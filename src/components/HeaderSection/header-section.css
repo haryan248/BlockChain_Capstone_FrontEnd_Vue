@@ -1,0 +1,29 @@
+.headersection__info {
+	padding-left: 20px;
+	padding-right: 20px;
+	padding-bottom: 1%;
+	border-bottom: 4px solid #babdc3;
+	box-sizing: border-box;
+	text-align: left;
+}
+.headersection__info .headerSection__time {
+	margin-top: 5%;
+	margin-bottom: 2%;
+	color: #a4a4a4;
+	font-size: 1.8vh;
+	font-weight: bold;
+	line-height: 18px;
+}
+.headersection__info .headerSection__title {
+	margin-top: 5%;
+	margin-bottom: 2%;
+	font-size: 5vh;
+	font-weight: bold;
+	line-height: 18px;
+}
+.headersection__info .headerSection__subttl {
+	margin-top: 5%;
+	font-size: 2vh;
+	font-weight: normal;
+	letter-spacing: -1px;
+}

@@ -1,0 +1,69 @@
+<template>
+	<div class="QR-Verification">
+		<div class="QR-card">
+			<div class="QR-wrapper">
+				<div class="box">
+					<div class="qr-card__item">
+						<p class="item__desc">입장을 위한 QR코드</p>
+						<!-- <QRCode value="http://facebook.github.io//" /> -->
+						<div class="item__code" :class="{ item__reload: countDown === 0 }">
+							<div v-if="countDown === 0" @click="resetQR">재발급 버튼</div>
+							<VueQrcode value="https://fengyuanchen.github.io/vue-qrcode" :size="150" />
+						</div>
+						<!-- qr발급시간이 끝날시 -->
+						<!-- <div v-if="countDown === 0" class="item__code-empty">
+							<div class="item__reload" @click="countDownTimer"></div>
+						</div> -->
+						<p class="item__temp">QR코드를 리더기에 제시해주세요</p>
+						<div class="item__time">
+							남은 시간
+							<div class="time__sec">{{ countDown }}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<PassButton :title="'돌아가기'" :color="'#5582F8'" @click="goBack()" />
+	</div>
+</template>
+<script>
+import VueQrcode from "qrcode.vue"
+import PassButton from "../../components/PassButton/PassButton"
+
+export default {
+	name: "QRVerification",
+	components: {
+		VueQrcode,
+		PassButton,
+	},
+	data() {
+		return { countDown: 15, polling: null }
+	},
+	created() {
+		this.countDownTimer()
+	},
+	unmounted() {
+		clearInterval(this.polling)
+	},
+	methods: {
+		countDownTimer() {
+			this.polling = setInterval(() => {
+				this.countDown-- //1찍 감소
+				if (this.countDown <= 0) clearInterval(this.polling)
+			}, 1000)
+		},
+		resetQR() {
+			clearInterval(this.polling)
+			this.countDown = 15
+			this.countDownTimer()
+		},
+
+		goBack() {
+			this.$emit("goBack")
+		},
+	},
+}
+</script>
+<style scoped>
+@import "./qrverification.css";
+</style>

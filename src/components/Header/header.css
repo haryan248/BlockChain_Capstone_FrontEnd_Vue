@@ -1,0 +1,87 @@
+.top-nav {
+	position: fixed;
+	top: 0;
+	right: 0;
+	left: 0;
+	z-index: 50;
+	justify-content: space-between;
+	height: 60px;
+}
+
+.top-nav,
+.top-nav .nav__button {
+	display: flex;
+	align-items: center;
+}
+
+.top-nav .nav__button {
+	width: 60px;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	color: #ccc;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: -0.5px;
+	position: absolute;
+	right: 20%;
+}
+
+.top-nav .test__button {
+	display: flex;
+	width: 60px;
+	height: 100%;
+	align-items: center;
+	justify-content: center;
+	color: #ccc;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: -0.5px;
+	position: absolute;
+	right: 10%;
+}
+
+.top-nav .nav__login {
+	width: 60px;
+	height: 100%;
+	justify-content: center;
+	color: #ccc;
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: -0.5px;
+	position: absolute;
+	right: 5%;
+}
+
+.top-nav .nav__icon {
+	display: block;
+	overflow: hidden;
+	width: 24px;
+	height: 24px;
+	color: transparent;
+	background-size: 100%;
+}
+
+.top-nav--active {
+	background-color: #fff;
+}
+.top-nav .nav__button--active {
+	color: #5582f8;
+}
+
+.header__nav {
+	width: 60%;
+	position: absolute;
+	left: 15%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	transform: translateX(-50%);
+	transition: all 0.1s;
+	opacity: 0;
+}
+
+.top-nav--active .header__nav {
+	opacity: 1;
+}

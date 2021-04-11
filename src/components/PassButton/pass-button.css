@@ -1,0 +1,21 @@
+.pass__button-nav {
+	/* display: flex; */
+	align-items: center;
+	color: #000;
+	margin: 20px;
+	font-size: 12px;
+}
+
+.pass__button-content {
+	width: 160px;
+	height: 42px;
+	line-height: 42px;
+
+	color: #fff;
+	border: 1px solid #5582f8;
+	border-radius: 70px;
+	background-color: "#5582F8";
+	box-shadow: 0 5px 10px rgb(0 0 0 / 15%);
+	font-weight: bold;
+	font-size: 20px;
+}

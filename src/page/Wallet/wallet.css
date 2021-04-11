@@ -1,0 +1,135 @@
+.card__content {
+	padding-top: 60px;
+	padding-bottom: 60px;
+	background-color: #5582f8;
+}
+.card__content .wallet__title {
+	padding: 0 30px 20px;
+	color: #fff;
+	font-size: 24px;
+	font-weight: 900;
+	line-height: 30px;
+	letter-spacing: -1.5px;
+}
+.wallet__content {
+	/* overflow: hidden;
+	position: relative;
+	display: flex;
+	padding: 30px 20px 0;
+	box-sizing: border-box; */
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	margin-top: -60px;
+
+	padding: 70px 20px 0;
+	box-sizing: border-box;
+	position: relative;
+	list-style: none;
+	z-index: 1;
+}
+.wallet__title {
+	padding: 0 10px 20px;
+	font-size: 3vh;
+	font-weight: 900;
+	line-height: 30px;
+	letter-spacing: -1.5px;
+}
+.card__button {
+	position: absolute;
+	top: 57px;
+	right: 20px;
+	padding: 14px 0px 0px 0px;
+	font-size: 1.5vh;
+	font-weight: normal;
+	line-height: 30px;
+}
+.credit-card__item {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 210px;
+	padding: 54px 30px 30px;
+	background-color: #fff;
+	border-radius: 15px;
+	box-sizing: border-box;
+}
+
+/* 카드 등록 모달창 */
+.card-bar__overlay {
+	height: 100vh;
+	box-sizing: border-box;
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	bottom: 0px;
+	left: 0px;
+	z-index: 50;
+	overflow: scroll;
+	background: linear-gradient(to top, rgb(255, 255, 255) 35%, rgba(0, 0, 0, 0.4) 50%);
+	overscroll-behavior: none;
+}
+.card-bar {
+	position: absolute;
+	align-items: center;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: max-content;
+	box-sizing: border-box;
+	padding: 10px 0;
+	background-color: white;
+	z-index: 25;
+}
+.card-bar .close-button {
+	padding-right: 20px;
+	color: rgb(204, 204, 204);
+	font-size: 2vh;
+	font-weight: normal;
+	letter-spacing: -0.5px;
+	text-align: right;
+}
+.card-input__title {
+	color: rgb(0, 0, 0);
+	padding-left: 20px;
+	font-size: 24px;
+	font-weight: 900;
+	letter-spacing: 0.2px;
+	text-align: left;
+}
+
+.card-input__list {
+	width: 300px;
+	margin: 20px auto;
+}
+.card-bar .card-bar__btn {
+	justify-content: space-between;
+	width: 100%;
+	margin-top: 10px;
+	padding: 20px;
+	border: none;
+	outline: none;
+	box-shadow: 0px 4px 20px 0px transparent;
+	border-radius: 20px;
+}
+
+/* 모달 애니메이션 */
+.alert-enter {
+	opacity: 0;
+	transform: translate3d(0, 100%, 0);
+}
+.alert-enter-active {
+	opacity: 1;
+	transform: translateX(0);
+	transition: opacity 0.2s, transform 0.2s;
+}
+.alert-exit {
+	opacity: 1;
+	transform: translateX(0);
+}
+.alert-exit-active {
+	opacity: 0;
+	transform: translate3d(0, 100%, 0);
+	transition: opacity 0.2s, transform 0.2s;
+}
