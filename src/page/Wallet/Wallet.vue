@@ -7,20 +7,18 @@
 					<HeaderSection :title="'지갑'" :subtitle="'간편하게 지갑을 관리하세요.'" />
 
 					<div class="card__content">
+						<div class="card__menu">
+							<div class="tab__list">
+								<div class="item__title p-text-bold">지불 관리</div>
+							</div>
+							<div class="tab__list">
+								<Button label="+ 카드 추가하기" class="p-button-text p-button-secondary" @click="visibleBottom = true" />
+							</div>
+						</div>
 						<!-- 스와이퍼 영역 -->
-						<div class="wallet__title">지불 관리</div>
-						<button class="card__button">
-							+ 카드 추가하기
-						</button>
-						<Drawer class="form-select" />
+
 						<div class="card__wrapper">
-							<swiper
-								:slides-per-view="1.2"
-								:space-between="10"
-								:centeredSlides="true"
-								:pagination="true"
-								:loop="true"
-							>
+							<swiper :slides-per-view="1.2" :space-between="10" :centeredSlides="true" :pagination="true" :loop="true">
 								<swiper-slide>
 									<div class="credit-card__item">
 										<div class="card__name">{{ "visa" }}</div>
@@ -41,6 +39,9 @@
 						</div>
 
 						<PassButton :title="'카드 삭제'" :color="'#F47B61'" />
+						<Sidebar v-model:visible="visibleBottom" :baseZIndex="1000" position="bottom">
+							<h3>Right Sidebar</h3>
+						</Sidebar>
 					</div>
 				</div>
 			</div>
@@ -54,13 +55,12 @@ import HeaderSection from "../../components/HeaderSection/HeaderSection"
 import { Swiper, SwiperSlide } from "swiper/vue"
 import SwiperCore, { Pagination, Controller } from "swiper"
 import "swiper/swiper-bundle.css"
-import Drawer from "../../components/Drawer/Drawer.vue"
 
 SwiperCore.use(Pagination)
 SwiperCore.use(Controller)
 export default {
 	name: "Wallet",
-	components: { Header, HeaderSection, Swiper, SwiperSlide, Drawer },
+	components: { Header, HeaderSection, Swiper, SwiperSlide },
 	computed: {
 		swiper() {
 			const swiper = document.querySelector(".home-carousel").swiper
@@ -68,7 +68,7 @@ export default {
 		},
 	},
 	data() {
-		return { innerWidth: window.innerWidth }
+		return { innerWidth: window.innerWidth, visibleBottom: false }
 	},
 	methods: {},
 }

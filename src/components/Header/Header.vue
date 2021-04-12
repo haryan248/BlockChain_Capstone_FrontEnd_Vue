@@ -17,7 +17,10 @@
 </template>
 <script>
 export default {
-	name: "Sample",
+	name: "Header",
+	props:{
+		
+	},
 	components: {},
 	data() {
 		return {

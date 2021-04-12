@@ -5,7 +5,7 @@
 	flex-direction: column;
 	align-items: center;
 	box-sizing: border-box;
-	width: 287px;
+	/* width: 287px; */
 }
 .QR-Verification .box {
 	display: flex;
@@ -29,7 +29,7 @@
 	flex-direction: column;
 	align-items: center;
 	box-sizing: border-box;
-	width: 287px;
+	/* width: 287px; */
 	/* height: 453px; */
 }
 .QR-wrapper {

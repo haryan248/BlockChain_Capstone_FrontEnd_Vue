@@ -1,63 +1,74 @@
 <template>
-	<Header />
-	<div class="container">
-		<HeaderSection :title="'주문서'" :subtitle="'음식을 주문해보세요.'" />
-		<ul class="order-list">
+	<div>
+		<Header />
+		<div class="container bg-gray">
 			<div>
-				<div class="oreder-component">
-					<div>
-						<li class="list__item">
-							<div class="order-list__item--active order-list__item">
-								<div class="item__summary">
-									<span class="item__tags">
-										<div class="tag-style">
-											<input type="checkbox" />
-										</div>
-									</span>
-								</div>
-								<div class="item__content">
-									<div class="item__txt">
-										<div class="item__summary">
-											<span class="item__tags">
-												<div class="tag-style">
-													<div></div>
-												</div>
-											</span>
-										</div>
-										<h3 class="item__name">
-											<button onClick="{reduceCnt}">-</button>
-											<button onClick="{addCnt}">+</button>
-										</h3>
-										<h3 class="item__name">{food.store}</h3>
-									</div>
-								</div>
-								<div class="item__thumb">
-									<span class="item__image" />
+				<div class="order-content">
+					<HeaderSection :title="'주문서'" :subtitle="'음식을 주문해보세요.'" />
+					<div class="menu__tab">
+						<div class="tab__list">
+							<MultiSelect v-model="selectedRestaurant" :options="restaurant" optionLabel="brand" placeholder="교내식당을 선택하세요." />
+						</div>
+						<div class="tab__list">
+							<Button label="주문서 확인" class="p-button-outlined p-button-secondary" @click="openModal" />
+						</div>
+					</div>
+					<OrderList v-model="cars" listStyle="height:auto" dataKey="vin">
+						<template #header>
+							식당메뉴
+						</template>
+						<template #item="slotProps">
+							<div class="p-caritem">
+								<img :src="'demo/images/car/' + slotProps.item.brand + '.png'" />
+								<div>
+									<span class="p-caritem-vin">{{ slotProps.item.vin }}</span>
+									<span>{{ slotProps.item.year }} - {{ slotProps.item.color }}</span>
 								</div>
 							</div>
-						</li>
+						</template>
+					</OrderList>
+					<div class="order__button">
+						<Button label="주문하기" icon="pi pi-check" iconPos="right" />
 					</div>
 				</div>
 			</div>
-		</ul>
-		<div class="order-content">
-			<PassButton :title="'주문하기'" :color="'#5582F8'" @click="toggleModal = !toggleModal" />
 		</div>
+
+		<Dialog header="Header" :showHeader="false" v-model:visible="displayModal" :style="{ width: '80vw' }" :modal="true">
+			<!-- <template #content> -->
+			<QRVerification @goBack="closeModal" />
+			<!-- <Button label="No" icon="pi pi-times" @click="closeResponsive" class="p-button-text" />
+								<Button label="Yes" icon="pi pi-check" @click="closeResponsive" autofocus /> -->
+			<!-- </template> -->
+		</Dialog>
 	</div>
-	<QRVerification v-if="toggleModal" />
 </template>
 <script>
 import Header from "../../components/Header/Header"
-import PassButton from "../../components/PassButton/PassButton"
+// import PassButton from "../../components/PassButton/PassButton"
 import QRVerification from "../../components/QRVerification/QRVerification"
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
 export default {
 	name: "Order",
-	components: { Header, PassButton, QRVerification, HeaderSection },
+	components: { Header, QRVerification, HeaderSection },
 	data() {
-		return { toggleModal: false }
+		return {
+			displayModal: false,
+			selectedRestaurant: null,
+			restaurant: [
+				{ brand: "E-square", value: "E-square" },
+				{ brand: "감성코어", value: "Emotional core" },
+			],
+		}
 	},
-	methods: {},
+	methods: {
+		openModal() {
+			this.displayModal = true
+		},
+		closeModal() {
+			this.displayModal = false
+		},
+	},
 }
 </script>
 <style scoped>
