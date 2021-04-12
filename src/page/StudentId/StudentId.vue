@@ -20,12 +20,24 @@
 									</div>
 								</div>
 							</div>
-							<div class="order__button">
-								<Button label="학생증" icon="pi pi-check" iconPos="right" @goBack="openModal"/>
+							<div class="student__button">
+								<Button
+									label="학생증"
+									icon="pi pi-id-card"
+									iconPos="left"
+									@goBack="openModal"
+									@click="openModal"
+								/>
 							</div>
 						</div>
 						<!-- <Button label="Show" icon="pi pi-external-link" @click="openModal" /> -->
-						<Dialog header="Header" :showHeader="false" v-model:visible="displayModal" :style="{ width: '80vw' }" :modal="true">
+						<Dialog
+							header="Header"
+							:showHeader="false"
+							v-model:visible="displayModal"
+							:style="{ width: '80vw' }"
+							:modal="true"
+						>
 							<!-- <template #content> -->
 							<QRVerification @goBack="closeModal" />
 							<!-- <Button label="No" icon="pi pi-times" @click="closeResponsive" class="p-button-text" />

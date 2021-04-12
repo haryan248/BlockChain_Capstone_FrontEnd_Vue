@@ -5,7 +5,7 @@
 }
 .card__content .item__title {
 	/* padding: 0 30px 20px; */
-	color: #607D8B;
+	color: #607d8b;
 	font-size: 24px;
 	font-weight: 900;
 	line-height: 30px;
@@ -54,4 +54,12 @@
 	background-color: #fff;
 	border-radius: 15px;
 	box-sizing: border-box;
+}
+
+.card-delete__button {
+	margin: 0 auto;
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
 }

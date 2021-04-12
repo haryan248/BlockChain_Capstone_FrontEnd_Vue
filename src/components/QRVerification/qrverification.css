@@ -97,3 +97,7 @@
 	letter-spacing: -1px;
 	text-align: center;
 }
+
+.qr-verification__button {
+	margin-top: 20px;
+}

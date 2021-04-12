@@ -1,14 +1,10 @@
 .bottom-nav {
 	background-color: #fff;
-	padding-right: 23px;
-	padding-left: 23px;
+	padding-right: 10px;
+	padding-left: 10px;
 	height: 80px;
 	font-size: 12px;
 	color: #424347;
-}
-.image {
-	display: block;
-	margin: auto;
 }
 .footer--view {
 	position: fixed;
@@ -29,4 +25,7 @@
 .footer-btn--active {
 	font-size: 20px;
 	color: #5582f8;
+}
+.p-button-text--active {
+	color: #5582f8 !important;
 }

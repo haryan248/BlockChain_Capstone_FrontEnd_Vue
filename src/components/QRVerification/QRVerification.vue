@@ -23,18 +23,18 @@
 				</div>
 			</div>
 		</div>
-		<PassButton :title="'돌아가기'" :color="'#5582F8'" @click="goBack()" />
+		<div class="qr-verification__button">
+			<Button label="돌아가기" icon="pi pi-backward" iconPos="left" @click="goBack()" />
+		</div>
 	</div>
 </template>
 <script>
 import VueQrcode from "qrcode.vue"
-import PassButton from "../../components/PassButton/PassButton"
 
 export default {
 	name: "QRVerification",
 	components: {
 		VueQrcode,
-		PassButton,
 	},
 	data() {
 		return { countDown: 15, polling: null }

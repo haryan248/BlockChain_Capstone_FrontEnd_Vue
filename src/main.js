@@ -4,7 +4,7 @@ import "primevue/resources/primevue.min.css"
 import "primeicons/primeicons.css"
 
 import { createApp } from "vue"
-import { router } from "./route" 
+import { router } from "./route"
 import App from "./App.vue"
 
 //primevue 임포트 부분
@@ -15,7 +15,7 @@ import Dialog from "primevue/dialog"
 import MultiSelect from "primevue/multiselect"
 import OrderList from "primevue/orderlist"
 import Carousel from "primevue/carousel"
-
+import Avatar from "primevue/avatar"
 
 // Create Vue Instance
 const app = createApp(App)
@@ -29,5 +29,6 @@ app.component("MultiSelect", MultiSelect)
 app.component("DataView", DataView)
 app.component("OrderList", OrderList)
 app.component("Carousel", Carousel)
+app.component("Avatar", Avatar)
 
 app.mount("#app")

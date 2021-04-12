@@ -24,33 +24,12 @@
 	font-weight: 700;
 	letter-spacing: -0.5px;
 	position: absolute;
-	right: 20%;
-}
-
-.top-nav .test__button {
-	display: flex;
-	width: 60px;
-	height: 100%;
-	align-items: center;
-	justify-content: center;
-	color: #ccc;
-	font-size: 14px;
-	font-weight: 700;
-	letter-spacing: -0.5px;
-	position: absolute;
-	right: 10%;
+	right: 5%;
 }
 
 .top-nav .nav__login {
-	width: 60px;
-	height: 100%;
-	justify-content: center;
-	color: #ccc;
-	font-size: 14px;
-	font-weight: 700;
-	letter-spacing: -0.5px;
 	position: absolute;
-	right: 5%;
+	right: 20%;
 }
 
 .top-nav .nav__icon {

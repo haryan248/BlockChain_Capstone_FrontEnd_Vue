@@ -1,60 +1,71 @@
 <template>
 	<div>
 		<aside class="bottom-nav footer--view">
-			<div
-				to=""
+			<router-link
+				to="/"
 				class="footer-btn"
 				:class="{ 'footer-btn--active': $route.path === path.studentId }"
-				@click="goToPage(`/`)"
 			>
-				<p />
-				학생증
-			</div>
-			<div
+				<Button
+					label="학생증"
+					iconPos="top"
+					icon="pi pi-user"
+					class="p-button-text p-button-secondary"
+					:class="{ 'p-button-text--active': $route.path === path.studentId }"
+				/>
+			</router-link>
+			<router-link
 				to="/wallet"
 				class="footer-btn"
 				:class="{ 'footer-btn--active': $route.path === path.wallet }"
-				@click="goToPage(`/wallet`)"
 			>
-				<p />
-				지갑
-			</div>
-			<div
+				<Button
+					label="지갑"
+					iconPos="top"
+					icon="pi pi-wallet"
+					class="p-button-text p-button-secondary"
+					:class="{ 'p-button-text--active': $route.path === path.wallet }"
+				/>
+			</router-link>
+			<router-link
 				to="/order"
 				class="footer-btn"
 				:class="{ 'footer-btn--active': $route.path === path.order }"
-				@click="goToPage(`/order`)"
 			>
-				<p />
-				주문
-			</div>
-			<div
+				<Button
+					label="주문"
+					iconPos="top"
+					icon="pi pi-shopping-cart"
+					class="p-button-text p-button-secondary"
+					:class="{ 'p-button-text--active': $route.path === path.order }"
+				/>
+			</router-link>
+			<router-link
 				to="/setting"
 				class="footer-btn"
 				:class="{ 'footer-btn--active': $route.path === path.setting }"
-				@click="goToPage(`/setting`)"
 			>
-				<p />
-				설정
-			</div>
-			<div
-				to="/todo"
-				class="footer-btn"
-				:class="{ 'footer-btn--active': $route.path === `/todo` }"
-				@click="goToPage(`/todo`)"
-			>
-				<p />
-				할일
-			</div>
-			<div
+				<Button
+					label="설정"
+					iconPos="top"
+					icon="pi pi-cog"
+					class="p-button-text p-button-secondary"
+					:class="{ 'p-button-text--active': $route.path === path.setting }"
+				/>
+			</router-link>
+			<router-link
 				to="/qrscanner"
 				class="footer-btn"
 				:class="{ 'footer-btn--active': $route.path === path.qrscanner }"
-				@click="goToPage(`/qrscanner`)"
 			>
-				<p />
-				qrscan
-			</div>
+				<Button
+					label="QR스캔"
+					iconPos="top"
+					icon="pi pi-camera"
+					class="p-button-text p-button-secondary"
+					:class="{ 'p-button-text--active': $route.path === path.qrscanner }"
+				/>
+			</router-link>
 		</aside>
 	</div>
 </template>
@@ -73,11 +84,7 @@ export default {
 			},
 		}
 	},
-	methods: {
-		goToPage(path) {
-			this.$router.push(path)
-		},
-	},
+	methods: {},
 }
 </script>
 <style scoped>

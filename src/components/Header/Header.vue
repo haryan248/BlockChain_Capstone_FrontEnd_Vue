@@ -1,14 +1,19 @@
 <template>
 	<nav class="top-nav top-nav--active">
-		<div class="header__nav">
+		<router-link to="/" class="header__nav">
 			<span>U-PASS</span>
+		</router-link>
+		<div class="nav__login">
+			<Avatar
+				class="p-mr-2"
+				style="background-color:#2196F3; color: #ffffff"
+				shape="circle"
+				icon="pi pi-user"
+			/>
 		</div>
 		<div class="nav__button">
-			<Button icon="pi pi-arrow-right" @click="visibleRight = true" class="p-mr-2" />
+			<Button icon="pi pi-arrow-left" @click="visibleRight = true" class="p-mr-2" />
 		</div>
-		<button type="button" class="nav__login">
-			<div>로그인</div>
-		</button>
 
 		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right">
 			<h3>Right Sidebar</h3>
@@ -18,9 +23,7 @@
 <script>
 export default {
 	name: "Header",
-	props:{
-		
-	},
+	props: {},
 	components: {},
 	data() {
 		return {

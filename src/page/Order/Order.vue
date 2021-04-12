@@ -7,13 +7,22 @@
 					<HeaderSection :title="'주문서'" :subtitle="'음식을 주문해보세요.'" />
 					<div class="menu__tab">
 						<div class="tab__list">
-							<MultiSelect v-model="selectedRestaurant" :options="restaurant" optionLabel="brand" placeholder="교내식당을 선택하세요." />
+							<MultiSelect
+								v-model="selectedRestaurant"
+								:options="restaurant"
+								optionLabel="brand"
+								placeholder="교내식당을 선택하세요."
+							/>
 						</div>
 						<div class="tab__list">
-							<Button label="주문서 확인" class="p-button-outlined p-button-secondary" @click="openModal" />
+							<Button
+								label="주문서 확인"
+								class="p-button-outlined p-button-secondary"
+								@click="openModal"
+							/>
 						</div>
 					</div>
-					<OrderList v-model="cars" listStyle="height:auto" dataKey="vin">
+					<OrderList v-model="restaurant" listStyle="height:auto" dataKey="vin">
 						<template #header>
 							식당메뉴
 						</template>
@@ -34,7 +43,13 @@
 			</div>
 		</div>
 
-		<Dialog header="Header" :showHeader="false" v-model:visible="displayModal" :style="{ width: '80vw' }" :modal="true">
+		<Dialog
+			header="Header"
+			:showHeader="false"
+			v-model:visible="displayModal"
+			:style="{ width: '80vw' }"
+			:modal="true"
+		>
 			<!-- <template #content> -->
 			<QRVerification @goBack="closeModal" />
 			<!-- <Button label="No" icon="pi pi-times" @click="closeResponsive" class="p-button-text" />

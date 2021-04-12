@@ -12,13 +12,23 @@
 								<div class="item__title p-text-bold">지불 관리</div>
 							</div>
 							<div class="tab__list">
-								<Button label="+ 카드 추가하기" class="p-button-text p-button-secondary" @click="visibleBottom = true" />
+								<Button
+									label="+ 카드 추가하기"
+									class="p-button-text p-button-secondary"
+									@click="visibleBottom = true"
+								/>
 							</div>
 						</div>
 						<!-- 스와이퍼 영역 -->
 
 						<div class="card__wrapper">
-							<swiper :slides-per-view="1.2" :space-between="10" :centeredSlides="true" :pagination="true" :loop="true">
+							<swiper
+								:slides-per-view="1.2"
+								:space-between="10"
+								:centeredSlides="true"
+								:pagination="true"
+								:loop="true"
+							>
 								<swiper-slide>
 									<div class="credit-card__item">
 										<div class="card__name">{{ "visa" }}</div>
@@ -37,8 +47,14 @@
 								</swiper-slide>
 							</swiper>
 						</div>
-
-						<PassButton :title="'카드 삭제'" :color="'#F47B61'" />
+						<div class="card-delete__button">
+							<Button
+								label="카드 삭제"
+								class="p-button-danger"
+								icon="pi pi-times"
+								iconPos="right"
+							/>
+						</div>
 						<Sidebar v-model:visible="visibleBottom" :baseZIndex="1000" position="bottom">
 							<h3>Right Sidebar</h3>
 						</Sidebar>
