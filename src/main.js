@@ -16,6 +16,8 @@ import MultiSelect from "primevue/multiselect"
 import OrderList from "primevue/orderlist"
 import Carousel from "primevue/carousel"
 import Avatar from "primevue/avatar"
+import InputText from "primevue/inputtext"
+import InputMask from "primevue/inputmask"
 
 // Create Vue Instance
 const app = createApp(App)
@@ -30,5 +32,7 @@ app.component("DataView", DataView)
 app.component("OrderList", OrderList)
 app.component("Carousel", Carousel)
 app.component("Avatar", Avatar)
+app.component("InputText", InputText)
+app.component("InputMask", InputMask)
 
 app.mount("#app")

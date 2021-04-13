@@ -34,7 +34,7 @@ const routes = [
 	},
 	{
 		path: "/simplepwd",
-		name: "Setting",
+		name: "SimplePassword",
 		component: SimplePassword,
 	},
 ]

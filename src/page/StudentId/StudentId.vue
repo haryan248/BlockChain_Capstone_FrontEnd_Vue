@@ -14,9 +14,9 @@
 										<div class="item__img">
 											<div class="student__img" />
 										</div>
-										<p class="item__temp">학번 : {}</p>
-										<p class="item__temp">성명 : {}</p>
-										<p class="item__temp">소속 : {}</p>
+										<p class="item__temp">학번 : </p>
+										<p class="item__temp">성명 : </p>
+										<p class="item__temp">소속 : </p>
 									</div>
 								</div>
 							</div>

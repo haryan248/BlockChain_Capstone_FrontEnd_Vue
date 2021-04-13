@@ -3,14 +3,14 @@
 		<router-link to="/" class="header__nav">
 			<span>U-PASS</span>
 		</router-link>
-		<div class="nav__login">
+		<router-link to="/simplepwd" class="nav__login">
 			<Avatar
 				class="p-mr-2"
 				style="background-color:#2196F3; color: #ffffff"
 				shape="circle"
 				icon="pi pi-user"
 			/>
-		</div>
+		</router-link>
 		<div class="nav__button">
 			<Button icon="pi pi-arrow-left" @click="visibleRight = true" class="p-mr-2" />
 		</div>
