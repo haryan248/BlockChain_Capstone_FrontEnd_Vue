@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div v-if="$route.path !== '/login' || $route.path !== '/simplepwd'">
 		<aside class="bottom-nav footer--view">
 			<router-link
 				to="/"
@@ -10,7 +10,7 @@
 					label="학생증"
 					iconPos="top"
 					icon="pi pi-user"
-					class="p-button-text p-button-secondary border-none"
+					class="p-button-text p-button-secondary border-none p-button-font--size"
 					:class="{ 'p-button-text--active': $route.path === path.studentId }"
 				/>
 			</router-link>
@@ -23,7 +23,7 @@
 					label="지갑"
 					iconPos="top"
 					icon="pi pi-wallet"
-					class="p-button-text p-button-secondary border-none"
+					class="p-button-text p-button-secondary border-none p-button-font--size"
 					:class="{ 'p-button-text--active': $route.path === path.wallet }"
 				/>
 			</router-link>
@@ -36,7 +36,7 @@
 					label="주문"
 					iconPos="top"
 					icon="pi pi-shopping-cart"
-					class="p-button-text p-button-secondary border-none"
+					class="p-button-text p-button-secondary border-none p-button-font--size"
 					:class="{ 'p-button-text--active': $route.path === path.order }"
 				/>
 			</router-link>
@@ -49,7 +49,7 @@
 					label="설정"
 					iconPos="top"
 					icon="pi pi-cog"
-					class="p-button-text p-button-secondary border-none"
+					class="p-button-text p-button-secondary border-none p-button-font--size"
 					:class="{ 'p-button-text--active': $route.path === path.setting }"
 				/>
 			</router-link>
@@ -62,7 +62,7 @@
 					label="QR스캔"
 					iconPos="top"
 					icon="pi pi-camera"
-					class="p-button-text p-button-secondary border-none"
+					class="p-button-text p-button-secondary border-none p-button-font--size"
 					:class="{ 'p-button-text--active': $route.path === path.qrscanner }"
 				/>
 			</router-link>

@@ -1,5 +1,7 @@
 <template>
 	<div>
+		<Header />
+
 		<p class="error">{{ error }}</p>
 
 		<p class="decode-result">
@@ -11,16 +13,17 @@
 				Loading...
 			</div>
 			<!-- 카메라 전환 -->
-			<Button icon="pi pi-undo" @click="switchCamera" class="p-mr-2" alt="switch camera"  />
+			<Button icon="pi pi-undo" @click="switchCamera" class="p-mr-2" alt="switch camera" />
 
 			<!-- qr 인증 되었을때 -->
-			<div v-show="showScanConfirmation" class="scan-confirmation">
-			</div>
+			<div v-show="showScanConfirmation" class="scan-confirmation"></div>
 		</qr-stream>
 	</div>
+	<BottomNav />
 </template>
 <script>
 import { QrStream } from "vue3-qr-reader"
+
 export default {
 	name: "QRScanner",
 	components: { QrStream },

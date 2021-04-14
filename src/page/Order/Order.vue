@@ -57,15 +57,14 @@
 			<!-- </template> -->
 		</Dialog>
 	</div>
+	<BottomNav />
 </template>
 <script>
-import Header from "../../components/Header/Header"
-// import PassButton from "../../components/PassButton/PassButton"
 import QRVerification from "../../components/QRVerification/QRVerification"
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
 export default {
 	name: "Order",
-	components: { Header, QRVerification, HeaderSection },
+	components: { QRVerification, HeaderSection },
 	data() {
 		return {
 			displayModal: false,

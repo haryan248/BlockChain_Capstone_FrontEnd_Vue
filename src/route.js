@@ -5,6 +5,7 @@ import Setting from "./page/Setting/Setting.vue"
 import Wallet from "./page/Wallet/Wallet.vue"
 import QRScanner from "./page/QRScanner/QRScanner.vue"
 import SimplePassword from "./page/SimplePasswd/SimplePasswd.vue"
+import Login from "./page/Login/Login.vue"
 
 const routes = [
 	{
@@ -31,6 +32,11 @@ const routes = [
 		path: "/qrscanner",
 		name: "QRScanner",
 		component: QRScanner,
+	},
+	{
+		path: "/login",
+		name: "Login",
+		component: Login,
 	},
 	{
 		path: "/simplepwd",

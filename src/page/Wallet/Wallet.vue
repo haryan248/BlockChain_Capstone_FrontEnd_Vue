@@ -12,13 +12,23 @@
 								<div class="item__title p-text-bold">지불 관리</div>
 							</div>
 							<div class="tab__list">
-								<Button label="+ 카드 추가하기" class="p-button-text p-button-secondary" @click="visibleBottom = true" />
+								<Button
+									label="+ 카드 추가하기"
+									class="p-button-text p-button-secondary"
+									@click="visibleBottom = true"
+								/>
 							</div>
 						</div>
 						<!-- 스와이퍼 영역 -->
 
 						<div class="card__wrapper">
-							<swiper :slides-per-view="1.2" :space-between="10" :centeredSlides="true" :pagination="true" :loop="true">
+							<swiper
+								:slides-per-view="1.2"
+								:space-between="10"
+								:centeredSlides="true"
+								:pagination="true"
+								:loop="true"
+							>
 								<swiper-slide>
 									<div class="credit-card__item">
 										<div class="card__name">{{ "visa" }}</div>
@@ -38,37 +48,47 @@
 							</swiper>
 						</div>
 						<div class="card-delete__button">
-							<Button label="카드 삭제" class="p-button-danger" icon="pi pi-times" iconPos="right" />
+							<Button
+								label="카드 삭제"
+								class="p-button-danger"
+								icon="pi pi-times"
+								iconPos="right"
+							/>
 						</div>
-						<Sidebar v-model:visible="visibleBottom" :baseZIndex="1000" position="bottom" style="height:30rem">
+						<Sidebar
+							v-model:visible="visibleBottom"
+							:baseZIndex="1000"
+							position="bottom"
+							style="height:30rem"
+						>
 							<div class="card">
 								<h3>카드 추가하기</h3>
 								<div class="p-fluid p-formgrid p-grid">
 									<div class="p-field p-col-12 p-md-6">
 										<label for="username">이름</label>
 										<InputText id="username" type="username" aria-describedby="username-help" />
-										<small id="username-help">Enter your username to reset your password.</small>
+										<small id="username-help">이름을 입력해주세요.</small>
 									</div>
 									<div class="p-field p-col-12">
 										<label for="username">카드 번호</label>
 										<InputText id="username" type="username" aria-describedby="username-help" />
-										<small id="username-help">Enter your username to reset your password.</small>
-									</div>
-									<div class="p-field p-col-12">
-										<label for="username">유효 기한</label>
-										<InputText id="username" type="username" aria-describedby="username-help" />
-										<small id="username-help">Enter your username to reset your password.</small>
+										<small id="username-help">카드번호를 입력해주세요.</small>
 									</div>
 									<div class="p-field p-col-6 p-md-6">
-										<label for="city">City</label>
+										<label for="city">유효 기한</label>
 										<InputText id="city" type="text" />
 									</div>
 									<div class="p-field p-col-6 p-md-3">
-										<label for="zip">Zip</label>
+										<label for="zip">CVV</label>
 										<InputText id="zip" type="text" />
 									</div>
 									<div class="p-field p-col-12">
-										<Button label="카드 추가하기" class="p-button-success" icon="pi pi-check" iconPos="right" />
+										<Button
+											label="카드 추가하기"
+											class="p-button-success"
+											icon="pi pi-check"
+											iconPos="right"
+										/>
 									</div>
 								</div>
 							</div>
@@ -78,9 +98,9 @@
 			</div>
 		</div>
 	</div>
+	<BottomNav />
 </template>
 <script>
-import Header from "../../components/Header/Header"
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
 
 import { Swiper, SwiperSlide } from "swiper/vue"
@@ -91,7 +111,7 @@ SwiperCore.use(Pagination)
 SwiperCore.use(Controller)
 export default {
 	name: "Wallet",
-	components: { Header, HeaderSection, Swiper, SwiperSlide },
+	components: { HeaderSection, Swiper, SwiperSlide },
 	computed: {
 		swiper() {
 			const swiper = document.querySelector(".home-carousel").swiper

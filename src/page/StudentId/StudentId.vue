@@ -14,9 +14,9 @@
 										<div class="item__img">
 											<div class="student__img" />
 										</div>
-										<p class="item__temp">학번 : </p>
-										<p class="item__temp">성명 : </p>
-										<p class="item__temp">소속 : </p>
+										<p class="item__temp">학번 :</p>
+										<p class="item__temp">성명 :</p>
+										<p class="item__temp">소속 :</p>
 									</div>
 								</div>
 							</div>
@@ -38,28 +38,22 @@
 							:style="{ width: '80vw' }"
 							:modal="true"
 						>
-							<!-- <template #content> -->
-							<QRVerification @goBack="closeModal" />
-							<!-- <Button label="No" icon="pi pi-times" @click="closeResponsive" class="p-button-text" />
-								<Button label="Yes" icon="pi pi-check" @click="closeResponsive" autofocus /> -->
-							<!-- </template> -->
+							<QRVerification @goBack="closeModal" :isStudentId="true" />
 						</Dialog>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<BottomNav />
 </template>
 <script>
-import Header from "../../components/Header/Header"
-// import PassButton from "../../components/PassButton/PassButton"
 import QRVerification from "../../components/QRVerification/QRVerification"
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
 
 export default {
 	name: "StudentId",
 	components: {
-		Header,
 		QRVerification,
 		HeaderSection,
 	},

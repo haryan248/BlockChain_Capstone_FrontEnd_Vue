@@ -29,3 +29,6 @@
 .p-button-text--active {
 	color: #5582f8 !important;
 }
+.p-button-font--size {
+	font-size: 0.7rem !important;
+}

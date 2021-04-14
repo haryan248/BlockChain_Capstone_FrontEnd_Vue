@@ -15,7 +15,7 @@
 			<Button icon="pi pi-arrow-left" @click="visibleRight = true" class="p-mr-2" />
 		</div>
 
-		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right">
+		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:12rem">
 			<h3>Right Sidebar</h3>
 		</Sidebar>
 	</nav>
