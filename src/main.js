@@ -9,7 +9,10 @@ import App from "./App.vue"
 
 // 구글 로그인
 import GAuth from "vue3-google-oauth2"
-// import googleAuth from "./authentification"
+
+//헤더, 푸터 임포트 부분
+import Header from "./components/Header/Header"
+import BottomNav from "./components/BottomNav/BottomNav"
 
 //primevue 임포트 부분
 import PrimeVue from "primevue/config"
@@ -24,13 +27,13 @@ import InputText from "primevue/inputtext"
 import InputMask from "primevue/inputmask"
 import Card from "primevue/card"
 import Dropdown from "primevue/dropdown"
-import Header from "./components/Header/Header"
 
 // Create Vue Instance
 const app = createApp(App)
 app.use(router) // 사용 설정 하기
 app.use(PrimeVue)
 app.component("Header", Header)
+app.component("BottomNav", BottomNav)
 
 //사용할 UI 컴포넌트 추가
 app.component("Sidebar", Sidebar)

@@ -3,7 +3,7 @@
 		<router-link to="/" class="header__nav">
 			<span>U-PASS</span>
 		</router-link>
-		<router-link to="/simplepwd" class="nav__login">
+		<router-link to="/" class="nav__login">
 			<Avatar
 				class="p-mr-2"
 				style="background-color:#2196F3; color: #ffffff"

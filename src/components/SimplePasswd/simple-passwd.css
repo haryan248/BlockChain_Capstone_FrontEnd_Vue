@@ -1,3 +1,14 @@
+.password-container {
+	overflow: hidden;
+}
+.password-header {
+	padding: 10px;
+	font-size: x-large;
+}
+.password__wrong {
+	margin-top: 4px;
+	color: #f47b61;
+}
 .inputter__flex {
 	flex-wrap: wrap;
 	width: 100%;
@@ -10,7 +21,6 @@
 	display: flex;
 	flex-direction: column;
 	height: 100vh;
-	margin: -60px;
 	padding: 70px 10px 0;
 	box-sizing: border-box;
 	margin-left: auto;
@@ -34,9 +44,10 @@
 	height: 453px;
 }
 .password-wrapper {
-	position: relative;
+	position: absolute;
 	width: 100%;
-	height: 100%;
+	height: 300px;
+	bottom: 223px;
 	padding-top: 5vh;
 	z-index: 1;
 	display: flex;
