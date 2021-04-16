@@ -1,7 +1,7 @@
 <template>
 	<nav class="top-nav top-nav--active">
 		<router-link to="/" class="header__nav">
-			<span>U-PASS</span>
+			<span>{{ title }}</span>
 		</router-link>
 		<router-link to="/simplepwd" class="nav__login">
 			<Avatar
@@ -23,7 +23,7 @@
 <script>
 export default {
 	name: "Header",
-	props: {},
+	props: { title: String },
 	components: {},
 	data() {
 		return {

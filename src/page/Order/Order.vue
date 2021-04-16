@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Header />
+		<Header :title="'주문'" />
 		<div class="container bg-gray">
 			<div>
 				<div class="order-content">

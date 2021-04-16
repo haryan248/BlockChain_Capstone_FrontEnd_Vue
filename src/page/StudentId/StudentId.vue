@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Header />
+		<Header :title="'U-PASS'" />
 		<div class="container bg-gray">
 			<div>
 				<div class="student-content">

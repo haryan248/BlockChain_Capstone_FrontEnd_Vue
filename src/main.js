@@ -25,12 +25,14 @@ import InputMask from "primevue/inputmask"
 import Card from "primevue/card"
 import Dropdown from "primevue/dropdown"
 import Header from "./components/Header/Header"
+import BottomNav from "../src/components/BottomNav/BottomNav"
 
 // Create Vue Instance
 const app = createApp(App)
 app.use(router) // 사용 설정 하기
 app.use(PrimeVue)
 app.component("Header", Header)
+app.component("BottomNav", BottomNav)
 
 //사용할 UI 컴포넌트 추가
 app.component("Sidebar", Sidebar)

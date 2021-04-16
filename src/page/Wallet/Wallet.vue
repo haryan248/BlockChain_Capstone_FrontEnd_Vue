@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Header />
+		<Header :title="'지갑'" />
 		<div class="container bg-gray">
 			<div>
 				<div class="wallet__content">

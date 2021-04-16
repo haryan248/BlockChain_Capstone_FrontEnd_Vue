@@ -1,25 +1,45 @@
 <template>
 	<div>
-		<Header />
-
-		<p class="error">{{ error }}</p>
+		<!-- <p class="error">{{ error }}</p>
 
 		<p class="decode-result">
 			Last result: <b>{{ result }}</b>
 		</p>
 		<qr-stream :camera="camera" @decode="onDecode" @init="onInit">
-			<!-- 로딩화면 -->
 			<div class="loading-indicator" v-if="loading">
 				Loading...
 			</div>
-			<!-- 카메라 전환 -->
 			<Button icon="pi pi-undo" @click="switchCamera" class="p-mr-2" alt="switch camera" />
-
-			<!-- qr 인증 되었을때 -->
 			<div v-show="showScanConfirmation" class="scan-confirmation"></div>
 		</qr-stream>
+	</div> -->
+		<Header :title="'QR인증'" />
+
+		<div class="container bg-gray">
+			<div>
+				<div class="qr-content">
+					<div class="center stream">
+						<div class="mb">
+							QR 인증
+							<!-- 카메라 전환 -->
+
+							<Button icon="pi pi-undo" @click="switchCamera" class="p-mr-2" alt="switch camera" />
+						</div>
+						<qr-stream :camera="camera" @decode="onDecode" class="mb" @init="onInit">
+							<!-- 로딩화면 -->
+							<div class="loading-indicator" v-if="loading">
+								Loading...
+							</div>
+							<div v-else style="color: red;" class="frame"></div>
+						</qr-stream>
+					</div>
+					<!-- qr 인증 되었을때 -->
+					<div v-show="showScanConfirmation" class="scan-confirmation">{{ result }}</div>
+				</div>
+			</div>
+		</div>
 	</div>
-	<BottomNav />
+	<!-- <BottomNav /> -->
 </template>
 <script>
 import { QrStream } from "vue3-qr-reader"
@@ -91,4 +111,22 @@ export default {
 </script>
 <style scoped>
 @import "./qrscanner.css";
+</style>
+<style>
+.stream {
+	margin: auto;
+}
+.frame {
+	border-style: solid;
+	border-width: 2px;
+	border-color: red;
+	height: 200px;
+	width: 200px;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	margin: auto;
+}
 </style>
