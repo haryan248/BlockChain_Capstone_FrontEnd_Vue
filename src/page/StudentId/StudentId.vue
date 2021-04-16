@@ -16,29 +16,28 @@
 										</div>
 										<p class="item__temp">학번 :</p>
 										<p class="item__temp">성명 :</p>
-										<p class="item__temp">소속 :</p>
+										<p class="item__temp">소속(학과) :</p>
 									</div>
 								</div>
 							</div>
 							<div class="student__button">
-								<Button
-									label="학생증"
-									icon="pi pi-id-card"
-									iconPos="left"
-									@goBack="openModal"
-									@click="openModal"
-								/>
+								<Button label="학생증" icon="pi pi-id-card" iconPos="left" @click="openPasswordModal" />
 							</div>
 						</div>
 						<!-- <Button label="Show" icon="pi pi-external-link" @click="openModal" /> -->
+						<Dialog class="QR-modal" header="Header" :showHeader="false" v-model:visible="displayQRModal" :style="{ width: '80vw' }" :modal="true">
+							<QRVerification @goBack="closeQRModal" :isStudentId="true" />
+						</Dialog>
 						<Dialog
+							class="password-modal p-dialog-maximized"
 							header="Header"
 							:showHeader="false"
-							v-model:visible="displayModal"
-							:style="{ width: '80vw' }"
+							:maximizable="true"
+							v-model:visible="displayPasswordModal"
+							:style="{ width: '100vw', height: '100vh' }"
 							:modal="true"
 						>
-							<QRVerification @goBack="closeModal" :isStudentId="true" />
+							<SimplePassword @correctPassword="closePasswordModal" />
 						</Dialog>
 					</div>
 				</div>
@@ -50,24 +49,34 @@
 <script>
 import QRVerification from "../../components/QRVerification/QRVerification"
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
+import SimplePassword from "../../components/SimplePasswd/SimplePasswd"
 
 export default {
 	name: "StudentId",
 	components: {
 		QRVerification,
 		HeaderSection,
+		SimplePassword,
 	},
 	data() {
 		return {
-			displayModal: false,
+			displayQRModal: false,
+			displayPasswordModal: false,
 		}
 	},
 	methods: {
-		openModal() {
-			this.displayModal = true
+		openQRModal() {
+			this.displayQRModal = true
 		},
-		closeModal() {
-			this.displayModal = false
+		closeQRModal() {
+			this.displayQRModal = false
+		},
+		openPasswordModal() {
+			this.displayPasswordModal = true
+		},
+		closePasswordModal() {
+			this.openQRModal()
+			this.displayPasswordModal = false
 		},
 	},
 }
@@ -79,7 +88,11 @@ export default {
 .p-dialog {
 	border-radius: 20px;
 }
-.p-dialog .p-dialog-content {
+.p-dialog.p-component.QR-modal {
+	overflow: hidden;
 	border-radius: 20px;
+}
+.p-dialog.p-component.password-modal.p-dialog-maximized .p-dialog-content{
+	padding: 0 !important;
 }
 </style>

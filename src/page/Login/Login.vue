@@ -2,7 +2,7 @@
 	<div>
 		<div class="login-box">
 			<div class="card">
-				<h5>U-PASS</h5>
+				<h5 class="login-header">U-PASS</h5>
 				<div class="p-fluid">
 					<!-- <div class="p-field">
 						<label for="name">이름</label>
@@ -19,52 +19,30 @@
 						<InputText autocomplete="off" id="department" type="text" />
 						<small id="username-help">자신의 학과를 입력해 주세요.</small>
 					</div> -->
-					<div v-if="signedIn" class="sign-in">
+					<div class="sign-in">
 						<div class="p-field">
-							<label for="name">학번</label>
-							<InputText autocomplete="off" id="name" type="text" v-model="userName" />
-							<small id="username-help">이름을 입력해주세요.</small>
+							<label for="studentId">학번</label>
+							<InputText autocomplete="off" id="studentId" type="text" v-model="studentId" />
+							<small id="studentid-help">학번을 입력해주세요.</small>
 						</div>
 						<div class="p-field">
-							<label for="id">전공</label>
-							<InputText autocomplete="off" id="id" type="text" v-model="department" />
-							<small id="username-help">전공을 선택해주세요.</small>
+							<label for="major">전공</label>
+							<InputText autocomplete="off" id="major" type="text" v-model="major" />
+							<small id="usermajor-help">전공을 선택해주세요.</small>
 						</div>
 						<div class="p-field">
 							<label for="id">학과</label>
-							<Dropdown
-								v-model="selectedGroupedCity"
-								:options="groupedCities"
-								optionLabel="name"
-								:filter="true"
-								placeholder="Select a Country"
-								:showClear="true"
-								optionGroupLabel="label"
-								optionGroupChildren="items"
-							>
-								<template #value="slotProps">
-									<div class="country-item country-item-value" v-if="slotProps.value">
-										<img
-											src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
-										/>
-										<div>{{ slotProps.value.name }}</div>
-									</div>
-									<span v-else>
-										{{ slotProps.placeholder }}
-									</span>
-								</template>
-								<template #option="slotProps">
-									<div class="country-item">
-										<img
-											src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png"
-										/>
-										<div>{{ slotProps.option.name }}</div>
+							<Dropdown v-model="selectedGroupedMajor" :options="groupedMajor" optionLabel="label" placeholder="학과를 선택해주세요." optionGroupLabel="label" optionGroupChildren="items">
+								<template #optiongroup="slotProps">
+									<div class="p-d-flex p-ai-center country-item">
+										<!-- <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" width="18" /> -->
+										<div>{{ slotProps.option.label }}</div>
 									</div>
 								</template>
 							</Dropdown>
 						</div>
 					</div>
-					<div v-else class="login__button">
+					<div class="login__button">
 						<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" />
 					</div>
 				</div>
@@ -143,42 +121,25 @@ export default {
 	name: "Login",
 	data() {
 		return {
+			major: "",
+			studentId: "",
 			signedIn: false,
 			userName: null,
 			userEmail: null,
 			userImage: null,
 			//임시 학과 데이터
 			selectedCountry: null,
-			selectedGroupedCity: null,
-			groupedCities: [
+			selectedGroupedMajor: null,
+			groupedMajor: [
 				{
-					label: "Germany",
-					code: "DE",
+					label: "소프트웨어경영대학",
+					code: "SE",
 					items: [
-						{ label: "Berlin", value: "Berlin" },
-						{ label: "Frankfurt", value: "Frankfurt" },
-						{ label: "Hamburg", value: "Hamburg" },
-						{ label: "Munich", value: "Munich" },
-					],
-				},
-				{
-					label: "USA",
-					code: "US",
-					items: [
-						{ label: "Chicago", value: "Chicago" },
-						{ label: "Los Angeles", value: "Los Angeles" },
-						{ label: "New York", value: "New York" },
-						{ label: "San Francisco", value: "San Francisco" },
-					],
-				},
-				{
-					label: "Japan",
-					code: "JP",
-					items: [
-						{ label: "Kyoto", value: "Kyoto" },
-						{ label: "Osaka", value: "Osaka" },
-						{ label: "Tokyo", value: "Tokyo" },
-						{ label: "Yokohama", value: "Yokohama" },
+						{ label: "국제산업정보학과", value: "국제산업정보학과" },
+						{ label: "경영학과", value: "경영학과" },
+						{ label: "컴퓨터공학부", value: "컴퓨터공학부" },
+						{ label: "융합보안학과", value: "융합보안학과" },
+						{ label: "산업경영공학과", value: "산업경영공학과" },
 					],
 				},
 			],
@@ -191,7 +152,7 @@ export default {
 			this.userImage = null
 			this.userEmail = null
 		},
-
+		//처음에 get으로 데이터를 받아오고, 없으면 회원가입 있으면 로그인 진행
 		async handleLogin() {
 			try {
 				const GoogleUser = await this.$gAuth.signIn()
@@ -203,13 +164,16 @@ export default {
 				) {
 					await this.$gAuth.signOut()
 					this.signedIn = GoogleUser.isSignedIn()
-
 					console.log(this.signedIn)
 				} else {
+					console.log(GoogleUser)
+					console.log(this.$gAuth.isAuthorized)
 					this.signedIn = GoogleUser.isSignedIn()
 					this.userName = GoogleUser.getBasicProfile().getName()
 					this.userImage = GoogleUser.getBasicProfile().getImageUrl()
 					this.userEmail = GoogleUser.getBasicProfile().getEmail()
+					this.$router.push("/")
+					//회원가입 완료시 post 해서 그정보를
 				}
 			} catch (e) {
 				console.error(e)

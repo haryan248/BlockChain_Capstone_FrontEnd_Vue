@@ -1,13 +1,20 @@
 <template>
-	<div class="container">
+	<div class="password-container">
 		<div class="password-content">
 			<div class="password-info">
-				<div class="password-header" v-for="(item, index) in simplePasswd.length" :key="index" style="display:inline-block">
+				<h1 class="password-header">간편 비밀번호</h1>
+				<div class="password-filter" v-for="(item, index) in simplePasswd.length" :key="index" style="display:inline-block">
 					<Button icon="pi pi-circle-on" class="p-button-rounded p-button-secondary p-button-text" />
 				</div>
-				<div class="password-header" v-for="(item, index) in 6-simplePasswd.length" :key="index" style="display:inline-block">
+				<div class="password-filter" v-for="(item, index) in 6 - simplePasswd.length" :key="index" style="display:inline-block">
 					<Button icon="pi pi-circle-off" class="p-button-rounded p-button-secondary p-button-text" />
 				</div>
+				<div v-show="checkWrongPassword" class="password__wrong">
+					비밀번호가 틀렸습니다.
+					<br>
+					확인 후 다시 입력해주세요.
+				</div>
+
 				<div class="password-inputter">
 					<div class="password-wrapper">
 						<div class="inputter__flex">
@@ -37,6 +44,7 @@ export default {
 			tempNum: null,
 			simplePasswd: "",
 			passwdMaxLength: 6,
+			checkWrongPassword: false
 		}
 	},
 	created() {
@@ -45,8 +53,11 @@ export default {
 	watch: {
 		simplePasswd(data) {
 			if (data.length === this.passwdMaxLength) {
-				if (data === "111111") this.$router.push("/")
-				else this.simplePasswd = ""
+				if (data === "111111") this.$emit("correctPassword")
+				else {
+					this.checkWrongPassword = true
+					this.simplePasswd = ""
+				}
 			}
 		},
 	},
