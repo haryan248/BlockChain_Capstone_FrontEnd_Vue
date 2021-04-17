@@ -29,6 +29,7 @@
 							<!-- 로딩화면 -->
 							<div class="loading-indicator" v-if="loading">
 								Loading...
+								<ProgressSpinner />
 							</div>
 							<div v-else style="color: red;" class="frame"></div>
 						</qr-stream>
@@ -112,21 +113,4 @@ export default {
 <style scoped>
 @import "./qrscanner.css";
 </style>
-<style>
-.stream {
-	margin: auto;
-}
-.frame {
-	border-style: solid;
-	border-width: 2px;
-	border-color: red;
-	height: 200px;
-	width: 200px;
-	position: absolute;
-	top: 0px;
-	bottom: 0px;
-	right: 0px;
-	left: 0px;
-	margin: auto;
-}
-</style>
+<style></style>

@@ -43,3 +43,19 @@ export const router = createRouter({
 	history: createWebHistory(),
 	routes,
 })
+
+router.beforeEach((to, from, next) => {
+	//로그인 페이지가 아닐떄, 로그인 상태가 아니면 로그인 페이지로 이동시킴
+	if (to.path != "/login" && localStorage.getItem("isLogin")) {
+		next({ path: "/login" })
+	}
+
+	//로그인 페이지 갔을때, 로그인 상태면 studentId 페이지로
+	else if (to.path == "/login" && localStorage.getItem("isLogin")) {
+		next({ path: "/login" })
+	}
+
+	//라우터 이동시 로그인상태인지 아니면 로그인 페이지로 이동
+	console.log(from.path + " -> " + to.path)
+	next()
+})

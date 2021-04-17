@@ -33,3 +33,41 @@
 	height: 100vh !important;
 	width: 100vw !important;
 }
+.loading-indicator {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.stream {
+	margin: auto;
+}
+.frame {
+	border-style: solid;
+	border-width: 2px;
+	border-color: red;
+	height: 300px;
+	width: 300px;
+	position: absolute;
+	top: 0px;
+	bottom: 0px;
+	right: 0px;
+	left: 0px;
+	margin: auto;
+}
+@keyframes p-progress-spinner-color {
+	100%,
+	0% {
+		stroke: #d62d20;
+	}
+	40% {
+		stroke: #0057e7;
+	}
+	66% {
+		stroke: #008744;
+	}
+	80%,
+	90% {
+		stroke: #ffa700;
+	}
+}

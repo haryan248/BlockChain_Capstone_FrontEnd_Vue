@@ -32,7 +32,14 @@
 						</div>
 						<div class="p-field">
 							<label for="id">학과</label>
-							<Dropdown v-model="selectedGroupedMajor" :options="groupedMajor" optionLabel="label" placeholder="학과를 선택해주세요." optionGroupLabel="label" optionGroupChildren="items">
+							<Dropdown
+								v-model="selectedGroupedMajor"
+								:options="groupedMajor"
+								optionLabel="label"
+								placeholder="학과를 선택해주세요."
+								optionGroupLabel="label"
+								optionGroupChildren="items"
+							>
 								<template #optiongroup="slotProps">
 									<div class="p-d-flex p-ai-center country-item">
 										<!-- <img src="https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png" width="18" /> -->
@@ -40,6 +47,7 @@
 									</div>
 								</template>
 							</Dropdown>
+							<small id="usermajor-help">학교 이메일(kyonggi.ac.kr)을 사용해 가입해주세요.</small>
 						</div>
 					</div>
 					<div class="login__button">
@@ -51,8 +59,8 @@
 	</div>
 </template>
 <script>
-// import api from "../../tool/api"
 // import axios from "axios"
+// import { api, endpoint } from "../../tool/index"
 
 export default {
 	// name: "Login",
@@ -118,6 +126,7 @@ export default {
 	// 	// 		})
 	// 	// },
 	// },
+
 	name: "Login",
 	data() {
 		return {
@@ -145,6 +154,9 @@ export default {
 			],
 		}
 	},
+	created() {
+		// this.getUserData()
+	},
 	methods: {
 		clear() {
 			this.signedIn = null
@@ -152,10 +164,15 @@ export default {
 			this.userImage = null
 			this.userEmail = null
 		},
+		// getUserData() {
+		// 	const response = axios.get(endpoint.USERLIST).then((res)=>)
+		// },
 		//처음에 get으로 데이터를 받아오고, 없으면 회원가입 있으면 로그인 진행
 		async handleLogin() {
 			try {
 				const GoogleUser = await this.$gAuth.signIn()
+				// const googleUser = this.$gAuth.GoogleUser.get()
+
 				if (!GoogleUser.isSignedIn()) throw new Error("로그인에 실패했습니다.")
 				if (
 					GoogleUser.getBasicProfile()
@@ -164,15 +181,14 @@ export default {
 				) {
 					await this.$gAuth.signOut()
 					this.signedIn = GoogleUser.isSignedIn()
-					console.log(this.signedIn)
 				} else {
-					console.log(GoogleUser)
-					console.log(this.$gAuth.isAuthorized)
 					this.signedIn = GoogleUser.isSignedIn()
 					this.userName = GoogleUser.getBasicProfile().getName()
 					this.userImage = GoogleUser.getBasicProfile().getImageUrl()
 					this.userEmail = GoogleUser.getBasicProfile().getEmail()
 					this.$router.push("/")
+					console.log(GoogleUser)
+
 					//회원가입 완료시 post 해서 그정보를
 				}
 			} catch (e) {
