@@ -59,8 +59,9 @@
 	</div>
 </template>
 <script>
-// import axios from "axios"
-// import { api, endpoint } from "../../tool/index"
+import axios from "axios"
+// import { api } from "../../tool/api"
+// import { endpoint } from "../../tool/endpoint"
 
 export default {
 	// name: "Login",
@@ -155,7 +156,7 @@ export default {
 		}
 	},
 	created() {
-		// this.getUserData()
+		this.getUserData()
 	},
 	methods: {
 		clear() {
@@ -164,9 +165,12 @@ export default {
 			this.userImage = null
 			this.userEmail = null
 		},
-		// getUserData() {
-		// 	const response = axios.get(endpoint.USERLIST).then((res)=>)
-		// },
+		getUserData() {
+			const response = axios.get("http://101.101.218.36:8000/api/members/", {}).then((res) => {
+				console.log(res)
+			})
+			console.log(response)
+		},
 		//처음에 get으로 데이터를 받아오고, 없으면 회원가입 있으면 로그인 진행
 		async handleLogin() {
 			try {
