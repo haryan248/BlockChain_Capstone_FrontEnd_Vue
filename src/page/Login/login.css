@@ -14,5 +14,6 @@
 	align-items: center;
 }
 
-.sign-in {
+.major-invalid {
+	border-color: #f44336;
 }

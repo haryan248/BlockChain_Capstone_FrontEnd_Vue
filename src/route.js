@@ -45,6 +45,12 @@ export const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+	// console.log(this.$gAuth.instance.currentUser.get().isSignedIn())
+	// console.log(this.GAuth.instance)
+	// let GoogleUser = JSON.parse(sessionStorage.getItem("user"))
+	// console.log(GoogleUser.isSignedIn())
+	// console.log(sessionStorage.getItem("user"))
+
 	//로그인 페이지가 아닐떄, 로그인 상태가 아니면 로그인 페이지로 이동시킴
 	if (to.path != "/login" && localStorage.getItem("isLogin")) {
 		next({ path: "/login" })

@@ -4,34 +4,23 @@
 			<div class="card">
 				<h5 class="login-header">U-PASS</h5>
 				<div class="p-fluid">
-					<!-- <div class="p-field">
-						<label for="name">이름</label>
-						<InputText autocomplete="off" id="name" type="text" />
-						<small id="username-help">이름을 입력해주세요.</small>
-					</div>
-					<div class="p-field">
-						<label for="id">학번</label>
-						<InputText autocomplete="off" id="id" type="text" />
-						<small id="username-help">학번을 입력해주세요.</small>
-					</div>
-					<div class="p-field">
-						<label for="department">학과</label>
-						<InputText autocomplete="off" id="department" type="text" />
-						<small id="username-help">자신의 학과를 입력해 주세요.</small>
-					</div> -->
-					<div class="sign-in">
+					<div v-if="isFirstMember" class="sign-in">
 						<div class="p-field">
-							<label for="studentId">학번</label>
-							<InputText autocomplete="off" id="studentId" type="text" v-model="studentId" />
-							<small id="studentid-help">학번을 입력해주세요.</small>
+							<label for="studentId" ref="usernameInput">학번</label>
+							<InputText
+								:class="{ 'p-invalid': failId }"
+								autocomplete="off"
+								id="studentId"
+								placeholder="학번"
+								type="text"
+								:maxlength="9"
+								v-model="studentId"
+							/>
+							<small v-if="failId" class="p-error" id="studentid-help">{{ failIdText }}</small>
+							<small v-else id="studentid-help">학번을 입력해주세요.</small>
 						</div>
 						<div class="p-field">
-							<label for="major">전공</label>
-							<InputText autocomplete="off" id="major" type="text" v-model="major" />
-							<small id="usermajor-help">전공을 선택해주세요.</small>
-						</div>
-						<div class="p-field">
-							<label for="id">학과</label>
+							<label for="id" ref="majorInput">학과</label>
 							<Dropdown
 								v-model="selectedGroupedMajor"
 								:options="groupedMajor"
@@ -39,6 +28,7 @@
 								placeholder="학과를 선택해주세요."
 								optionGroupLabel="label"
 								optionGroupChildren="items"
+								:class="{ 'major-invalid': failMajor }"
 							>
 								<template #optiongroup="slotProps">
 									<div class="p-d-flex p-ai-center country-item">
@@ -47,11 +37,17 @@
 									</div>
 								</template>
 							</Dropdown>
-							<small id="usermajor-help">학교 이메일(kyonggi.ac.kr)을 사용해 가입해주세요.</small>
+							<small v-if="failMajor" class="p-error" id="studentid-help">{{
+								failMajorText
+							}}</small>
+
+							<small v-else id="usermajor-help">학과를 선택해주세요.</small>
 						</div>
+
+						<Button label="회원 가입" icon="pi pi-check" iconPos="right" @click="checkValidate()" />
 					</div>
-					<div class="login__button">
-						<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" />
+					<div v-else class="login__button">
+						<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin()" />
 					</div>
 				</div>
 			</div>
@@ -131,12 +127,17 @@ export default {
 	name: "Login",
 	data() {
 		return {
-			major: "",
 			studentId: "",
+			failId: false,
+			failIdText: "",
+			failMajor: false,
+			failMajorText: "",
 			signedIn: false,
 			userName: null,
 			userEmail: null,
 			userImage: null,
+			currentUser: null,
+			isFirstMember: true,
 			//임시 학과 데이터
 			selectedCountry: null,
 			selectedGroupedMajor: null,
@@ -155,49 +156,79 @@ export default {
 			],
 		}
 	},
-	created() {
-		this.getUserData()
+	mounted() {
+		// this.$nextTick(function() {
+		// 	console.log(this.$gAuth)
+		// 	console.log(this.$gAuth.instance)
+		// })
 	},
 	methods: {
 		clear() {
-			this.signedIn = null
+			this.signedIn = false
 			this.userName = null
 			this.userImage = null
 			this.userEmail = null
 		},
 		getUserData() {
-			const response = axios.get("http://101.101.218.36:8000/api/members/", {}).then((res) => {
+			//email을 paramater로 전달시 이
+			const response = axios.get("/api/members/", {}).then((res) => {
 				console.log(res)
 			})
 			console.log(response)
 		},
+
+		//유효성 검사
+		checkValidate() {
+			let regexp = /^[0-9]*$/
+			if (!regexp.test(this.studentId) || this.studentId.length !== 9) {
+				this.failId = true
+				this.failIdText = "9자리 숫자만 입력하세요."
+				this.$refs.usernameInput.focus()
+				return
+			} else if (this.studentId === "") {
+				this.failId = true
+				this.failIdText = "필수 입력 사항입니다."
+				this.$refs.usernameInput.focus()
+				return
+			} else if (this.selectedGroupedMajor === null) {
+				this.failId = false
+				this.failMajor = true
+				this.$refs.majorInput.focus()
+				this.failMajorText = "필수 입력 사항입니다."
+				return
+			}
+			console.log(this.selectedGroupedMajor.label)
+
+			this.failMajor = false
+		},
+
 		//처음에 get으로 데이터를 받아오고, 없으면 회원가입 있으면 로그인 진행
 		async handleLogin() {
-			try {
-				const GoogleUser = await this.$gAuth.signIn()
-				// const googleUser = this.$gAuth.GoogleUser.get()
+			const GoogleUser = await this.$gAuth.signIn()
+			// if (!GoogleUser.isSignedIn()) throw new Error("로그인에 실패했습니다.")
+			const profile = GoogleUser.getBasicProfile()
+			const email = profile.getEmail()
 
-				if (!GoogleUser.isSignedIn()) throw new Error("로그인에 실패했습니다.")
-				if (
-					GoogleUser.getBasicProfile()
-						.getEmail()
-						.split("@")[1] !== "kyonggi.ac.kr"
-				) {
-					await this.$gAuth.signOut()
-					this.signedIn = GoogleUser.isSignedIn()
-				} else {
-					this.signedIn = GoogleUser.isSignedIn()
-					this.userName = GoogleUser.getBasicProfile().getName()
-					this.userImage = GoogleUser.getBasicProfile().getImageUrl()
-					this.userEmail = GoogleUser.getBasicProfile().getEmail()
-					this.$router.push("/")
-					console.log(GoogleUser)
-
-					//회원가입 완료시 post 해서 그정보를
-				}
-			} catch (e) {
-				console.error(e)
+			if (
+				GoogleUser.getBasicProfile()
+					.getEmail()
+					.split("@")[1] !== "kyonggi.ac.kr"
+			) {
+				await this.$gAuth.signOut()
+				// this.signedIn = GoogleUser.isSignedIn()
+			} else {
+				this.getUserData()
+				console.log(GoogleUser)
+				console.log(JSON.parse(sessionStorage.getItem("user")))
+				sessionStorage.setItem("userfunction", JSON.stringify(GoogleUser.isSignedIn()))
+				this.userName = profile.getName()
+				this.userImage = profile.getImageUrl()
+				this.userEmail = email
+				this.$router.push("/")
+				//회원가입 완료시 post 해서 그정보를
 			}
+			this.signedIn = GoogleUser.isSignedIn()
+			console.log(this.$gAuth.instance.currentUser.get())
 		},
 	},
 }

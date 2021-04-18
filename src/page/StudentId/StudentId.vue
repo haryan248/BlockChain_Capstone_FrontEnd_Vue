@@ -12,27 +12,40 @@
 									<div class="student-card__item">
 										<p class="item__univ">경기대학교</p>
 										<div class="item__img">
-											<div class="student__img" />
+											<img
+												class="student__img"
+												src="../../assets/KakaoTalk_20210418_124638504.jpg"
+											/>
 										</div>
-										<p class="item__temp">학번 :</p>
-										<p class="item__temp">성명 :</p>
-										<p class="item__temp">소속(학과) :</p>
+										<p class="item__temp">학번 : 203011123</p>
+										<p class="item__temp">성명 : 뽀삐</p>
+										<p class="item__temp">소속(학과) : 심쿵시킬과</p>
 									</div>
 								</div>
 							</div>
 							<div class="student__button">
-								<Button label="학생증" icon="pi pi-id-card" iconPos="left" @click="openPasswordModal" />
+								<Button
+									label="학생증"
+									icon="pi pi-id-card"
+									iconPos="left"
+									@click="openPasswordModal"
+								/>
 							</div>
 						</div>
 						<!-- <Button label="Show" icon="pi pi-external-link" @click="openModal" /> -->
-						<Dialog class="QR-modal" header="Header" :showHeader="false" v-model:visible="displayQRModal" :style="{ width: '80vw' }" :modal="true">
+						<Dialog
+							class="QR-modal"
+							header="Header"
+							:showHeader="false"
+							v-model:visible="displayQRModal"
+							:style="{ width: '80vw' }"
+							:modal="true"
+						>
 							<QRVerification @goBack="closeQRModal" :isStudentId="true" />
 						</Dialog>
 						<Dialog
 							class="password-modal p-dialog-maximized"
-							header="Header"
-							:showHeader="false"
-							:maximizable="true"
+							header=""
 							v-model:visible="displayPasswordModal"
 							:style="{ width: '100vw', height: '100vh' }"
 							:modal="true"
@@ -50,7 +63,6 @@
 import QRVerification from "../../components/QRVerification/QRVerification"
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
 import SimplePassword from "../../components/SimplePasswd/SimplePasswd"
-
 export default {
 	name: "StudentId",
 	components: {
@@ -63,6 +75,11 @@ export default {
 			displayQRModal: false,
 			displayPasswordModal: false,
 		}
+	},
+	mounted() {
+		setTimeout(() => {
+			console.log(this.$gAuth.instance.currentUser.get().isSignedIn())
+		}, 2000)
 	},
 	methods: {
 		openQRModal() {
@@ -92,7 +109,7 @@ export default {
 	overflow: hidden;
 	border-radius: 20px;
 }
-.p-dialog.p-component.password-modal.p-dialog-maximized .p-dialog-content{
+.p-dialog.p-component.password-modal.p-dialog-maximized .p-dialog-content {
 	padding: 0 !important;
 }
 </style>

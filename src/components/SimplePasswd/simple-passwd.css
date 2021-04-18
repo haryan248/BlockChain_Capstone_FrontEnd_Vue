@@ -20,7 +20,7 @@
 .password-content {
 	display: flex;
 	flex-direction: column;
-	height: 100vh;
+	height: 100%;
 	padding: 70px 10px 0;
 	box-sizing: border-box;
 	margin-left: auto;
@@ -29,6 +29,7 @@
 	list-style: none;
 	z-index: 100;
 	background-color: #fff;
+	align-items: center;
 }
 .password-info {
 	height: 100%;
@@ -46,8 +47,8 @@
 .password-wrapper {
 	position: absolute;
 	width: 100%;
-	height: 300px;
-	bottom: 223px;
+	/* height: 300px; */
+	/* bottom: 223px; */
 	padding-top: 5vh;
 	z-index: 1;
 	display: flex;
