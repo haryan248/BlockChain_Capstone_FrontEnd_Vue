@@ -29,7 +29,7 @@
 							<QRVerification @goBack="closeQRModal" :isStudentId="true" />
 						</Dialog>
 						<Dialog class="password-modal p-dialog-maximized" header="" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
-							<SimplePassword :title="'간편 비밀번호 입력'" :isSetting="true" @correctPassword="closePasswordModal" />
+							<SimplePassword :title="'간편 비밀번호 입력'" :isSetting="false" @correctPassword="closePasswordModal" />
 						</Dialog>
 					</div>
 				</div>
@@ -55,21 +55,11 @@ export default {
 			displayPasswordModal: false,
 		}
 	},
-	async mounted() {
-		// setTimeout(() => {
-		// 	console.log(await this.$gAuth.instance.currentUser.get().isSignedIn())
-		// }, 2000)
-					console.log(await this.$gAuth.instance.currentUser.get().isSignedIn())
-
+	mounted() {
+		setTimeout(() => {
+			console.log(this.$gAuth.instance.currentUser.get().isSignedIn())
+		}, 2000)
 	},
-	// beforeRouteEnter(to, from, next) {
-	// 	console.log(from.path + " -> " + to.path)
-	// 	next((vm) => {
-	// 		console.log(vm.$gAuth)
-
-	// 		console.log(vm.$gAuth.instance.currentUser.get().isSignedIn())
-	// 	})
-	// },
 	methods: {
 		openQRModal() {
 			this.displayQRModal = true

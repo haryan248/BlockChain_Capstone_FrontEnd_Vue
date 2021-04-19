@@ -2,7 +2,7 @@
 	<div class="password-container">
 		<div class="password-content">
 			<h1 class="password-header">{{ title }}</h1>
-
+			<h4 class="password-help">6자리 숫자를 입력해 주세요.</h4>
 			<div class="password-info">
 				<div class="password-filter" v-for="(item, index) in simplePasswd.length" :key="index" style="display:inline-block">
 					<Button icon="pi pi-circle-on" class="p-button-rounded p-button-secondary p-button-text" />
@@ -13,15 +13,15 @@
 				<div v-if="checkWrongPassword" class="password__wrong">
 					비밀번호가 틀렸습니다.
 					<br />
-					확인 후 다시 입력해주세요.
+					확인 후 다시 입력해 주세요.
 				</div>
 				<div v-if="!isFirstSettingPassword">
-					간편 비밀번호를 한 번 더 입력해주세요.
+					간편 비밀번호를 한 번 더 입력해 주세요.
 				</div>
 				<div v-if="checkSettingPassword" class="password__wrong">
-					비밀번호가 같지 않습니다
+					입력한 비밀번호가 동일하지 않습니다.
 					<br />
-					확인 후 다시 설정해주세요.
+					확인 후 다시 설정해 주세요.
 				</div>
 				<div class="password-inputter">
 					<div class="password-wrapper">
@@ -68,7 +68,7 @@ export default {
 	watch: {
 		simplePasswd(data) {
 			if (this.isSetting === false && data.length === this.passwdMaxLength) {
-				if (data === "111111") this.$emit("correctPassword")
+				if (data === localStorage.getItem("simplePassword")) this.$emit("correctPassword")
 				else {
 					this.checkWrongPassword = true
 					this.simplePasswd = ""
@@ -83,7 +83,7 @@ export default {
 					this.checkSettingPassword = false
 				} else {
 					if (this.tempPassword === this.simplePasswd) {
-						localStorage.setItem('simplePassword',this.simplePasswd)
+						localStorage.setItem("simplePassword", this.simplePasswd)
 						this.$emit("setCorrectPassword")
 						console.log("입력한 비밀번호가 올바릅니다.")
 					} else {
@@ -106,7 +106,6 @@ export default {
 		setPasswd(num) {
 			if (this.simplePasswd.length !== this.passwdMaxLength) {
 				this.simplePasswd = this.simplePasswd + String(num)
-				console.log(this.tempPassword)
 			}
 		},
 		erasePasswd() {

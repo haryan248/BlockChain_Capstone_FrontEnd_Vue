@@ -13,17 +13,18 @@
 			<div v-show="showScanConfirmation" class="scan-confirmation"></div>
 		</qr-stream>
 	</div> -->
-		<Header :title="'QR인증'" />
+		<Header :title="'QR인증'" :isShow="false" />
 
 		<div class="container bg-gray">
 			<div>
 				<div class="qr-content">
 					<div class="center stream">
-						<div class="mb">
-							QR 인증
+						<div class="close__button">
+							<Button icon="pi pi-times" @click="goBack" class="p-button-lg" alt="switch camera" />
+						</div>
+						<div class="conver__button">
 							<!-- 카메라 전환 -->
-
-							<Button icon="pi pi-undo" @click="switchCamera" class="p-mr-2" alt="switch camera" />
+							<Button icon="pi pi-undo" @click="switchCamera" class="p-button-lg" alt="switch camera" />
 						</div>
 						<qr-stream :camera="camera" @decode="onDecode" class="mb" @init="onInit">
 							<!-- 로딩화면 -->
@@ -66,7 +67,10 @@ export default {
 		pause() {
 			this.camera = "off"
 		},
-
+		goBack() {
+			console.log("뒤로가기")
+			this.$router.go(-1)
+		},
 		//카메라 전환
 		switchCamera() {
 			switch (this.camera) {
