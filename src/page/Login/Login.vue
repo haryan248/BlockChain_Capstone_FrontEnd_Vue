@@ -4,18 +4,10 @@
 			<div class="card">
 				<h5 class="login-header">U-PASS</h5>
 				<div class="p-fluid">
-					<div v-if="isFirstMember" class="sign-in">
+					<div v-if="isFirstMember === null" class="sign-in">
 						<div class="p-field">
 							<label for="studentId" ref="usernameInput">학번</label>
-							<InputText
-								:class="{ 'p-invalid': failId }"
-								autocomplete="off"
-								id="studentId"
-								placeholder="학번"
-								type="text"
-								:maxlength="9"
-								v-model="studentId"
-							/>
+							<InputText :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" />
 							<small v-if="failId" class="p-error" id="studentid-help">{{ failIdText }}</small>
 							<small v-else id="studentid-help">학번을 입력해주세요.</small>
 						</div>
@@ -37,18 +29,19 @@
 									</div>
 								</template>
 							</Dropdown>
-							<small v-if="failMajor" class="p-error" id="studentid-help">{{
-								failMajorText
-							}}</small>
+							<small v-if="failMajor" class="p-error" id="studentid-help">{{ failMajorText }}</small>
 
 							<small v-else id="usermajor-help">학과를 선택해주세요.</small>
 						</div>
 
-						<Button label="회원 가입" icon="pi pi-check" iconPos="right" @click="checkValidate()" />
+						<Button label="회원 가입" icon="pi pi-check" iconPos="right" @click="checkValidate" />
 					</div>
 					<div v-else class="login__button">
-						<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin()" />
+						<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" />
 					</div>
+					<Dialog class="password-modal p-dialog-maximized" header="" :showHeader="false" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
+						<SimplePassword :title="'간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
+					</Dialog>
 				</div>
 			</div>
 		</div>
@@ -56,6 +49,8 @@
 </template>
 <script>
 import axios from "axios"
+import SimplePassword from "../../components/SimplePasswd/SimplePasswd"
+
 // import { api } from "../../tool/api"
 // import { endpoint } from "../../tool/endpoint"
 
@@ -125,6 +120,9 @@ export default {
 	// },
 
 	name: "Login",
+	components: {
+		SimplePassword,
+	},
 	data() {
 		return {
 			studentId: "",
@@ -137,10 +135,12 @@ export default {
 			userEmail: null,
 			userImage: null,
 			currentUser: null,
-			isFirstMember: true,
+			isFirstMember: null,
 			//임시 학과 데이터
 			selectedCountry: null,
 			selectedGroupedMajor: null,
+			displayPasswordModal: false,
+
 			groupedMajor: [
 				{
 					label: "소프트웨어경영대학",
@@ -161,6 +161,7 @@ export default {
 		// 	console.log(this.$gAuth)
 		// 	console.log(this.$gAuth.instance)
 		// })
+		console.log(this.isFirstMember === null)
 	},
 	methods: {
 		clear() {
@@ -198,37 +199,51 @@ export default {
 				return
 			}
 			console.log(this.selectedGroupedMajor.label)
-
 			this.failMajor = false
+			//회원가입 완료시 post 해서 그정보를
+			this.signUp()
+			this.openPasswordModal()
 		},
-
+		signUp() {
+			this.isFirstMember = false
+			//구글 이메일, 이름, 이미지 url로 API POST
+			// post 완료시 키값 저장
+			// localStorage.setItem('key', data.key)
+		},
 		//처음에 get으로 데이터를 받아오고, 없으면 회원가입 있으면 로그인 진행
 		async handleLogin() {
 			const GoogleUser = await this.$gAuth.signIn()
-			// if (!GoogleUser.isSignedIn()) throw new Error("로그인에 실패했습니다.")
 			const profile = GoogleUser.getBasicProfile()
 			const email = profile.getEmail()
 
+			//경기대 이메일만 가입 가능
 			if (
 				GoogleUser.getBasicProfile()
 					.getEmail()
 					.split("@")[1] !== "kyonggi.ac.kr"
 			) {
 				await this.$gAuth.signOut()
-				// this.signedIn = GoogleUser.isSignedIn()
 			} else {
-				this.getUserData()
-				console.log(GoogleUser)
-				console.log(JSON.parse(sessionStorage.getItem("user")))
-				sessionStorage.setItem("userfunction", JSON.stringify(GoogleUser.isSignedIn()))
 				this.userName = profile.getName()
 				this.userImage = profile.getImageUrl()
 				this.userEmail = email
-				this.$router.push("/")
-				//회원가입 완료시 post 해서 그정보를
+				this.isFirstMember = localStorage.getItem("key")
+
+				//처음 가입시 회원가입, 아닐시 바로 학생증 창으로 이동
+				if (this.isFirstMember !== null) {
+					this.$router.push("/")
+				}
 			}
 			this.signedIn = GoogleUser.isSignedIn()
 			console.log(this.$gAuth.instance.currentUser.get())
+		},
+
+		openPasswordModal() {
+			this.displayPasswordModal = true
+		},
+		closePasswordModal() {
+			this.displayPasswordModal = false
+			this.$router.push("/")
 		},
 	},
 }

@@ -5,6 +5,7 @@ import Setting from "./page/Setting/Setting.vue"
 import Wallet from "./page/Wallet/Wallet.vue"
 import QRScanner from "./page/QRScanner/QRScanner.vue"
 import Login from "./page/Login/Login.vue"
+import LoginForm from "./page/LoginForm/LoginForm.vue"
 
 const routes = [
 	{
@@ -37,6 +38,11 @@ const routes = [
 		name: "Login",
 		component: Login,
 	},
+	{
+		path: "/loginForm",
+		name: "LoginForm",
+		component: LoginForm,
+	},
 ]
 
 export const router = createRouter({
@@ -52,12 +58,12 @@ router.beforeEach((to, from, next) => {
 	// console.log(sessionStorage.getItem("user"))
 
 	//로그인 페이지가 아닐떄, 로그인 상태가 아니면 로그인 페이지로 이동시킴
-	if (to.path != "/login" && localStorage.getItem("isLogin")) {
+	if (to.path != "/login" && localStorage.getItem("key")) {
 		next({ path: "/login" })
 	}
 
 	//로그인 페이지 갔을때, 로그인 상태면 studentId 페이지로
-	else if (to.path == "/login" && localStorage.getItem("isLogin")) {
+	else if (to.path == "/login" && localStorage.getItem("key")) {
 		next({ path: "/login" })
 	}
 

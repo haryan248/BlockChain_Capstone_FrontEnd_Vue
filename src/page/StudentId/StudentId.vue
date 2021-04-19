@@ -12,10 +12,7 @@
 									<div class="student-card__item">
 										<p class="item__univ">경기대학교</p>
 										<div class="item__img">
-											<img
-												class="student__img"
-												src="../../assets/KakaoTalk_20210418_124638504.jpg"
-											/>
+											<img class="student__img" src="../../assets/KakaoTalk_20210418_124638504.jpg" />
 										</div>
 										<p class="item__temp">학번 : 203011123</p>
 										<p class="item__temp">성명 : 뽀삐</p>
@@ -24,33 +21,15 @@
 								</div>
 							</div>
 							<div class="student__button">
-								<Button
-									label="학생증"
-									icon="pi pi-id-card"
-									iconPos="left"
-									@click="openPasswordModal"
-								/>
+								<Button label="학생증" icon="pi pi-id-card" iconPos="left" @click="openPasswordModal" />
 							</div>
 						</div>
 						<!-- <Button label="Show" icon="pi pi-external-link" @click="openModal" /> -->
-						<Dialog
-							class="QR-modal"
-							header="Header"
-							:showHeader="false"
-							v-model:visible="displayQRModal"
-							:style="{ width: '80vw' }"
-							:modal="true"
-						>
+						<Dialog class="QR-modal" header="Header" :showHeader="false" v-model:visible="displayQRModal" :style="{ width: '80vw' }" :modal="true">
 							<QRVerification @goBack="closeQRModal" :isStudentId="true" />
 						</Dialog>
-						<Dialog
-							class="password-modal p-dialog-maximized"
-							header=""
-							v-model:visible="displayPasswordModal"
-							:style="{ width: '100vw', height: '100vh' }"
-							:modal="true"
-						>
-							<SimplePassword @correctPassword="closePasswordModal" />
+						<Dialog class="password-modal p-dialog-maximized" header="" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
+							<SimplePassword :title="'간편 비밀번호 입력'" :isSetting="true" @correctPassword="closePasswordModal" />
 						</Dialog>
 					</div>
 				</div>
@@ -76,11 +55,21 @@ export default {
 			displayPasswordModal: false,
 		}
 	},
-	mounted() {
-		setTimeout(() => {
-			console.log(this.$gAuth.instance.currentUser.get().isSignedIn())
-		}, 2000)
+	async mounted() {
+		// setTimeout(() => {
+		// 	console.log(await this.$gAuth.instance.currentUser.get().isSignedIn())
+		// }, 2000)
+					console.log(await this.$gAuth.instance.currentUser.get().isSignedIn())
+
 	},
+	// beforeRouteEnter(to, from, next) {
+	// 	console.log(from.path + " -> " + to.path)
+	// 	next((vm) => {
+	// 		console.log(vm.$gAuth)
+
+	// 		console.log(vm.$gAuth.instance.currentUser.get().isSignedIn())
+	// 	})
+	// },
 	methods: {
 		openQRModal() {
 			this.displayQRModal = true
