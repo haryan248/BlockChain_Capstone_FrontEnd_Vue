@@ -7,5 +7,6 @@ module.exports = {
 				logLevel: "debug",
 			},
 		},
+		disableHostCheck: true,
 	},
 }

@@ -8,6 +8,9 @@ export default {
 	data() {
 		return {}
 	},
+	mounted() {
+		this.$shared.checkGoogleLogin(this.$gAuth)
+	},
 	methods: {},
 }
 </script>

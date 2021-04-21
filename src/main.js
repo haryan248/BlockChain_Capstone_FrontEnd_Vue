@@ -7,6 +7,12 @@ import { createApp } from "vue"
 import { router } from "./route"
 import App from "./App.vue"
 
+//파이선 쉘
+// import { PythonShell } from "python-shell"
+
+// 공통 함수
+import shared from "./tool/shared.ts"
+
 // 구글 로그인
 import GAuth from "vue3-google-oauth2"
 
@@ -60,7 +66,5 @@ const gAuthOptions = {
 }
 
 app.use(GAuth, gAuthOptions)
-
-// Install Vue plugin
-
+app.config.globalProperties.$shared = shared
 app.mount("#app")

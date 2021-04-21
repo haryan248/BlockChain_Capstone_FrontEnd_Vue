@@ -12,23 +12,13 @@
 								<div class="item__title p-text-bold">지불 관리</div>
 							</div>
 							<div class="tab__list">
-								<Button
-									label="+ 카드 추가하기"
-									class="p-button-text p-button-secondary"
-									@click="visibleBottom = true"
-								/>
+								<Button label="+ 카드 추가하기" class="p-button-text p-button-secondary" @click="visibleBottom = true" />
 							</div>
 						</div>
 						<!-- 스와이퍼 영역 -->
 
 						<div class="card__wrapper">
-							<swiper
-								:slides-per-view="1.2"
-								:space-between="10"
-								:centeredSlides="true"
-								:pagination="true"
-								:loop="true"
-							>
+							<swiper :slides-per-view="1.2" :space-between="10" :centeredSlides="true" :pagination="true" :loop="true">
 								<swiper-slide>
 									<div class="credit-card__item">
 										<div class="card__name">{{ "visa" }}</div>
@@ -48,19 +38,9 @@
 							</swiper>
 						</div>
 						<div class="card-delete__button">
-							<Button
-								label="카드 삭제"
-								class="p-button-danger"
-								icon="pi pi-times"
-								iconPos="right"
-							/>
+							<Button label="카드 삭제" class="p-button-danger" icon="pi pi-times" iconPos="right" />
 						</div>
-						<Sidebar
-							v-model:visible="visibleBottom"
-							:baseZIndex="1000"
-							position="bottom"
-							style="height:30rem"
-						>
+						<Sidebar v-model:visible="visibleBottom" :baseZIndex="1000" position="bottom" style="height:30rem">
 							<div class="card">
 								<h3>카드 추가하기</h3>
 								<div class="p-fluid p-formgrid p-grid">
@@ -83,12 +63,7 @@
 										<InputText id="zip" type="text" />
 									</div>
 									<div class="p-field p-col-12">
-										<Button
-											label="카드 추가하기"
-											class="p-button-success"
-											icon="pi pi-check"
-											iconPos="right"
-										/>
+										<Button label="카드 추가하기" class="p-button-success" icon="pi pi-check" iconPos="right" />
 									</div>
 								</div>
 							</div>
@@ -117,6 +92,9 @@ export default {
 			const swiper = document.querySelector(".home-carousel").swiper
 			return swiper
 		},
+	},
+	mounted() {
+		this.$shared.checkGoogleLogin(this.$gAuth)
 	},
 	data() {
 		return { innerWidth: window.innerWidth, visibleBottom: false }

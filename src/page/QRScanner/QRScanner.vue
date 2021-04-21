@@ -52,6 +52,9 @@ export default {
 	data() {
 		return { result: "", error: "", loading: false, camera: "auto", showScanConfirmation: false }
 	},
+	mounted() {
+		this.$shared.checkGoogleLogin(this.$gAuth)
+	},
 	methods: {
 		async onDecode(result) {
 			this.result = result

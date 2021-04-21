@@ -56,9 +56,7 @@ export default {
 		}
 	},
 	mounted() {
-		setTimeout(() => {
-			console.log(this.$gAuth.instance.currentUser.get().isSignedIn())
-		}, 2000)
+		this.$shared.checkGoogleLogin(this.$gAuth)
 	},
 	methods: {
 		openQRModal() {

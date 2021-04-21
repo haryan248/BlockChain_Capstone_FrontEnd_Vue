@@ -17,6 +17,7 @@
 
 // import { api } from "../../tool/api"
 // import { endpoint } from "../../tool/endpoint"
+// import { PythonShell } from "python-shell"
 
 export default {
 	// name: "Login",
@@ -95,6 +96,16 @@ export default {
 			isFirstMember: null,
 		}
 	},
+	mounted() {
+		// let options = {
+		// 	scriptPath: "./",
+		// 	args: [1, 2],
+		// }
+		// PythonShell.run("test.py", options, (err, data) => {
+		// 	if (err) throw err
+		// 	console.log(data)
+		// })
+	},
 	methods: {
 		clear() {
 			this.signedIn = false
@@ -127,13 +138,14 @@ export default {
 				this.userImage = profile.getImageUrl()
 				this.userEmail = email
 				this.isFirstMember = localStorage.getItem("key")
-
+				console.log(this.isFirstMember !== null)
 				//처음 가입시 회원가입, 아닐시 바로 학생증 창으로 이동
 				if (this.isFirstMember !== null) {
 					this.$router.push("/")
 				} else {
 					//처음 가입시 로그인 폼으로 이동
-					this.$router.push("/loginForm")
+
+					this.$router.push({ name: "LoginForm", params: { name: this.userName, imgUrl: this.userImage, email: this.userEmail } })
 				}
 			}
 			this.signedIn = GoogleUser.isSignedIn()

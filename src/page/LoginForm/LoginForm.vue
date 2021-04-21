@@ -36,6 +36,7 @@ import SimplePassword from "../../components/SimplePasswd/SimplePasswd"
 export default {
 	name: "LoginForm",
 	components: { SimplePassword },
+	props: { name: String, imgUrl: String, email: String },
 	data() {
 		return {
 			studentId: "",
@@ -62,6 +63,7 @@ export default {
 			],
 		}
 	},
+	mounted() {},
 	methods: {
 		//유효성 검사
 		checkValidate() {
@@ -91,6 +93,11 @@ export default {
 		},
 		signUp() {
 			this.isFirstMember = false
+			console.log(this.email)
+			console.log(this.name)
+			console.log(this.imgUrl)
+			console.log(this.studentId)
+			console.log(this.selectedGroupedMajor)
 			//구글 이메일, 이름, 이미지 url로 API POST
 			// post 완료시 키값 저장
 			// localStorage.setItem('key', data.key)
