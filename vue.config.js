@@ -9,6 +9,6 @@ module.exports = {
 			},
 		},
 		disableHostCheck: true,
-		allowedHosts: ["http://www.kyonggiupass.com/"],
+		allowedHosts: ["http://www.kyonggiupass.com:8080/"],
 	},
 }
