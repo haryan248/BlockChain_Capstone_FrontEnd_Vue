@@ -16,7 +16,6 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
-    "electron": "^12.0.4",
     "forever": "^3.0.4",
     "primeflex": "^2.0.0",
     "primeicons": "^4.1.0",
@@ -42,7 +41,6 @@
     "@vue/cli-service": "~4.5.12",
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
-    "electron": "^9.0.0",
     "electron-devtools-installer": "^3.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^7.0.0",
