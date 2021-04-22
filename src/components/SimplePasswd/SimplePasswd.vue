@@ -32,7 +32,7 @@
 								</button>
 								<div v-else @click="setPasswd(item)">{{ item }}</div>
 							</button>
-							<button class="num-button__flex spread-effect fantasy-font__2_3rem">
+							<button class="num-button__flex spread-effect fantasy-font__2_3rem" @click="setPasswd(tempNum)">
 								{{ tempNum }}
 							</button>
 							<button class="num-button__flex spread-effect fantasy-font__2_3rem" @click="erasePasswd">

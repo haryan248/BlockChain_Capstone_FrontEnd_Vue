@@ -1,0 +1,64 @@
+.setting__content {
+	display: flex;
+	height: 100vh;
+	/* padding: 20px 0; */
+	box-sizing: border-box;
+}
+.home__title {	
+	/* margin-bottom: 20px; */
+	padding-right: 20px;
+	padding-left: 20px;
+	font-size: 24px;
+	font-weight: 800;
+	line-height: 1em;
+	letter-spacing: -1.5px;
+}
+.recommend__list {
+	/* padding: 20px; */
+}
+.recommend__list .list__item {
+	padding-top: 13px;
+	padding-bottom: 13px;
+}
+
+.recommend__image {
+	display: block;
+	width: 64px;
+	height: 64px;
+	margin-right: 16px;
+	background-color: #747474;
+	border-radius: 20px;
+	flex: none;
+}
+.recommend__image:before {
+	content: "";
+	display: block;
+	width: 24px;
+	height: 24px;
+	/*margin: auto 하면 좌우 margin 만 됨..?*/
+	margin: 20px;
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+.recommend__title {
+	font-size: 16px;
+	line-height: 22px;
+	letter-spacing: -1px;
+}
+.recommend__description,
+.recommend__title {
+	overflow: hidden;
+	color: #000;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+}
+.recommend__description {
+	margin-top: 5px;
+	font-size: 14px;
+	line-height: 20px;
+	letter-spacing: -0.5px;
+}
+
+.sidebar_content{
+  margin-top: 40px;
+}

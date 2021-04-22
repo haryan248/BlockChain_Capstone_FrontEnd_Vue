@@ -20,10 +20,10 @@
 						<div class="card__wrapper">
 							<swiper :slides-per-view="1.2" :space-between="10" :centeredSlides="true" :pagination="true" :loop="true">
 								<swiper-slide>
-									<div class="credit-card__item">
+									<div class="credit-card__item" >
 										<div class="card__name">{{ "visa" }}</div>
 										<div class="card__number">{{ "**** **** **** **** 3282" }}</div>
-										<div class="card__holder">{{ "조규선" }}</div>
+										<div class="card__holder">{{ "하현준" }}</div>
 										<div class="card__expires">{{ "12/23" }}</div>
 									</div>
 								</swiper-slide>
@@ -31,7 +31,7 @@
 									<div class="credit-card__item">
 										<div class="card__name">{{ "visa" }}</div>
 										<div class="card__number">{{ "**** **** **** **** 3282" }}</div>
-										<div class="card__holder">{{ "조규선" }}</div>
+										<div class="card__holder">{{ "하현준" }}</div>
 										<div class="card__expires">{{ "12/23" }}</div>
 									</div>
 								</swiper-slide>

@@ -3,6 +3,10 @@
 	padding-bottom: 60px;
 	/* background-color: #5582f8; */
 }
+.card__wrapper {
+	padding-top: 30px;
+	padding-bottom: 30px;
+}
 .card__content .item__title {
 	/* padding: 0 30px 20px; */
 	color: #607d8b;
@@ -54,6 +58,12 @@
 	background-color: #fff;
 	border-radius: 15px;
 	box-sizing: border-box;
+	margin-bottom: 50px;
+	box-shadow: 0 25px 25px -10px rgb(0 0 0 / 13%);
+	opacity: 0.5;
+	background-color: var(--blue-900);
+	/* background-color: #6dc3f0; */
+	color: #FFF;
 }
 
 .card-delete__button {
@@ -62,4 +72,7 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+}
+.swiper-slide-active .credit-card__item {
+	opacity: 1;
 }

@@ -34,6 +34,8 @@ import InputMask from "primevue/inputmask"
 import Card from "primevue/card"
 import Dropdown from "primevue/dropdown"
 import ProgressSpinner from "primevue/progressspinner"
+import Accordion from "primevue/accordion"
+import AccordionTab from "primevue/accordiontab"
 
 // Create Vue Instance
 const app = createApp(App)
@@ -56,6 +58,8 @@ app.component("InputMask", InputMask)
 app.component("Card", Card)
 app.component("Dropdown", Dropdown)
 app.component("ProgressSpinner", ProgressSpinner)
+app.component("Accordion", Accordion)
+app.component("AccordionTab", AccordionTab)
 
 //구글 로그인
 const gAuthOptions = {
