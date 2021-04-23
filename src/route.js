@@ -51,25 +51,25 @@ export const router = createRouter({
 	routes,
 })
 
-router.beforeEach((to, from, next) => {
-	//로그인 페이지 갔을때
-	if (to.path == "/login") {
-		// 로그인 상태면(key 있으면) studentId 페이지로
-		if (localStorage.getItem("key") === null) {
-			// 로그인 상태면(key 있으면) 페이지 이동
-			next()
-		} else {
-			next({ path: "/" })
-		}
-	} else if (to.path.split("/")[1] == "loginForm") {
-		next()
-	} else {
-		if (localStorage.getItem("key") === null) {
-			//로그인 상태(key 없으면)가 아니면 로그인 페이지로 이동시킴
-			next({ path: "/login" })
-		} else {
-			// 로그인 상태면(key 있으면) 페이지 이동
-			next()
-		}
-	}
-})
+// router.beforeEach((to, from, next) => {
+// 	//로그인 페이지 갔을때
+// 	if (to.path == "/login") {
+// 		// 로그인 상태면(key 있으면) studentId 페이지로
+// 		if (localStorage.getItem("key") === null) {
+// 			// 로그인 상태면(key 있으면) 페이지 이동
+// 			next()
+// 		} else {
+// 			next({ path: "/" })
+// 		}
+// 	} else if (to.path.split("/")[1] == "loginForm") {
+// 		next()
+// 	} else {
+// 		if (localStorage.getItem("key") === null) {
+// 			//로그인 상태(key 없으면)가 아니면 로그인 페이지로 이동시킴
+// 			next({ path: "/login" })
+// 		} else {
+// 			// 로그인 상태면(key 있으면) 페이지 이동
+// 			next()
+// 		}
+// 	}
+// })
