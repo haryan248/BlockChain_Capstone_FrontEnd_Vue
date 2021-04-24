@@ -66,6 +66,7 @@ const gAuthOptions = {
 	clientId: "1022565741938-a0i54ckun7augse5rfte33htdn1kea74.apps.googleusercontent.com",
 	scope: "email profile",
 	prompt: "consent",
+	ux_mode: "redirect",
 	fetch_basic_profile: true,
 }
 
