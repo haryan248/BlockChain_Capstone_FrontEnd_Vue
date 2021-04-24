@@ -100,7 +100,7 @@ export default {
 			console.log(this.selectedGroupedMajor)
 			//구글 이메일, 이름, 이미지 url로 API POST
 			// post 완료시 키값 저장
-			// localStorage.setItem('key', data.key)
+			localStorage.setItem("key", "temp")
 		},
 		openPasswordModal() {
 			this.displayPasswordModal = true
