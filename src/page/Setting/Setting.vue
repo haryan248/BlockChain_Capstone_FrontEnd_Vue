@@ -15,7 +15,7 @@
 										<h2 class="recommend__title">
 											간편비밀번호 재설정
 										</h2>
-										<p class="recommend__description">{{ exp.desc }}</p>
+										<p class="recommend__description"></p>
 									</div>
 								</div>
 							</li>
