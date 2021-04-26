@@ -42,6 +42,7 @@
 import QRVerification from "../../components/QRVerification/QRVerification"
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
 import SimplePassword from "../../components/SimplePasswd/SimplePasswd"
+import { SHA256 } from "../../sha256.js"
 export default {
 	name: "StudentId",
 	components: {
@@ -56,6 +57,7 @@ export default {
 		}
 	},
 	mounted() {
+		console.log(SHA256("blockchain"))
 		this.$shared.checkGoogleLogin(this.$gAuth)
 	},
 	methods: {

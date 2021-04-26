@@ -26,7 +26,7 @@
 				<div class="password-inputter">
 					<div class="password-wrapper">
 						<div class="inputter__flex">
-							<button v-for="(item, index) in passwdArray" :key="index" class="num-button__flex spread-effect fantasy-font__2_3rem">
+							<button v-for="(item, index) in passwdArray" :key="index" ref="passwdButton" :class="{ 'num-button__flex--active': touchstart }" class="num-button__flex spread-effect fantasy-font__2_3rem">
 								<button v-if="index === 9" class="num-button__flex spread-effect fantasy-font__2_3rem">
 									{{ checkInvisibleNum(item) }}
 								</button>
@@ -60,10 +60,19 @@ export default {
 			tempPassword: "",
 			checkSettingPassword: false,
 			isFirstSettingPassword: true,
+			touchstart: false,
 		}
 	},
 	created() {
 		this.shuffle(this.passwdArray)
+	},
+	mounted() {
+		document.addEventListener("touchstart", (event) => {
+			this.touchListener(event)
+		})
+		document.addEventListener("touchend", (event) => {
+			this.touchListener(event)
+		})
 	},
 	watch: {
 		simplePasswd(data) {
@@ -99,6 +108,12 @@ export default {
 	methods: {
 		shuffle(array) {
 			array.sort(() => Math.random() - 0.5)
+		},
+		touchListener(event) {
+			this.touchstart = !this.touchstart
+			console.log(this.touchstart)
+
+			console.log(event)
 		},
 		checkInvisibleNum(num) {
 			this.tempNum = num

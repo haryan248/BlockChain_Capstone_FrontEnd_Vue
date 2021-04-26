@@ -65,10 +65,13 @@
 	overflow: hidden;
 	position: relative;
 }
-.num-button__flex:hover,
-.num-button__flex:active {
+/* .num-button__flex:hover {
 	color: #2196f3;
+} */
+.num-button__flex--active {
+	color: #2196f3 !important;
 }
+
 .submit-button {
 	-webkit-transition: all 200ms cubic-bezier(0.39, 0.5, 0.15, 1.36);
 	-moz-transition: all 200ms cubic-bezier(0.39, 0.5, 0.15, 1.36);
@@ -108,4 +111,8 @@
 	padding: 10px;
 	width: 33.3%;
 	color: #2c3e50;
+}
+
+.p-ripple.purple .p-ink {
+	background: rgba(256, 39, 176, 0.3);
 }

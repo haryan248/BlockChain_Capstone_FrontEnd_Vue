@@ -1,46 +1,16 @@
 <template>
 	<div v-if="$route.path !== '/login' || $route.path !== '/simplepwd'">
 		<aside class="bottom-nav footer--view">
-			<router-link
-				to="/"
-				class="footer-btn"
-				:class="{ 'footer-btn--active': $route.path === path.studentId }"
-			>
-				<Button
-					label="학생증"
-					iconPos="top"
-					icon="pi pi-user"
-					class="p-button-text p-button-secondary border-none p-button-font--size"
-					:class="{ 'p-button-text--active': $route.path === path.studentId }"
-				/>
+			<router-link to="/" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.studentId }">
+				<Button label="학생증" iconPos="top" icon="pi pi-user" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.studentId }" />
 			</router-link>
-			<router-link
-				to="/wallet"
-				class="footer-btn"
-				:class="{ 'footer-btn--active': $route.path === path.wallet }"
-			>
-				<Button
-					label="지갑"
-					iconPos="top"
-					icon="pi pi-wallet"
-					class="p-button-text p-button-secondary border-none p-button-font--size"
-					:class="{ 'p-button-text--active': $route.path === path.wallet }"
-				/>
+			<router-link to="/wallet" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.wallet }">
+				<Button label="지갑" iconPos="top" icon="pi pi-wallet" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.wallet }" />
 			</router-link>
-			<router-link
-				to="/order"
-				class="footer-btn"
-				:class="{ 'footer-btn--active': $route.path === path.order }"
-			>
-				<Button
-					label="주문"
-					iconPos="top"
-					icon="pi pi-shopping-cart"
-					class="p-button-text p-button-secondary border-none p-button-font--size"
-					:class="{ 'p-button-text--active': $route.path === path.order }"
-				/>
+			<router-link to="/order" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.order }">
+				<Button label="주문" iconPos="top" icon="pi pi-shopping-cart" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.order }" />
 			</router-link>
-			<router-link
+			<!-- <router-link
 				to="/setting"
 				class="footer-btn"
 				:class="{ 'footer-btn--active': $route.path === path.setting }"
@@ -52,19 +22,9 @@
 					class="p-button-text p-button-secondary border-none p-button-font--size"
 					:class="{ 'p-button-text--active': $route.path === path.setting }"
 				/>
-			</router-link>
-			<router-link
-				to="/qrscanner"
-				class="footer-btn"
-				:class="{ 'footer-btn--active': $route.path === path.qrscanner }"
-			>
-				<Button
-					label="QR스캔"
-					iconPos="top"
-					icon="pi pi-camera"
-					class="p-button-text p-button-secondary border-none p-button-font--size"
-					:class="{ 'p-button-text--active': $route.path === path.qrscanner }"
-				/>
+			</router-link> -->
+			<router-link to="/qrscanner" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.qrscanner }">
+				<Button label="QR스캔" iconPos="top" icon="pi pi-camera" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.qrscanner }" />
 			</router-link>
 		</aside>
 	</div>

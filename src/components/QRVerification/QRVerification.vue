@@ -12,14 +12,7 @@
 							<div class="item__code" :class="{ item__refresh: countDown === 0 }">
 								<VueQrcode value="https://fengyuanchen.github.io/vue-qrcode" :size="150" />
 							</div>
-							<Button
-								v-if="countDown === 0"
-								iconPos="top"
-								size="large"
-								icon="pi pi-refresh"
-								@click="resetQR"
-								class="p-d-block p-mx-auto p-button-rounded p-button-info p-button-font--size refresh__button"
-							/>
+							<Button v-if="countDown === 0" iconPos="top" size="large" icon="pi pi-refresh" @click="resetQR" class="p-button-rounded refresh__button" />
 						</div>
 
 						<!-- qr발급시간이 끝날시 -->
@@ -52,10 +45,11 @@ export default {
 		VueQrcode,
 	},
 	data() {
-		return { countDown: 15, polling: null }
+		return { countDown: 15, polling: null, timeStamp: Math.round(+new Date() / 1000) }
 	},
 	created() {
 		this.countDownTimer()
+		console.log(this.timeStamp)
 	},
 	unmounted() {
 		clearInterval(this.polling)
