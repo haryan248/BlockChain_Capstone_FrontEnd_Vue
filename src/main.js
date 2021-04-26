@@ -36,6 +36,7 @@ import Dropdown from "primevue/dropdown"
 import ProgressSpinner from "primevue/progressspinner"
 import Accordion from "primevue/accordion"
 import AccordionTab from "primevue/accordiontab"
+import InputSwitch from "primevue/inputswitch"
 
 // Create Vue Instance
 const app = createApp(App)
@@ -60,6 +61,7 @@ app.component("Dropdown", Dropdown)
 app.component("ProgressSpinner", ProgressSpinner)
 app.component("Accordion", Accordion)
 app.component("AccordionTab", AccordionTab)
+app.component("InputSwitch", InputSwitch)
 
 //구글 로그인
 const gAuthOptions = {
