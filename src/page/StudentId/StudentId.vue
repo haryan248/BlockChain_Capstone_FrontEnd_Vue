@@ -77,7 +77,7 @@ export default {
 	},
 	methods: {
 		async getMember() {
-			const response = await this.$axios.get("http://101.101.218.36:8000/members/" + this.key, {})
+			const response = await this.$axios.get("https://101.101.218.36:8000/members/" + this.key, {})
 			if (response.status === 201) {
 				this.name = response.data.name
 				this.studentId = response.data.stdnum

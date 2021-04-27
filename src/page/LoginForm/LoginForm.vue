@@ -104,7 +104,7 @@ export default {
 			this.isFirstMember = false
 			//구글 이메일, 이름, 이미지 url로 API POST
 			// post 완료시 키값 저장
-			const response = await this.$axios.post("http://101.101.218.36:8000/members/", {
+			const response = await this.$axios.post("https://101.101.218.36:8000/members/", {
 				major: this.selectedGroupedMajor.label,
 				stdnum: this.studentId,
 				name: this.name,
@@ -122,7 +122,7 @@ export default {
 		},
 		//did 발급
 		async getUserDID() {
-			const response = await this.$axios.get("http://101.101.218.36:8000/runpython/", {})
+			const response = await this.$axios.get("https://101.101.218.36:8000/runpython/", {})
 			if (response.status === 201) {
 				console.log(response)
 				localStorage.setItem("did", response.data.did)
