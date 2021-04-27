@@ -10,7 +10,7 @@
 						<!-- <QRCode value="http://facebook.github.io//" /> -->
 						<div class="demo-container p-p-4">
 							<div class="item__code" :class="{ item__refresh: countDown === 0 }">
-								<VueQrcode value="https://fengyuanchen.github.io/vue-qrcode" :size="150" />
+								<VueQrcode :value="qrString" :size="150" />
 							</div>
 							<Button v-if="countDown === 0" iconPos="top" size="large" icon="pi pi-refresh" @click="resetQR" class="p-button-rounded refresh__button" />
 						</div>
@@ -28,6 +28,9 @@
 				</div>
 			</div>
 		</div>
+		<div style="display:block; font-size: 2px; width:100% word-break:normal;">
+			{{ qrString }}
+		</div>
 		<div class="qr-verification__button">
 			<Button label="돌아가기" icon="pi pi-backward" iconPos="left" @click="goBack()" />
 		</div>
@@ -35,26 +38,32 @@
 </template>
 <script>
 import VueQrcode from "qrcode.vue"
+import { SHA256 } from "../../sha256.js"
 
 export default {
 	name: "QRVerification",
 	props: {
 		isStudentId: null,
+		DIDPasswd: String,
 	},
 	components: {
 		VueQrcode,
 	},
 	data() {
-		return { countDown: 15, polling: null, timeStamp: Math.round(+new Date() / 1000) }
+		return { countDown: 15, polling: null, timeStamp: null, qrString: "" }
 	},
 	created() {
+		this.setQRString()
 		this.countDownTimer()
-		console.log(this.timeStamp)
 	},
 	unmounted() {
 		clearInterval(this.polling)
 	},
 	methods: {
+		setQRString() {
+			this.timeStamp = Math.round(+new Date() / 1000)
+			this.qrString = SHA256(this.DIDPasswd + this.timeStamp)
+		},
 		countDownTimer() {
 			if (this.isStudentId) {
 				this.polling = setInterval(() => {
@@ -67,6 +76,7 @@ export default {
 			clearInterval(this.polling)
 			this.countDown = 15
 			this.countDownTimer()
+			this.setQRString()
 		},
 
 		goBack() {

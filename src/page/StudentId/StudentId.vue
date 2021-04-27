@@ -14,9 +14,9 @@
 										<div class="item__img">
 											<img class="student__img" src="../../assets/KakaoTalk_20210418_124638504.jpg" />
 										</div>
-										<p class="item__temp">학번 : 203011123</p>
-										<p class="item__temp">성명 : 뽀삐</p>
-										<p class="item__temp">소속(학과) : 심쿵시킬과</p>
+										<p class="item__temp">학번 : {{ studentId }}</p>
+										<p class="item__temp">성명 : {{ name }}</p>
+										<p class="item__temp">소속(학과) : {{ major }}</p>
 									</div>
 								</div>
 							</div>
@@ -24,12 +24,15 @@
 								<Button label="학생증" icon="pi pi-id-card" iconPos="left" @click="openPasswordModal" />
 							</div>
 						</div>
-						<!-- <Button label="Show" icon="pi pi-external-link" @click="openModal" /> -->
+
 						<Dialog class="QR-modal" header="Header" :showHeader="false" v-model:visible="displayQRModal" :style="{ width: '80vw' }" :modal="true">
-							<QRVerification @goBack="closeQRModal" :isStudentId="true" />
+							<QRVerification @goBack="closeQRModal" :isStudentId="true" :DIDPasswd="DIDPasswd" />
 						</Dialog>
 						<Dialog class="password-modal p-dialog-maximized" header="" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 							<SimplePassword :title="'간편 비밀번호 입력'" :isSetting="false" @correctPassword="closePasswordModal" />
+						</Dialog>
+						<Dialog class="password-modal p-dialog-maximized" header="" v-model:visible="displayPasswordModalForNone" :style="{ width: '100vw', height: '100vh' }" :modal="true">
+							<SimplePassword :title="'간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModalForNone" />
 						</Dialog>
 					</div>
 				</div>
@@ -54,13 +57,37 @@ export default {
 		return {
 			displayQRModal: false,
 			displayPasswordModal: false,
+			displayPasswordModalForNone: false,
+			name: "",
+			major: "",
+			studentId: "",
+			DID: localStorage.getItem("did"),
+			SimplePassword: localStorage.getItem("simplePassword"),
+			key: localStorage.getItem("key"),
+			DIDPasswd: "",
 		}
 	},
+	created() {
+		this.setQRString()
+		this.getMember()
+	},
 	mounted() {
-		console.log(SHA256("blockchain"))
+		if (localStorage.getItem("simplePassword") === null) this.displayPasswordModalForNone = true
 		this.$shared.checkGoogleLogin(this.$gAuth)
 	},
 	methods: {
+		async getMember() {
+			const response = await this.$axios.get("http://101.101.218.36:8000/members/" + this.key, {})
+			if (response.status === 201) {
+				this.name = response.data.name
+				this.studentId = response.data.stdnum
+				this.major = response.data.major
+				// localStorage.setItem("did", response.data.did)
+			}
+		},
+		setQRString() {
+			this.DIDPasswd = SHA256(this.did + this.SimplePassword)
+		},
 		openQRModal() {
 			this.displayQRModal = true
 		},
@@ -73,6 +100,12 @@ export default {
 		closePasswordModal() {
 			this.openQRModal()
 			this.displayPasswordModal = false
+		},
+		openPasswordModalForNone() {
+			this.displayPasswordModalForNone = true
+		},
+		closePasswordModalForNone() {
+			this.displayPasswordModalForNone = false
 		},
 	},
 }

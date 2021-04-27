@@ -97,20 +97,36 @@ export default {
 			}
 			console.log(this.selectedGroupedMajor.label)
 			this.failMajor = false
-			//회원가입 완료시 post 해서 그정보를
+			//회원가입 완료시 post
 			this.signUp()
-			this.openPasswordModal()
 		},
-		signUp() {
+		async signUp() {
 			this.isFirstMember = false
-			console.log(this.email)
-			console.log(this.name)
-			console.log(this.imgUrl)
-			console.log(this.studentId)
-			console.log(this.selectedGroupedMajor)
 			//구글 이메일, 이름, 이미지 url로 API POST
 			// post 완료시 키값 저장
-			localStorage.setItem("key", "temp")
+			const response = await this.$axios.post("http://101.101.218.36:8000/members/", {
+				major: this.selectedGroupedMajor.label,
+				stdnum: this.studentId,
+				name: this.name,
+				email: this.email,
+				key: "2877",
+			})
+			if (response.status === 201) {
+				localStorage.setItem("key", response.data.email)
+				this.openPasswordModal()
+				this.getUserDID()
+			} else if (response.status === 400) {
+				//중복 회원가입시
+				console.log(response)
+			}
+		},
+		//did 발급
+		async getUserDID() {
+			const response = await this.$axios.get("http://101.101.218.36:8000/runpython/", {})
+			if (response.status === 201) {
+				console.log(response)
+				localStorage.setItem("did", response.data.did)
+			}
 		},
 		openPasswordModal() {
 			this.displayPasswordModal = true

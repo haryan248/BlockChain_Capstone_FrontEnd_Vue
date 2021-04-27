@@ -1,7 +1,7 @@
 const shared = {
 	checkGoogleLogin(gAuth) {
 		setTimeout(() => {
-			console.log(gAuth.instance.currentUser.get().isSignedIn())
+			// console.log(gAuth.instance.currentUser.get().isSignedIn())
 			if (gAuth.instance.currentUser.get().isSignedIn() === false) localStorage.removeItem("key")
 		}, 2000)
 	},

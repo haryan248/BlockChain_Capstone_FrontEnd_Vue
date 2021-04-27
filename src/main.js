@@ -6,6 +6,7 @@ import "primeicons/primeicons.css"
 import { createApp } from "vue"
 import { router } from "./route"
 import App from "./App.vue"
+import axios from "axios"
 
 //파이선 쉘
 // import { PythonShell } from "python-shell"
@@ -46,6 +47,7 @@ app.component("Header", Header)
 app.component("BottomNav", BottomNav)
 
 //사용할 UI 컴포넌트 추가
+
 app.component("Sidebar", Sidebar)
 app.component("Button", Button)
 app.component("Dialog", Dialog)
@@ -74,4 +76,5 @@ const gAuthOptions = {
 
 app.use(GAuth, gAuthOptions)
 app.config.globalProperties.$shared = shared
+app.config.globalProperties.$axios = axios
 app.mount("#app")

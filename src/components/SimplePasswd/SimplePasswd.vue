@@ -26,14 +26,20 @@
 				<div class="password-inputter">
 					<div class="password-wrapper">
 						<div class="inputter__flex">
-							<button v-for="(item, index) in passwdArray" :key="index" ref="passwdButton" :class="{ 'num-button__flex--active': touchstart }" class="num-button__flex spread-effect fantasy-font__2_3rem">
+							<button
+								v-for="(item, index) in passwdArray"
+								:key="index"
+								ref="passwdButton"
+								:class="{ 'num-button__flex--active': touchstart[index] }"
+								class="num-button__flex spread-effect fantasy-font__2_3rem"
+							>
 								<button v-if="index === 9" class="num-button__flex spread-effect fantasy-font__2_3rem">
 									{{ checkInvisibleNum(item) }}
 								</button>
-								<div v-else @click="setPasswd(item)">{{ item }}</div>
+								<div v-else @click="setPasswd(item)" :value="index">{{ item }}</div>
 							</button>
-							<button class="num-button__flex spread-effect fantasy-font__2_3rem" @click="setPasswd(tempNum)">
-								{{ tempNum }}
+							<button class="num-button__flex spread-effect fantasy-font__2_3rem">
+								<div @click="setPasswd(tempNum)">{{ tempNum }}</div>
 							</button>
 							<button class="num-button__flex spread-effect fantasy-font__2_3rem" @click="erasePasswd">
 								←
@@ -60,7 +66,7 @@ export default {
 			tempPassword: "",
 			checkSettingPassword: false,
 			isFirstSettingPassword: true,
-			touchstart: false,
+			touchstart: [],
 		}
 	},
 	created() {
@@ -68,11 +74,39 @@ export default {
 	},
 	mounted() {
 		document.addEventListener("touchstart", (event) => {
-			this.touchListener(event)
+			this.touchStartListener(event)
 		})
 		document.addEventListener("touchend", (event) => {
-			this.touchListener(event)
+			this.touchEndListener(event)
 		})
+	},
+	unmounted() {
+		document.removeEventListener("touchstart", this.touchStartListener)
+		document.removeEventListener("touchend", this.touchEndListener)
+	},
+	methods: {
+		shuffle(array) {
+			array.sort(() => Math.random() - 0.5)
+		},
+		touchStartListener(event) {
+			this.touchstart[event.target.getAttribute("value")] = true
+		},
+		touchEndListener(event) {
+			setTimeout(() => {
+				this.touchstart[event.target.getAttribute("value")] = false
+			}, 700)
+		},
+		checkInvisibleNum(num) {
+			this.tempNum = num
+		},
+		setPasswd(num) {
+			if (this.simplePasswd.length !== this.passwdMaxLength) {
+				this.simplePasswd = this.simplePasswd + String(num)
+			}
+		},
+		erasePasswd() {
+			this.simplePasswd = this.simplePasswd.slice(0, this.simplePasswd.length === 0 ? 0 : this.simplePasswd.length - 1)
+		},
 	},
 	watch: {
 		simplePasswd(data) {
@@ -103,28 +137,6 @@ export default {
 					}
 				}
 			}
-		},
-	},
-	methods: {
-		shuffle(array) {
-			array.sort(() => Math.random() - 0.5)
-		},
-		touchListener(event) {
-			this.touchstart = !this.touchstart
-			console.log(this.touchstart)
-
-			console.log(event)
-		},
-		checkInvisibleNum(num) {
-			this.tempNum = num
-		},
-		setPasswd(num) {
-			if (this.simplePasswd.length !== this.passwdMaxLength) {
-				this.simplePasswd = this.simplePasswd + String(num)
-			}
-		},
-		erasePasswd() {
-			this.simplePasswd = this.simplePasswd.slice(0, this.simplePasswd.length === 0 ? 0 : this.simplePasswd.length - 1)
 		},
 	},
 }

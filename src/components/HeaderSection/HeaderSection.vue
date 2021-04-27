@@ -23,7 +23,6 @@ export default {
 	methods: {
 		setTime() {
 			let date = new Date()
-			console.log(date.getMonth())
 			this.currentDate = date.getFullYear() + "년 " + (date.getMonth() + 1) + "월 " + date.getDate() + "일"
 		},
 	},

@@ -18,76 +18,7 @@
 	</div>
 </template>
 <script>
-// import axios from "axios"
-
-// import { api } from "../../tool/api"
-// import { endpoint } from "../../tool/endpoint"
-
 export default {
-	// name: "Login",
-	// components: {},
-	// created() {
-	// 	console.log(window.location.hostname.split(".")[0])
-	// },
-	// data() {
-	// 	return {
-	// 		loginObj: {
-	// 			username: null,
-	// 			password: null,
-	// 		},
-	// 		token: null,
-	// 	}
-	// },
-	// methods: {
-	// 	// getToken() {
-	// 	// 	axios.get("http://localhost:8000/user/").then((res)=>)
-	// 	// },
-	// 	// checkLogin() {
-	// 	// 	console.log(JSON.stringify(this.loginObj))
-	// 	// 	axios
-	// 	// 		.post("http://localhost:8000/user/", this.loginObj)
-	// 	// 		.then((res) => res.json())
-	// 	// 		.then((json) => {
-	// 	// 			if (json.username && json.token) {
-	// 	// 				// props.userHasAuthenticated(true, json.username, json.token)
-	// 	// 				console.log(JSON.stringify(this.loginObj))
-	// 	// 				history.push("/")
-	// 	// 				// props.setModal(true)
-	// 	// 			} else {
-	// 	// 				alert("사용불가능한 아이디입니다.")
-	// 	// 			}
-	// 	// 		})
-	// 	// 		.catch((error) => alert(error))
-	// 	// },
-	// 	// handleClickGetAuth() {
-	// 	// 	this.$gAuth
-	// 	// 		.signIn()
-	// 	// 		.then(async (GoogleUser) => {
-	// 	// 			const params = {
-	// 	// 				email: GoogleUser.Rs.At,
-	// 	// 				name: GoogleUser.Rs.Se,
-	// 	// 				imgUrl: GoogleUser.Rs.WI,
-	// 	// 			}
-	// 	// 			const { data, result } = await api.appPost(endpoint.GOOGLELOGIN, params)
-	// 	// 			if (result === 2000) {
-	// 	// 				this.$shared.setToken(data.staffKey)
-	// 	// 				sessionStorage.setItem(
-	// 	// 					"userInfo",
-	// 	// 					JSON.stringify({
-	// 	// 						email: data.email,
-	// 	// 						name: data.name,
-	// 	// 						imgUrl: data.imgUrl,
-	// 	// 					})
-	// 	// 				)
-	// 	// 				this.$router.push({ name: "/" })
-	// 	// 			}
-	// 	// 		})
-	// 	// 		.catch((error) => {
-	// 	// 			log.d(error)
-	// 	// 		})
-	// 	// },
-	// },
-
 	name: "Login",
 	// components: { GoogleLogin },
 	data() {
@@ -112,13 +43,6 @@ export default {
 		}
 	},
 	methods: {
-		// getUserData() {
-		// 	//email을 paramater로 전달시 이
-		// 	const response = axios.get("/api/members/", {}).then((res) => {
-		// 		console.log(res)
-		// 	})
-		// 	console.log(response)
-		// },
 		async checkLogin() {
 			const GoogleUser = this.$gAuth.instance.currentUser.get()
 			const profile = GoogleUser.getBasicProfile()
@@ -131,7 +55,6 @@ export default {
 			const email = profile.getEmail()
 
 			if (email.split("@")[1] !== "kyonggi.ac.kr") {
-				console.log("경기대 이메일(kyonggi.ac.kr)로만 로그인/회원가입 해주세요.")
 				this.errorTitle = "경기대 이메일(kyonggi.ac.kr)로<br> 로그인/회원가입 해주세요."
 				this.loading = false
 				await this.$gAuth.signOut()
