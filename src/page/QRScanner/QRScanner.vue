@@ -1,20 +1,6 @@
 <template>
 	<div>
-		<!-- <p class="error">{{ error }}</p>
-
-		<p class="decode-result">
-			Last result: <b>{{ result }}</b>
-		</p>
-		<qr-stream :camera="camera" @decode="onDecode" @init="onInit">
-			<div class="loading-indicator" v-if="loading">
-				Loading...
-			</div>
-			<Button icon="pi pi-undo" @click="switchCamera" class="p-mr-2" alt="switch camera" />
-			<div v-show="showScanConfirmation" class="scan-confirmation"></div>
-		</qr-stream>
-	</div> -->
 		<Header :title="'QR인증'" :isShow="false" />
-
 		<div class="container bg-gray">
 			<div>
 				<div class="qr-content">
@@ -22,21 +8,33 @@
 						<div class="close__button">
 							<Button icon="pi pi-times" @click="goBack" class="p-button-lg" alt="switch camera" />
 						</div>
-						<div class="conver__button">
+						<div class="conver__button camera-turn">
 							<!-- 카메라 전환 -->
-							<Button icon="pi pi-undo" @click="switchCamera" class="p-button-lg" alt="switch camera" />
+							<!-- <Button icon="pi" @click="switchCamera" class="p-button-lg" alt="switch camera" /> -->
 						</div>
+						<button class="conver__button" type="button"></button>
 						<qr-stream :camera="camera" @decode="onDecode" class="mb" @init="onInit">
 							<!-- 로딩화면 -->
 							<div class="loading-indicator" v-if="loading">
 								Loading...
 								<ProgressSpinner />
 							</div>
+							<div v-if="validationSuccess" class="validation-success">
+								{{ result }}
+							</div>
+
+							<div v-if="validationFailure" class="validation-failure">
+								This is NOT a URL!
+							</div>
+
+							<div v-if="validationPending" class="validation-pending">
+								Long validation in progress...
+							</div>
 							<div v-else style="color: red;" class="frame"></div>
 						</qr-stream>
 					</div>
 					<!-- qr 인증 되었을때 -->
-					<div v-show="showScanConfirmation" class="scan-confirmation">{{ result }}</div>
+					<!-- <div v-show="showScanConfirmation" class="scan-confirmation">{{ result }}</div> -->
 				</div>
 			</div>
 		</div>
@@ -50,28 +48,49 @@ export default {
 	name: "QRScanner",
 	components: { QrStream },
 	data() {
-		return { result: "", error: "", loading: false, camera: "auto", showScanConfirmation: false }
+		return { isValid: undefined, result: "", error: "", loading: false, camera: "front", showScanConfirmation: false }
 	},
 	mounted() {
 		this.$shared.checkGoogleLogin(this.$gAuth)
 	},
+	computed: {
+		validationPending() {
+			return this.isValid === undefined && this.camera === "off"
+		},
+
+		validationSuccess() {
+			return this.isValid === true
+		},
+
+		validationFailure() {
+			return this.isValid === false
+		},
+	},
 	methods: {
 		async onDecode(result) {
 			this.result = result
-			console.log(result)
-			this.pause()
-			await this.timeout(500)
-			this.unpause()
+			this.turnCameraOff()
+
+			// pretend it's taking really long
+			await this.timeout(3000)
+			this.isValid = result.startsWith("https")
+
+			// some more delay, so users have time to read the message
+			await this.timeout(2000)
+			this.turnCameraOn()
 		},
-		unpause() {
-			this.camera = "rear"
+		resetValidationState() {
+			this.isValid = undefined
+		},
+		turnCameraOn() {
+			this.camera = "front"
 		},
 
-		pause() {
+		turnCameraOff() {
 			this.camera = "off"
 		},
+
 		goBack() {
-			console.log("뒤로가기")
 			this.$router.go(-1)
 		},
 		//카메라 전환
@@ -110,8 +129,9 @@ export default {
 					this.error = "ERROR: Stream API is not supported in this browser"
 				}
 			} finally {
-				this.showScanConfirmation = this.camera === "off"
+				// this.showScanConfirmation = this.camera === "off"
 				this.loading = false
+				this.resetValidationState()
 			}
 		},
 	},
@@ -120,4 +140,21 @@ export default {
 <style scoped>
 @import "./qrscanner.css";
 </style>
-<style></style>
+<style>
+@keyframes p-progress-spinner-color {
+	100%,
+	0% {
+		stroke: #2196f3;
+	}
+	40% {
+		stroke: #2196f3;
+	}
+	66% {
+		stroke: #2196f3;
+	}
+	80%,
+	90% {
+		stroke: #2196f3;
+	}
+}
+</style>

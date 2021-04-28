@@ -23,6 +23,9 @@
 					:class="{ 'p-button-text--active': $route.path === path.setting }"
 				/>
 			</router-link> -->
+			<router-link to="/reservation" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.setting }">
+				<Button label="예약" iconPos="top" icon="pi pi-ticket" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.setting }" />
+			</router-link>
 			<router-link to="/qrscanner" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.qrscanner }">
 				<Button label="QR스캔" iconPos="top" icon="pi pi-camera" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.qrscanner }" />
 			</router-link>
