@@ -1,12 +1,13 @@
 <template>
 	<div class="home-container bg-gray">
 		<div v-if="!loading" class="login-box">
-			<div class="card">
+			<div class="login-card">
 				<h5 class="login-header">U-PASS</h5>
 				<div class="p-fluid">
 					<div class="login__button">
-						<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" style="border:20px" />
+						<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" />
 						<div class="error-message" v-html="errorTitle"></div>
+						<Button label="이미 가입하신적이 있나요?" class="p-button-outlined p-button-danger" icon="pi pi-question-circle" iconPos="left" @click="goToFindForm" />
 					</div>
 				</div>
 			</div>
@@ -78,6 +79,10 @@ export default {
 			sessionStorage.setItem("isLogin", true)
 			await this.$gAuth.signIn()
 		},
+		goToFindForm(){
+			console.log(1)
+			this.$router.push("/findAccountForm")
+		}
 	},
 }
 </script>

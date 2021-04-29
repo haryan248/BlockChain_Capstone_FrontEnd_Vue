@@ -18,7 +18,7 @@
 						<!-- 스와이퍼 영역 -->
 
 						<div class="card__wrapper">
-							<swiper :slides-per-view="1.2" :space-between="10" :centeredSlides="true" :pagination="true" :loop="true">
+							<swiper :slides-per-view="1.3" :space-between="10" :centeredSlides="true" :pagination="true" :loop="true">
 								<swiper-slide>
 									<div class="credit-card__item" >
 										<div class="card__name">{{ "visa" }}</div>

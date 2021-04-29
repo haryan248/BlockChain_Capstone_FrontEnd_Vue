@@ -6,6 +6,8 @@ import Wallet from "./page/Wallet/Wallet.vue"
 import QRScanner from "./page/QRScanner/QRScanner.vue"
 import Login from "./page/Login/Login.vue"
 import LoginForm from "./page/LoginForm/LoginForm.vue"
+import Reservation from "./page/Reservation/Reservation.vue"
+import FindAccountForm from "./page/FindAccountForm/FindAccountForm.vue"
 
 const routes = [
 	{
@@ -29,6 +31,11 @@ const routes = [
 		component: Setting,
 	},
 	{
+		path: "/reservation",
+		name: "Reservation",
+		component: Reservation,
+	},
+	{
 		path: "/qrscanner",
 		name: "QRScanner",
 		component: QRScanner,
@@ -37,6 +44,11 @@ const routes = [
 		path: "/login",
 		name: "Login",
 		component: Login,
+	},
+	{
+		path: "/findAccountForm",
+		name: "FindAccountForm",
+		component: FindAccountForm,
 	},
 	{
 		path: "/loginForm/:name/:imgUrl/:email",
