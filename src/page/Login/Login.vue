@@ -1,19 +1,20 @@
 <template>
-	<div class="home-container bg-gray">
-		<div v-if="!loading" class="login-box">
-			<div class="login-card">
-				<h5 class="login-header">U-PASS</h5>
-				<div class="p-fluid">
-					<div class="login__button">
-						<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" />
-						<div class="error-message" v-html="errorTitle"></div>
-						<Button label="이미 가입하신적이 있나요?" class="p-button-outlined p-button-danger" icon="pi pi-question-circle" iconPos="left" @click="goToFindForm" />
+	<div :class="{ 'home-container--loading': loading }" class="home-container">
+		<Dialog v-if="!loading" :showHeader="false" position="bottom" v-model:visible="displayBasic" :style="{ width: '80vw' }">
+			<div class="login-box">
+				<div class="login-card">
+					<div class="p-fluid">
+						<div class="login__button">
+							<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" class="p-button-outlined" />
+							<div class="error-message" v-html="errorTitle"></div>
+							<Button label="이미 가입하신적이 있나요?" class="p-button-outlined p-button-danger" icon="pi pi-question-circle" iconPos="left" @click="goToFindForm" />
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</Dialog>
 		<div v-else class="loading-indicator">
-			<h5 class="login-header">잠시만 기다려주세요.</h5>
+			<h5 class="login_loading">잠시만 기다려주세요.</h5>
 			<ProgressSpinner style="width70px;height:70px" strokeWidth="6" animationDuration=".5s" />
 		</div>
 	</div>
@@ -33,6 +34,7 @@ export default {
 			startLogin: false,
 			loading: false,
 			errorTitle: "",
+			displayBasic: false,
 		}
 	},
 	mounted() {
@@ -42,6 +44,9 @@ export default {
 				this.checkLogin()
 			}, 2000)
 		}
+		setTimeout(() => {
+			this.displayBasic = true
+		}, 600)
 	},
 	methods: {
 		async checkLogin() {
@@ -79,10 +84,10 @@ export default {
 			sessionStorage.setItem("isLogin", true)
 			await this.$gAuth.signIn()
 		},
-		goToFindForm(){
+		goToFindForm() {
 			console.log(1)
 			this.$router.push("/findAccountForm")
-		}
+		},
 	},
 }
 </script>
@@ -93,17 +98,17 @@ export default {
 @keyframes p-progress-spinner-color {
 	100%,
 	0% {
-		stroke: #2196f3;
+		stroke: #ffffff;
 	}
 	40% {
-		stroke: #2196f3;
+		stroke: #ffffff;
 	}
 	66% {
-		stroke: #2196f3;
+		stroke: #ffffff;
 	}
 	80%,
 	90% {
-		stroke: #2196f3;
+		stroke: #ffffff;
 	}
 }
 </style>

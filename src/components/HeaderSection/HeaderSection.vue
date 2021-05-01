@@ -1,9 +1,9 @@
 <template>
 	<div className="headersection__info">
 		<!-- <Clock date="{new" Date()} /> -->
-		<div className="headerSection__time">{{ currentDate }}</div>
+		<h5 className="headerSection__time">{{ currentDate }}</h5>
 		<h1 className="headerSection__title">{{ title }}</h1>
-		<div className="headerSection__subttl">{{ subtitle }}</div>
+		<h3 className="headerSection__subttl">{{ subtitle }}</h3>
 	</div>
 </template>
 <script>

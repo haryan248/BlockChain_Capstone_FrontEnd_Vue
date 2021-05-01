@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Header :title="'U-PASS'" />
+		<Header :title="'예약'" />
 		<div class="container bg-gray">
 			<div class="reservation-content">
 				<div class="row">

@@ -30,7 +30,7 @@
 							<div v-if="validationPending" class="validation-pending">
 								Long validation in progress...
 							</div>
-							<div v-else style="color: red;" class="frame"></div>
+							<div v-else style="color: #ff4b4b;" class="frame"></div>
 						</qr-stream>
 					</div>
 					<!-- qr 인증 되었을때 -->

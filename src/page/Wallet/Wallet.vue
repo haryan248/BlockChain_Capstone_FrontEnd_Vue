@@ -4,7 +4,7 @@
 		<div class="container bg-gray">
 			<div>
 				<div class="wallet__content">
-					<HeaderSection :title="'지갑'" :subtitle="'간편하게 지갑을 관리하세요.'" />
+					<HeaderSection :title="'결제'" :subtitle="'간편하게 지갑을 관리하세요.'" />
 
 					<div class="card__content">
 						<div class="card__menu">
@@ -20,7 +20,7 @@
 						<div class="card__wrapper">
 							<swiper :slides-per-view="1.3" :space-between="10" :centeredSlides="true" :pagination="true" :loop="true">
 								<swiper-slide>
-									<div class="credit-card__item" >
+									<div class="credit-card__item">
 										<div class="card__name">{{ "visa" }}</div>
 										<div class="card__number">{{ "**** **** **** **** 3282" }}</div>
 										<div class="card__holder">{{ "하현준" }}</div>

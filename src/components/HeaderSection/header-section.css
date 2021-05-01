@@ -1,15 +1,22 @@
 .headersection__info {
 	padding-left: 20px;
 	padding-right: 20px;
-	padding-bottom: 1%;
-	border-bottom: 4px solid #babdc3;
+	margin-left: -10px;
+	margin-right: -10px;
+	padding-bottom: 10px;
+	/* border-bottom: 4px solid #ffaf34;
+	background: #ffc05f; */
+	background: #ffffff;
+	border-radius: 0 0 25px 25px;
 	box-sizing: border-box;
 	text-align: left;
+	color: #ffffff;
+	box-shadow: 0 0 5px rgb(0 0 0 / 5%), 0 5px 20px rgb(0 0 0 / 5%);
 }
 .headersection__info .headerSection__time {
 	margin-top: 5%;
 	margin-bottom: 2%;
-	color: #a4a4a4;
+	color: black;
 	font-size: 1.8vh;
 	font-weight: bold;
 	line-height: 18px;
@@ -17,13 +24,17 @@
 .headersection__info .headerSection__title {
 	margin-top: 5%;
 	margin-bottom: 2%;
-	font-size: 5vh;
+	color: black;
+
+	font-size: 30px;
 	font-weight: bold;
 	line-height: 18px;
 }
 .headersection__info .headerSection__subttl {
 	margin-top: 5%;
-	font-size: 2vh;
+	color: black;
+
+	font-size: 15px;
 	font-weight: normal;
 	letter-spacing: -1px;
 }

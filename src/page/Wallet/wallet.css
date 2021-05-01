@@ -20,7 +20,7 @@
 	flex-direction: column;
 	height: 100vh;
 	margin-top: -60px;
-	padding: 70px 20px 0;
+	padding: 60px 10px 0;
 	box-sizing: border-box;
 	position: relative;
 	list-style: none;
@@ -60,7 +60,7 @@
 	box-sizing: border-box;
 	margin-bottom: 50px;
 	opacity: 0.5;
-	background-color: var(--blue-900);
+	background-color: #13405b;
 	/* background-color: #6dc3f0; */
 	color: #fff;
 }

@@ -1,43 +1,37 @@
 <template>
-	<div class="home-container bg-gray">
-		<div class="login-box">
-			<div class="p-fluid">
-				<div class="sign-in">
-					<div class="p-field">
-						<label for="studentId" ref="usernameInput">학번</label>
-						<InputText :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" />
-						<small v-if="failId" class="p-error" id="studentid-help">{{ failIdText }}</small>
-						<small v-else id="studentid-help">학번을 입력해주세요.</small>
-					</div>
-					<div class="p-field">
-						<label for="id" ref="majorInput">학과</label>
-						<Dropdown
-							v-model="selectedGroupedMajor"
-							:options="groupedMajor"
-							optionLabel="label"
-							placeholder="학과를 선택해주세요."
-							optionGroupLabel="label"
-							optionGroupChildren="items"
-							:class="{ 'major-invalid': failMajor }"
-						>
-							<template #optiongroup="slotProps">
-								<div class="p-d-flex p-ai-center country-item">
-									<div>{{ slotProps.option.label }}</div>
-								</div>
-							</template>
-						</Dropdown>
-						<small v-if="failMajor" class="p-error" id="studentid-help">{{ failMajorText }}</small>
+	<div class="home-container">
+		<Dialog v-model:visible="displayBasic" :showHeader="false" position="bottom" :style="{ width: '80vw' }">
+			<div class="login__form-box">
+				<div class="p-fluid">
+					<div class="sign-in">
+						<div class="p-field">
+							<label for="studentId" ref="usernameInput">학번</label>
+							<InputText :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" />
+							<small v-if="failId" class="p-error" id="studentid-help">{{ failIdText }}</small>
+							<small v-else id="studentid-help">학번을 입력해주세요.</small>
+						</div>
+						<div class="p-field">
+							<label for="id" ref="majorInput">학과</label>
+							<Dropdown v-model="selectedGroupedMajor" :options="groupedMajor" optionLabel="label" placeholder="학과를 선택해주세요." optionGroupLabel="label" optionGroupChildren="items" :class="{ 'major-invalid': failMajor }">
+								<template #optiongroup="slotProps">
+									<div class="p-d-flex p-ai-center country-item">
+										<div>{{ slotProps.option.label }}</div>
+									</div>
+								</template>
+							</Dropdown>
+							<small v-if="failMajor" class="p-error" id="studentid-help">{{ failMajorText }}</small>
 
-						<small v-else id="usermajor-help">학과를 선택해주세요.</small>
-					</div>
+							<small v-else id="usermajor-help">학과를 선택해주세요.</small>
+						</div>
 
-					<Button label="회원 가입" icon="pi pi-check" iconPos="right" @click="checkValidate" />
+						<Button label="회원 가입" icon="pi pi-check" iconPos="right" class="p-button-outlined" @click="checkValidate" />
+					</div>
+					<Dialog class="password-modal p-dialog-maximized" :showHeader="false" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
+						<SimplePassword :title="'간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
+					</Dialog>
 				</div>
-				<Dialog class="password-modal p-dialog-maximized" header="" :showHeader="false" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
-					<SimplePassword :title="'간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
-				</Dialog>
 			</div>
-		</div>
+		</Dialog>
 	</div>
 </template>
 <script>
@@ -56,7 +50,7 @@ export default {
 			failMajorText: "",
 			selectedGroupedMajor: null,
 			displayPasswordModal: false,
-
+			displayBasic: false,
 			//임시 학과 데이터
 			groupedMajor: [
 				{
@@ -73,14 +67,18 @@ export default {
 			],
 		}
 	},
-	mounted() {},
+	mounted() {
+		setTimeout(() => {
+			this.displayBasic = true
+		}, 600)
+	},
 	methods: {
 		//유효성 검사
 		checkValidate() {
 			let regexp = /^[0-9]*$/
 			if (!regexp.test(this.studentId) || this.studentId.length !== 9) {
 				this.failId = true
-				this.failIdText = "9자리 숫자만 입력하세요."
+				this.failIdText = "9자리 숫자를 입력해주세요."
 				this.$refs.usernameInput.focus()
 				return
 			} else if (this.studentId === "") {
@@ -140,4 +138,9 @@ export default {
 </script>
 <style scoped>
 @import "./login-form.css";
+</style>
+<style>
+.p-dialog .p-dialog-content {
+	border-radius: 20px;
+}
 </style>

@@ -2,7 +2,7 @@
 	<div v-if="$route.path !== '/login' || $route.path !== '/simplepwd'">
 		<aside class="bottom-nav footer--view">
 			<router-link to="/" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.studentId }">
-				<Button label="학생증" iconPos="top" icon="pi pi-user" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.studentId }" />
+				<Button label="학생증" iconPos="top" icon="pi pi-id-card" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.studentId }" />
 			</router-link>
 			<router-link to="/wallet" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.wallet }">
 				<Button label="지갑" iconPos="top" icon="pi pi-wallet" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.wallet }" />
@@ -42,7 +42,7 @@ export default {
 				studentId: "/",
 				wallet: "/wallet",
 				order: "/order",
-				setting: "/setting",
+				setting: "/reservation",
 				qrscanner: "/qrscanner",
 			},
 		}
@@ -52,4 +52,9 @@ export default {
 </script>
 <style scoped>
 @import "./bottom-nav.css";
+</style>
+<style>
+.footer-btn--active .p-button-label {
+	font-weight: bold;
+}
 </style>

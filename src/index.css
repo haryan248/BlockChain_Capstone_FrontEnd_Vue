@@ -65,7 +65,8 @@ input,
 select,
 table,
 textarea {
-	font-family: Roboto, Noto Sans KR, Helvetica Neue, Apple SD Gothic Neo, Arial, Helvetica, sans-serif;
+	/* font-family: Roboto, Noto Sans KR, Helvetica Neue, Apple SD Gothic Neo, Arial, Helvetica, sans-serif; */
+	font-family: "s-core-dream-light", sans-serif !important;
 	font-size: 14px;
 }
 
@@ -168,7 +169,7 @@ padding-bottom: 100px
 }
 
 .bg-gray {
-	background-color: #e3ebf6;
+	background-color: #f9f9f9;
 }
 
 /* 버튼 보더 지우기 */
@@ -177,4 +178,18 @@ padding-bottom: 100px
 	background: transparent !important;
 	outline: none !important;
 	box-shadow: none !important;
+}
+.p-button.p-button-danger {
+	color: #ffffff;
+	background: #ff4b4b;
+	border: 1px solid #ff4b4b;
+}
+.p-button {
+	background: #4a83e5;
+	border: 1px solid #4a83e5;
+}
+.p-button.p-button-success {
+	color: #ffffff;
+	background: #ffaf34;
+	border: 1px solid #ffaf34;
 }

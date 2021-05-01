@@ -55,8 +55,8 @@
 	margin: auto;
 }
 .frame {
-	border-style: solid;
-	border-width: 2px;
+	border-style: dashed;
+	border-width: 3px;
 	border-color: red;
 	height: 300px;
 	width: 300px;
@@ -105,8 +105,8 @@
 	width: 45px;
 	height: 45px;
 	/* margin-right: 16px; */
-	background-color: #2196f3;
-	border: 1px solid #2196f3;
+	background-color: #4a83e5;
+	border: 1px solid #4a83e5;
 	border-radius: 3px;
 	flex: none;
 }

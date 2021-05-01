@@ -43,6 +43,7 @@
 
 .top-nav--active {
 	background-color: #fff;
+	border-bottom: 1px solid #e3e3e3;
 }
 .top-nav .nav__button--active {
 	color: #5582f8;
@@ -63,4 +64,16 @@
 
 .top-nav--active .header__nav {
 	opacity: 1;
+}
+
+.header__nav .header__title2 {
+	font-size: 16px;
+	font-weight: bold;
+}
+.header__title1 {
+	background-image: url("../../assets/upass.png");
+	background-size: 100%;
+	background-position: center;
+	background-repeat: no-repeat;
+	width: 100px;
 }

@@ -1,0 +1,39 @@
+.login__form-box {
+	/* position: absolute;
+	top: -525%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	padding: 20px;
+	min-width: 300px;
+	box-shadow: -1px 13px 20px 3px rgb(0 0 0 / 13%);
+	border-radius: 20px;
+	background-color: #fff;
+	min-height: 300px; */
+	padding-top: 20px;
+}
+.login-header {
+	text-align: center;
+	font-size: 20px;
+	margin-bottom: 20px;
+}
+.login__button {
+	align-items: center;
+}
+
+.major-invalid {
+	border-color: #f44336;
+}
+.error-message {
+	text-align: center;
+	padding-top: 20px;
+	color: #f47b61;
+}
+.home-container {
+	height: 100vh;
+	background-color: #4a83e5;
+	background-image: url("../../assets/upass-white.png");
+	background-size: 100%;
+	background-position: center;
+	background-position: 50% 23%;
+	background-repeat: no-repeat;
+}

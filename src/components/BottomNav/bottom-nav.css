@@ -18,16 +18,17 @@
 	display: flex;
 	background-color: #fff;
 	border-radius: 20px 20px 0px 0px;
+	box-shadow: 0 0 5px rgb(0 0 0 / 5%), 0 5px 20px rgb(0 0 0 / 5%);
 	-webkit-transition: bottom 0.2s ease-in-out;
 	-o-transition: bottom 0.2s ease-in-out;
 	transition: bottom 0.2s ease-in-out;
 }
 .footer-btn--active {
 	font-size: 20px;
-	color: #5582f8;
+	color: #4a83e5;
 }
 .p-button-text--active {
-	color: #5582f8 !important;
+	color: #4a83e5 !important;
 }
 .p-button-font--size {
 	font-size: 0.7rem !important;
