@@ -193,3 +193,9 @@ padding-bottom: 100px
 	background: #ffaf34;
 	border: 1px solid #ffaf34;
 }
+.p-component {
+	font-family: "s-core-dream-light", sans-serif !important;
+}
+.p-progressbar .p-progressbar-value {
+	background: #4a83e5;
+}

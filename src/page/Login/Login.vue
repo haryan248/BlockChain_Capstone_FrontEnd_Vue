@@ -1,6 +1,6 @@
 <template>
 	<div :class="{ 'home-container--loading': loading }" class="home-container">
-		<Dialog v-if="!loading" :showHeader="false" position="bottom" v-model:visible="displayBasic" :style="{ width: '80vw' }">
+		<Dialog class="login" v-if="!loading" :showHeader="false" position="bottom" v-model:visible="displayBasic" :style="{ width: '80vw' }">
 			<div class="login-box">
 				<div class="login-card">
 					<div class="p-fluid">
@@ -15,7 +15,7 @@
 		</Dialog>
 		<div v-else class="loading-indicator">
 			<h5 class="login_loading">잠시만 기다려주세요.</h5>
-			<ProgressSpinner style="width70px;height:70px" strokeWidth="6" animationDuration=".5s" />
+			<ProgressBar mode="indeterminate" style="height: .5em" />
 		</div>
 	</div>
 </template>
@@ -42,7 +42,7 @@ export default {
 			this.loading = true
 			setTimeout(() => {
 				this.checkLogin()
-			}, 2000)
+			}, 3000)
 		}
 		setTimeout(() => {
 			this.displayBasic = true
@@ -50,6 +50,8 @@ export default {
 	},
 	methods: {
 		async checkLogin() {
+			if (this.$gAuth.instance === null) this.loading = false
+
 			const GoogleUser = this.$gAuth.instance.currentUser.get()
 			const profile = GoogleUser.getBasicProfile()
 			console.log(GoogleUser.isSignedIn())
@@ -95,20 +97,7 @@ export default {
 @import "./login.css";
 </style>
 <style>
-@keyframes p-progress-spinner-color {
-	100%,
-	0% {
-		stroke: #ffffff;
-	}
-	40% {
-		stroke: #ffffff;
-	}
-	66% {
-		stroke: #ffffff;
-	}
-	80%,
-	90% {
-		stroke: #ffffff;
-	}
+.login .p-dialog-content {
+	border-radius: 20px;
 }
 </style>

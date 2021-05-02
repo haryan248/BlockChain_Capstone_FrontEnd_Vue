@@ -24,7 +24,7 @@
 .login_loading {
 	text-align: center;
 	font-size: 20px;
-	color: #ffffff;
+	/* color: #ffffff; */
 	margin-bottom: 20px;
 }
 .login__button {
@@ -49,21 +49,11 @@
 	background-repeat: no-repeat;
 }
 .home-container--loading {
-	background-image: url("");
+	background-image: url("../../assets/First.png");
 }
-@keyframes p-progress-spinner-color {
-	100%,
-	0% {
-		stroke: #ffffff;
-	}
-	40% {
-		stroke: #ffffff;
-	}
-	66% {
-		stroke: #ffffff;
-	}
-	80%,
-	90% {
-		stroke: #ffffff;
-	}
+.loading-indicator {
+	position: absolute;
+	top: 9%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }

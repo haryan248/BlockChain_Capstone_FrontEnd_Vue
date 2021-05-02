@@ -12,6 +12,9 @@
 	list-style: none;
 	z-index: 1;
 }
+.student__id-content {
+	height: 60%;
+}
 .card-nav {
 	display: flex;
 	align-items: center;
@@ -40,16 +43,16 @@
 	margin: auto;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
+	/* align-items: center;
 	box-sizing: border-box;
 	width: 287px;
-	height: 453px;
+	height: 453px; */
 }
 .student-wrapper {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	padding-top: 5vh;
+	/* padding-top: 5vh; */
 	z-index: 1;
 	display: flex;
 	transition-property: transform;
@@ -59,11 +62,12 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	/* // min-height: 375px; */
-	padding: 42px 20px 20px;
+	/* min-height: 375px;
+	padding: 42px 20px 20px; */
+	padding-top: 42px;
 	background: #fff;
-	box-shadow: 0 0 5px rgba(0, 0, 0, 0.05), 0 5px 20px rgba(0, 0, 0, 0.05);
-	border-radius: 20px;
+	/* box-shadow: 0 0 5px rgba(0, 0, 0, 0.05), 0 5px 20px rgba(0, 0, 0, 0.05);
+	border-radius: 20px; */
 	box-sizing: border-box;
 	flex-shrink: 0;
 	width: 100%;

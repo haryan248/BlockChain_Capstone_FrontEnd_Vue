@@ -1,15 +1,22 @@
+const fs = require("fs")
 module.exports = {
 	devServer: {
 		compress: true,
 		proxy: {
-			"^/members": {
-				target: "https://101.101.218.36:8000",
+			"^/api": {
+				target: "https://apiupass.com/api",
 				changeOrigin: true,
 				logLevel: "debug",
 			},
 		},
+		// https: true,
+		// https: {
+		// 	key: fs.readFileSync("./key/example.com+5-key.pem"),
+		// 	cert: fs.readFileSync("./key/example.com+5.pem"),
+		// },
+		// public: "https://localhost:8080/",
 		disableHostCheck: true,
-		allowedHosts: ["http://localhost:8080"],
+		// allowedHosts: ["http://localhost:8080"],
 		allowedHosts: ["https://www.kyonggiupass.com"],
 	},
 }

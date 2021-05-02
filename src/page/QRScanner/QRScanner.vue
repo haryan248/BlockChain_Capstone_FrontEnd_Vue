@@ -15,9 +15,10 @@
 						<button class="conver__button" type="button"></button>
 						<qr-stream :camera="camera" @decode="onDecode" class="mb" @init="onInit">
 							<!-- 로딩화면 -->
-							<div class="loading-indicator" v-if="loading">
-								Loading...
-								<ProgressSpinner />
+							<div class="loading-indicator-qr" v-if="loading">
+								잠시만 기다려주세요.
+								<ProgressBar mode="indeterminate" style="height: .5em" />
+								<!-- <ProgressSpinner  /> -->
 							</div>
 							<div v-if="validationSuccess" class="validation-success">
 								{{ result }}

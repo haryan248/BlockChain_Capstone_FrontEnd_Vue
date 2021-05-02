@@ -28,12 +28,20 @@
 	padding-top: 20px;
 	color: #f47b61;
 }
-.home-container {
+.login__Form-container {
 	height: 100vh;
 	background-color: #4a83e5;
 	background-image: url("../../assets/upass-white.png");
+	/* background-image: url("../../assets/First.png"); */
+
 	background-size: 100%;
 	background-position: center;
 	background-position: 50% 23%;
 	background-repeat: no-repeat;
+}
+.studentId {
+	font-weight: bold;
+}
+.did-issued {
+	margin-top: 20px;
 }

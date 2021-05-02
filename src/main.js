@@ -39,11 +39,16 @@ import ProgressSpinner from "primevue/progressspinner"
 import Accordion from "primevue/accordion"
 import AccordionTab from "primevue/accordiontab"
 import InputSwitch from "primevue/inputswitch"
+import ToastService from "primevue/toastservice"
+import Toast from "primevue/toast"
+import ProgressBar from "primevue/progressbar"
 
 // Create Vue Instance
 const app = createApp(App)
 app.use(router) // 사용 설정 하기
 app.use(PrimeVue)
+app.use(ToastService)
+
 app.component("Header", Header)
 app.component("BottomNav", BottomNav)
 
@@ -65,6 +70,8 @@ app.component("ProgressSpinner", ProgressSpinner)
 app.component("Accordion", Accordion)
 app.component("AccordionTab", AccordionTab)
 app.component("InputSwitch", InputSwitch)
+app.component("Toast", Toast)
+app.component("ProgressBar", ProgressBar)
 
 //구글 로그인
 const gAuthOptions = {

@@ -1,18 +1,20 @@
 <template>
-	<div class="home-container">
-		<Dialog v-model:visible="displayBasic" :showHeader="false" position="bottom" :style="{ width: '80vw' }">
+	<div class="login__Form-container">
+		<Toast :style="{ width: '90%', zIndex: '2100' }" />
+
+		<Dialog class="login-form" v-model:visible="displayBasic" :showHeader="false" position="bottom" :style="{ width: '80vw' }">
 			<div class="login__form-box">
 				<div class="p-fluid">
 					<div class="sign-in">
 						<div class="p-field">
-							<label for="studentId" ref="usernameInput">학번</label>
-							<InputText :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" />
+							<label for="studentId" ref="usernameInput" class="studentId">학번 *</label>
+							<InputText :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" :disabled="successSignUp" />
 							<small v-if="failId" class="p-error" id="studentid-help">{{ failIdText }}</small>
 							<small v-else id="studentid-help">학번을 입력해주세요.</small>
 						</div>
 						<div class="p-field">
-							<label for="id" ref="majorInput">학과</label>
-							<Dropdown v-model="selectedGroupedMajor" :options="groupedMajor" optionLabel="label" placeholder="학과를 선택해주세요." optionGroupLabel="label" optionGroupChildren="items" :class="{ 'major-invalid': failMajor }">
+							<label for="id" class="studentId" ref="majorInput">학과 *</label>
+							<Dropdown :disabled="successSignUp" v-model="selectedGroupedMajor" :options="groupedMajor" optionLabel="label" placeholder="학과를 선택해주세요." optionGroupLabel="label" optionGroupChildren="items" :class="{ 'major-invalid': failMajor }">
 								<template #optiongroup="slotProps">
 									<div class="p-d-flex p-ai-center country-item">
 										<div>{{ slotProps.option.label }}</div>
@@ -24,7 +26,8 @@
 							<small v-else id="usermajor-help">학과를 선택해주세요.</small>
 						</div>
 
-						<Button label="회원 가입" icon="pi pi-check" iconPos="right" class="p-button-outlined" @click="checkValidate" />
+						<Button label="회원 가입" icon="pi pi-check" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
+						<Button label="학생증 발급" icon="pi pi-user-plus" iconPos="right" class="p-button-outlined did-issued" :disabled="!successSignUp" @click="getUserDID" />
 					</div>
 					<Dialog class="password-modal p-dialog-maximized" :showHeader="false" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 						<SimplePassword :title="'간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
@@ -51,6 +54,9 @@ export default {
 			selectedGroupedMajor: null,
 			displayPasswordModal: false,
 			displayBasic: false,
+			successSignUp: false,
+			summaryText: "",
+			detailText: "",
 			//임시 학과 데이터
 			groupedMajor: [
 				{
@@ -93,16 +99,18 @@ export default {
 				this.failMajorText = "필수 입력 사항입니다."
 				return
 			}
-			console.log(this.selectedGroupedMajor.label)
 			this.failMajor = false
 			//회원가입 완료시 post
 			this.signUp()
 		},
 		async signUp() {
+			this.summaryText = "회원가입 오류"
+			this.detailText = "이미 가입된 회원입니다.\n잠시후 메인화면으로 이동합니다."
+			this.showError(this.summaryText, this.detailText)
 			this.isFirstMember = false
 			//구글 이메일, 이름, 이미지 url로 API POST
 			// post 완료시 키값 저장
-			const response = await this.$axios.post("https://101.101.218.36:8000/members/", {
+			const response = await this.$axios.post("/api/members/", {
 				major: this.selectedGroupedMajor.label,
 				stdnum: this.studentId,
 				name: this.name,
@@ -111,19 +119,27 @@ export default {
 			})
 			if (response.status === 201) {
 				localStorage.setItem("key", response.data.email)
-				this.openPasswordModal()
-				this.getUserDID()
-			} else if (response.status === 400) {
+				this.successSignUp = true
+			} else {
 				//중복 회원가입시
 				console.log(response)
+				this.summaryText = "회원가입 오류"
+				this.detailText = "이미 가입된 회원입니다."
+				this.showError(this.summaryText, this.detailText)
 			}
 		},
 		//did 발급
 		async getUserDID() {
-			const response = await this.$axios.get("https://101.101.218.36:8000/runpython/", {})
+			const response = await this.$axios.get("/api/runpython/", {})
 			if (response.status === 201) {
 				console.log(response)
+				this.openPasswordModal()
 				localStorage.setItem("did", response.data.did)
+			} else {
+				console.log("학생증 발급 오류입니다.")
+				this.summaryText = "학생증 발급 오류"
+				this.detailText = "이미 가입된 회원입니다."
+				this.showError(this.summaryText, this.detailText)
 			}
 		},
 		openPasswordModal() {
@@ -133,6 +149,10 @@ export default {
 			this.displayPasswordModal = false
 			this.$router.push("/")
 		},
+		showError(summaryText, detailText) {
+			console.log(summaryText)
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
+		},
 	},
 }
 </script>
@@ -140,7 +160,10 @@ export default {
 @import "./login-form.css";
 </style>
 <style>
-.p-dialog .p-dialog-content {
+.login-form .p-dialog-content {
 	border-radius: 20px;
+}
+.p-toast .p-toast-message .p-toast-message-content .p-toast-detail {
+	white-space: pre;
 }
 </style>
