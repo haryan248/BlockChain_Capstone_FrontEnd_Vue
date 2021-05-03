@@ -5,8 +5,9 @@
 				<div class="login-card">
 					<div class="p-fluid">
 						<div class="login__button">
-							<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" class="p-button-outlined" />
 							<div class="error-message" v-html="errorTitle"></div>
+							<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" class="p-button-outlined" />
+							<div class="error-message"></div>
 							<Button label="이미 가입하신적이 있나요?" class="p-button-outlined p-button-danger" icon="pi pi-question-circle" iconPos="left" @click="goToFindForm" />
 						</div>
 					</div>
@@ -38,7 +39,7 @@ export default {
 		}
 	},
 	mounted() {
-		if (sessionStorage.getItem("isLogin") !== null) {
+		if (sessionStorage.getItem("isLogin") !== null || sessionStorage.getItem("isFindAccount") !== null) {
 			this.loading = true
 			setTimeout(() => {
 				this.checkLogin()
@@ -51,15 +52,14 @@ export default {
 	methods: {
 		async checkLogin() {
 			if (this.$gAuth.instance === null) this.loading = false
-
 			const GoogleUser = this.$gAuth.instance.currentUser.get()
-			const profile = GoogleUser.getBasicProfile()
-			console.log(GoogleUser.isSignedIn())
 			if (GoogleUser.isSignedIn() === false) {
 				this.loading = false
 				sessionStorage.removeItem("isLogin")
+				sessionStorage.removeItem("isFindAccount")
 				return
 			}
+			const profile = GoogleUser.getBasicProfile()
 			const email = profile.getEmail()
 
 			if (email.split("@")[1] !== "kyonggi.ac.kr") {
@@ -71,13 +71,19 @@ export default {
 				this.userImage = profile.getImageUrl()
 				this.userEmail = email
 				this.isFirstMember = localStorage.getItem("key")
-				sessionStorage.removeItem("isLogin")
 				//처음 가입시 회원가입, 아닐시 바로 학생증 창으로 이동
+				console.log(this.isFirstMember !==null)
 				if (this.isFirstMember !== null) {
 					this.$router.push("/")
 				} else {
 					//처음 가입시 로그인 폼으로 이동
-					this.$router.replace({ name: "LoginForm", params: { name: this.userName, imgUrl: this.userImage, email: this.userEmail } })
+					if (sessionStorage.getItem("isFindAccount") !== null) {
+						this.$router.replace({ name: "FindAccountForm", params: { email: this.userEmail } })
+						sessionStorage.removeItem("isFindAccount")
+					} else {
+						this.$router.replace({ name: "LoginForm", params: { name: this.userName, imgUrl: this.userImage, email: this.userEmail } })
+						sessionStorage.removeItem("isLogin")
+					}
 				}
 			}
 		},
@@ -86,9 +92,9 @@ export default {
 			sessionStorage.setItem("isLogin", true)
 			await this.$gAuth.signIn()
 		},
-		goToFindForm() {
-			console.log(1)
-			this.$router.push("/findAccountForm")
+		async goToFindForm() {
+			sessionStorage.setItem("isFindAccount", true)
+			await this.$gAuth.signIn()
 		},
 	},
 }

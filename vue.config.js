@@ -4,7 +4,7 @@ module.exports = {
 		compress: true,
 		proxy: {
 			"^/api": {
-				target: "https://apiupass.com/api",
+				target: "https://apiupass.com",
 				changeOrigin: true,
 				logLevel: "debug",
 			},
@@ -14,7 +14,7 @@ module.exports = {
 		// 	key: fs.readFileSync("./key/example.com+5-key.pem"),
 		// 	cert: fs.readFileSync("./key/example.com+5.pem"),
 		// },
-		// public: "https://localhost:8080/",
+		public: "http://localhost:8080/",
 		disableHostCheck: true,
 		// allowedHosts: ["http://localhost:8080"],
 		allowedHosts: ["https://www.kyonggiupass.com"],

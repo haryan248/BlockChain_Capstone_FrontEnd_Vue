@@ -199,3 +199,6 @@ padding-bottom: 100px
 .p-progressbar .p-progressbar-value {
 	background: #4a83e5;
 }
+.p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
+	background: #4a83e5;
+}

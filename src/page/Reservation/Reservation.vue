@@ -61,7 +61,7 @@ export default {
 	name: "Reservation",
 	components: {},
 	data() {
-		return { errors: [], o: [], selectedSeat: null, rows: 5, cols: 12, seats: [] }
+		return { errors: [], o: [], selectedSeat: null, rows: 12, cols: 7, seats: [] }
 	},
 	computed: {},
 	methods: {

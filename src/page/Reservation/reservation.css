@@ -4,6 +4,8 @@
 	height: 100vh;
 	margin-top: -60px;
 	padding-top: 70px;
+	padding-left: 20px;
+	padding-right: 20px;
 	box-sizing: border-box;
 	position: relative;
 	list-style: none;

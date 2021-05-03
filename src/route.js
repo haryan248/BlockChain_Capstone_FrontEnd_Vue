@@ -46,9 +46,10 @@ const routes = [
 		component: Login,
 	},
 	{
-		path: "/findAccountForm",
+		path: "/findAccountForm/:email",
 		name: "FindAccountForm",
 		component: FindAccountForm,
+		props: true,
 	},
 	{
 		path: "/loginForm/:name/:imgUrl/:email",
@@ -74,6 +75,8 @@ router.beforeEach((to, from, next) => {
 			next({ path: "/" })
 		}
 	} else if (to.path.split("/")[1] == "loginForm") {
+		next()
+	} else if (to.path.split("/")[1] == "findAccountForm") {
 		next()
 	} else {
 		if (localStorage.getItem("key") === null) {

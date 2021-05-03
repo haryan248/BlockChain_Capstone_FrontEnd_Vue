@@ -14,7 +14,16 @@
 						</div>
 						<div class="p-field">
 							<label for="id" class="studentId" ref="majorInput">학과 *</label>
-							<Dropdown :disabled="successSignUp" v-model="selectedGroupedMajor" :options="groupedMajor" optionLabel="label" placeholder="학과를 선택해주세요." optionGroupLabel="label" optionGroupChildren="items" :class="{ 'major-invalid': failMajor }">
+							<Dropdown
+								:disabled="successSignUp"
+								v-model="selectedGroupedMajor"
+								:options="groupedMajor"
+								optionLabel="label"
+								placeholder="학과를 선택해주세요."
+								optionGroupLabel="label"
+								optionGroupChildren="items"
+								:class="{ 'major-invalid': failMajor }"
+							>
 								<template #optiongroup="slotProps">
 									<div class="p-d-flex p-ai-center country-item">
 										<div>{{ slotProps.option.label }}</div>
@@ -82,14 +91,14 @@ export default {
 		//유효성 검사
 		checkValidate() {
 			let regexp = /^[0-9]*$/
-			if (!regexp.test(this.studentId) || this.studentId.length !== 9) {
-				this.failId = true
-				this.failIdText = "9자리 숫자를 입력해주세요."
-				this.$refs.usernameInput.focus()
-				return
-			} else if (this.studentId === "") {
+			if (this.studentId === "") {
 				this.failId = true
 				this.failIdText = "필수 입력 사항입니다."
+				this.$refs.usernameInput.focus()
+				return
+			} else if (!regexp.test(this.studentId) || this.studentId.length !== 9) {
+				this.failId = true
+				this.failIdText = "9자리 숫자를 입력해주세요."
 				this.$refs.usernameInput.focus()
 				return
 			} else if (this.selectedGroupedMajor === null) {
@@ -150,7 +159,6 @@ export default {
 			this.$router.push("/")
 		},
 		showError(summaryText, detailText) {
-			console.log(summaryText)
 			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
 		},
 	},
