@@ -149,7 +149,7 @@ export default {
 						this.$refs.studentId.$el.focus()
 					} else if (Object.keys(error.response.data).includes("email")) {
 						this.summaryText = "회원가입 오류"
-						this.detailText = "이미 등록된 이메일입니다.\n잠시후 메인화면으로 이동합니다."
+						this.detailText = "이미 등록된 이메일입니다.\n잠시후 메인 화면으로 이동합니다."
 						this.showError(this.summaryText, this.detailText)
 						setTimeout(() => {
 							this.$router.replace("/login")
@@ -167,6 +167,7 @@ export default {
 					this.summaryText = "학생증 발급 완료"
 					this.detailText = "학생증 발급이 완료되었습니다."
 					this.showSuccess(this.summaryText, this.detailText)
+					this.displayBasic = false
 					this.openPasswordModal()
 				}
 			} catch (error) {
