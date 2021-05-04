@@ -1,5 +1,7 @@
 <template>
 	<div>
+		<Toast :style="{ width: '90%', zIndex: '2100' }" />
+
 		<Header :title="'U-PASS'" />
 		<div class="container bg-gray">
 			<div>
@@ -15,9 +17,9 @@
 											<div class="item__img">
 												<img class="student__img" src="../../assets/KakaoTalk_20210418_124638504.jpg" />
 											</div>
-											<p class="item__temp">학번 : {{ studentId }}</p>
-											<p class="item__temp">성명 : {{ name }}</p>
-											<p class="item__temp">소속(학과) : {{ major }}</p>
+											<p class="item__detail">학번 : {{ studentId }}</p>
+											<p class="item__detail">성명 : {{ name }}</p>
+											<p class="item__detail">소속(학과) : {{ major }}</p>
 										</div>
 									</div>
 								</div>
@@ -39,6 +41,25 @@
 						<Button label="학생증" icon="pi pi-id-card" iconPos="left" @click="openPasswordModal" />
 					</div>
 				</div>
+				<Dialog class="did__error-modal" header="" :showHeader="false" v-model:visible="displayDIDModal" :style="{ width: '80vw' }" :modal="true">
+					<div class="did-modal">
+						<div class="did-card">
+							<div class="did-wrapper">
+								<div class="box">
+									<div class="did-card__item">
+										<p class="item__title">학생증 발급 필요</p>
+										<p class="item__detail">
+											<br />DID (Decentralized Identifier)을 발급하는 도중에 오류가 발생하였거나, 어플이 종료되었을 수 있습니다. <br /><br />
+											기기에 DID정보가 없으므로 학생증을 발급해주세요.<br />
+										</p>
+
+										<Button label="학생증 발급" icon="pi pi-user-plus" iconPos="right" class="p-button-outlined did-issued" @click="getUserDID" />
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</Dialog>
 			</div>
 		</div>
 	</div>
@@ -62,6 +83,7 @@ export default {
 			displayPasswordModal: false,
 			displayPasswordModalForNone: false,
 			displayStudentModal: false,
+			displayDIDModal: false,
 			name: "",
 			major: "",
 			studentId: "",
@@ -76,18 +98,42 @@ export default {
 		this.getMember()
 	},
 	mounted() {
-		if (localStorage.getItem("simplePassword") === null) this.displayPasswordModalForNone = true
-		this.$shared.checkGoogleLogin(this.$gAuth)
+		if (localStorage.getItem("simplePassword") === null) this.openPasswordModalForNone()
+		if (localStorage.getItem("did") === null) this.openDIDModal()
 		this.displayStudentModal = true
+		this.$shared.checkGoogleLogin(this.$gAuth)
 	},
 	methods: {
 		async getMember() {
-			const response = await this.$axios.get("/api/members/" + this.key, {})
-			if (response.status === 201) {
-				this.name = response.data.name
-				this.studentId = response.data.stdnum
-				this.major = response.data.major
-				// localStorage.setItem("did", response.data.did)
+			try {
+				const response = await this.$axios.get("/api/members/" + this.key, {})
+				if (response.status === 201) {
+					this.name = response.data.name
+					this.studentId = response.data.stdnum
+					this.major = response.data.major
+					// localStorage.setItem("did", response.data.did)
+				}
+			} catch (error) {
+				if (error.response) {
+					// 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+					// console.log(error.response.data)
+					// console.log(error.response.status)
+					// console.log(error.response.headers)
+				}
+			}
+		},
+		async getUserDID() {
+			try {
+				const response = await this.$axios.get("/api/runpython/", {})
+				if (response.status === 201) {
+					localStorage.setItem("did", response.data.did)
+				}
+			} catch (error) {
+				if (error.response) {
+					this.summaryText = "DID발급 오류"
+					this.detailText = "죄송합니다. \nDID 발급에 오류가 있습니다."
+					this.showError(this.summaryText, this.detailText)
+				}
 			}
 		},
 		setQRString() {
@@ -112,6 +158,12 @@ export default {
 		closePasswordModalForNone() {
 			this.displayPasswordModalForNone = false
 		},
+		openDIDModal() {
+			this.displayDIDModal = true
+		},
+		closeDIDModal() {
+			this.displayDIDModal = false
+		},
 	},
 }
 </script>
@@ -123,6 +175,11 @@ export default {
 	border-radius: 20px;
 }
 .p-dialog.p-component.QR-modal {
+	overflow: hidden;
+	border-radius: 20px;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.05), 0 5px 20px rgba(0, 0, 0, 0.05);
+}
+.p-dialog.p-component.did__error-modal {
 	overflow: hidden;
 	border-radius: 20px;
 	box-shadow: 0 0 5px rgba(0, 0, 0, 0.05), 0 5px 20px rgba(0, 0, 0, 0.05);

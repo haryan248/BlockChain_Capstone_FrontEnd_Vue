@@ -8,7 +8,17 @@
 					<div class="sign-in">
 						<div class="p-field">
 							<label for="studentId" ref="usernameInput" class="studentId">학번 *</label>
-							<InputText :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" :disabled="successSignUp" />
+							<InputText
+								ref="studentId"
+								:class="{ 'p-invalid': failId }"
+								autocomplete="off"
+								id="studentId"
+								placeholder="학번"
+								type="text"
+								:maxlength="9"
+								v-model="studentId"
+								:disabled="successSignUp"
+							/>
 							<small v-if="failId" class="p-error" id="studentid-help">{{ failIdText }}</small>
 							<small v-else id="studentid-help">학번을 입력해주세요.</small>
 						</div>
@@ -86,6 +96,7 @@ export default {
 		setTimeout(() => {
 			this.displayBasic = true
 		}, 600)
+		this.getUserDID()
 	},
 	methods: {
 		//유효성 검사
@@ -113,42 +124,56 @@ export default {
 			this.signUp()
 		},
 		async signUp() {
-			this.summaryText = "회원가입 오류"
-			this.detailText = "이미 가입된 회원입니다.\n잠시후 메인화면으로 이동합니다."
-			this.showError(this.summaryText, this.detailText)
 			this.isFirstMember = false
 			//구글 이메일, 이름, 이미지 url로 API POST
 			// post 완료시 키값 저장
-			const response = await this.$axios.post("/api/members/", {
-				major: this.selectedGroupedMajor.label,
-				stdnum: this.studentId,
-				name: this.name,
-				email: this.email,
-				key: "2877",
-			})
-			if (response.status === 201) {
-				localStorage.setItem("key", response.data.email)
-				this.successSignUp = true
-			} else {
-				//중복 회원가입시
-				console.log(response)
-				this.summaryText = "회원가입 오류"
-				this.detailText = "이미 가입된 회원입니다."
-				this.showError(this.summaryText, this.detailText)
+			try {
+				const response = await this.$axios.post("/api/members/", {
+					major: this.selectedGroupedMajor.label,
+					stdnum: this.studentId,
+					name: this.name,
+					email: this.email,
+					key: "2877",
+				})
+				if (response.status === 201) {
+					localStorage.setItem("key", response.data.email)
+					this.successSignUp = true
+				}
+			} catch (error) {
+				if (error.response) {
+					//중복 회원가입시
+					if (Object.keys(error.response.data).includes("stdnum")) {
+						this.summaryText = "회원가입 오류"
+						this.detailText = "이미 등록된 학번입니다."
+						this.showError(this.summaryText, this.detailText)
+						this.studentId = ""
+						this.$refs.studentId.$el.focus()
+					} else if (Object.keys(error.response.data).includes("email")) {
+						this.summaryText = "회원가입 오류"
+						this.detailText = "이미 등록된 이메일입니다.\n잠시후 메인화면으로 이동합니다."
+						this.showError(this.summaryText, this.detailText)
+						setTimeout(() => {
+							this.$router.replace("/login")
+						}, 3000)
+					}
+				}
 			}
 		},
 		//did 발급
 		async getUserDID() {
-			const response = await this.$axios.get("/api/runpython/", {})
-			if (response.status === 201) {
-				console.log(response)
-				this.openPasswordModal()
-				localStorage.setItem("did", response.data.did)
-			} else {
-				console.log("학생증 발급 오류입니다.")
-				this.summaryText = "학생증 발급 오류"
-				this.detailText = "이미 가입된 회원입니다."
-				this.showError(this.summaryText, this.detailText)
+			try {
+				const response = await this.$axios.get("/api/runpython/", {})
+				if (response.status === 201) {
+					this.openPasswordModal()
+					localStorage.setItem("did", response.data.did)
+				} 
+			} catch (error) {
+				if (error.response) {
+					console.log(error.response)
+					this.summaryText = "DID발급 오류"
+					this.detailText = "죄송합니다. \nDID 발급에 오류가 있습니다."
+					this.showError(this.summaryText, this.detailText)
+				}
 			}
 		},
 		openPasswordModal() {
