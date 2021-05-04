@@ -2,7 +2,7 @@ import "primeflex/primeflex.css"
 import "primevue/resources/themes/saga-blue/theme.css"
 import "primevue/resources/primevue.min.css"
 import "primeicons/primeicons.css"
-import "S-Core-Dream-light/s-core-dream.css"
+import "./assets/S-Core-Dream-light/s-core-dream.css"
 
 import { createApp } from "vue"
 import { router } from "./route"
