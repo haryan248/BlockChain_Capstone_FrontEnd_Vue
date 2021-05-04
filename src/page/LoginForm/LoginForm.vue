@@ -96,7 +96,6 @@ export default {
 		setTimeout(() => {
 			this.displayBasic = true
 		}, 600)
-		this.getUserDID()
 	},
 	methods: {
 		//유효성 검사
@@ -164,9 +163,12 @@ export default {
 			try {
 				const response = await this.$axios.get("/api/runpython/", {})
 				if (response.status === 201) {
-					this.openPasswordModal()
 					localStorage.setItem("did", response.data.did)
-				} 
+					this.summaryText = "학생증 발급 완료"
+					this.detailText = "학생증 발급이 완료되었습니다."
+					this.showSuccess(this.summaryText, this.detailText)
+					this.openPasswordModal()
+				}
 			} catch (error) {
 				if (error.response) {
 					console.log(error.response)
@@ -185,6 +187,9 @@ export default {
 		},
 		showError(summaryText, detailText) {
 			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
+		},
+		showSuccess(summaryText, detailText) {
+			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
 		},
 	},
 }

@@ -9,7 +9,7 @@
 	border-radius: 20px;
 	background-color: #fff;
 	min-height: 300px; */
-	padding-top: 64px;
+	padding-top: 44px;
 	padding-bottom: 32px;
 }
 .login-card {
@@ -37,6 +37,7 @@
 .error-message {
 	text-align: center;
 	padding-top: 20px;
+	padding-bottom: 20px;
 	color: #f47b61;
 }
 .home-container {
@@ -56,4 +57,20 @@
 	top: 9%;
 	left: 50%;
 	transform: translate(-50%, -50%);
+}
+
+.upass__button-info {
+	color: black !important;
+	text-align: right;
+	font-size: 20px;
+}
+
+.upass-info__detail {
+	text-align: center;
+	font-weight: 200;
+	font-size: 14px;
+}
+.upass-info__detail .upass-focus {
+	font-size: 15.5px;
+	font-weight: bold;
 }
