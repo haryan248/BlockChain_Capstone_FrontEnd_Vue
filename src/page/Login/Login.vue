@@ -92,7 +92,6 @@ export default {
 			} else {
 				this.userName = profile.getName()
 				this.userImage = profile.getImageUrl()
-				localStorage.setItem("image", this.userImage)
 				this.userEmail = email
 				this.isFirstMember = localStorage.getItem("key")
 				//처음 가입시 회원가입, 아닐시 바로 학생증 창으로 이동

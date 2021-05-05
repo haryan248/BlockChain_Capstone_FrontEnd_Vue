@@ -17,7 +17,7 @@
 											<div class="item__img">
 												<!-- <img class="student__img" src="../../assets/KakaoTalk_20210418_124638504.jpg" /> -->
 
-												<div class="student__img" :style="{ 'background-image': 'url(' + image + ')' }"></div>
+												<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }"></div>
 											</div>
 											<p class="item__detail">학번 : {{ studentId }}</p>
 											<p class="item__detail">성명 : {{ name }}</p>
@@ -86,7 +86,7 @@ export default {
 			displayPasswordModalForNone: false,
 			displayStudentModal: false,
 			displayDIDModal: false,
-			image: "",
+			userImage: "",
 			name: "",
 			major: "",
 			studentId: "",
@@ -99,8 +99,6 @@ export default {
 	created() {
 		this.setQRString()
 		this.getMember()
-		this.image = localStorage.getItem("image")
-		console.log(this.image)
 	},
 	mounted() {
 		if (localStorage.getItem("simplePassword") === null) this.openPasswordModalForNone()
@@ -116,7 +114,7 @@ export default {
 					this.name = response.data.name
 					this.studentId = response.data.stdnum
 					this.major = response.data.major
-					// localStorage.setItem("did", response.data.did)
+					this.userImage = response.data.image
 				}
 			} catch (error) {
 				if (error.response) {

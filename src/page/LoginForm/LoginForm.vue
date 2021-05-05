@@ -112,6 +112,7 @@ export default {
 					major: this.selectedGroupedMajor.label,
 					stdnum: this.studentId,
 					name: this.name,
+					image: this.imgUrl,
 					email: this.email,
 					key: "2877",
 				})
