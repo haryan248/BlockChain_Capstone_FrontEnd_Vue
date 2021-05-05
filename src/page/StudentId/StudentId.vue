@@ -15,7 +15,9 @@
 										<div class="student-card__item">
 											<p class="item__univ">경기대학교</p>
 											<div class="item__img">
-												<img class="student__img" src="../../assets/KakaoTalk_20210418_124638504.jpg" />
+												<!-- <img class="student__img" src="../../assets/KakaoTalk_20210418_124638504.jpg" /> -->
+
+												<div class="student__img" :style="{ 'background-image': 'url(' + image + ')' }"></div>
 											</div>
 											<p class="item__detail">학번 : {{ studentId }}</p>
 											<p class="item__detail">성명 : {{ name }}</p>
@@ -84,6 +86,7 @@ export default {
 			displayPasswordModalForNone: false,
 			displayStudentModal: false,
 			displayDIDModal: false,
+			image: "",
 			name: "",
 			major: "",
 			studentId: "",
@@ -96,6 +99,8 @@ export default {
 	created() {
 		this.setQRString()
 		this.getMember()
+		this.image = localStorage.getItem("image")
+		console.log(this.image)
 	},
 	mounted() {
 		if (localStorage.getItem("simplePassword") === null) this.openPasswordModalForNone()

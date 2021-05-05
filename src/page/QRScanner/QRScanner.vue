@@ -10,9 +10,9 @@
 						</div>
 						<div class="conver__button camera-turn">
 							<!-- 카메라 전환 -->
-							<!-- <Button icon="pi" @click="switchCamera" class="p-button-lg" alt="switch camera" /> -->
+							<!-- <Button icon="pi" class="p-button-lg" alt="switch camera" /> -->
 						</div>
-						<button class="conver__button" type="button"></button>
+						<button class="conver__button" type="button" @click="switchCamera"></button>
 						<qr-stream :camera="camera" @decode="onDecode" class="mb" @init="onInit">
 							<!-- 로딩화면 -->
 							<div class="loading-indicator-qr" v-if="loading">
@@ -96,6 +96,7 @@ export default {
 		},
 		//카메라 전환
 		switchCamera() {
+			console.log(this.camera)
 			switch (this.camera) {
 				case "front":
 					this.camera = "rear"

@@ -4,7 +4,7 @@
 			<div class="login-box">
 				<div class="login-card">
 					<div class="p-fluid">
-						<Button label="U-PASS란" icon="pi pi-info-circle" iconPos="right" class="p-button-secondary border-none p-button-text upass__button-info" @click="openInfoModal" />
+						<Button label="U-PASS란?" icon="pi pi-info-circle" iconPos="right" class="p-button-secondary border-none p-button-text upass__button-info" @click="openInfoModal" />
 
 						<div class="login__button">
 							<div class="error-message" v-html="errorTitle"></div>
@@ -92,6 +92,7 @@ export default {
 			} else {
 				this.userName = profile.getName()
 				this.userImage = profile.getImageUrl()
+				localStorage.setItem("image", this.userImage)
 				this.userEmail = email
 				this.isFirstMember = localStorage.getItem("key")
 				//처음 가입시 회원가입, 아닐시 바로 학생증 창으로 이동
