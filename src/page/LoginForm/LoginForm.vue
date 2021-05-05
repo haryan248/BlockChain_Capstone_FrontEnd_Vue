@@ -148,8 +148,9 @@ export default {
 					this.summaryText = "학생증 발급 완료"
 					this.detailText = "학생증 발급이 완료되었습니다."
 					this.showSuccess(this.summaryText, this.detailText)
-					this.displayBasic = false
 					this.openPasswordModal()
+					console.log(this.displayPasswordModal)
+					this.displayBasic = false
 				}
 			} catch (error) {
 				if (error.response) {
