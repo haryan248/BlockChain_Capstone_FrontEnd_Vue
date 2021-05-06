@@ -59,6 +59,7 @@ export default {
 	data() {
 		return {
 			passwdArray: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+			alphaPasswdArray: null,
 			tempNum: null,
 			simplePasswd: "",
 			passwdMaxLength: 6,
@@ -71,6 +72,7 @@ export default {
 	},
 	created() {
 		this.shuffle(this.passwdArray)
+		this.genCharArray("a", "z")
 	},
 	mounted() {
 		document.addEventListener("touchstart", (event) => {
@@ -85,6 +87,18 @@ export default {
 		document.removeEventListener("touchend", this.touchEndListener)
 	},
 	methods: {
+		genCharArray(charA, charZ) {
+			var a = [],
+				i = charA.charCodeAt(0),
+				j = charZ.charCodeAt(0)
+			for (; i <= j; ++i) {
+				a.push(String.fromCharCode(i))
+			}
+			console.log(typeof a)
+			console.log(typeof this.alphaPasswdArray)
+			this.alphaPasswdArray = a
+			console.log(this.alphaPasswdArray)
+		},
 		shuffle(array) {
 			array.sort(() => Math.random() - 0.5)
 		},

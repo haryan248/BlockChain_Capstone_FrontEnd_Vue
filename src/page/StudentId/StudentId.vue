@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Toast :style="{ width: '90%', zIndex: '2100' }" />
+		<Toast :style="{ width: '90%' }" position="top-right" />
 
 		<Header :title="'U-PASS'" />
 		<div class="container bg-gray">
@@ -15,8 +15,6 @@
 										<div class="student-card__item">
 											<p class="item__univ">경기대학교</p>
 											<div class="item__img">
-												<!-- <img class="student__img" src="../../assets/KakaoTalk_20210418_124638504.jpg" /> -->
-
 												<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }"></div>
 											</div>
 											<p class="item__detail">학번 : {{ studentId }}</p>
@@ -94,6 +92,8 @@ export default {
 			SimplePassword: localStorage.getItem("simplePassword"),
 			key: localStorage.getItem("key"),
 			DIDPasswd: "",
+			summaryText: "",
+			detailText: "",
 		}
 	},
 	created() {
@@ -160,12 +160,16 @@ export default {
 		},
 		closePasswordModalForNone() {
 			this.displayPasswordModalForNone = false
+			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다.")
 		},
 		openDIDModal() {
 			this.displayDIDModal = true
 		},
 		closeDIDModal() {
 			this.displayDIDModal = false
+		},
+		showSuccess(summaryText, detailText) {
+			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 30000 })
 		},
 	},
 }
