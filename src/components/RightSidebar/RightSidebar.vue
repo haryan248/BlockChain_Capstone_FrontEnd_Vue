@@ -49,6 +49,10 @@ export default {
 		},
 		closePasswordModal() {
 			this.displayPasswordModal = false
+			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다.")
+		},
+		showSuccess(summaryText, detailText) {
+			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
 		},
 	},
 }
