@@ -119,6 +119,9 @@ export default {
 				if (response.status === 201) {
 					localStorage.setItem("key", response.data.email)
 					this.successSignUp = true
+					this.summaryText = "회원가입 완료"
+					this.detailText = "회원가입이 완료되었습니다. \n학생증을 발급해주세요."
+					this.showSuccess(this.summaryText, this.detailText)
 				}
 			} catch (error) {
 				if (error.response) {
