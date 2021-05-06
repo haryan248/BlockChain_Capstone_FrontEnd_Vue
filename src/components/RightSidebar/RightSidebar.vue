@@ -11,9 +11,9 @@
 						<div class="accordian-item" @click="openPasswordModal">
 							재설정
 						</div>
-						<div class="accordian-item" @click="openPasswordModal">
+						<!-- <div class="accordian-item" @click="openPasswordModal">
 							찾기
-						</div>
+						</div> -->
 					</AccordionTab>
 					<AccordionTab header="다크모드"> 다크모드 <InputSwitch v-model="checked" /> </AccordionTab>
 					<AccordionTab header="DID 재발급">
