@@ -1,15 +1,32 @@
 .password-container {
 	overflow: hidden;
 }
+.warning-info {
+	bottom: 50px;
+	font-size: 5px;
+	color: #ff4b4b;
+	font-weight: bold;
+	text-align: center;
+}
+.warning-info .text {
+	margin-left: 4px;
+	display: inline-block;
+}
 .password-header {
 	padding: 10px;
 	font-size: x-large;
+	font-weight: bold;
 	margin-bottom: 40px;
+}
+.password-help {
+	font-size: 16px;
+	letter-spacing: -1px;
 }
 .password__wrong {
 	margin-top: 4px;
 	margin-bottom: 7px;
-	color: #f47b61;
+	color: #ff4b4b;
+	min-height: 49px;
 }
 .inputter__flex {
 	flex-wrap: wrap;
@@ -44,7 +61,7 @@
 	align-items: center;
 	box-sizing: border-box;
 	/* width: 287px; */
-	height: 453px;
+	height: 390px;
 }
 .password-wrapper {
 	position: absolute;
@@ -66,12 +83,9 @@
 	overflow: hidden;
 	position: relative;
 }
-/* .num-button__flex:hover {
-	color: #2196f3;
-} */
 .num-button__flex--active {
 	color: #2196f3 !important;
-	text-shadow: 1px 1px 2px #427388;
+	/* text-shadow: 1px 1px 2px #427388; */
 }
 
 .submit-button {
@@ -105,7 +119,7 @@
 	box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
 	outline-color: rgba(255, 255, 255, 0);
 	outline-offset: 15px;
-	text-shadow: 6px 5px 4px #b7bdc0;
+	/* text-shadow: 6px 5px 4px #b7bdc0; */
 }
 
 .fantasy-font__2_3rem {
@@ -113,14 +127,14 @@
 	padding: 10px;
 	width: 33.3%;
 	color: #2c3e50;
-	text-shadow: 6px 5px 4px #b7bdc0;
+	/* text-shadow: 6px 5px 4px #b7bdc0; */
 }
 .fantasy-font__2_3rem--alpha {
 	font-size: 1.9rem;
 	padding: 10px;
 	width: 14.2%;
 	color: #2c3e50;
-	text-shadow: 6px 5px 4px #b7bdc0;
+	/* text-shadow: 6px 5px 4px #b7bdc0; */
 }
 .p-ripple.purple .p-ink {
 	background: rgba(256, 39, 176, 0.3);

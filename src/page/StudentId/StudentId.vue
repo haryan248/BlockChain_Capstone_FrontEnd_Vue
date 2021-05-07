@@ -31,10 +31,10 @@
 							<Dialog class="password-modal p-dialog-maximized" header="" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 								<SimplePassword :title="'간편 비밀번호 입력'" :isSetting="false" @correctPassword="closePasswordModal" />
 							</Dialog>
-							<Dialog class="password-modal p-dialog-maximized" header="" v-model:visible="displayPasswordModalForNone" :style="{ width: '100vw', height: '100vh' }" :modal="true">
-								<SimplePassword :title="'간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModalForNone" />
-							</Dialog>
 						</div>
+					</Dialog>
+					<Dialog class="password-modal p-dialog-maximized" header="" :showHeader="false" v-model:visible="displayPasswordModalForNone" :style="{ width: '100vw', height: '100vh' }" :modal="true">
+						<SimplePassword :title="'간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModalForNone" />
 					</Dialog>
 					<div class="student__id-content"></div>
 					<div class="student__button">
@@ -97,14 +97,15 @@ export default {
 		}
 	},
 	created() {
-		this.setQRString()
 		this.getMember()
 	},
 	mounted() {
 		if (localStorage.getItem("simplePassword") === null) this.openPasswordModalForNone()
-		if (localStorage.getItem("did") === null) this.openDIDModal()
-		this.displayStudentModal = true
-		this.$shared.checkGoogleLogin(this.$gAuth)
+		else if (localStorage.getItem("did") === null) this.openDIDModal()
+		else {
+			this.displayStudentModal = true
+			this.$shared.checkGoogleLogin(this.$gAuth)
+		}
 	},
 	methods: {
 		async getMember() {
@@ -130,6 +131,7 @@ export default {
 				const response = await this.$axios.get("/api/runpython/", {})
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
+					this.closeDIDModal()
 				}
 			} catch (error) {
 				if (error.response) {
@@ -149,6 +151,7 @@ export default {
 			this.displayQRModal = false
 		},
 		openPasswordModal() {
+			this.setQRString()
 			this.displayPasswordModal = true
 		},
 		closePasswordModal() {
@@ -156,20 +159,27 @@ export default {
 			this.displayPasswordModal = false
 		},
 		openPasswordModalForNone() {
+			this.displayStudentModal = false
 			this.displayPasswordModalForNone = true
 		},
 		closePasswordModalForNone() {
+			if (localStorage.getItem("did") === null) this.openDIDModal()
+			this.displayStudentModal = true
 			this.displayPasswordModalForNone = false
 			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다.")
 		},
 		openDIDModal() {
+			this.displayStudentModal = false
 			this.displayDIDModal = true
 		},
 		closeDIDModal() {
+			if (localStorage.getItem("simplePassword") === null) this.openPasswordModalForNone()
+			this.displayStudentModal = true
 			this.displayDIDModal = false
+			this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
 		},
 		showSuccess(summaryText, detailText) {
-			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 30000 })
+			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
 		},
 	},
 }

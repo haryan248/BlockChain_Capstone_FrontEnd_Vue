@@ -25,7 +25,7 @@
 			</div>
 		</Sidebar>
 		<Dialog class="password-modal p-dialog-maximized" header="" :showHeader="true" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
-			<SimplePassword :title="'간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
+			<SimplePassword :title="'간편 비밀번호 재설정'" :isSetting="true" :isResetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
 	</div>
 </template>

@@ -2,36 +2,34 @@
 	<div class="password-container">
 		<div class="password-content">
 			<h1 class="password-header">{{ title }}</h1>
-			<h4 class="password-help">비밀번호를 입력해 주세요.</h4>
+			<div v-if="isResetting" class="password-help" v-html="resettingText"></div>
+			<div v-else class="password-help">숫자 6자리 + 영문자 1자리</div>
+
 			<div class="password-info">
+				<!-- 비밀번호 입력시 뜨는 화면 -->
 				<div class="password-filter" v-for="(item, index) in simplePasswd.length" :key="index" style="display:inline-block">
-					<Button v-if="index === 6" icon="pi pi-plus" class="p-button-rounded p-button-secondary p-button-text" />
-					<Button v-else icon="pi pi-circle-on" class="p-button-rounded p-button-secondary p-button-text" />
+					<Button v-if="index === 6" icon="pi pi-plus" class="p-button-rounded p-button-secondary p-button-text border-none" />
+					<Button v-else icon="pi pi-circle-on" class="p-button-rounded p-button-secondary p-button-text border-none" />
 				</div>
 				<div class="password-filter" v-for="(item, index) in 8 - simplePasswd.length" :key="index" style="display:inline-block">
-					<Button v-if="simplePasswd.length <= 6 && index === 6 - simplePasswd.length" icon="pi pi-plus" class="p-button-rounded p-button-secondary p-button-text" />
-					<Button v-else icon="pi pi-circle-off" class="p-button-rounded p-button-secondary p-button-text" />
+					<Button v-if="simplePasswd.length <= 6 && index === 6 - simplePasswd.length" icon="pi pi-plus" class="p-button-rounded p-button-secondary p-button-text  border-none" />
+					<Button v-else icon="pi pi-circle-off" class="p-button-rounded p-button-secondary p-button-text  border-none" />
 				</div>
-				<div v-if="checkWrongPassword" class="password__wrong">
-					비밀번호가 틀렸습니다.
-					<br />
-					확인 후 다시 입력해 주세요.
-				</div>
-				<div v-if="!isFirstSettingPassword">
-					간편 비밀번호를 한 번 더 입력해 주세요.
-				</div>
-				<div v-if="checkSettingPassword" class="password__wrong">
-					입력한 비밀번호가 동일하지 않습니다.
-					<br />
-					확인 후 다시 설정해 주세요.
-				</div>
-				<Button v-if="!isSetting" label="비밀번호를 몰라요" class="p-button-sm p-button-raised p-button-secondary" @click="findSimplePasswd" />
+				<div class="password__wrong" v-html="simplePasswdText"></div>
+
+				<!-- 비밀번호 입력창 -->
 				<div class="password-inputter">
 					<div class="password-wrapper">
 						<div class="inputter__flex">
 							<!-- 숫자 자판 -->
 							<div v-if="simplePasswd.length !== 6">
-								<button v-for="(item, index) in passwdArray" :key="index" ref="passwdButton" :class="{ 'num-button__flex--active': touchstart[index] }" class="num-button__flex spread-effect fantasy-font__2_3rem">
+								<button
+									v-for="(item, index) in passwdArray"
+									:key="index"
+									ref="passwdButton"
+									:class="{ 'num-button__flex--active': touchstart[index] }"
+									class="num-button__flex spread-effect fantasy-font__2_3rem"
+								>
 									<button v-if="index === 9" class="num-button__flex spread-effect fantasy-font__2_3rem">
 										{{ checkInvisibleNum(item) }}
 									</button>
@@ -46,7 +44,13 @@
 							</div>
 							<!-- 영어 자판 -->
 							<div v-else>
-								<button v-for="(item, index) in alphaPasswdArray" :key="index" ref="passwdButton" :class="{ 'num-button__flex--active': touchAlphaStart[index] }" class="num-button__flex spread-effect fantasy-font__2_3rem--alpha">
+								<button
+									v-for="(item, index) in alphaPasswdArray"
+									:key="index"
+									ref="passwdButton"
+									:class="{ 'num-button__flex--active': touchAlphaStart[index] }"
+									class="num-button__flex spread-effect fantasy-font__2_3rem--alpha"
+								>
 									<button v-if="index === 21" class="num-button__flex spread-effect fantasy-font__2_3rem--alpha">
 										{{ checkInvisibleNum(item) }}
 									</button>
@@ -63,13 +67,17 @@
 					</div>
 				</div>
 			</div>
+			<div v-if="isSetting || isResetting" class="warning-info">
+				<i class="pi pi-shield" style="fontSize: 5px"></i>
+				<div class="text">간편번호를 잊어버리면 찾을 수 없으니 주의해주시기 바랍니다.</div>
+			</div>
 		</div>
 	</div>
 </template>
 <script>
 export default {
 	name: "SimplePassword",
-	props: { title: String, isSetting: Boolean },
+	props: { title: String, isSetting: Boolean, isResetting: Boolean },
 	components: {},
 	data() {
 		return {
@@ -77,11 +85,12 @@ export default {
 			alphaPasswdArray: null,
 			tempNum: null,
 			simplePasswd: "",
-			passwdMaxLength: 7,
-			checkWrongPassword: false,
 			tempPassword: "",
-			checkSettingPassword: false,
+			passwdMaxLength: 7,
 			isFirstSettingPassword: true,
+			correctCurrentPassword: false,
+			simplePasswdText: "",
+			resettingText: "현재 사용중인 비밀번호를 입력해주세요.",
 			touchstart: [],
 			touchAlphaStart: [],
 		}
@@ -90,6 +99,8 @@ export default {
 		this.shuffle(this.passwdArray)
 		this.genCharArray("a", "z")
 		this.shuffle(this.alphaPasswdArray)
+		console.log(this.touchstart)
+		console.log(this.touchAlphaStart)
 	},
 	mounted() {
 		document.addEventListener("touchstart", (event) => {
@@ -116,21 +127,24 @@ export default {
 		shuffle(array) {
 			array.sort(() => Math.random() - 0.5)
 		},
+		// 자판 터치 이벤트
 		touchStartListener(event) {
-			if (this.simplePasswd.length <= 6) {
+			if (this.simplePasswd.length + 1 <= 6) {
 				this.touchstart[event.target.getAttribute("value")] = true
 			} else {
 				this.touchAlphaStart[event.target.getAttribute("value")] = true
 			}
 		},
 		touchEndListener(event) {
-			setTimeout(() => {
-				if (this.simplePasswd.length <= 6) {
+			if (this.simplePasswd.length + 1 <= 6) {
+				setTimeout(() => {
 					this.touchstart[event.target.getAttribute("value")] = false
-				} else {
-					this.touchAlphaStart[event.target.getAttribute("value")] = false
-				}
-			}, 300)
+				}, 300)
+			} else if (this.simplePasswd.length + 1 === 6) {
+				this.touchstart[event.target.getAttribute("value")] = false
+			} else {
+				this.touchAlphaStart[event.target.getAttribute("value")] = false
+			}
 		},
 		checkInvisibleNum(num) {
 			this.tempNum = num
@@ -149,30 +163,43 @@ export default {
 	},
 	watch: {
 		simplePasswd(data) {
+			if (data.length >= 1) this.simplePasswdText = ""
+
 			if (this.isSetting === false && data.length === this.passwdMaxLength) {
 				if (data === localStorage.getItem("simplePassword")) this.$emit("correctPassword")
 				else {
-					this.checkWrongPassword = true
+					this.simplePasswdText = "비밀번호가 틀렸습니다.<br> 확인 후 다시 입력해 주세요."
+					this.simplePasswd = ""
+				}
+			}
+			//비밀번호 재설정 관련
+			else if (this.correctCurrentPassword === false && this.isResetting === true && data.length === this.passwdMaxLength) {
+				if (data === localStorage.getItem("simplePassword")) {
+					this.resettingText = "변경할 비밀번호를 입력해주세요."
+					this.simplePasswd = ""
+					this.simplePasswdText = ""
+					this.correctCurrentPassword = true
+				} else {
+					this.simplePasswdText = "비밀번호가 틀렸습니다.<br> 확인 후 다시 입력해 주세요."
 					this.simplePasswd = ""
 				}
 			}
 			//비밀 번호 설정 관련
-			else if (this.isSetting === true && data.length === this.passwdMaxLength) {
+			else if ((this.isSetting === true && data.length === this.passwdMaxLength) || (this.correctCurrentPassword === true && data.length === this.passwdMaxLength)) {
+				//처음 비밀번호 입력
 				if (this.isFirstSettingPassword) {
 					this.tempPassword = this.simplePasswd
 					this.simplePasswd = ""
 					this.isFirstSettingPassword = false
-					this.checkSettingPassword = false
+					this.simplePasswdText = "간편 비밀번호를 한 번 더 입력해 주세요."
 				} else {
 					if (this.tempPassword === this.simplePasswd) {
 						localStorage.setItem("simplePassword", this.simplePasswd)
 						this.$emit("setCorrectPassword")
-						console.log("입력한 비밀번호가 올바릅니다.")
 					} else {
 						this.isFirstSettingPassword = true
-						this.checkSettingPassword = true
+						this.simplePasswdText = "입력한 비밀번호가 동일하지 않습니다.<br>확인 후 다시 설정해 주세요."
 						this.simplePasswd = ""
-						console.log("입력한 비밀번호가 올바르지 않습니다.")
 					}
 				}
 			}
