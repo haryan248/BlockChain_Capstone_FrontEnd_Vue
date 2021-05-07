@@ -8,32 +8,13 @@
 					<div class="sign-in">
 						<div class="p-field">
 							<label for="studentId" ref="usernameInput" class="studentId">학번 *</label>
-							<InputText
-								ref="studentId"
-								:class="{ 'p-invalid': failId }"
-								autocomplete="off"
-								id="studentId"
-								placeholder="학번"
-								type="text"
-								:maxlength="9"
-								v-model="studentId"
-								:disabled="successSignUp"
-							/>
+							<InputText ref="studentId" :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" :disabled="successSignUp" />
 							<small v-if="failId" class="p-error" id="studentid-help">{{ failIdText }}</small>
 							<small v-else id="studentid-help">학번을 입력해주세요.</small>
 						</div>
 						<div class="p-field">
 							<label for="id" class="studentId" ref="majorInput">학과 *</label>
-							<Dropdown
-								:disabled="successSignUp"
-								v-model="selectedGroupedMajor"
-								:options="groupedMajor"
-								optionLabel="label"
-								placeholder="학과를 선택해주세요."
-								optionGroupLabel="label"
-								optionGroupChildren="items"
-								:class="{ 'major-invalid': failMajor }"
-							>
+							<Dropdown :disabled="successSignUp" v-model="selectedGroupedMajor" :options="groupedMajor" optionLabel="label" placeholder="학과를 선택해주세요." optionGroupLabel="label" optionGroupChildren="items" :class="{ 'major-invalid': failMajor }">
 								<template #optiongroup="slotProps">
 									<div class="p-d-flex p-ai-center country-item">
 										<div>{{ slotProps.option.label }}</div>
@@ -136,7 +117,7 @@ export default {
 					key: "2877",
 				})
 				if (response.status === 201) {
-					localStorage.setItem("key", response.data.email)
+					localStorage.setItem("key", response.data.email_hash)
 					this.successSignUp = true
 					this.summaryText = "회원가입 완료"
 					this.detailText = "회원가입이 완료되었습니다. \n학생증을 발급해주세요."
@@ -189,7 +170,7 @@ export default {
 		},
 		closePasswordModal() {
 			this.displayPasswordModal = false
-			this.$router.push("/")
+			this.$router.replace("/")
 		},
 		showError(summaryText, detailText) {
 			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
