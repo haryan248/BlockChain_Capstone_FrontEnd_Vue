@@ -1,11 +1,12 @@
 <template>
 	<div class="login__Form-container">
-		<Toast :style="{ width: '90%', zIndex: '2100' }" />
+		<Toast :style="{ width: '90%' }" />
 
 		<Dialog class="login-form" v-model:visible="displayBasic" :showHeader="false" position="bottom" :style="{ width: '80vw' }">
 			<div class="login__form-box">
 				<div class="p-fluid">
 					<div class="sign-in">
+						<!-- 학번 입력 화면 -->
 						<div class="p-field">
 							<label for="studentId" ref="usernameInput" class="studentId">학번 *</label>
 							<InputText ref="studentId" :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" :disabled="successSignUp" />
@@ -53,7 +54,6 @@ export default {
 		async findAccount() {
 			try {
 				const response = await this.$axios.post("/api/findmyinfo/", { stdnum: this.studentId, email: this.email })
-
 				if (response.status === 201) {
 					this.showSuccess("회원 찾기 성공", "이미 가입된 회원입니다. \n잠시후 학생증 페이지로 이동합니다.")
 					localStorage.setItem("key", response.data.key)

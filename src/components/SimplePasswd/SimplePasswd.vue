@@ -23,13 +23,7 @@
 						<div class="inputter__flex">
 							<!-- 숫자 자판 -->
 							<div v-if="simplePasswd.length !== 6">
-								<button
-									v-for="(item, index) in passwdArray"
-									:key="index"
-									ref="passwdButton"
-									:class="{ 'num-button__flex--active': touchstart[index] }"
-									class="num-button__flex spread-effect fantasy-font__2_3rem"
-								>
+								<button v-for="(item, index) in passwdArray" :key="index" ref="passwdButton" :class="{ 'num-button__flex--active': touchstart[index] }" class="num-button__flex spread-effect fantasy-font__2_3rem">
 									<button v-if="index === 9" class="num-button__flex spread-effect fantasy-font__2_3rem">
 										{{ checkInvisibleNum(item) }}
 									</button>
@@ -44,13 +38,7 @@
 							</div>
 							<!-- 영어 자판 -->
 							<div v-else>
-								<button
-									v-for="(item, index) in alphaPasswdArray"
-									:key="index"
-									ref="passwdButton"
-									:class="{ 'num-button__flex--active': touchAlphaStart[index] }"
-									class="num-button__flex spread-effect fantasy-font__2_3rem--alpha"
-								>
+								<button v-for="(item, index) in alphaPasswdArray" :key="index" ref="passwdButton" :class="{ 'num-button__flex--active': touchAlphaStart[index] }" class="num-button__flex spread-effect fantasy-font__2_3rem--alpha">
 									<button v-if="index === 21" class="num-button__flex spread-effect fantasy-font__2_3rem--alpha">
 										{{ checkInvisibleNum(item) }}
 									</button>
@@ -67,6 +55,7 @@
 					</div>
 				</div>
 			</div>
+			<!-- 비밀번호 경고 문구 -->
 			<div v-if="isSetting || isResetting" class="warning-info">
 				<i class="pi pi-shield" style="fontSize: 5px"></i>
 				<div class="text">간편번호를 잊어버리면 찾을 수 없으니 주의해주시기 바랍니다.</div>
@@ -124,9 +113,11 @@ export default {
 			}
 			this.alphaPasswdArray = a
 		},
+		// 배열 무작위 셔플
 		shuffle(array) {
 			array.sort(() => Math.random() - 0.5)
 		},
+
 		// 자판 터치 이벤트
 		touchStartListener(event) {
 			if (this.simplePasswd.length + 1 <= 6) {
@@ -165,6 +156,7 @@ export default {
 		simplePasswd(data) {
 			if (data.length >= 1) this.simplePasswdText = ""
 
+			// 비밀번호 입력 관련
 			if (this.isSetting === false && data.length === this.passwdMaxLength) {
 				if (data === localStorage.getItem("simplePassword")) this.$emit("correctPassword")
 				else {

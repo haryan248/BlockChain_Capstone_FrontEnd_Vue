@@ -64,6 +64,7 @@ export const router = createRouter({
 	routes,
 })
 
+// 라우터 이동전에 로그인 유효성 검사
 router.beforeEach((to, from, next) => {
 	//로그인 페이지 갔을때
 	if (to.path == "/login") {

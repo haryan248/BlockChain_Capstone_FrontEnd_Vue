@@ -1,8 +1,8 @@
 <template>
 	<div class="login__Form-container">
-		<Toast :style="{ width: '90%', zIndex: '2100' }" />
-
+		<Toast :style="{ width: '90%' }" />
 		<Dialog class="login-form" v-model:visible="displayBasic" :showHeader="false" position="bottom" :style="{ width: '80vw' }">
+			<!-- 회원가입 정보 입력 화면 -->
 			<div class="login__form-box">
 				<div class="p-fluid">
 					<div class="sign-in">
@@ -22,7 +22,6 @@
 								</template>
 							</Dropdown>
 							<small v-if="failMajor" class="p-error" id="studentid-help">{{ failMajorText }}</small>
-
 							<small v-else id="usermajor-help">학과를 선택해주세요.</small>
 						</div>
 

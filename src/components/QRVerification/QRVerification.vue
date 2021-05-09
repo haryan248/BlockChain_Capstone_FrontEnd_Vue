@@ -6,19 +6,14 @@
 					<div class="qr-card__item">
 						<p v-if="isStudentId" class="item__desc">입장을 위한 QR코드</p>
 						<p v-else class="item__desc p-text-center p-text-bold">주문 확인을 위한 QR코드</p>
-
-						<!-- <QRCode value="http://facebook.github.io//" /> -->
 						<div class="demo-container p-p-4">
+							<!-- qr 코드 출력 부분 -->
 							<div class="item__code" :class="{ item__refresh: countDown === 0 }">
 								<VueQrcode :value="qrString" :size="150" />
 							</div>
+							<!-- qr 시간 만료시 재발급 -->
 							<Button v-if="countDown === 0" iconPos="top" size="large" icon="pi pi-refresh" @click="resetQR" class="p-button-rounded refresh__button" />
 						</div>
-
-						<!-- qr발급시간이 끝날시 -->
-						<!-- <div v-if="countDown === 0" class="item__code-empty">
-							<div class="item__reload" @click="countDownTimer"></div>
-						</div> -->
 						<p class="item__temp p-text-center p-text-bold">QR코드를 리더기에 제시해주세요</p>
 						<div v-if="isStudentId" class="item__time">
 							남은 시간
@@ -28,6 +23,7 @@
 				</div>
 			</div>
 		</div>
+		<!-- 임시 qr 내용 출력 부분 -->
 		<div style="display:block; font-size: 2px; width:100% word-break:normal;">
 			{{ qrString }}
 		</div>

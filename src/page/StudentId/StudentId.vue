@@ -1,13 +1,13 @@
 <template>
 	<div>
 		<Toast :style="{ width: '90%' }" position="top-right" />
-
 		<Header :title="'U-PASS'" />
 		<div class="container bg-gray">
 			<div>
 				<div class="student-content">
 					<HeaderSection :title="'학생증'" :subtitle="'자신의 정보를 간편하게 관리해보세요.'" />
 					<Dialog class="QR-modal" :showHeader="false" v-model:visible="displayStudentModal" :style="{ width: '80vw' }">
+						<!-- 학생증 카드 -->
 						<div class="student-info">
 							<div class="student-card">
 								<div class="student-wrapper">
@@ -24,15 +24,17 @@
 									</div>
 								</div>
 							</div>
-
-							<Dialog class="QR-modal" header="Header" :showHeader="false" v-model:visible="displayQRModal" :style="{ width: '80vw' }" :modal="true">
-								<QRVerification @goBack="closeQRModal" :isStudentId="true" :DIDPasswd="DIDPasswd" />
-							</Dialog>
+							<!-- 학생증 누를때 간편번호 입력 -->
 							<Dialog class="password-modal p-dialog-maximized" header="" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 								<SimplePassword :title="'간편 비밀번호 입력'" :isSetting="false" @correctPassword="closePasswordModal" />
 							</Dialog>
+							<!-- qr 코드 화면 부분 -->
+							<Dialog class="QR-modal" header="Header" :showHeader="false" v-model:visible="displayQRModal" :style="{ width: '80vw' }" :modal="true">
+								<QRVerification @goBack="closeQRModal" :isStudentId="true" :DIDPasswd="DIDPasswd" />
+							</Dialog>
 						</div>
 					</Dialog>
+					<!-- 간편 비밀번호 없을때 설정 화면 띄우는 부분 -->
 					<Dialog class="password-modal p-dialog-maximized" header="" :showHeader="false" v-model:visible="displayPasswordModalForNone" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 						<SimplePassword :title="'간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModalForNone" />
 					</Dialog>
@@ -41,6 +43,7 @@
 						<Button label="학생증" icon="pi pi-id-card" iconPos="left" @click="openPasswordModal" />
 					</div>
 				</div>
+				<!-- 학생증 발급되지 않았을때 화면 띄우는 부분 -->
 				<Dialog class="did__error-modal" header="" :showHeader="false" v-model:visible="displayDIDModal" :style="{ width: '80vw' }" :modal="true">
 					<div class="did-modal">
 						<div class="did-card">

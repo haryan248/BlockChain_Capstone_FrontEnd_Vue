@@ -1,4 +1,5 @@
 <template>
+	<!-- 프로필 화면 -->
 	<div class="nav__button">
 		<Button icon="pi pi-align-justify" @click="visibleRight = true" class="p-mr-2" />
 	</div>
@@ -11,19 +12,15 @@
 						<div class="accordian-item" @click="openPasswordModal">
 							재설정
 						</div>
-						<!-- <div class="accordian-item" @click="openPasswordModal">
-							찾기
-						</div> -->
 					</AccordionTab>
 					<AccordionTab header="다크모드"> 다크모드 <InputSwitch v-model="checked" /> </AccordionTab>
 					<AccordionTab header="DID 재발급">
 						재발급
 					</AccordionTab>
 				</Accordion>
-
-				<!-- <PanelMenu :model="items" /> -->
 			</div>
 		</Sidebar>
+		<!-- 간편번호 재설정시 띄우는 화면 -->
 		<Dialog class="password-modal p-dialog-maximized" header="" :showHeader="true" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 			<SimplePassword :title="'간편 비밀번호 재설정'" :isSetting="true" :isResetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
@@ -43,6 +40,7 @@ export default {
 		}
 	},
 	methods: {
+		// 패스워드 모달 관련 함수
 		openPasswordModal() {
 			this.visibleRight = false
 			this.displayPasswordModal = true
@@ -51,6 +49,7 @@ export default {
 			this.displayPasswordModal = false
 			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다.")
 		},
+		// 설정 완료시 띄워주는 toast message
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
 		},
@@ -62,7 +61,6 @@ export default {
 </style>
 <style>
 /* 판넬 css overwritting */
-
 .p-panelmenu .p-panelmenu-header > a {
 	/* border: 1px solid #FFF; */
 	background: #fff;

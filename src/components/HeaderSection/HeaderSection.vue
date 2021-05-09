@@ -1,6 +1,6 @@
 <template>
+	<!-- 각 탭의 타이틀 영역 -->
 	<div className="headersection__info">
-		<!-- <Clock date="{new" Date()} /> -->
 		<h5 className="headerSection__time">{{ currentDate }}</h5>
 		<h1 className="headerSection__title">{{ title }}</h1>
 		<h3 className="headerSection__subttl">{{ subtitle }}</h3>

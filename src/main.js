@@ -9,9 +9,6 @@ import { router } from "./route"
 import App from "./App.vue"
 import axios from "axios"
 
-//파이선 쉘
-// import { PythonShell } from "python-shell"
-
 // 공통 함수
 import shared from "./tool/shared.ts"
 
@@ -53,7 +50,6 @@ app.component("Header", Header)
 app.component("BottomNav", BottomNav)
 
 //사용할 UI 컴포넌트 추가
-
 app.component("Sidebar", Sidebar)
 app.component("Button", Button)
 app.component("Dialog", Dialog)
@@ -83,6 +79,7 @@ const gAuthOptions = {
 }
 
 app.use(GAuth, gAuthOptions)
+//전역 변수 설정
 app.config.globalProperties.$shared = shared
 app.config.globalProperties.$axios = axios
 app.mount("#app")

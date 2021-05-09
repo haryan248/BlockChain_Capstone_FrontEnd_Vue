@@ -1,4 +1,3 @@
-const fs = require("fs")
 module.exports = {
 	devServer: {
 		compress: true,
@@ -9,14 +8,7 @@ module.exports = {
 				logLevel: "debug",
 			},
 		},
-		// https: true,
-		// https: {
-		// 	key: fs.readFileSync("./key/example.com+5-key.pem"),
-		// 	cert: fs.readFileSync("./key/example.com+5.pem"),
-		// },
-		// public: "http://localhost:8080/",
 		disableHostCheck: true,
-		// allowedHosts: ["http://localhost:8080"],
 		allowedHosts: ["https://www.kyonggiupass.com"],
 	},
 }

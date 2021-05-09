@@ -1,4 +1,5 @@
 <template>
+	<!-- 각 페이지의 하단 네비게이션 -->
 	<div v-if="$route.path !== '/login' || $route.path !== '/simplepwd'">
 		<aside class="bottom-nav footer--view">
 			<router-link to="/" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.studentId }">
@@ -10,19 +11,6 @@
 			<router-link to="/order" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.order }">
 				<Button label="주문" iconPos="top" icon="pi pi-shopping-cart" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.order }" />
 			</router-link>
-			<!-- <router-link
-				to="/setting"
-				class="footer-btn"
-				:class="{ 'footer-btn--active': $route.path === path.setting }"
-			>
-				<Button
-					label="설정"
-					iconPos="top"
-					icon="pi pi-cog"
-					class="p-button-text p-button-secondary border-none p-button-font--size"
-					:class="{ 'p-button-text--active': $route.path === path.setting }"
-				/>
-			</router-link> -->
 			<router-link to="/reservation" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.setting }">
 				<Button label="예약" iconPos="top" icon="pi pi-ticket" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.setting }" />
 			</router-link>
