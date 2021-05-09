@@ -1,15 +1,19 @@
 <template>
-	<!-- 프로필 화면 -->
 	<div class="nav__button">
 		<Button icon="pi pi-align-justify" @click="visibleRight = true" class="p-mr-2" />
 	</div>
 	<div>
 		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:12rem">
-			<Avatar class="p-mr-2" size="large" style="background-color:#4a83e5; color: #ffffff" shape="circle" icon="pi pi-user" />
+			<!-- 프로필 화면 -->
+			<!-- <Avatar class="p-mr-2" size="large" style="background-color:#4a83e5; color: #ffffff" shape="circle" icon="pi pi-user" /> -->
+			<div class="profile__content">
+				<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }"></div>
+			</div>
 			<div class="sidebar_content">
 				<Accordion>
 					<AccordionTab header="간편비밀번호">
 						<div class="accordian-item" @click="openPasswordModal">
+							{{ userImage }}
 							재설정
 						</div>
 					</AccordionTab>
@@ -37,9 +41,29 @@ export default {
 			visibleRight: false,
 			displayPasswordModal: false,
 			checked: false,
+			key: localStorage.getItem("key"),
+			userImage: "",
 		}
 	},
+	created() {
+		this.getUserImage()
+	},
 	methods: {
+		async getUserImage() {
+			try {
+				const response = await this.$axios.get("/api/members/" + this.key, {})
+				if (response.status === 201) {
+					this.userImage = response.data.image
+				}
+			} catch (error) {
+				if (error.response) {
+					// 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
+					// console.log(error.response.data)
+					// console.log(error.response.status)
+					// console.log(error.response.headers)
+				}
+			}
+		},
 		// 패스워드 모달 관련 함수
 		openPasswordModal() {
 			this.visibleRight = false
