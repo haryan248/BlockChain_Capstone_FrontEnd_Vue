@@ -17,15 +17,24 @@
 .accordian-item {
 	padding: 10px;
 }
-
 .profile__content {
+	display: inline;
+}
+.profile__content .student__img {
 	width: 3rem;
 	height: 3rem;
 	font-size: 1.5rem;
 	border-radius: 50%;
 	border: 1px solid #495057;
 }
-
+.logout__button {
+	position: fixed;
+	display: flex;
+	bottom: 40px;
+}
+.logout__button .logout {
+	align-items: center;
+}
 .recommend__list {
 	/* padding: 20px; */
 }

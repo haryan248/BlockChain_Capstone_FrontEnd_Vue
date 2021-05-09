@@ -5,10 +5,15 @@
 	<div>
 		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:12rem">
 			<!-- 프로필 화면 -->
-			<!-- <Avatar class="p-mr-2" size="large" style="background-color:#4a83e5; color: #ffffff" shape="circle" icon="pi pi-user" /> -->
-			<div class="profile__content">
-				<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }"></div>
-			</div>
+			<a href="https://myaccount.google.com/u/1/personal-info">
+				<div class="profile__content">
+					<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }"></div>
+					<div class="student__name">{{ name }} 님</div>
+
+					{{ studentId }}
+					{{ major }}
+				</div>
+			</a>
 			<div class="sidebar_content">
 				<Accordion>
 					<AccordionTab header="간편비밀번호">
@@ -22,6 +27,9 @@
 						재발급
 					</AccordionTab>
 				</Accordion>
+			</div>
+			<div class="logout__button">
+				<Button label="로그아웃" class="logout" icon="pi pi-sign-out" iconPos="right" @click="logout" />
 			</div>
 		</Sidebar>
 		<!-- 간편번호 재설정시 띄우는 화면 -->
@@ -42,6 +50,9 @@ export default {
 			displayPasswordModal: false,
 			checked: false,
 			key: localStorage.getItem("key"),
+			name: "",
+			studentId: "",
+			major: "",
 			userImage: "",
 		}
 	},
@@ -53,6 +64,9 @@ export default {
 			try {
 				const response = await this.$axios.get("/api/members/" + this.key, {})
 				if (response.status === 201) {
+					this.name = response.data.name
+					this.studentId = response.data.stdnum
+					this.major = response.data.major
 					this.userImage = response.data.image
 				}
 			} catch (error) {
@@ -63,6 +77,10 @@ export default {
 					// console.log(error.response.headers)
 				}
 			}
+		},
+		logout() {
+			this.$gAuth.instance.currentUser.get().signOut()
+			this.$router.replace("/login")
 		},
 		// 패스워드 모달 관련 함수
 		openPasswordModal() {
