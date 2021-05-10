@@ -9,7 +9,17 @@
 						<!-- 학번 입력 화면 -->
 						<div class="p-field">
 							<label for="studentId" ref="usernameInput" class="studentId">학번 *</label>
-							<InputText ref="studentId" :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" :disabled="successSignUp" />
+							<InputText
+								ref="studentId"
+								:class="{ 'p-invalid': failId }"
+								autocomplete="off"
+								id="studentId"
+								placeholder="학번"
+								type="text"
+								:maxlength="9"
+								v-model="studentId"
+								:disabled="successSignUp"
+							/>
 							<small v-if="failId" class="p-error" id="studentid-help">{{ failIdText }}</small>
 							<small v-else id="studentid-help">학번을 입력해주세요.</small>
 						</div>
@@ -22,6 +32,7 @@
 	</div>
 </template>
 <script>
+
 export default {
 	name: "FindAccountForm",
 	props: { email: String },
@@ -53,7 +64,7 @@ export default {
 		//did 찾아오는것 필요.
 		async findAccount() {
 			try {
-				const response = await this.$axios.post("/api/findmyinfo/", { stdnum: this.studentId, email: this.email })
+				const response = await this.$axios.post("/api/findmyinfo/", { stdnum: this.studentId, email: this.email, key: this.$sha256("이팔청춘의 U-PASS") })
 				if (response.status === 201) {
 					this.showSuccess("회원 찾기 성공", "이미 가입된 회원입니다. \n잠시후 학생증 페이지로 이동합니다.")
 					localStorage.setItem("key", response.data.key)
@@ -64,7 +75,6 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
-					console.log(error.response.data.msg)
 					if (error.response.data.msg === "가입되지 않은 stdnum입니다") {
 						this.showError("회원 찾기 오류", "가입된 정보가 없습니다. \n잠시후 메인 화면으로 돌아갑니다.")
 						setTimeout(() => {

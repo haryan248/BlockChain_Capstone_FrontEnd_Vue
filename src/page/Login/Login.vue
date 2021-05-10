@@ -95,8 +95,9 @@ export default {
 				this.userEmail = email
 				this.isFirstMember = localStorage.getItem("key")
 				//처음 가입시 회원가입, 아닐시 바로 학생증 창으로 이동
-				console.log(this.isFirstMember !== null)
-				if (this.isFirstMember !== null) {
+				if (localStorage.getItem("hasLogout")) {
+					this.findAccount()
+				} else if (this.isFirstMember !== null) {
 					this.$router.push("/")
 				} else {
 					//처음 가입시 로그인 폼으로 이동
@@ -106,6 +107,32 @@ export default {
 					} else {
 						this.$router.replace({ name: "LoginForm", params: { name: this.userName, imgUrl: this.userImage, email: this.userEmail } })
 						sessionStorage.removeItem("isLogin")
+					}
+				}
+			}
+		},
+		//did 찾아오는것 필요.
+		async findAccount() {
+			try {
+				const response = await this.$axios.post("/api/findmyinfo/", { email: this.email, key: this.$sha256("이팔청춘의 U-PASS") })
+				if (response.status === 201) {
+					localStorage.setItem("key", response.data.key)
+					localStorage.setItem("did", response.data.did)
+					setTimeout(() => {
+						this.$router.replace("/")
+					}, 2000)
+				}
+			} catch (error) {
+				if (error.response) {
+					if (error.response.data.msg === "가입되지 않은 stdnum입니다") {
+						this.showError("회원 찾기 오류", "가입된 정보가 없습니다. \n잠시후 메인 화면으로 돌아갑니다.")
+						setTimeout(() => {
+							this.$router.replace("/login")
+						}, 2000)
+					} else if (error.response.data.msg === "email과 stdnum이 일치하지 않습니다.") {
+						this.showError("회원 찾기 오류", "해당되는 학번이 없습니다. \n확인 후 다시 입력해주세요.")
+						this.studentId = ""
+						this.$refs.studentId.$el.focus()
 					}
 				}
 			}

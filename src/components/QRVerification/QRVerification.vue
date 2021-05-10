@@ -34,7 +34,6 @@
 </template>
 <script>
 import VueQrcode from "qrcode.vue"
-import { SHA256 } from "../../sha256.js"
 
 export default {
 	name: "QRVerification",
@@ -58,7 +57,7 @@ export default {
 	methods: {
 		setQRString() {
 			this.timeStamp = Math.round(+new Date() / 1000)
-			this.qrString = SHA256(this.DIDPasswd + this.timeStamp)
+			this.qrString = this.$sha256(this.DIDPasswd + this.timeStamp)
 		},
 		countDownTimer() {
 			if (this.isStudentId) {

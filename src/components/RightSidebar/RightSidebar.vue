@@ -49,7 +49,6 @@ export default {
 			visibleRight: false,
 			displayPasswordModal: false,
 			checked: false,
-			key: localStorage.getItem("key"),
 			name: "",
 			studentId: "",
 			major: "",
@@ -62,7 +61,7 @@ export default {
 	methods: {
 		async getUserImage() {
 			try {
-				const response = await this.$axios.get("/api/members/" + this.key, {})
+				const response = await this.$axios.get("/api/members/", { key: localStorage.getItem("key")})
 				if (response.status === 201) {
 					this.name = response.data.name
 					this.studentId = response.data.stdnum
@@ -80,6 +79,8 @@ export default {
 		},
 		logout() {
 			this.$gAuth.instance.currentUser.get().signOut()
+			localStorage.removeItem("key")
+			localStorage.setItem("hasLogout", true)
 			this.$router.replace("/login")
 		},
 		// 패스워드 모달 관련 함수

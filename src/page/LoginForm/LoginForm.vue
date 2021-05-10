@@ -8,13 +8,32 @@
 					<div class="sign-in">
 						<div class="p-field">
 							<label for="studentId" ref="usernameInput" class="studentId">학번 *</label>
-							<InputText ref="studentId" :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" :disabled="successSignUp" />
+							<InputText
+								ref="studentId"
+								:class="{ 'p-invalid': failId }"
+								autocomplete="off"
+								id="studentId"
+								placeholder="학번"
+								type="text"
+								:maxlength="9"
+								v-model="studentId"
+								:disabled="successSignUp"
+							/>
 							<small v-if="failId" class="p-error" id="studentid-help">{{ failIdText }}</small>
 							<small v-else id="studentid-help">학번을 입력해주세요.</small>
 						</div>
 						<div class="p-field">
 							<label for="id" class="studentId" ref="majorInput">학과 *</label>
-							<Dropdown :disabled="successSignUp" v-model="selectedGroupedMajor" :options="groupedMajor" optionLabel="label" placeholder="학과를 선택해주세요." optionGroupLabel="label" optionGroupChildren="items" :class="{ 'major-invalid': failMajor }">
+							<Dropdown
+								:disabled="successSignUp"
+								v-model="selectedGroupedMajor"
+								:options="groupedMajor"
+								optionLabel="label"
+								placeholder="학과를 선택해주세요."
+								optionGroupLabel="label"
+								optionGroupChildren="items"
+								:class="{ 'major-invalid': failMajor }"
+							>
 								<template #optiongroup="slotProps">
 									<div class="p-d-flex p-ai-center country-item">
 										<div>{{ slotProps.option.label }}</div>
@@ -113,7 +132,7 @@ export default {
 					name: this.name,
 					image: this.imgUrl,
 					email: this.email,
-					key: "2877",
+					key: this.$sha256("이팔청춘의 U-PASS"),
 				})
 				if (response.status === 201) {
 					localStorage.setItem("key", response.data.email_hash)
@@ -145,7 +164,7 @@ export default {
 		//did 발급
 		async getUserDID() {
 			try {
-				const response = await this.$axios.get("/api/runpython/", {})
+				const response = await this.$axios.get("/api/runpython/", { key: localStorage.getItem("key") })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
 					this.summaryText = "학생증 발급 완료"

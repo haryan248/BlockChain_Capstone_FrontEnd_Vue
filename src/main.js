@@ -8,6 +8,7 @@ import { createApp } from "vue"
 import { router } from "./route"
 import App from "./App.vue"
 import axios from "axios"
+import { SHA256 } from "./sha256.js"
 
 // 공통 함수
 import shared from "./tool/shared.ts"
@@ -82,4 +83,5 @@ app.use(GAuth, gAuthOptions)
 //전역 변수 설정
 app.config.globalProperties.$shared = shared
 app.config.globalProperties.$axios = axios
+app.config.globalProperties.$sha256 = SHA256
 app.mount("#app")

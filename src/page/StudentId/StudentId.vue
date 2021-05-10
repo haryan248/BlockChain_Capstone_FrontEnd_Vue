@@ -72,7 +72,7 @@
 import QRVerification from "../../components/QRVerification/QRVerification"
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
 import SimplePassword from "../../components/SimplePasswd/SimplePasswd"
-import { SHA256 } from "../../sha256.js"
+
 export default {
 	name: "StudentId",
 	components: {
@@ -93,7 +93,6 @@ export default {
 			userImage: "",
 			DID: localStorage.getItem("did"),
 			SimplePassword: localStorage.getItem("simplePassword"),
-			key: localStorage.getItem("key"),
 			DIDPasswd: "",
 			summaryText: "",
 			detailText: "",
@@ -112,8 +111,12 @@ export default {
 	},
 	methods: {
 		async getMember() {
+			// setCommonParams(params)
+			// const headers = {
+			// 	"Content-Type": "application/x-www-form-urlencoded",
+			// }
 			try {
-				const response = await this.$axios.get("/api/members/" + this.key, {})
+				const response = await this.$axios.get("/api/members/", { key: localStorage.getItem("key") })
 				if (response.status === 201) {
 					this.name = response.data.name
 					this.studentId = response.data.stdnum
@@ -131,7 +134,7 @@ export default {
 		},
 		async getUserDID() {
 			try {
-				const response = await this.$axios.get("/api/runpython/", {})
+				const response = await this.$axios.get("/api/runpython/", { key: localStorage.getItem("key") })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
 					this.closeDIDModal()
@@ -145,7 +148,7 @@ export default {
 			}
 		},
 		setQRString() {
-			this.DIDPasswd = SHA256(this.did + this.SimplePassword)
+			this.DIDPasswd = this.$sha256(this.did + this.SimplePassword)
 		},
 		openQRModal() {
 			this.displayQRModal = true
