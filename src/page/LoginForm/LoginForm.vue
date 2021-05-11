@@ -157,7 +157,7 @@ export default {
 		//did 발급
 		async getUserDID() {
 			try {
-				const response = await this.$axios.get("/api/runpython/", { params: { key: localStorage.getItem("key") } })
+				const response = await this.$axios.get("/api/runpython/", { params: { key: localStorage.getItem("key"), email: this.email } })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
 					this.summaryText = "학생증 발급 완료"

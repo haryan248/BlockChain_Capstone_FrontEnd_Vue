@@ -112,10 +112,6 @@ export default {
 	},
 	methods: {
 		async getMember() {
-			// setCommonParams(params)
-			// const headers = {
-			// 	"Content-Type": "application/x-www-form-urlencoded",
-			// }
 			try {
 				const response = await this.$axios.get("/api/members/", { params: { key: localStorage.getItem("key") } })
 				if (response.status === 201) {
