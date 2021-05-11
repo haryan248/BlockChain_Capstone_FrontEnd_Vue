@@ -1,22 +1,28 @@
 <template>
 	<div>
-		<!-- <Header :title="'캘린더'" /> -->
-		<Calendar />
-		<DatePicker v-model="date" />
-		<!-- <BottomNav /> -->
+		<div class="container bg-gray">
+			<div class="student-content">
+				<Header :title="'캘린더'" />
+				<!-- <Calendar /> -->
+				<v-calendar is-expanded :attributes="attrs" />
+			</div>
+			<BottomNav />
+		</div>
 	</div>
 </template>
 <script>
-import { Calendar, DatePicker } from "v-calendar"
-
 export default {
 	name: "Calendar",
-	components: {
-		Calendar,
-		DatePicker,
-	},
 	data() {
-		return { date: new Date() }
+		return {
+			attrs: [
+				{
+					key: "today",
+					highlight: true,
+					dates: new Date(),
+				},
+			],
+		}
 	},
 	methods: {},
 }

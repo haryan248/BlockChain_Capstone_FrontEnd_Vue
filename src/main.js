@@ -18,6 +18,7 @@ import GAuth from "vue3-google-oauth2"
 
 //calendar 사용
 import VCalendar from "v-calendar"
+import { SetupCalendar, Calendar, DatePicker } from "v-calendar"
 
 //헤더, 푸터 임포트 부분
 import Header from "./components/Header/Header"
@@ -49,6 +50,7 @@ const app = createApp(App)
 app.use(router) // 사용 설정 하기
 app.use(PrimeVue)
 app.use(ToastService)
+app.use(VCalendar, {})
 
 app.component("Header", Header)
 app.component("BottomNav", BottomNav)
@@ -71,8 +73,11 @@ app.component("Accordion", Accordion)
 app.component("AccordionTab", AccordionTab)
 app.component("InputSwitch", InputSwitch)
 app.component("Toast", Toast)
-app.component("ProgressBar", ProgressBar)
 
+app.component("ProgressBar", ProgressBar)
+app.component("Calendar", Calendar)
+app.component("DatePicker", DatePicker)
+app.component("SetupCalendar", SetupCalendar)
 //구글 로그인
 const gAuthOptions = {
 	clientId: "1022565741938-a0i54ckun7augse5rfte33htdn1kea74.apps.googleusercontent.com",
@@ -81,7 +86,6 @@ const gAuthOptions = {
 	ux_mode: "redirect",
 	fetch_basic_profile: true,
 }
-app.use(VCalendar, {})
 app.use(GAuth, gAuthOptions)
 //전역 변수 설정
 app.config.globalProperties.$shared = shared
