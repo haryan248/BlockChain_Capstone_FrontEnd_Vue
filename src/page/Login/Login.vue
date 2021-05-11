@@ -114,10 +114,11 @@ export default {
 		//did 찾아오는것 필요.
 		async findAccount() {
 			try {
-				const response = await this.$axios.post("/api/findmyinfo/", { email: this.email, key: this.$sha256("이팔청춘의 U-PASS") })
+				const response = await this.$axios.post("/api/findmyinfo/", { params: { key: localStorage.getItem("key") } }, { email: this.email })
 				if (response.status === 201) {
 					localStorage.setItem("key", response.data.key)
 					localStorage.setItem("did", response.data.did)
+					localStorage.removeItem("hasLogout")
 					setTimeout(() => {
 						this.$router.replace("/")
 					}, 2000)

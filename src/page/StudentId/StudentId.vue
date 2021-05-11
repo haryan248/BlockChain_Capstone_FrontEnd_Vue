@@ -72,6 +72,7 @@
 import QRVerification from "../../components/QRVerification/QRVerification"
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
 import SimplePassword from "../../components/SimplePasswd/SimplePasswd"
+// import * as querystring from "querystring"
 
 export default {
 	name: "StudentId",
@@ -116,7 +117,7 @@ export default {
 			// 	"Content-Type": "application/x-www-form-urlencoded",
 			// }
 			try {
-				const response = await this.$axios.get("/api/members/", { key: localStorage.getItem("key") })
+				const response = await this.$axios.get("/api/members/", { params: { key: localStorage.getItem("key") } })
 				if (response.status === 201) {
 					this.name = response.data.name
 					this.studentId = response.data.stdnum
@@ -134,7 +135,7 @@ export default {
 		},
 		async getUserDID() {
 			try {
-				const response = await this.$axios.get("/api/runpython/", { key: localStorage.getItem("key") })
+				const response = await this.$axios.get("/api/runpython/", { params: { key: localStorage.getItem("key") } })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
 					this.closeDIDModal()

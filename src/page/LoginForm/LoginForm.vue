@@ -126,14 +126,17 @@ export default {
 			//구글 이메일, 이름, 이미지 url로 API POST
 			// post 완료시 키값 저장
 			try {
-				const response = await this.$axios.post("/api/members/", {
-					major: this.selectedGroupedMajor.label,
-					stdnum: this.studentId,
-					name: this.name,
-					image: this.imgUrl,
-					email: this.email,
-					key: this.$sha256("이팔청춘의 U-PASS"),
-				})
+				const response = await this.$axios.post(
+					"/api/members/",
+					{ params: { key: this.$sha256("이팔청춘의 U-PASS") } },
+					{
+						major: this.selectedGroupedMajor.label,
+						stdnum: this.studentId,
+						name: this.name,
+						image: this.imgUrl,
+						email: this.email,
+					}
+				)
 				if (response.status === 201) {
 					localStorage.setItem("key", response.data.email_hash)
 					this.successSignUp = true
@@ -164,7 +167,7 @@ export default {
 		//did 발급
 		async getUserDID() {
 			try {
-				const response = await this.$axios.get("/api/runpython/", { key: localStorage.getItem("key") })
+				const response = await this.$axios.get("/api/runpython/", { params: { key: localStorage.getItem("key") } })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
 					this.summaryText = "학생증 발급 완료"

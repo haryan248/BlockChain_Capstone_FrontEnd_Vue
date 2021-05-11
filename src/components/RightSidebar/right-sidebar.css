@@ -28,9 +28,10 @@
 	border: 1px solid #495057;
 }
 .logout__button {
-	position: fixed;
 	display: flex;
-	bottom: 40px;
+	align-items: center;
+	justify-content: center;
+	margin-top: 150px;
 }
 .logout__button .logout {
 	align-items: center;

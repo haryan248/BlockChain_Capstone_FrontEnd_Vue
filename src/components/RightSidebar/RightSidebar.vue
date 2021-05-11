@@ -28,6 +28,7 @@
 					</AccordionTab>
 				</Accordion>
 			</div>
+			<!-- 로그아웃 버튼 -->
 			<div class="logout__button">
 				<Button label="로그아웃" class="logout" icon="pi pi-sign-out" iconPos="right" @click="logout" />
 			</div>
@@ -61,7 +62,7 @@ export default {
 	methods: {
 		async getUserImage() {
 			try {
-				const response = await this.$axios.get("/api/members/", { key: localStorage.getItem("key")})
+				const response = await this.$axios.get("/api/members/", { params: { key: localStorage.getItem("key") } })
 				if (response.status === 201) {
 					this.name = response.data.name
 					this.studentId = response.data.stdnum

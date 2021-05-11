@@ -16,6 +16,9 @@ import shared from "./tool/shared.ts"
 // 구글 로그인
 import GAuth from "vue3-google-oauth2"
 
+//calendar 사용
+import VCalendar from "v-calendar"
+
 //헤더, 푸터 임포트 부분
 import Header from "./components/Header/Header"
 import BottomNav from "./components/BottomNav/BottomNav"
@@ -78,7 +81,7 @@ const gAuthOptions = {
 	ux_mode: "redirect",
 	fetch_basic_profile: true,
 }
-
+app.use(VCalendar, {})
 app.use(GAuth, gAuthOptions)
 //전역 변수 설정
 app.config.globalProperties.$shared = shared

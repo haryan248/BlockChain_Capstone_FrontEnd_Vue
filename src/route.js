@@ -7,6 +7,8 @@ import QRScanner from "./page/QRScanner/QRScanner.vue"
 import Login from "./page/Login/Login.vue"
 import LoginForm from "./page/LoginForm/LoginForm.vue"
 import Reservation from "./page/Reservation/Reservation.vue"
+import Calendar from "./page/Calendar/Calendar.vue"
+
 import FindAccountForm from "./page/FindAccountForm/FindAccountForm.vue"
 
 const routes = [
@@ -34,6 +36,11 @@ const routes = [
 		path: "/reservation",
 		name: "Reservation",
 		component: Reservation,
+	},
+	{
+		path: "/calendar",
+		name: "Calendar",
+		component: Calendar,
 	},
 	{
 		path: "/qrscanner",
