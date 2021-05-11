@@ -8,17 +8,7 @@
 					<div class="sign-in">
 						<div class="p-field">
 							<label for="studentId" ref="usernameInput" class="studentId">학번 *</label>
-							<InputText
-								ref="studentId"
-								:class="{ 'p-invalid': failId }"
-								autocomplete="off"
-								id="studentId"
-								placeholder="학번"
-								type="text"
-								:maxlength="9"
-								v-model="studentId"
-								:disabled="successSignUp"
-							/>
+							<InputText ref="studentId" :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" :disabled="successSignUp" />
 							<small v-if="failId" class="p-error" id="studentid-help">{{ failIdText }}</small>
 							<small v-else id="studentid-help">학번을 입력해주세요.</small>
 						</div>
@@ -128,14 +118,14 @@ export default {
 			try {
 				const response = await this.$axios.post(
 					"/api/members/",
-					{ params: { key: this.$sha256("이팔청춘의 U-PASS") } },
 					{
 						major: this.selectedGroupedMajor.label,
 						stdnum: this.studentId,
 						name: this.name,
 						image: this.imgUrl,
 						email: this.email,
-					}
+					},
+					{ params: { key: this.$sha256("이팔청춘의 U-PASS") } }
 				)
 				if (response.status === 201) {
 					localStorage.setItem("key", response.data.email_hash)
@@ -147,13 +137,13 @@ export default {
 			} catch (error) {
 				if (error.response) {
 					//중복 회원가입시
-					if (Object.keys(error.response.data).includes("stdnum")) {
+					if (error.response.data.msg === "stdnum is already exists") {
 						this.summaryText = "회원가입 오류"
 						this.detailText = "이미 등록된 학번입니다."
 						this.showError(this.summaryText, this.detailText)
 						this.studentId = ""
 						this.$refs.studentId.$el.focus()
-					} else if (Object.keys(error.response.data).includes("email")) {
+					} else if (error.response.data.msg === "Email is already exists") {
 						this.summaryText = "회원가입 오류"
 						this.detailText = "이미 등록된 이메일입니다.\n잠시후 메인 화면으로 이동합니다."
 						this.showError(this.summaryText, this.detailText)
