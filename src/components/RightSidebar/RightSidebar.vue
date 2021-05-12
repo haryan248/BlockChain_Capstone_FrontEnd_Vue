@@ -18,7 +18,6 @@
 				<Accordion>
 					<AccordionTab header="간편비밀번호">
 						<div class="accordian-item" @click="openPasswordModal">
-							{{ userImage }}
 							재설정
 						</div>
 					</AccordionTab>

@@ -11,6 +11,9 @@
 						</div>
 					</template>
 				</v-calendar>
+				<div class="schedule__content">
+					<div class="item__content"></div>
+				</div>
 			</div>
 			<BottomNav />
 		</div>
@@ -24,8 +27,10 @@ export default {
 			{
 				description: "Take Noah to basketball practice.",
 				isComplete: false,
-				dates: { weekdays: 6 }, // Every Friday
+				dates: [new Date()], // Every Friday
 				color: "red",
+				key: "today",
+				highlight: true,
 			},
 		]
 		return {

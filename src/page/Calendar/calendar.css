@@ -1,0 +1,11 @@
+.schedule__content {
+	background: #ffffff;
+	color: #495057;
+	padding: 0 1.5rem 2rem 1.5rem;
+	border-color: var(--gray-400);
+}
+.schedule__content .item__content {
+	height: 100%;
+	/* align-items: center; */
+	text-align: center;
+}

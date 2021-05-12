@@ -95,18 +95,11 @@ export default {
 			DID: localStorage.getItem("did"),
 			SimplePassword: localStorage.getItem("simplePassword"),
 			DIDPasswd: "",
-			summaryText: "",
-			detailText: "",
-			members: {
-				name: "",
-				studentId: "",
-				major: "",
-				userImage: "",
-			},
+			members: JSON.parse(localStorage.getItem("members")),
 		}
 	},
 	created() {
-		this.getMember()
+		this.setMembers()
 	},
 	mounted() {
 		if (localStorage.getItem("simplePassword") === null) this.openPasswordModalForNone()
@@ -117,37 +110,32 @@ export default {
 		}
 	},
 	methods: {
+		setMembers() {
+			this.name = this.members.name
+			this.studentId = this.members.studentId
+			this.major = this.members.major
+			this.userImage = this.members.userImage
+		},
 		async getMember() {
-			try {
-				const response = await this.$axios.get("/api/members/", { params: { key: localStorage.getItem("key") } })
-				if (response.status === 201) {
-					this.name = this.members.name = response.data.name
-					this.studentId = this.members.studentId = response.data.stdnum
-					this.major = this.members.major = response.data.major
-					this.userImage = this.members.userImage = response.data.image
-					localStorage.setItem("members", JSON.stringify(this.members))
-				}
-			} catch (error) {
-				if (error.response) {
-					// 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-					// console.log(error.response.data)
-					// console.log(error.response.status)
-					// console.log(error.response.headers)
-				}
+			const response = await this.$axios.get("/api/members/", { params: { key: localStorage.getItem("key") } })
+			if (response.status === 201) {
+				this.name = this.members.name = response.data.name
+				this.studentId = this.members.studentId = response.data.stdnum
+				this.major = this.members.major = response.data.major
+				this.userImage = this.members.userImage = response.data.image
 			}
 		},
 		async getUserDID() {
 			try {
-				const response = await this.$axios.get("/api/runpython/", { params: { key: localStorage.getItem("key") } })
+				const response = await this.$axios.get("/api/runpython/", { params: { key: localStorage.getItem("key"), email: this.email, SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
-					this.closeDIDModal()
+					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
+					this.$router.replace("/")
 				}
 			} catch (error) {
 				if (error.response) {
-					this.summaryText = "DID발급 오류"
-					this.detailText = "죄송합니다. \nDID 발급에 오류가 있습니다."
-					this.showError(this.summaryText, this.detailText)
+					this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
 				}
 			}
 		},

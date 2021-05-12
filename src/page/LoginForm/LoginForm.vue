@@ -63,8 +63,6 @@ export default {
 			displayPasswordModal: false,
 			displayBasic: false,
 			successSignUp: false,
-			summaryText: "",
-			detailText: "",
 			//임시 학과 데이터
 			groupedMajor: [
 				{
@@ -79,6 +77,12 @@ export default {
 					],
 				},
 			],
+			members: {
+				name: "",
+				studentId: "",
+				major: "",
+				userImage: "",
+			},
 		}
 	},
 	mounted() {
@@ -128,30 +132,25 @@ export default {
 					{ params: { key: this.$sha256("이팔청춘의 U-PASS") } }
 				)
 				if (response.status === 201) {
-					localStorage.setItem("key", response.data.email_hash)
-					localStorage.setItem("stdnum", this.stdnum)
-					localStorage.setItem("name", this.name)
-					localStorage.setItem("image", this.imgUrl)
-					localStorage.setItem("email", this.email)
-
 					this.successSignUp = true
-					this.summaryText = "회원가입 완료"
-					this.detailText = "회원가입이 완료되었습니다. \n학생증을 발급해주세요."
-					this.showSuccess(this.summaryText, this.detailText)
+					this.showSuccess("회원가입 완료", "회원가입이 완료되었습니다. \n간편비밀번호를 설정해주세요.")
+					this.displayBasic = false
+					this.members.name = this.name
+					this.members.studentId = this.studentId
+					this.members.major = this.selectedGroupedMajor.label
+					this.members.userImage = this.imgUrl
+					localStorage.setItem("members", JSON.stringify(this.members))
+					this.openPasswordModal()
 				}
 			} catch (error) {
 				if (error.response) {
 					//중복 회원가입시
 					if (error.response.data.msg === "stdnum is already exists") {
-						this.summaryText = "회원가입 오류"
-						this.detailText = "이미 등록된 학번입니다."
-						this.showError(this.summaryText, this.detailText)
+						this.showError("회원가입 오류", "이미 등록된 학번입니다.")
 						this.studentId = ""
 						this.$refs.studentId.$el.focus()
 					} else if (error.response.data.msg === "Email is already exists") {
-						this.summaryText = "회원가입 오류"
-						this.detailText = "이미 등록된 이메일입니다.\n잠시후 메인 화면으로 이동합니다."
-						this.showError(this.summaryText, this.detailText)
+						this.showError("회원가입 오류", "이미 등록된 이메일입니다.\n잠시후 메인 화면으로 이동합니다.")
 						setTimeout(() => {
 							this.$router.replace("/login")
 						}, 3000)
@@ -162,22 +161,16 @@ export default {
 		//did 발급
 		async getUserDID() {
 			try {
-				const response = await this.$axios.get("/api/runpython/", { params: { key: localStorage.getItem("key"), email: this.email } })
+				const response = await this.$axios.get("/api/runpython/", { params: { key: localStorage.getItem("key"), email: this.email, SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
-					this.summaryText = "학생증 발급 완료"
-					this.detailText = "학생증 발급이 완료되었습니다."
-					this.showSuccess(this.summaryText, this.detailText)
-					this.openPasswordModal()
-					console.log(this.displayPasswordModal)
-					this.displayBasic = false
+					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
+					this.$router.replace("/")
 				}
 			} catch (error) {
 				if (error.response) {
 					console.log(error.response)
-					this.summaryText = "DID발급 오류"
-					this.detailText = "죄송합니다. \nDID 발급에 오류가 있습니다."
-					this.showError(this.summaryText, this.detailText)
+					this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
 				}
 			}
 		},
@@ -185,8 +178,9 @@ export default {
 			this.displayPasswordModal = true
 		},
 		closePasswordModal() {
+			this.displayBasic = true
+			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다. \n학생증을 발급해주세요.")
 			this.displayPasswordModal = false
-			this.$router.replace("/")
 		},
 		showError(summaryText, detailText) {
 			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
