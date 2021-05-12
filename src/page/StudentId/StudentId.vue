@@ -72,7 +72,6 @@
 import QRVerification from "../../components/QRVerification/QRVerification"
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
 import SimplePassword from "../../components/SimplePasswd/SimplePasswd"
-// import * as querystring from "querystring"
 
 export default {
 	name: "StudentId",
@@ -105,7 +104,7 @@ export default {
 		if (localStorage.getItem("simplePassword") === null) this.openPasswordModalForNone()
 		else if (localStorage.getItem("did") === null) this.openDIDModal()
 		else {
-			this.displayStudentModal = true
+			this.openStudentModal()
 			this.$shared.checkGoogleLogin(this.$gAuth)
 		}
 	},
@@ -157,24 +156,30 @@ export default {
 			this.displayPasswordModal = false
 		},
 		openPasswordModalForNone() {
-			this.displayStudentModal = false
+			this.closeStudentModal()
 			this.displayPasswordModalForNone = true
 		},
 		closePasswordModalForNone() {
 			if (localStorage.getItem("did") === null) this.openDIDModal()
-			this.displayStudentModal = true
+			this.openStudentModal()
 			this.displayPasswordModalForNone = false
 			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다.")
 		},
 		openDIDModal() {
-			this.displayStudentModal = false
+			this.closeStudentModal()
 			this.displayDIDModal = true
 		},
 		closeDIDModal() {
 			if (localStorage.getItem("simplePassword") === null) this.openPasswordModalForNone()
-			this.displayStudentModal = true
+			this.openStudentModal()
 			this.displayDIDModal = false
 			this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
+		},
+		openStudentModal() {
+			this.displayStudentModal = true
+		},
+		closeStudentModal() {
+			this.displayStudentModal = false
 		},
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })

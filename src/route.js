@@ -9,8 +9,6 @@ import LoginForm from "./page/LoginForm/LoginForm.vue"
 import Reservation from "./page/Reservation/Reservation.vue"
 import Calendar from "./page/Calendar/Calendar.vue"
 
-import FindAccountForm from "./page/FindAccountForm/FindAccountForm.vue"
-
 const routes = [
 	{
 		path: "/",
@@ -53,12 +51,6 @@ const routes = [
 		component: Login,
 	},
 	{
-		path: "/findAccountForm/:email",
-		name: "FindAccountForm",
-		component: FindAccountForm,
-		props: true,
-	},
-	{
 		path: "/loginForm/:name/:imgUrl/:email",
 		name: "LoginForm",
 		component: LoginForm,
@@ -83,8 +75,6 @@ router.beforeEach((to, from, next) => {
 			next({ path: "/" })
 		}
 	} else if (to.path.split("/")[1] == "loginForm") {
-		next()
-	} else if (to.path.split("/")[1] == "findAccountForm") {
 		next()
 	} else {
 		if (localStorage.getItem("key") === null) {

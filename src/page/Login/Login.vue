@@ -45,7 +45,6 @@
 <script>
 export default {
 	name: "Login",
-	// components: { GoogleLogin },
 	data() {
 		return {
 			signedIn: false,
@@ -102,16 +101,18 @@ export default {
 				} else {
 					//처음 가입시 로그인 폼으로 이동
 					if (sessionStorage.getItem("isFindAccount") !== null) {
-						this.$router.replace({ name: "FindAccountForm", params: { email: this.userEmail } })
+						// 회원찾기 시
+						this.$router.replace({ name: "LoginForm", params: { name: this.userName, imgUrl: this.userImage, email: this.userEmail, find: true } })
 						sessionStorage.removeItem("isFindAccount")
 					} else {
+						//회원가입 시
 						this.$router.replace({ name: "LoginForm", params: { name: this.userName, imgUrl: this.userImage, email: this.userEmail } })
 						sessionStorage.removeItem("isLogin")
 					}
 				}
 			}
 		},
-		//did 찾아오는것 필요.
+		//로그아웃 후 로그인 시
 		async findAccount() {
 			try {
 				const response = await this.$axios.post("/api/findmyinfo/", { params: { key: localStorage.getItem("key") } }, { email: this.email })

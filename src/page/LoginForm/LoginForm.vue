@@ -33,9 +33,11 @@
 							<small v-if="failMajor" class="p-error" id="studentid-help">{{ failMajorText }}</small>
 							<small v-else id="usermajor-help">학과를 선택해주세요.</small>
 						</div>
-
-						<Button label="회원 가입" icon="pi pi-check" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
-						<Button label="학생증 발급" icon="pi pi-user-plus" iconPos="right" class="p-button-outlined did-issued" :disabled="!successSignUp" @click="getUserDID" />
+						<Button v-if="find === 'true'" label="학생증 찾기" icon="pi pi-search" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
+						<div v-else>
+							<Button label="회원 가입" icon="pi pi-check" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
+							<Button label="학생증 발급" icon="pi pi-user-plus" iconPos="right" class="p-button-outlined did-issued" :disabled="!successSignUp" @click="getUserDID" />
+						</div>
 					</div>
 				</div>
 			</div>
@@ -51,7 +53,7 @@ import SimplePassword from "../../components/SimplePasswd/SimplePasswd"
 export default {
 	name: "LoginForm",
 	components: { SimplePassword },
-	props: { name: String, imgUrl: String, email: String },
+	props: { name: String, imgUrl: String, email: String, find: null },
 	data() {
 		return {
 			studentId: "",
@@ -87,10 +89,17 @@ export default {
 	},
 	mounted() {
 		setTimeout(() => {
-			this.displayBasic = true
+			this.openBasicModal()
 		}, 600)
 	},
 	methods: {
+		setMembers() {
+			this.members.name = this.name
+			this.members.studentId = this.studentId
+			this.members.major = this.selectedGroupedMajor.label
+			this.members.userImage = this.imgUrl
+			localStorage.setItem("members", JSON.stringify(this.members))
+		},
 		//유효성 검사
 		checkValidate() {
 			let regexp = /^[0-9]*$/
@@ -112,13 +121,15 @@ export default {
 				return
 			}
 			this.failMajor = false
-			//회원가입 완료시 post
-			this.signUp()
+			if (this.find === "true") {
+				this.findAccount()
+			} else {
+				this.signUp()
+			}
 		},
+		//회원가입
 		async signUp() {
 			this.isFirstMember = false
-			//구글 이메일, 이름, 이미지 url로 API POST
-			// post 완료시 키값 저장
 			try {
 				const response = await this.$axios.post(
 					"/api/members/",
@@ -134,12 +145,8 @@ export default {
 				if (response.status === 201) {
 					this.successSignUp = true
 					this.showSuccess("회원가입 완료", "회원가입이 완료되었습니다. \n간편비밀번호를 설정해주세요.")
-					this.displayBasic = false
-					this.members.name = this.name
-					this.members.studentId = this.studentId
-					this.members.major = this.selectedGroupedMajor.label
-					this.members.userImage = this.imgUrl
-					localStorage.setItem("members", JSON.stringify(this.members))
+					this.setMembers()
+					this.closeBasicModal()
 					this.openPasswordModal()
 				}
 			} catch (error) {
@@ -169,8 +176,35 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
-					console.log(error.response)
 					this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
+				}
+			}
+		},
+		//회원 찾기
+		async findAccount() {
+			try {
+				const response = await this.$axios.post("/api/findmyinfo/", { stdnum: this.studentId, email: this.email }, { params: { key: this.$sha256("이팔청춘의 U-PASS") } })
+				if (response.status === 201) {
+					this.showSuccess("회원 찾기 성공", "이미 가입된 회원입니다. \n잠시후 학생증 페이지로 이동합니다.")
+					localStorage.setItem("key", response.data.email_hash)
+					localStorage.setItem("did", response.data.did)
+					this.setMembers()
+					setTimeout(() => {
+						this.$router.replace("/")
+					}, 2000)
+				}
+			} catch (error) {
+				if (error.response) {
+					if (error.response.data.msg === "가입되지 않은 email입니다.") {
+						this.showError("회원 찾기 오류", "가입된 정보가 없습니다. \n잠시후 메인 화면으로 돌아갑니다.")
+						setTimeout(() => {
+							this.$router.replace("/login")
+						}, 2000)
+					} else if (error.response.data.msg === "email과 stdnum이 일치하지 않습니다.") {
+						this.showError("회원 찾기 오류", "해당되는 학번이 없습니다. \n확인 후 다시 입력해주세요.")
+						this.studentId = ""
+						this.$refs.studentId.$el.focus()
+					}
 				}
 			}
 		},
@@ -178,9 +212,15 @@ export default {
 			this.displayPasswordModal = true
 		},
 		closePasswordModal() {
-			this.displayBasic = true
+			this.openBasicModal()
 			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다. \n학생증을 발급해주세요.")
 			this.displayPasswordModal = false
+		},
+		openBasicModal() {
+			this.displayBasic = true
+		},
+		closeBasicModal() {
+			this.displayBasic = false
 		},
 		showError(summaryText, detailText) {
 			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
