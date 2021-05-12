@@ -6,14 +6,14 @@
 		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:12rem">
 			<!-- 프로필 화면 -->
 			<a href="https://myaccount.google.com/u/1/personal-info">
-				<div class="profile__content">
-					<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }"></div>
-					<div class="student__name">{{ name }} 님</div>
-
-					{{ studentId }}
-					{{ major }}
-				</div>
+				<div class="blank__content"></div>
 			</a>
+			<div class="profile__content">
+				<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }"></div>
+				<div class="student__name">{{ name }} 님</div>
+				<div class="student__id">{{ studentId }}</div>
+				<div class="student__major">{{ major }}</div>
+			</div>
 			<div class="sidebar_content">
 				<Accordion>
 					<AccordionTab header="간편비밀번호">

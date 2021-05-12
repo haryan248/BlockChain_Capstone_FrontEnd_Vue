@@ -133,14 +133,8 @@ export default {
 			try {
 				const response = await this.$axios.post(
 					"/api/members/",
-					{
-						major: this.selectedGroupedMajor.label,
-						stdnum: this.studentId,
-						name: this.name,
-						image: this.imgUrl,
-						email: this.email,
-					},
-					{ params: { key: this.$sha256("이팔청춘의 U-PASS") } }
+					{},
+					{ params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, image: this.imgUrl, email: this.email } }
 				)
 				if (response.status === 201) {
 					this.successSignUp = true

@@ -17,8 +17,17 @@
 .accordian-item {
 	padding: 10px;
 }
+.blank__content {
+	padding: 20px;
+}
 .profile__content {
-	display: inline;
+	/* display: flex; */
+	align-items: center;
+	justify-content: space-between;
+	margin-top: 10px;
+	padding: 20px;
+	border-radius: 10px;
+	background-color: #f8f9fa;
 }
 .profile__content .student__img {
 	width: 3rem;
@@ -27,11 +36,20 @@
 	border-radius: 50%;
 	border: 1px solid #495057;
 }
+.profile__content .student__name {
+	font-size: 15px;
+}
+.profile__content .student__id {
+	font-size: 15px;
+}
+.profile__content .student__major {
+	font-size: 15px;
+}
 .logout__button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-top: 150px;
+	position: fixed;
+	margin: 0 auto;
+	bottom: 40px;
+	margin-left: 20px;
 }
 .logout__button .logout {
 	align-items: center;
