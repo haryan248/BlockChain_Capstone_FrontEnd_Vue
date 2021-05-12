@@ -97,6 +97,12 @@ export default {
 			DIDPasswd: "",
 			summaryText: "",
 			detailText: "",
+			members: {
+				name: "",
+				studentId: "",
+				major: "",
+				userImage: "",
+			},
 		}
 	},
 	created() {
@@ -115,10 +121,11 @@ export default {
 			try {
 				const response = await this.$axios.get("/api/members/", { params: { key: localStorage.getItem("key") } })
 				if (response.status === 201) {
-					this.name = response.data.name
-					this.studentId = response.data.stdnum
-					this.major = response.data.major
-					this.userImage = response.data.image
+					this.name = this.members.name = response.data.name
+					this.studentId = this.members.studentId = response.data.stdnum
+					this.major = this.members.major = response.data.major
+					this.userImage = this.members.userImage = response.data.image
+					localStorage.setItem("members", JSON.stringify(this.members))
 				}
 			} catch (error) {
 				if (error.response) {

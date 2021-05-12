@@ -54,29 +54,18 @@ export default {
 			studentId: "",
 			major: "",
 			userImage: "",
+			members: JSON.parse(localStorage.getItem("members")),
 		}
 	},
 	created() {
-		this.getUserImage()
+		this.setMembers()
 	},
 	methods: {
-		async getUserImage() {
-			try {
-				const response = await this.$axios.get("/api/members/", { params: { key: localStorage.getItem("key") } })
-				if (response.status === 201) {
-					this.name = response.data.name
-					this.studentId = response.data.stdnum
-					this.major = response.data.major
-					this.userImage = response.data.image
-				}
-			} catch (error) {
-				if (error.response) {
-					// 요청이 이루어졌으며 서버가 2xx의 범위를 벗어나는 상태 코드로 응답했습니다.
-					// console.log(error.response.data)
-					// console.log(error.response.status)
-					// console.log(error.response.headers)
-				}
-			}
+		setMembers() {
+			this.name = this.members.name
+			this.studentId = this.members.studentId
+			this.major = this.members.major
+			this.userImage = this.members.userImage
 		},
 		logout() {
 			this.$gAuth.instance.currentUser.get().signOut()
