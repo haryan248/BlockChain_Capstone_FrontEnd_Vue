@@ -21,7 +21,7 @@
 	padding: 20px;
 }
 .profile__content {
-	/* display: flex; */
+	display: block;
 	align-items: center;
 	justify-content: space-between;
 	margin-top: 10px;

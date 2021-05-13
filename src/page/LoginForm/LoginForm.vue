@@ -192,7 +192,7 @@ export default {
 			} catch (error) {
 				if (error.response) {
 					if (error.response.data.msg === "가입되지 않은 email입니다.") {
-						this.showError("회원 찾기 오류", "가입된 정보가 없습니다. \n잠시후 메인 화면으로 돌아갑니다.")
+						this.showError("회원 찾기 오류", "가입된 정보가 없거나, \n입력된 정보가 올바르지 않습니다. \n잠시후 메인 화면으로 돌아갑니다.")
 						setTimeout(() => {
 							this.$router.replace("/login")
 						}, 2000)
@@ -219,7 +219,7 @@ export default {
 			this.displayBasic = false
 		},
 		showError(summaryText, detailText) {
-			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 30000 })
 		},
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
