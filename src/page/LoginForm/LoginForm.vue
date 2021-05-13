@@ -192,13 +192,14 @@ export default {
 			} catch (error) {
 				if (error.response) {
 					if (error.response.data.msg === "가입되지 않은 email입니다.") {
-						this.showError("회원 찾기 오류", "가입된 정보가 없거나, \n입력된 정보가 올바르지 않습니다. \n잠시후 메인 화면으로 돌아갑니다.")
+						this.showError("회원 찾기 오류", "가입된 이메일이 없습니다. \n잠시후 메인 화면으로 돌아갑니다.")
 						setTimeout(() => {
 							this.$router.replace("/login")
 						}, 2000)
-					} else if (error.response.data.msg === "email과 stdnum이 일치하지 않습니다.") {
-						this.showError("회원 찾기 오류", "해당되는 학번이 없습니다. \n확인 후 다시 입력해주세요.")
+					} else if (error.response.data.msg === "잘못된 정보를 입력하였습니다.") {
+						this.showError("회원 찾기 오류", "해당되는 회원정보가 없습니다. \n다시 입력해주세요.")
 						this.studentId = ""
+						this.selectedGroupedMajor.label = ""
 						this.$refs.studentId.$el.focus()
 					}
 				}
