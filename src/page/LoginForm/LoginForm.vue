@@ -179,7 +179,7 @@ export default {
 		//회원 찾기
 		async findAccount() {
 			try {
-				const response = await this.$axios.post("/api/findmyinfo/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), email: this.email  } })
+				const response = await this.$axios.post("/api/findmyinfo/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email  } })
 				if (response.status === 201) {
 					this.showSuccess("회원 찾기 성공", "이미 가입된 회원입니다. \n잠시후 학생증 페이지로 이동합니다.")
 					localStorage.setItem("key", response.data.user_key)
