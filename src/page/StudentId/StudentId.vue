@@ -127,11 +127,12 @@ export default {
 		},
 		async getUserDID() {
 			try {
-				const response = await this.$axios.get("/api/runpython/", { params: { key: localStorage.getItem("key"), email: this.email, SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post("/api/generatedid/", 
+				{}, 
+				{ params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
-					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
-					this.$router.replace("/")
+					this.closeDIDModal()
 				}
 			} catch (error) {
 				if (error.response) {

@@ -95,6 +95,7 @@ export default {
 	methods: {
 		setMembers() {
 			this.members.name = this.name
+			this.members.email = this.email
 			this.members.studentId = this.studentId
 			this.members.major = this.selectedGroupedMajor.label
 			this.members.userImage = this.imgUrl
@@ -134,11 +135,12 @@ export default {
 				const response = await this.$axios.post(
 					"/api/members/",
 					{},
-					{ params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, image: this.imgUrl, email: this.email } }
+					{ params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } }
 				)
 				if (response.status === 201) {
 					this.successSignUp = true
 					this.showSuccess("회원가입 완료", "회원가입이 완료되었습니다. \n간편비밀번호를 설정해주세요.")
+					localStorage.setItem("key", response.data.user_key)
 					this.setMembers()
 					this.closeBasicModal()
 					this.openPasswordModal()
@@ -162,7 +164,7 @@ export default {
 		//did 발급
 		async getUserDID() {
 			try {
-				const response = await this.$axios.get("/api/runpython/", { params: { key: localStorage.getItem("key"), email: this.email, SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post("/api/generatedid/", { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
 					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
@@ -177,10 +179,10 @@ export default {
 		//회원 찾기
 		async findAccount() {
 			try {
-				const response = await this.$axios.post("/api/findmyinfo/", { stdnum: this.studentId, email: this.email }, { params: { key: this.$sha256("이팔청춘의 U-PASS") } })
+				const response = await this.$axios.post("/api/findmyinfo/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), email: this.email  } })
 				if (response.status === 201) {
 					this.showSuccess("회원 찾기 성공", "이미 가입된 회원입니다. \n잠시후 학생증 페이지로 이동합니다.")
-					localStorage.setItem("key", response.data.email_hash)
+					localStorage.setItem("key", response.data.user_key)
 					localStorage.setItem("did", response.data.did)
 					this.setMembers()
 					setTimeout(() => {
