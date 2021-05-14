@@ -9,9 +9,8 @@
 						<div class="login__button">
 							<div class="error-message" v-html="errorTitle"></div>
 
-							<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" class="p-button-outlined" />
-							<div class="error-message"></div>
-							<Button label="이미 가입하신적이 있나요?" class="p-button-outlined p-button-danger" icon="pi pi-question-circle" iconPos="left" @click="goToFindForm" />
+							<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" class="p-button-outlined" style="margin-bottom:40px;" />
+							<Button v-if="checkLogout !== 'true'" label="이미 가입하신적이 있나요?" class="p-button-outlined p-button-danger" icon="pi pi-question-circle" iconPos="left" @click="goToFindForm" />
 						</div>
 					</div>
 				</div>
@@ -43,6 +42,7 @@
 	</div>
 </template>
 <script>
+
 export default {
 	name: "Login",
 	data() {
@@ -55,13 +55,15 @@ export default {
 			isFirstMember: null,
 			startLogin: false,
 			loading: false,
+			checkLogout: localStorage.getItem("hasLogout"),
 			errorTitle: "",
 			displayBasic: false,
 			displayInfoModal: false,
+			members: JSON.parse(localStorage.getItem("members")),
 		}
 	},
 	mounted() {
-		if (sessionStorage.getItem("isLogin") !== null || sessionStorage.getItem("isFindAccount") !== null) {
+		if (sessionStorage.getItem("isLogin") !== null || sessionStorage.getItem("isFindAccount") !== null || this.checkLogout !== null) {
 			this.loading = true
 			setTimeout(() => {
 				this.checkLogin()
@@ -75,7 +77,8 @@ export default {
 		async checkLogin() {
 			if (this.$gAuth.instance === null) this.loading = false
 			const GoogleUser = this.$gAuth.instance.currentUser.get()
-			if (GoogleUser.isSignedIn() === false) {
+			console.log(GoogleUser.isSignedIn() === false && this.checkLogout !== 'true')
+			if (GoogleUser.isSignedIn() === false && this.checkLogout !== 'true') {
 				this.loading = false
 				sessionStorage.removeItem("isLogin")
 				sessionStorage.removeItem("isFindAccount")
@@ -107,15 +110,15 @@ export default {
 					} else {
 						//회원가입 시
 						this.$router.replace({ name: "LoginForm", params: { name: this.userName, imgUrl: this.userImage, email: this.userEmail } })
-						sessionStorage.removeItem("isLogin")
 					}
 				}
+				sessionStorage.removeItem("isLogin")
 			}
 		},
 		//로그아웃 후 로그인 시
 		async findAccount() {
 			try {
-				const response = await this.$axios.post("/api/findmyinfo/", { params: { key: localStorage.getItem("key") } }, { email: this.email })
+				const response = await this.$axios.post("/api/findmyinfo/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.members.major, stdnum: this.members.studentId, name: this.members.name, email: this.members.email  } })
 				if (response.status === 201) {
 					localStorage.setItem("key", response.data.key)
 					localStorage.setItem("did", response.data.did)

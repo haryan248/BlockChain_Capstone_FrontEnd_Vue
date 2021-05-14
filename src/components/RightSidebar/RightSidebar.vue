@@ -67,7 +67,7 @@ export default {
 			this.userImage = this.members.userImage
 		},
 		logout() {
-			this.$gAuth.instance.currentUser.get().signOut()
+			this.$gAuth.instance.signOut()
 			localStorage.removeItem("key")
 			localStorage.setItem("hasLogout", true)
 			this.$router.replace("/login")

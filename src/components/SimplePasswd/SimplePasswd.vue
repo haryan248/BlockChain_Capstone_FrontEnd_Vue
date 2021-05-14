@@ -57,8 +57,8 @@
 			</div>
 			<!-- 비밀번호 경고 문구 -->
 			<div v-if="isSetting || isResetting" class="warning-info">
-				<i class="pi pi-shield" style="fontSize: 5px"></i>
-				<div class="text">간편번호를 잊어버리면 찾을 수 없으니 주의해주시기 바랍니다.</div>
+				<i class="pi pi-shield" style="fontSize: 6px"></i>
+				<div class="text">간편비밀번호를 잊어버리면 찾을 수 없으니 주의해주시기 바랍니다.</div>
 			</div>
 		</div>
 	</div>

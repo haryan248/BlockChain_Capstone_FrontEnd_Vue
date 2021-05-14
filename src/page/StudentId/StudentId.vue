@@ -99,7 +99,6 @@ export default {
 	},
 	created() {
 		this.setMembers()
-		console.log(this.$sha256("하현준"))
 	},
 	mounted() {
 		if (localStorage.getItem("simplePassword") === null) this.openPasswordModalForNone()
