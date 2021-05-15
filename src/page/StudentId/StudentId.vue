@@ -197,12 +197,12 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
-					JSON.stringify(localStorage.setItem("wrongPassword", this.failCount++))
-					if (JSON.parse(localStorage.getItem("wrongPassword")) === 5) this.regenerateDID = true
-					this.showError("학생증 찾기 오류", "간편 비밀번호를 " + JSON.parse(localStorage.getItem("wrongPassword")) + "회 틀렸습니다. \n5회 오류시 학생증을 재발급이 가능합니다.")
-					this.successPassword = false
-					this.successFindDID = false
-					if (error.response.data.msg === "가입되지 않은 email입니다.") {
+					if (error.response.data.msg === "DID를 찾을 수 없습니다.") {
+						JSON.stringify(localStorage.setItem("wrongPassword", this.failCount++))
+						if (JSON.parse(localStorage.getItem("wrongPassword")) === 5) this.regenerateDID = true
+						this.showError("학생증 찾기 오류", "간편 비밀번호를 " + JSON.parse(localStorage.getItem("wrongPassword")) + "회 틀렸습니다. \n5회 오류시 학생증을 재발급이 가능합니다.")
+						this.successPassword = false
+						this.successFindDID = false
 						this.showError("학생증 찾기 오류", "간편비밀번호가 틀렸습니다 \n확인 후 다시 입력해주세요.")
 					}
 				}
