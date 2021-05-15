@@ -82,8 +82,8 @@ export default {
 				icon: "pi pi-exclamation-triangle",
 				accept: () => {
 					//callback to execute when user confirms the action
-					console.log(JSON.parse(localStorage.getItem("DarkMode")) === null)
-					if (JSON.parse(localStorage.getItem("DarkMode")) === false || null) {
+					console.log(JSON.parse(localStorage.getItem("DarkMode")) === false || null)
+					if (JSON.parse(localStorage.getItem("DarkMode")) === false || JSON.parse(localStorage.getItem("DarkMode")) === null) {
 						JSON.stringify(localStorage.setItem("DarkMode", true))
 					} else {
 						JSON.stringify(localStorage.setItem("DarkMode", false))
