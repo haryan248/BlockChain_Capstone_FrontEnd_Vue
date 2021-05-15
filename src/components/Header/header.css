@@ -77,3 +77,9 @@
 	background-repeat: no-repeat;
 	width: 100px;
 }
+
+/*다크 모드 css*/
+.top-nav--active.dark__mode {
+	background-color: #333536;
+	color: #ffffff;
+}

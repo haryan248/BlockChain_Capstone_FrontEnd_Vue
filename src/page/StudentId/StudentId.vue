@@ -2,16 +2,16 @@
 	<div>
 		<Toast :style="{ width: '90%' }" position="top-right" :baseZIndex="100" />
 		<Header :title="'U-PASS'" />
-		<div class="container bg-gray">
+		<div class="container bg-gray" :class="{ 'bg-dark': $shared.checkDarkMode() }">
 			<div>
 				<div class="student-content">
 					<HeaderSection :title="'학생증'" :subtitle="'자신의 정보를 간편하게 관리해보세요.'" />
-					<Dialog class="QR-modal" :showHeader="false" v-model:visible="displayStudentModal" :style="{ width: '80vw' }">
+					<Dialog class="QR-modal" :showHeader="false" v-model:visible="displayStudentModal" :style="{ width: '80vw' }" :class="{ dark__mode: $shared.checkDarkMode() }">
 						<!-- 학생증 카드 -->
 						<div class="student-info">
 							<div class="student-card">
 								<div class="student-wrapper">
-									<div class="box">
+									<div class="box" :class="{ dark__mode: $shared.checkDarkMode() }">
 										<div class="student-card__item">
 											<p class="item__univ">경기대학교</p>
 											<div class="item__img">
@@ -313,5 +313,10 @@ export default {
 	padding: 1rem 1rem 1rem 1rem;
 	border-radius: 0 0 20px 20px;
 	text-align: center;
+}
+
+/* 다크모드 */
+.p-dialog.p-component.QR-modal.dark__mode .p-dialog-content {
+	background: #333536;
 }
 </style>

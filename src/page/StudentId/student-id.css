@@ -128,3 +128,12 @@
 .did-issued {
 	margin-top: 70px;
 }
+
+/* 다크모드 css */
+.student-wrapper .box.dark__mode {
+	background: #333536;
+}
+
+.box.dark__mode .student-card__item {
+	color: #ffffff;
+}

@@ -78,3 +78,8 @@
 	height: 210px;
 	opacity: 1;
 }
+
+/* 다크 모드 css */
+.card__menu.dark__mode .item__title {
+	color: #ffffff;
+}

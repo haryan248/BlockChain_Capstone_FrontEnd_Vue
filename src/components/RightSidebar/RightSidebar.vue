@@ -3,7 +3,7 @@
 		<Button icon="pi pi-align-justify" @click="visibleRight = true" class="p-mr-2" />
 	</div>
 	<div>
-		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:12rem">
+		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:12rem" :class="{ dark__mode: $shared.checkDarkMode() }">
 			<!-- 프로필 화면 -->
 			<div>
 				<div class="blank__content"></div>
@@ -15,7 +15,7 @@
 				<div class="student__major">{{ major }}</div>
 			</a>
 			<div class="sidebar_content">
-				<Accordion>
+				<Accordion :class="{ dark__mode: $shared.checkDarkMode() }">
 					<AccordionTab header="간편비밀번호">
 						<div class="accordian-item" @click="openPasswordModal">
 							재설정
@@ -105,5 +105,27 @@ export default {
 	background: transparent !important;
 	outline: none !important;
 	box-shadow: none !important;
+}
+
+/* 다크모드  */
+.p-sidebar.p-component.p-sidebar-right.p-sidebar-active.dark__mode {
+	background: #333536;
+}
+.p-accordion.dark__mode .p-accordion-header .p-accordion-header-link {
+	background: #495057;
+	border: 1px solid #495057;
+	color: #ffffff;
+}
+.p-accordion.dark__mode .p-accordion-header:not(.p-disabled).p-highlight:hover .p-accordion-header-link,
+.p-accordion.dark__mode .p-accordion-header:not(.p-highlight):not(.p-disabled):hover .p-accordion-header-link,
+.p-accordion.dark__mode .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+	background: #495057;
+	border: 1px solid #495057;
+	color: #ffffff;
+}
+.p-accordion.dark__mode .p-accordion-content {
+	background: #858c92;
+	border: 1px solid #495057;
+	color: #ffffff;
 }
 </style>

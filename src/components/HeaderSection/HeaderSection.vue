@@ -1,9 +1,9 @@
 <template>
 	<!-- 각 탭의 타이틀 영역 -->
-	<div className="headersection__info">
-		<h5 className="headerSection__time">{{ currentDate }}</h5>
-		<h1 className="headerSection__title">{{ title }}</h1>
-		<h3 className="headerSection__subttl">{{ subtitle }}</h3>
+	<div class="headersection__info" :class="{ dark__mode: $shared.checkDarkMode() }">
+		<h5 class="headerSection__time">{{ currentDate }}</h5>
+		<h1 class="headerSection__title">{{ title }}</h1>
+		<h3 class="headerSection__subttl">{{ subtitle }}</h3>
 	</div>
 </template>
 <script>

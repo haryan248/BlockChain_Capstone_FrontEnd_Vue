@@ -171,7 +171,10 @@ padding-bottom: 100px
 .bg-gray {
 	background-color: #f9f9f9;
 }
-
+/* 다크 모드 ㅏ*/
+.bg-dark {
+	background-color: #495057;
+}
 /* 버튼 보더 지우기 */
 .border-none {
 	border: none !important;

@@ -38,3 +38,13 @@
 	font-weight: normal;
 	letter-spacing: -1px;
 }
+
+/*다크모드 css*/
+.headersection__info.dark__mode {
+	background-color: #333536;
+}
+.headersection__info.dark__mode .headerSection__time,
+.headersection__info.dark__mode .headerSection__title,
+.headersection__info.dark__mode .headerSection__subttl {
+	color: #ffffff;
+}

@@ -1,18 +1,18 @@
 <template>
 	<div>
 		<Header :title="'지갑'" />
-		<div class="container bg-gray">
+		<div class="container bg-gray" :class="{ 'bg-dark': $shared.checkDarkMode() }">
 			<div>
 				<div class="wallet__content">
 					<HeaderSection :title="'결제'" :subtitle="'간편하게 지갑을 관리하세요.'" />
 
 					<div class="card__content">
-						<div class="card__menu">
+						<div class="card__menu" :class="{ dark__mode: $shared.checkDarkMode() }">
 							<div class="tab__list">
 								<div class="item__title p-text-bold">지불 관리</div>
 							</div>
 							<div class="tab__list">
-								<Button label="+ 카드 추가하기" class="p-button-text p-button-secondary" @click="visibleBottom = true" />
+								<Button label="+ 카드 추가하기" :class="{ dark__mode: $shared.checkDarkMode() }" class="p-button-text p-button-secondary" @click="visibleBottom = true" />
 							</div>
 						</div>
 						<!-- 스와이퍼 영역 -->
@@ -104,4 +104,9 @@ export default {
 </script>
 <style scoped>
 @import "./wallet.css";
+</style>
+<style>
+button.p-button.p-component.dark__mode.p-button-text.p-button-secondary {
+	color: #fff;
+}
 </style>

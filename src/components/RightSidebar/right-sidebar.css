@@ -54,52 +54,22 @@
 .logout__button .logout {
 	align-items: center;
 }
-.recommend__list {
-	/* padding: 20px; */
-}
-.recommend__list .list__item {
-	padding-top: 13px;
-	padding-bottom: 13px;
-}
-
-.recommend__image {
-	display: block;
-	width: 64px;
-	height: 64px;
-	margin-right: 16px;
-	background-color: #747474;
-	border-radius: 20px;
-	flex: none;
-}
-.recommend__image:before {
-	content: "";
-	display: block;
-	width: 24px;
-	height: 24px;
-	/*margin: auto 하면 좌우 margin 만 됨..?*/
-	margin: 20px;
-	background-repeat: no-repeat;
-	background-size: 100%;
-}
-.recommend__title {
-	font-size: 16px;
-	line-height: 22px;
-	letter-spacing: -1px;
-}
-.recommend__description,
-.recommend__title {
-	overflow: hidden;
-	color: #000;
-	white-space: nowrap;
-	text-overflow: ellipsis;
-}
-.recommend__description {
-	margin-top: 5px;
-	font-size: 14px;
-	line-height: 20px;
-	letter-spacing: -0.5px;
-}
 
 .sidebar_content {
 	margin-top: 40px;
+}
+
+/* 다크 모드  */
+
+.dark__mode .profile__content {
+	background: #495057;
+}
+.dark__mode .profile__content .student__img {
+	border: 1px solid #ffffff;
+}
+.dark__mode .profile__content .student__img,
+.dark__mode .profile__content .student__id,
+.dark__mode .profile__content .student__name,
+.dark__mode .profile__content .student__major {
+	color: #ffffff;
 }

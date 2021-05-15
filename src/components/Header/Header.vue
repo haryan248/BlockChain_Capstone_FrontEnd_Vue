@@ -1,7 +1,7 @@
 <template>
 	<!-- 해더 부분 -->
 	<div v-if="isShow">
-		<nav class="top-nav top-nav--active">
+		<nav class="top-nav top-nav--active" :class="{ dark__mode: $shared.checkDarkMode() }">
 			<div v-if="$route.path === '/'" to="/" class="header__nav header__title1">
 				<div class="" />
 			</div>

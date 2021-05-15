@@ -1,14 +1,4 @@
 .login__form-box {
-	/* position: absolute;
-	top: -525%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	padding: 20px;
-	min-width: 300px;
-	box-shadow: -1px 13px 20px 3px rgb(0 0 0 / 13%);
-	border-radius: 20px;
-	background-color: #fff;
-	min-height: 300px; */
 	padding-top: 20px;
 }
 .login-header {
@@ -51,6 +41,7 @@
 }
 .did-issued.v-enter-active .did-issued.v-leave-active {
 	transition: transform all 3s, background-color 1s;
+	transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 .password-warning__detail {
 	text-align: center;

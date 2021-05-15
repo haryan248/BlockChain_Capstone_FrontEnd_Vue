@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<Header :title="'주문'" />
-		<div class="container bg-gray">
+		<div class="container bg-gray" :class="{ 'bg-dark': $shared.checkDarkMode() }">
 			<div>
 				<div class="order-content">
 					<HeaderSection :title="'주문서'" :subtitle="'음식을 주문해보세요.'" />
