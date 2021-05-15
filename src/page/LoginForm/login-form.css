@@ -46,27 +46,24 @@
 	margin-top: 20px;
 	/* animation: fadein 1s; */
 }
-.did-issued.v-enter-from
-.did-issued.v-leave-to{
-  transform: translate3d(0, -200%, 0);
+.did-issued.v-enter-from .did-issued.v-leave-to {
+	transform: translate3d(0, -200%, 0);
 }
-.did-issued.v-enter-active
-.did-issued.v-leave-active{
-	  transition: transform 3s;
+.did-issued.v-enter-active .did-issued.v-leave-active {
+	transition: transform all 3s, background-color 1s;
 }
 .password-warning__detail {
-    text-align: center;
-    font-weight: 200;
-		font-size: 14px;
-
+	text-align: center;
+	font-weight: 200;
+	font-size: 14px;
 }
 .password-warning__detail .password-focus {
-    font-size: 15.5px;
-		font-weight: bold;
-		color:#ff4b4b;
-		display: flex;
-    justify-content: center;
-    align-items: center;
+	font-size: 15.5px;
+	font-weight: bold;
+	color: #ff4b4b;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 @keyframes fadein {

@@ -124,57 +124,7 @@
 }
 
 /*did 모달*/
-.did-modal {
-	height: 100%;
-	text-align: center;
-	padding-top: 20px;
-	padding-bottom: 40px;
-}
-.did-card {
-	margin: auto;
-	display: flex;
-	flex-direction: column;
-}
-.did-wrapper {
-	position: relative;
-	width: 100%;
-	height: 100%;
-	z-index: 1;
-	display: flex;
-	transition-property: transform;
-	box-sizing: content-box;
-}
-.did-card .box {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	padding-top: 42px;
-	background: #fff;
-	box-sizing: border-box;
-	flex-shrink: 0;
-	width: 100%;
-	height: 100%;
-	position: relative;
-	transition-property: transform;
-}
-.did-card__item {
-	position: relative;
-}
-.did-card__item .item__title {
-	text-align: center;
-	font-size: 32px;
-	font-weight: 700;
-	line-height: 38px;
-	margin-bottom: 20px;
-}
-.did-card__item .item__detail {
-	text-align: left;
-	margin-top: 10px;
-	font-weight: 400;
-	font-size: 15px;
-	line-height: 20px;
-	letter-spacing: -1px;
-}
+
 .did-issued {
 	margin-top: 70px;
 }

@@ -38,7 +38,7 @@
 							<Button label="회원 정보 입력" icon="pi pi-pencil" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
 							<Button v-if="successSignUp" label="간편 비밀번호 입력" icon="pi pi-lock" iconPos="right" class="did-issued" :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openPasswordModal" />
 							<Button v-if="successPassword" label="학생증 찾기" icon="pi pi-search" iconPos="right" class="did-issued" :class="{ 'p-button-outlined': !successFindDID }" :disabled="successFindDID" @click="getUserDID" />
-							<Button v-if="regenerateDID" label="학생증 재발급" icon="pi pi-clone" iconPos="right" style="margin-top:20px" class="did-reissued" @click="openWarningModal" />
+							<Button v-if="regenerateDID" label="학생증 재발급" icon="pi pi-clone" iconPos="right" style="margin-top:20px" class="did-reissued" @click="openWarningModal" :disabled="!successSignUp" />
 						</div>
 						<!-- 회원가입 버튼 -->
 						<div v-else>
@@ -51,7 +51,7 @@
 			</div>
 		</Dialog>
 		<Dialog class="password-modal p-dialog-maximized" :showHeader="false" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
-			<SimplePassword :title="find === 'true'? '간편 비밀번호 입력' :'간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
+			<SimplePassword :title="find === 'true' ? '간편 비밀번호 입력' : '간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
 
 		<!-- 비밀번호 설정시 경고모달 -->
@@ -59,27 +59,27 @@
 			<p v-if="regenerateDID" class="password-warning__detail">
 				<br /><span class="password-focus"> 주의 사항 <i class="pi pi-exclamation-triangle" style="color:#ff4b4b; margin-left:5px;"></i></span> <br />
 				<br />
-				학생증 재발급시 이전의 출입했던 <br/>기록은 찾을 수 없습니다.
+				학생증 재발급 시<br />
+				이전의 출입했던 기록들은 <br />찾을 수 없습니다.
 				<br />
 				<br />
-				이 점 유의해 주시길 바랍니다.
+				유의해 주시길 바랍니다.
 				<br />
 			</p>
 			<p v-else class="password-warning__detail">
 				<br /><span class="password-focus"> 주의 사항 <i class="pi pi-exclamation-triangle" style="color:#ff4b4b; margin-left:5px;"></i></span> <br />
 				<br />
-				간편 비밀번호는 블록체인 네트워크 상 <br/>지갑의 비밀번호 입니다.
+				간편 비밀번호는 블록체인 네트워크 상 <br />지갑의 비밀번호 입니다.
 				<br />
 				<br />
 				지갑의 비밀번호는 사용자 개인만 알 수 있고, 해당 비밀번호를 분실하게 될 경우 모든 책임은 사용자에게 있습니다.
 				<br />
 			</p>
 			<template #footer>
-				<Button label="취소" icon="pi pi-times" class="border-none p-button-outlined" @click="closeWarningModal" autofocus/>
+				<Button label="취소" icon="pi pi-times" class="border-none p-button-outlined" @click="closeWarningModal" autofocus />
 				<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="openPasswordModal('regenerate')" autofocus />
 			</template>
 		</Dialog>
-
 	</div>
 </template>
 <script>
@@ -103,8 +103,9 @@ export default {
 			successSignUp: false,
 			successPassword: false,
 			successFindDID: false,
-			failCount: 1,
-			regenerateDID: false,
+			failCount: JSON.parse(localStorage.getItem("wrongPassword")) ? JSON.parse(localStorage.getItem("wrongPassword")) : 1,
+			regenerateDID: JSON.parse(localStorage.getItem("wrongPassword")) >= 5 ? true : false,
+			checkRegenerateDID: false,
 			//임시 학과 데이터
 			groupedMajor: [
 				{
@@ -172,11 +173,7 @@ export default {
 		async signUp() {
 			this.isFirstMember = false
 			try {
-				const response = await this.$axios.post(
-					"/api/members/",
-					{},
-					{ params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } }
-				)
+				const response = await this.$axios.post("/api/members/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
 				if (response.status === 201) {
 					this.successSignUp = true
 					this.showSuccess("회원가입 완료", "회원가입이 완료되었습니다. \n간편비밀번호를 설정해주세요.")
@@ -206,12 +203,15 @@ export default {
 				const response = await this.$axios.post("/api/generatedid/", {}, { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
-					if(this.regenerateDID){
-						this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다.")
-					}else{
+					localStorage.removeItem("wrongPassword")
+					if (this.checkRegenerateDID) {
+						this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다. \n잠시후 학생증 페이지로 이동합니다.")
+					} else {
 						this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
 					}
-					this.$router.replace("/")
+					setTimeout(() => {
+						this.$router.replace("/")
+					}, 2000)
 				}
 			} catch (error) {
 				if (error.response) {
@@ -222,10 +222,11 @@ export default {
 		//did 찾기
 		async getUserDID() {
 			try {
-				const response = await this.$axios.get("/api/getdd/", { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.get("/api/getdid/", { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					this.successFindDID = true
 					localStorage.setItem("did", response.data.did)
+					localStorage.removeItem("wrongPassword")
 					this.showSuccess("학생증 찾기 성공", "학생증 찾기를 성공하였습니다. \n잠시후 학생증 페이지로 이동합니다.")
 					setTimeout(() => {
 						this.$router.replace("/")
@@ -233,9 +234,10 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
-					if(JSON.parse(localStorage.getItem('wrongPassword')) === 10) this.regenerateDID = true
-					JSON.stringify(localStorage.setItem('wrongPassword', this.failCount++))
-					this.showError("학생증 찾기 오류", "간편 비밀번호를 "+JSON.parse(localStorage.getItem('wrongPassword'))+ "회 틀렸습니다. \n10회 오류시 학생증을 재발급이 가능합니다.")
+					JSON.stringify(localStorage.setItem("wrongPassword", this.failCount++))
+					if (JSON.parse(localStorage.getItem("wrongPassword")) === 5) this.regenerateDID = true
+
+					this.showError("학생증 찾기 오류", "간편 비밀번호를 " + JSON.parse(localStorage.getItem("wrongPassword")) + "회 틀렸습니다. \n5회 오류시 학생증을 재발급이 가능합니다.")
 					this.successPassword = false
 					if (error.response.data.msg === "가입되지 않은 email입니다.") {
 						this.showError("학생증 찾기 오류", "간편비밀번호가 틀렸습니다 \n확인 후 다시 입력해주세요.")
@@ -246,10 +248,11 @@ export default {
 		//회원 찾기
 		async findAccount() {
 			try {
-				const response = await this.$axios.post("/api/findmyinfo/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email  } })
+				const response = await this.$axios.post("/api/findmyinfo/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
 				if (response.status === 201) {
-					this.showSuccess("회원 찾기 성공", "올바른 회원입니다. \n간편 비밀번호를 입력해주세요. ")
+					this.showSuccess("회원 정보 입력 성공", "올바른 회원입니다. \n간편 비밀번호를 입력해주세요. ")
 					localStorage.setItem("key", response.data.user_key)
+					localStorage.setItem("findDid", JSON.stringify(true))
 					this.successSignUp = true
 					this.setMembers()
 				}
@@ -270,12 +273,16 @@ export default {
 			}
 		},
 		//간편 비밀번호 모달
-		openPasswordModal() {
+		openPasswordModal(state) {
+			if (state === "regenerate") this.checkRegenerateDID = true
+			console.log(this.checkRegenerateDID)
 			this.closeWarningModal()
 			this.displayPasswordModal = true
 		},
 		closePasswordModal() {
-			if(this.find !== "true"){
+			if (this.checkRegenerateDID) {
+				this.generateUserDID()
+			} else if (this.find !== "true") {
 				this.openBasicModal()
 				this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다. \n학생증을 발급해주세요.")
 			}
@@ -330,7 +337,7 @@ export default {
 	border-radius: 0 0 20px 20px;
 	text-align: center;
 }
-button.p-button.p-component.did-reissued	{
+button.p-button.p-component.did-reissued {
 	background: #fbc02d;
 	border: 1px solid #fbc02d;
 }

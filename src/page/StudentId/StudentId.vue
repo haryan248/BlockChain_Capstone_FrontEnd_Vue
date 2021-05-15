@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<Toast :style="{ width: '90%' }" position="top-right" />
+		<Toast :style="{ width: '90%' }" position="top-right" :baseZIndex="100" />
 		<Header :title="'U-PASS'" />
 		<div class="container bg-gray">
 			<div>
@@ -44,24 +44,66 @@
 					</div>
 				</div>
 				<!-- 학생증 발급되지 않았을때 화면 띄우는 부분 -->
-				<Dialog class="did__error-modal" header="" :showHeader="false" v-model:visible="displayDIDModal" :style="{ width: '80vw' }" :modal="true">
-					<div class="did-modal">
-						<div class="did-card">
-							<div class="did-wrapper">
-								<div class="box">
-									<div class="did-card__item">
-										<p class="item__title">학생증 발급 필요</p>
-										<p class="item__detail">
-											<br />DID (Decentralized Identifier)을 발급하는 도중에 오류가 발생하였거나, 어플이 종료되었을 수 있습니다. <br /><br />
-											기기에 DID정보가 없으므로 학생증을 발급해주세요.<br />
-										</p>
-
-										<Button label="학생증 발급" icon="pi pi-user-plus" iconPos="right" class="p-button-outlined did-issued" @click="getUserDID" />
-									</div>
-								</div>
-							</div>
+				<Dialog class="did__error-modal" header="" :showHeader="false" v-model:visible="displayDIDModal" :style="{ width: '80vw', zIndex: 900 }" :modal="true">
+					<p v-if="checkDid" class="password-warning__detail">
+						<br /><span class="password-focus"> DID 오류 <i class="pi pi-exclamation-triangle" style="color:#ff4b4b; margin-left:5px;"></i></span> <br />
+						<br />
+						학생증 찾기 도중에 오류가 발생하였거나, 어플이 종료되었을 수 있습니다.
+						<br /><br />
+						기기에 DID정보가 없으므로 학생증을 <br />발급해주세요.
+						<br />
+					</p>
+					<p v-else class="password-warning__detail">
+						<br /><span class="password-focus"> DID 오류 <i class="pi pi-exclamation-triangle" style="color:#ff4b4b; margin-left:5px;"></i></span> <br />
+						<br />
+						DID (Decentralized Identifier)을 발급하는 도중에 오류가 발생하였거나, 어플이 종료되었을 수 있습니다.
+						<br /><br />
+						기기에 DID정보가 없으므로 학생증을 발급해주세요.
+						<br />
+					</p>
+					<template #footer>
+						<div v-if="checkDid" style="display: grid; align-items: center; justify-content: center;">
+							<Button
+								label="간편 비밀번호 입력"
+								style="margin-bottom:10px;"
+								icon="pi pi-lock"
+								iconPos="right"
+								class="did-issued"
+								:class="{ 'p-button-outlined': !successPassword }"
+								:disabled="successPassword"
+								@click="openPasswordModalForNone"
+							/>
+							<Button
+								label="학생증 찾기"
+								icon="pi pi-search"
+								style="margin-bottom:10px;"
+								iconPos="right"
+								class="p-button-outlined did-issued"
+								:class="{ 'p-button-outlined': !successFindDID }"
+								:disabled="!successFindDID"
+								@click="getUserDID"
+							/>
+							<Button v-if="regenerateDID" label="학생증 재발급" icon="pi pi-clone" iconPos="right" class="did-reissued" @click="openWarningModal" />
 						</div>
-					</div>
+						<Button v-else label="학생증 발급" icon="pi pi-user-plus" iconPos="right" class="p-button-outlined did-issued" @click="generateUserDID" />
+					</template>
+				</Dialog>
+
+				<!-- 비밀번호 설정시 경고모달 -->
+				<Dialog class="password__warning-modal" header="" :showHeader="false" v-model:visible="displayWarningModal" :style="{ width: '80vw' }" :modal="true">
+					<p v-if="regenerateDID" class="password-warning__detail">
+						<br /><span class="password-focus"> 주의 사항 <i class="pi pi-exclamation-triangle" style="color:#ff4b4b; margin-left:5px;"></i></span> <br />
+						<br />
+						학생증 재발급 시 이전의 출입했던 <br />기록은 찾을 수 없습니다.
+						<br />
+						<br />
+						유의해 주시길 바랍니다.
+						<br />
+					</p>
+					<template #footer>
+						<Button label="취소" icon="pi pi-times" class="border-none p-button-outlined" @click="closeWarningModal" autofocus />
+						<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="openPasswordModalForNone('regenerate')" autofocus />
+					</template>
 				</Dialog>
 			</div>
 		</div>
@@ -87,6 +129,7 @@ export default {
 			displayPasswordModalForNone: false,
 			displayStudentModal: false,
 			displayDIDModal: false,
+			displayWarningModal: false,
 			name: "",
 			studentId: "",
 			major: "",
@@ -95,14 +138,20 @@ export default {
 			SimplePassword: localStorage.getItem("simplePassword"),
 			DIDPasswd: "",
 			members: JSON.parse(localStorage.getItem("members")),
+			checkDid: JSON.parse(localStorage.getItem("findDid")),
+			failCount: JSON.parse(localStorage.getItem("wrongPassword")) ? JSON.parse(localStorage.getItem("wrongPassword")) : 1,
+			regenerateDID: JSON.parse(localStorage.getItem("wrongPassword")) >= 5 ? true : false,
+			checkRegenerateDID: false,
+
+			successPassword: false,
+			successFindDID: false,
 		}
 	},
 	created() {
 		this.setMembers()
 	},
 	mounted() {
-		if (localStorage.getItem("simplePassword") === null) this.openPasswordModalForNone()
-		else if (localStorage.getItem("did") === null) this.openDIDModal()
+		if (localStorage.getItem("did") === null) this.openDIDModal()
 		else {
 			this.openStudentModal()
 			this.$shared.checkGoogleLogin(this.$gAuth)
@@ -124,11 +173,9 @@ export default {
 				this.userImage = this.members.userImage = response.data.image
 			}
 		},
-		async getUserDID() {
+		async generateUserDID() {
 			try {
-				const response = await this.$axios.post("/api/generatedid/", 
-				{}, 
-				{ params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post("/api/generatedid/", {}, { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
 					this.closeDIDModal()
@@ -136,6 +183,28 @@ export default {
 			} catch (error) {
 				if (error.response) {
 					this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
+				}
+			}
+		},
+		//did 찾기
+		async getUserDID() {
+			try {
+				const response = await this.$axios.get("/api/getdd/", { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
+				if (response.status === 201) {
+					this.successFindDID = true
+					localStorage.setItem("did", response.data.did)
+					this.closeDIDModal()
+				}
+			} catch (error) {
+				if (error.response) {
+					JSON.stringify(localStorage.setItem("wrongPassword", this.failCount++))
+					if (JSON.parse(localStorage.getItem("wrongPassword")) === 5) this.regenerateDID = true
+					this.showError("학생증 찾기 오류", "간편 비밀번호를 " + JSON.parse(localStorage.getItem("wrongPassword")) + "회 틀렸습니다. \n5회 오류시 학생증을 재발급이 가능합니다.")
+					this.successPassword = false
+					this.successFindDID = false
+					if (error.response.data.msg === "가입되지 않은 email입니다.") {
+						this.showError("학생증 찾기 오류", "간편비밀번호가 틀렸습니다 \n확인 후 다시 입력해주세요.")
+					}
 				}
 			}
 		},
@@ -156,31 +225,58 @@ export default {
 			this.openQRModal()
 			this.displayPasswordModal = false
 		},
-		openPasswordModalForNone() {
+		openPasswordModalForNone(state) {
+			if (state === "regenerate") {
+				this.closeWarningModal()
+				this.checkRegenerateDID = true
+			}
 			this.closeStudentModal()
 			this.displayPasswordModalForNone = true
 		},
 		closePasswordModalForNone() {
-			if (localStorage.getItem("did") === null) this.openDIDModal()
-			this.openStudentModal()
 			this.displayPasswordModalForNone = false
-			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다.")
+			if (this.checkRegenerateDID) this.generateUserDID()
+			else if (this.checkDid) {
+				this.successPassword = true
+				this.successFindDID = true
+			} else {
+				if (localStorage.getItem("did") === null) this.openDIDModal()
+				this.openStudentModal()
+				this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다.")
+			}
 		},
 		openDIDModal() {
 			this.closeStudentModal()
 			this.displayDIDModal = true
 		},
 		closeDIDModal() {
-			if (localStorage.getItem("simplePassword") === null) this.openPasswordModalForNone()
 			this.openStudentModal()
 			this.displayDIDModal = false
-			this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
+			if (this.checkRegenerateDID) {
+				this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다.")
+			} else if (this.checkDid) {
+				this.showSuccess("학생증 찾기 성공", "학생증 찾기를 성공하였습니다.")
+			} else {
+				this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
+			}
 		},
 		openStudentModal() {
 			this.displayStudentModal = true
 		},
 		closeStudentModal() {
 			this.displayStudentModal = false
+		},
+		//간편 비밀번호 경고 모달
+		openWarningModal() {
+			this.displayWarningModal = true
+		},
+		closeWarningModal() {
+			this.displayWarningModal = false
+		},
+
+		//에러 토스트 메시지
+		showError(summaryText, detailText) {
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
 		},
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
@@ -207,5 +303,15 @@ export default {
 }
 .p-dialog.p-component.password-modal.p-dialog-maximized .p-dialog-content {
 	padding: 0 !important;
+}
+
+.did__error-modal .p-dialog-content {
+	border-radius: 20px 20px 0 0;
+}
+.did__error-modal .p-dialog-footer {
+	border-top: 1px solid #e2e2e2;
+	padding: 1rem 1rem 1rem 1rem;
+	border-radius: 0 0 20px 20px;
+	text-align: center;
 }
 </style>
