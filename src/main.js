@@ -44,12 +44,15 @@ import InputSwitch from "primevue/inputswitch"
 import ToastService from "primevue/toastservice"
 import Toast from "primevue/toast"
 import ProgressBar from "primevue/progressbar"
+import ConfirmationService from "primevue/confirmationservice"
+import ConfirmDialog from "primevue/confirmdialog"
 
 // Create Vue Instance
 const app = createApp(App)
 app.use(router) // 사용 설정 하기
 app.use(PrimeVue)
 app.use(ToastService)
+app.use(ConfirmationService)
 app.use(VCalendar, {})
 
 app.component("Header", Header)
@@ -73,6 +76,7 @@ app.component("Accordion", Accordion)
 app.component("AccordionTab", AccordionTab)
 app.component("InputSwitch", InputSwitch)
 app.component("Toast", Toast)
+app.component("ConfirmDialog", ConfirmDialog)
 
 app.component("ProgressBar", ProgressBar)
 app.component("Calendar", Calendar)

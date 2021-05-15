@@ -1,6 +1,8 @@
 <template>
+	<ConfirmDialog></ConfirmDialog>
+
 	<div class="nav__button">
-		<Button icon="pi pi-align-justify" @click="visibleRight = true" class="p-mr-2" />
+		<Button icon="pi pi-align-justify" @click="openVisibleRight()" class="p-mr-2" />
 	</div>
 	<div>
 		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:12rem" :class="{ dark__mode: $shared.checkDarkMode() }">
@@ -21,7 +23,7 @@
 							재설정
 						</div>
 					</AccordionTab>
-					<AccordionTab header="다크모드"> 다크모드 <InputSwitch v-model="checked" /> </AccordionTab>
+					<AccordionTab header="다크모드"> 다크모드 <InputSwitch v-model="darkModeChecked" @click="confirmDarkMode()" /> </AccordionTab>
 					<AccordionTab header="DID 재발급">
 						재발급
 					</AccordionTab>
@@ -48,7 +50,7 @@ export default {
 		return {
 			visibleRight: false,
 			displayPasswordModal: false,
-			checked: false,
+			darkModeChecked: JSON.parse(localStorage.getItem("DarkMode")) === true ? true : false,
 			name: "",
 			studentId: "",
 			major: "",
@@ -72,9 +74,34 @@ export default {
 			localStorage.setItem("hasLogout", true)
 			this.$router.replace("/login")
 		},
+		confirmDarkMode() {
+			this.closeVisibleRight()
+			this.$confirm.require({
+				message: JSON.parse(localStorage.getItem("DarkMode")) === true ? "다크모드를 비활성화 하시겠습니까?" : "다크모드를 활성화 하시겠습니까?",
+				header: "Confirmation",
+				icon: "pi pi-exclamation-triangle",
+				accept: () => {
+					//callback to execute when user confirms the action
+					console.log(JSON.parse(localStorage.getItem("DarkMode")) === null)
+					if (JSON.parse(localStorage.getItem("DarkMode")) === false || null) {
+						JSON.stringify(localStorage.setItem("DarkMode", true))
+					} else {
+						JSON.stringify(localStorage.setItem("DarkMode", false))
+					}
+					this.$router.go(0)
+				},
+				reject: () => {},
+			})
+		},
+		openVisibleRight() {
+			this.visibleRight = true
+		},
+		closeVisibleRight() {
+			this.visibleRight = false
+		},
 		// 패스워드 모달 관련 함수
 		openPasswordModal() {
-			this.visibleRight = false
+			this.closeVisibleRight()
 			this.displayPasswordModal = true
 		},
 		closePasswordModal() {
