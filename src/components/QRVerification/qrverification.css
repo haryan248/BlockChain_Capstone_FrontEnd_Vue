@@ -15,7 +15,7 @@
 	padding: 20px;
 	background: #fff;
 	/* box-shadow: 0 0 5px rgba(0, 0, 0, 0.05), 0 5px 20px rgba(0, 0, 0, 0.05); */
-	border-radius: 20px;
+	border-radius: 10px;
 	box-sizing: border-box;
 	flex-shrink: 0;
 	width: 100%;
