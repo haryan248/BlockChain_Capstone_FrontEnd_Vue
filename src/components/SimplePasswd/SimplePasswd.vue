@@ -1,6 +1,6 @@
 <template>
 	<div class="password-container">
-		<div class="password-content">
+		<div class="password-content" :class="{ dark__mode: darkModeState }">
 			<h1 class="password-header">{{ title }}</h1>
 			<div v-if="isResetting" class="password-help" v-html="resettingText"></div>
 			<div v-else class="password-help">숫자 6자리 + 영문자 1자리</div>
@@ -39,7 +39,7 @@
 							<!-- 영어 자판 -->
 							<div v-else>
 								<button v-for="(item, index) in alphaPasswdArray" :key="index" ref="passwdButton" :class="{ 'num-button__flex--active': touchAlphaStart[index] }" class="num-button__flex spread-effect fantasy-font__2_3rem--alpha">
-									<button v-if="index === 21" class="num-button__flex spread-effect fantasy-font__2_3rem--alpha">
+									<button v-if="index === 21" class="num-button__flex spread-effect 1">
 										{{ checkInvisibleNum(item) }}
 									</button>
 									<div v-else @click="setPasswd(item)" :value="index">{{ item }}</div>
@@ -82,6 +82,7 @@ export default {
 			resettingText: "현재 사용중인 비밀번호를 입력해주세요.",
 			touchstart: [],
 			touchAlphaStart: [],
+			darkModeState: this.$shared.checkDarkMode(),
 		}
 	},
 	created() {
@@ -201,4 +202,11 @@ export default {
 </script>
 <style scoped>
 @import "./simple-passwd.css";
+</style>
+<style>
+/* 다크모드 css*/
+.p-dialog.p-component.password-modal.p-dialog-maximized.dark__mode .p-dialog-header,
+.p-dialog.p-component.password-modal.p-dialog-maximized.dark__mode .p-dialog-content {
+	background-color: #333536;
+}
 </style>

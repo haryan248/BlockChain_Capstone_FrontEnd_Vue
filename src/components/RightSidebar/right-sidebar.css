@@ -21,29 +21,30 @@
 	padding: 20px;
 }
 .profile__content {
-	display: block;
+	display: flex;
 	align-items: center;
 	justify-content: space-between;
 	margin-top: 10px;
-	padding: 20px;
+	padding: 20px 10px 20px 10px;
 	border-radius: 10px;
 	background-color: #f8f9fa;
+}
+.profile__content .img__content {
+	margin-right: 4px;
 }
 .profile__content .student__img {
 	width: 3rem;
 	height: 3rem;
 	font-size: 1.5rem;
 	border-radius: 50%;
+	/* border-radius: 20px; */
+
 	border: 1px solid #495057;
 }
-.profile__content .student__name {
-	font-size: 15px;
-}
-.profile__content .student__id {
-	font-size: 15px;
-}
+.profile__content .student__name,
+.profile__content .student__id,
 .profile__content .student__major {
-	font-size: 15px;
+	font-size: 12px;
 }
 .logout__button {
 	position: fixed;
@@ -59,8 +60,15 @@
 	margin-top: 40px;
 }
 
+.dark__mode-button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.dark__mode-button .item-content {
+	margin-right: 13px;
+}
 /* 다크 모드  */
-
 .dark__mode .profile__content {
 	background: #495057;
 }

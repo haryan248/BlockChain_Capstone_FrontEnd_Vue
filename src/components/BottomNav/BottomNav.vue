@@ -1,24 +1,18 @@
 <template>
 	<!-- 각 페이지의 하단 네비게이션 -->
 	<div v-if="$route.path !== '/login' || $route.path !== '/simplepwd'">
-		<aside class="bottom-nav footer--view" :class="{ dark__mode: $shared.checkDarkMode() }">
+		<aside class="bottom-nav footer--view" :class="{ dark__mode: darkModeState }">
 			<router-link to="/" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.studentId }">
 				<Button
 					label="학생증"
 					iconPos="top"
 					icon="pi pi-id-card"
 					class="p-button-text p-button-secondary border-none p-button-font--size"
-					:class="[{ 'p-button-text--active': $route.path === path.studentId }, { dark__mode: $shared.checkDarkMode() }]"
+					:class="[{ 'p-button-text--active': $route.path === path.studentId }, { dark__mode: darkModeState }]"
 				/>
 			</router-link>
 			<router-link to="/wallet" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.wallet }">
-				<Button
-					label="지갑"
-					iconPos="top"
-					icon="pi pi-wallet"
-					class="p-button-text p-button-secondary border-none p-button-font--size"
-					:class="[{ 'p-button-text--active': $route.path === path.wallet }, { dark__mode: $shared.checkDarkMode() }]"
-				/>
+				<Button label="지갑" iconPos="top" icon="pi pi-wallet" class="p-button-text p-button-secondary border-none p-button-font--size" :class="[{ 'p-button-text--active': $route.path === path.wallet }, { dark__mode: darkModeState }]" />
 			</router-link>
 			<router-link to="/order" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.order }">
 				<Button
@@ -26,7 +20,7 @@
 					iconPos="top"
 					icon="pi pi-shopping-cart"
 					class="p-button-text p-button-secondary border-none p-button-font--size"
-					:class="[{ 'p-button-text--active': $route.path === path.order }, { dark__mode: $shared.checkDarkMode() }]"
+					:class="[{ 'p-button-text--active': $route.path === path.order }, { dark__mode: darkModeState }]"
 				/>
 			</router-link>
 			<!-- <router-link to="/reservation" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.setting }">
@@ -38,7 +32,7 @@
 					iconPos="top"
 					icon="pi pi-calendar"
 					class="p-button-text p-button-secondary border-none p-button-font--size"
-					:class="[{ 'p-button-text--active': $route.path === path.calendar }, { dark__mode: $shared.checkDarkMode() }]"
+					:class="[{ 'p-button-text--active': $route.path === path.calendar }, { dark__mode: darkModeState }]"
 				/>
 			</router-link>
 			<router-link to="/qrscanner" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.qrscanner }">
@@ -47,7 +41,7 @@
 					iconPos="top"
 					icon="pi pi-camera"
 					class="p-button-text p-button-secondary border-none p-button-font--size"
-					:class="[{ 'p-button-text--active': $route.path === path.qrscanner }, { dark__mode: $shared.checkDarkMode() }]"
+					:class="[{ 'p-button-text--active': $route.path === path.qrscanner }, { dark__mode: darkModeState }]"
 				/>
 			</router-link>
 		</aside>
@@ -57,6 +51,7 @@
 export default {
 	name: "BottomNav",
 	components: {},
+	props: { darkModeState: Boolean },
 	data() {
 		return {
 			path: {

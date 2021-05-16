@@ -1,18 +1,18 @@
 <template>
 	<div>
-		<Header :title="'지갑'" />
-		<div class="container bg-gray" :class="{ 'bg-dark': $shared.checkDarkMode() }">
+		<Header :title="'지갑'" @confirmSetting="confirmSetting" />
+		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div>
 				<div class="wallet__content">
-					<HeaderSection :title="'결제'" :subtitle="'간편하게 지갑을 관리하세요.'" />
+					<HeaderSection :title="'결제'" :subtitle="'간편하게 지갑을 관리하세요.'" :darkModeState="darkModeState" />
 
 					<div class="card__content">
-						<div class="card__menu" :class="{ dark__mode: $shared.checkDarkMode() }">
+						<div class="card__menu" :class="{ dark__mode: darkModeState }">
 							<div class="tab__list">
 								<div class="item__title p-text-bold">지불 관리</div>
 							</div>
 							<div class="tab__list">
-								<Button label="+ 카드 추가하기" :class="{ dark__mode: $shared.checkDarkMode() }" class="p-button-text p-button-secondary" @click="visibleBottom = true" />
+								<Button label="+ 카드 추가하기" :class="{ dark__mode: darkModeState }" class="p-button-text p-button-secondary" @click="visibleBottom = true" />
 							</div>
 						</div>
 						<!-- 스와이퍼 영역 -->
@@ -73,7 +73,7 @@
 			</div>
 		</div>
 	</div>
-	<BottomNav />
+	<BottomNav :darkModeState="darkModeState" />
 </template>
 <script>
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
@@ -97,9 +97,13 @@ export default {
 		this.$shared.checkGoogleLogin(this.$gAuth)
 	},
 	data() {
-		return { innerWidth: window.innerWidth, visibleBottom: false }
+		return { innerWidth: window.innerWidth, visibleBottom: false, darkModeState: this.$shared.checkDarkMode() }
 	},
-	methods: {},
+	methods: {
+		confirmSetting() {
+			this.darkModeState = this.$shared.checkDarkMode()
+		},
+	},
 }
 </script>
 <style scoped>

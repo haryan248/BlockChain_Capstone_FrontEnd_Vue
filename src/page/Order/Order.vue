@@ -1,10 +1,10 @@
 <template>
 	<div>
-		<Header :title="'주문'" />
-		<div class="container bg-gray" :class="{ 'bg-dark': $shared.checkDarkMode() }">
+		<Header :title="'주문'" @confirmSetting="confirmSetting" />
+		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div>
 				<div class="order-content">
-					<HeaderSection :title="'주문서'" :subtitle="'음식을 주문해보세요.'" />
+					<HeaderSection :title="'주문서'" :subtitle="'음식을 주문해보세요.'" :darkModeState="darkModeState" />
 					<div class="menu__tab">
 						<div class="tab__list">
 							<MultiSelect v-model="selectedRestaurant" :options="restaurant" optionLabel="brand" placeholder="교내식당을 선택하세요." />
@@ -42,7 +42,7 @@
 			<!-- </template> -->
 		</Dialog>
 	</div>
-	<BottomNav />
+	<BottomNav :darkModeState="darkModeState" />
 </template>
 <script>
 import QRVerification from "../../components/QRVerification/QRVerification"
@@ -58,6 +58,7 @@ export default {
 				{ brand: "E-square", value: "E-square" },
 				{ brand: "감성코어", value: "Emotional core" },
 			],
+			darkModeState: this.$shared.checkDarkMode(),
 		}
 	},
 	mounted() {

@@ -1,5 +1,5 @@
 <template>
-	<div class="login__Form-container">
+	<div class="login__form-container" :class="{ dark__mode: darkModeState }">
 		<Toast :style="{ width: '90%' }" />
 		<Dialog class="login-form" v-model:visible="displayBasic" :showHeader="false" position="bottom" :style="{ width: '80vw' }">
 			<!-- 회원가입 정보 입력 화면 -->
@@ -50,7 +50,7 @@
 				</div>
 			</div>
 		</Dialog>
-		<Dialog class="password-modal p-dialog-maximized" :showHeader="false" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
+		<Dialog class="password-modal p-dialog-maximized" :class="{ dark__mode: darkModeState }" :showHeader="false" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 			<SimplePassword :title="find === 'true' ? '간편 비밀번호 입력' : '간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
 
@@ -126,6 +126,7 @@ export default {
 				major: "",
 				userImage: "",
 			},
+			darkModeState: this.$shared.checkDarkMode(),
 		}
 	},
 	mounted() {
@@ -227,6 +228,7 @@ export default {
 					this.successFindDID = true
 					localStorage.setItem("did", response.data.did)
 					localStorage.removeItem("wrongPassword")
+					localStorage.removeItem("findDid")
 					this.showSuccess("학생증 찾기 성공", "학생증 찾기를 성공하였습니다. \n잠시후 학생증 페이지로 이동합니다.")
 					setTimeout(() => {
 						this.$router.replace("/")
@@ -237,7 +239,7 @@ export default {
 					if (error.response.data.msg === "DID를 찾을 수 없습니다.") {
 						JSON.stringify(localStorage.setItem("wrongPassword", this.failCount++))
 						if (JSON.parse(localStorage.getItem("wrongPassword")) === 5) this.regenerateDID = true
-						this.showError("학생증 찾기 오류", "간편 비밀번호를 " + JSON.parse(localStorage.getItem("wrongPassword")) + "회 틀렸습니다. \n5회 오류시 학생증을 재발급이 가능합니다.")
+						this.showError("학생증 찾기 오류", "간편 비밀번호를 " + JSON.parse(localStorage.getItem("wrongPassword")) + "회 틀렸습니다. \n5회 오류시 학생증 재발급이 가능합니다.")
 						this.successPassword = false
 					}
 				}
@@ -250,7 +252,7 @@ export default {
 				if (response.status === 201) {
 					this.showSuccess("회원 정보 입력 성공", "올바른 회원입니다. \n간편 비밀번호를 입력해주세요. ")
 					localStorage.setItem("key", response.data.user_key)
-					localStorage.setItem("findDid", JSON.stringify(true))
+					JSON.stringify(localStorage.setItem("findDid", true))
 					this.successSignUp = true
 					this.setMembers()
 				}

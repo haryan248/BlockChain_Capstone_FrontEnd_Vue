@@ -1,16 +1,14 @@
 <template>
-	<div :class="{ 'home-container--loading': loading }" class="home-container">
+	<div :class="[{ 'home-container--loading': loading }, { dark__mode: darkModeState }, { 'home-container--loading-dark': darkModeState && loading }]" class="home-container">
 		<Dialog class="login" v-if="!loading" :showHeader="false" position="bottom" v-model:visible="displayBasic" :style="{ width: '80vw' }">
 			<div class="login-box">
 				<div class="login-card">
 					<div class="p-fluid">
 						<Button label="U-PASS란?" icon="pi pi-info-circle" iconPos="right" class="p-button-secondary border-none p-button-text upass__button-info" @click="openInfoModal" />
-
 						<div class="login__button">
 							<div class="error-message" v-html="errorTitle"></div>
-
 							<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" class="p-button-outlined" style="margin-bottom:40px;" />
-							<Button v-if="checkLogout !== 'true'" label="이미 가입하신적이 있나요?" class="p-button-outlined p-button-danger" icon="pi pi-question-circle" iconPos="left" @click="goToFindForm" />
+							<Button v-if="checkLogout !== true" label="이미 가입하신적이 있나요?" class="p-button-outlined p-button-danger" icon="pi pi-question-circle" iconPos="left" @click="goToFindForm" />
 						</div>
 					</div>
 				</div>
@@ -42,7 +40,6 @@
 	</div>
 </template>
 <script>
-
 export default {
 	name: "Login",
 	data() {
@@ -55,15 +52,21 @@ export default {
 			isFirstMember: null,
 			startLogin: false,
 			loading: false,
-			checkLogout: localStorage.getItem("hasLogout"),
+			checkLogout: JSON.parse(localStorage.getItem("hasLogout")),
 			errorTitle: "",
 			displayBasic: false,
 			displayInfoModal: false,
 			members: JSON.parse(localStorage.getItem("members")),
+			darkModeState: this.$shared.checkDarkMode(),
 		}
 	},
+	created() {
+		console.log(sessionStorage.getItem("isLogin") !== null || sessionStorage.getItem("isFindAccount") !== null || this.checkLogout === true)
+	},
 	mounted() {
-		if (sessionStorage.getItem("isLogin") !== null || sessionStorage.getItem("isFindAccount") !== null || this.checkLogout !== null) {
+		if (this.checkLogout) {
+			this.loading = false
+		} else if (sessionStorage.getItem("isLogin") !== null || sessionStorage.getItem("isFindAccount") !== null || this.checkLogout === true) {
 			this.loading = true
 			setTimeout(() => {
 				this.checkLogin()
@@ -77,8 +80,7 @@ export default {
 		async checkLogin() {
 			if (this.$gAuth.instance === null) this.loading = false
 			const GoogleUser = this.$gAuth.instance.currentUser.get()
-			console.log(GoogleUser.isSignedIn() === false && this.checkLogout !== 'true')
-			if (GoogleUser.isSignedIn() === false && this.checkLogout !== 'true') {
+			if (GoogleUser.isSignedIn() === false && this.checkLogout !== true) {
 				this.loading = false
 				sessionStorage.removeItem("isLogin")
 				sessionStorage.removeItem("isFindAccount")
@@ -97,7 +99,7 @@ export default {
 				this.userEmail = email
 				this.isFirstMember = localStorage.getItem("key")
 				//처음 가입시 회원가입, 아닐시 바로 학생증 창으로 이동
-				if (localStorage.getItem("hasLogout")) {
+				if (this.checkLogout) {
 					this.findAccount()
 				} else if (this.isFirstMember !== null) {
 					this.$router.push("/")
@@ -118,10 +120,9 @@ export default {
 		//로그아웃 후 로그인 시
 		async findAccount() {
 			try {
-				const response = await this.$axios.post("/api/findmyinfo/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.members.major, stdnum: this.members.studentId, name: this.members.name, email: this.members.email  } })
+				const response = await this.$axios.post("/api/findmyinfo/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.members.major, stdnum: this.members.studentId, name: this.members.name, email: this.members.email } })
 				if (response.status === 201) {
-					localStorage.setItem("key", response.data.key)
-					localStorage.setItem("did", response.data.did)
+					localStorage.setItem("key", response.data.user_key)
 					localStorage.removeItem("hasLogout")
 					setTimeout(() => {
 						this.$router.replace("/")
@@ -145,6 +146,7 @@ export default {
 		//처음에 get으로 데이터를 받아오고, 없으면 회원가입 있으면 로그인 진행
 		async handleLogin() {
 			sessionStorage.setItem("isLogin", true)
+			if (this.checkLogout) localStorage.removeItem("hasLogout")
 			await this.$gAuth.signIn()
 		},
 		async goToFindForm() {

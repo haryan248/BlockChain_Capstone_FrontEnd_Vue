@@ -1,17 +1,17 @@
 <template>
 	<div>
 		<Toast :style="{ width: '90%' }" position="top-right" :baseZIndex="100" />
-		<Header :title="'U-PASS'" />
-		<div class="container bg-gray" :class="{ 'bg-dark': $shared.checkDarkMode() }">
+		<Header :title="'U-PASS'" @confirmSetting="confirmSetting" />
+		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div>
 				<div class="student-content">
-					<HeaderSection :title="'학생증'" :subtitle="'자신의 정보를 간편하게 관리해보세요.'" />
-					<Dialog class="QR-modal" :showHeader="false" v-model:visible="displayStudentModal" :style="{ width: '80vw' }" :class="{ dark__mode: $shared.checkDarkMode() }">
+					<HeaderSection :title="'학생증'" :subtitle="'자신의 정보를 간편하게 관리해보세요.'" :darkModeState="darkModeState" />
+					<Dialog class="QR-modal" :showHeader="false" v-model:visible="displayStudentModal" :style="{ width: '80vw' }" :class="{ dark__mode: darkModeState }">
 						<!-- 학생증 카드 -->
 						<div class="student-info">
 							<div class="student-card">
 								<div class="student-wrapper">
-									<div class="box" :class="{ dark__mode: $shared.checkDarkMode() }">
+									<div class="box" :class="{ dark__mode: darkModeState }">
 										<div class="student-card__item">
 											<p class="item__univ">경기대학교</p>
 											<div class="item__img">
@@ -25,7 +25,7 @@
 								</div>
 							</div>
 							<!-- 학생증 누를때 간편번호 입력 -->
-							<Dialog class="password-modal p-dialog-maximized" header="" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
+							<Dialog class="password-modal p-dialog-maximized" :class="{ dark__mode: darkModeState }" header="" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 								<SimplePassword :title="'간편 비밀번호 입력'" :isSetting="false" @correctPassword="closePasswordModal" />
 							</Dialog>
 							<!-- qr 코드 화면 부분 -->
@@ -35,7 +35,7 @@
 						</div>
 					</Dialog>
 					<!-- 간편 비밀번호 없을때 설정 화면 띄우는 부분 -->
-					<Dialog class="password-modal p-dialog-maximized" header="" :showHeader="false" v-model:visible="displayPasswordModalForNone" :style="{ width: '100vw', height: '100vh' }" :modal="true">
+					<Dialog class="password-modal p-dialog-maximized" :class="{ dark__mode: darkModeState }" header="" :showHeader="false" v-model:visible="displayPasswordModalForNone" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 						<SimplePassword :title="'간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModalForNone" />
 					</Dialog>
 					<div class="student__id-content"></div>
@@ -108,7 +108,7 @@
 			</div>
 		</div>
 	</div>
-	<BottomNav />
+	<BottomNav :darkModeState="darkModeState" />
 </template>
 <script>
 import QRVerification from "../../components/QRVerification/QRVerification"
@@ -142,9 +142,9 @@ export default {
 			failCount: JSON.parse(localStorage.getItem("wrongPassword")) ? JSON.parse(localStorage.getItem("wrongPassword")) : 1,
 			regenerateDID: JSON.parse(localStorage.getItem("wrongPassword")) >= 5 ? true : false,
 			checkRegenerateDID: false,
-
 			successPassword: false,
 			successFindDID: false,
+			darkModeState: this.$shared.checkDarkMode(),
 		}
 	},
 	created() {
@@ -157,7 +157,11 @@ export default {
 			this.$shared.checkGoogleLogin(this.$gAuth)
 		}
 	},
+	watch: {},
 	methods: {
+		confirmSetting() {
+			this.darkModeState = this.$shared.checkDarkMode()
+		},
 		setMembers() {
 			this.name = this.members.name
 			this.studentId = this.members.studentId

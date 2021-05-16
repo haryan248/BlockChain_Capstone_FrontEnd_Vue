@@ -1,6 +1,6 @@
 <template>
 	<!-- 각 탭의 타이틀 영역 -->
-	<div class="headersection__info" :class="{ dark__mode: $shared.checkDarkMode() }">
+	<div class="headersection__info" :class="{ dark__mode: darkModeState }">
 		<h5 class="headerSection__time">{{ currentDate }}</h5>
 		<h1 class="headerSection__title">{{ title }}</h1>
 		<h3 class="headerSection__subttl">{{ subtitle }}</h3>
@@ -12,6 +12,7 @@ export default {
 	props: {
 		title: String,
 		subtitle: String,
+		darkModeState: Boolean,
 	},
 	components: {},
 	data() {

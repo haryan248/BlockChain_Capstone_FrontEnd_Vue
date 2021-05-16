@@ -110,13 +110,11 @@
 
 .spread-effect {
 	border: 0 solid;
-	box-shadow: inset 0 0 20px rgba(255, 255, 255, 0);
 	outline: 1px solid rgba(255, 255, 255, 0.5);
 	-webkit-transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
 	transition: all 1s cubic-bezier(0.19, 1, 0.22, 1);
 }
 .spread-effect:hover {
-	box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5), 0 0 20px rgba(255, 255, 255, 0.2);
 	outline-color: rgba(255, 255, 255, 0);
 	outline-offset: 15px;
 	/* text-shadow: 6px 5px 4px #b7bdc0; */
@@ -138,4 +136,17 @@
 }
 .p-ripple.purple .p-ink {
 	background: rgba(256, 39, 176, 0.3);
+}
+
+/* 다크모드 css */
+.password-content.dark__mode {
+	background-color: #333536;
+	color: #ffffff;
+}
+.password-content.dark__mode .fantasy-font__2_3rem,
+.password-content.dark__mode .fantasy-font__2_3rem--alpha {
+	color: #ffffff;
+}
+.password-content.dark__mode .spread-effect {
+	outline: 1px solid #333536;
 }

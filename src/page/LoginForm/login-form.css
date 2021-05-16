@@ -18,7 +18,7 @@
 	padding-top: 20px;
 	color: #f47b61;
 }
-.login__Form-container {
+.login__form-container {
 	height: 100vh;
 	background-color: #4a83e5;
 	background-image: url("../../assets/upass-white.png");
@@ -64,4 +64,9 @@
 	to {
 		opacity: 1;
 	}
+}
+
+/* 다크모드 css */
+.login__form-container.dark__mode {
+	background-color: #333536;
 }

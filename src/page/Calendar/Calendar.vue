@@ -1,8 +1,8 @@
 <template>
 	<div>
-		<div class="container bg-gray" :class="{ 'bg-dark': $shared.checkDarkMode() }">
+		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div class="calendar__content">
-				<Header :title="'캘린더'" />
+				<Header :title="'캘린더'" @confirmSetting="confirmSetting" />
 				<!-- <Calendar /> -->
 				<v-calendar is-expanded :attributes="attributes">
 					<template #day-popover="{ day, format, masks }">
@@ -17,7 +17,7 @@
 					</div>
 				</div>
 			</div>
-			<BottomNav />
+			<BottomNav :darkModeState="darkModeState" />
 		</div>
 	</div>
 </template>
@@ -53,6 +53,7 @@ export default {
 			],
 			incId: todos.length,
 			todos,
+			darkModeState: this.$shared.checkDarkMode(),
 		}
 	},
 	computed: {
@@ -73,7 +74,11 @@ export default {
 			]
 		},
 	},
-	methods: {},
+	methods: {
+		confirmSetting() {
+			this.darkModeState = this.$shared.checkDarkMode()
+		},
+	},
 }
 </script>
 <style scoped>

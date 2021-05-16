@@ -52,6 +52,9 @@
 .home-container--loading {
 	background-image: url("../../assets/First.png");
 }
+.home-container--loading-dark {
+	background-image: url("../../assets/First-Dark.png");
+}
 .loading-indicator {
 	position: absolute;
 	top: 9%;
@@ -73,4 +76,8 @@
 .upass-info__detail .upass-focus {
 	font-size: 15.5px;
 	font-weight: bold;
+}
+
+.home-container.dark__mode {
+	background-color: #333536;
 }

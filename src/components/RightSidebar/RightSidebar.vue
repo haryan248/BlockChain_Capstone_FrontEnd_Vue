@@ -1,5 +1,5 @@
 <template>
-	<ConfirmDialog></ConfirmDialog>
+	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }"></ConfirmDialog>
 
 	<div class="nav__button">
 		<Button icon="pi pi-align-justify" @click="openVisibleRight()" class="p-mr-2" />
@@ -11,10 +11,14 @@
 				<div class="blank__content"></div>
 			</div>
 			<a href="https://myaccount.google.com/u/1/personal-info" class="profile__content">
-				<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }"></div>
-				<div class="student__name">{{ name }} 님</div>
-				<div class="student__id">{{ studentId }}</div>
-				<div class="student__major">{{ major }}</div>
+				<div class="img__content">
+					<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }" style="width: 60px;height: 60px;"></div>
+				</div>
+				<div class="text__content">
+					<div class="student__name">{{ name }} 님😃</div>
+					<div class="student__id">{{ studentId }}</div>
+					<div class="student__major">{{ major }}</div>
+				</div>
 			</a>
 			<div class="sidebar_content">
 				<Accordion :class="{ dark__mode: $shared.checkDarkMode() }">
@@ -23,7 +27,12 @@
 							재설정
 						</div>
 					</AccordionTab>
-					<AccordionTab header="다크모드"> 다크모드 <InputSwitch v-model="darkModeChecked" @click="confirmDarkMode()" /> </AccordionTab>
+					<AccordionTab header="다크모드">
+						<div class="dark__mode-button">
+							<div class="item-content">다크모드</div>
+							<InputSwitch v-model="darkModeChecked" @click="confirmDarkMode()" />
+						</div>
+					</AccordionTab>
 					<AccordionTab header="DID 재발급">
 						재발급
 					</AccordionTab>
@@ -35,7 +44,7 @@
 			</div>
 		</Sidebar>
 		<!-- 간편번호 재설정시 띄우는 화면 -->
-		<Dialog class="password-modal p-dialog-maximized" header="" :showHeader="true" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
+		<Dialog class="password-modal p-dialog-maximized" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 			<SimplePassword :title="'간편 비밀번호 재설정'" :isSetting="true" :isResetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
 	</div>
@@ -61,6 +70,8 @@ export default {
 	created() {
 		this.setMembers()
 	},
+	emits: ["confirmSetting"],
+
 	methods: {
 		setMembers() {
 			this.name = this.members.name
@@ -71,24 +82,23 @@ export default {
 		logout() {
 			this.$gAuth.instance.signOut()
 			localStorage.removeItem("key")
-			localStorage.setItem("hasLogout", true)
+			JSON.stringify(localStorage.setItem("hasLogout", true))
 			this.$router.replace("/login")
 		},
 		confirmDarkMode() {
 			this.closeVisibleRight()
 			this.$confirm.require({
 				message: JSON.parse(localStorage.getItem("DarkMode")) === true ? "다크모드를 비활성화 하시겠습니까?" : "다크모드를 활성화 하시겠습니까?",
-				header: "Confirmation",
-				icon: "pi pi-exclamation-triangle",
+				header: "다크모드 설정",
+				icon: "pi",
 				accept: () => {
-					//callback to execute when user confirms the action
-					console.log(JSON.parse(localStorage.getItem("DarkMode")) === false || null)
 					if (JSON.parse(localStorage.getItem("DarkMode")) === false || JSON.parse(localStorage.getItem("DarkMode")) === null) {
 						JSON.stringify(localStorage.setItem("DarkMode", true))
 					} else {
 						JSON.stringify(localStorage.setItem("DarkMode", false))
 					}
-					this.$router.go(0)
+					this.openVisibleRight()
+					this.$emit("confirmSetting")
 				},
 				reject: () => {},
 			})
@@ -133,8 +143,11 @@ export default {
 	outline: none !important;
 	box-shadow: none !important;
 }
-
-/* 다크모드  */
+/* 모달 닫기 버튼 */
+button.p-dialog-header-icon.p-dialog-header-close.p-link {
+	/* display: none; */
+}
+/* 다크모드  css*/
 .p-sidebar.p-component.p-sidebar-right.p-sidebar-active.dark__mode {
 	background: #333536;
 }
@@ -154,5 +167,20 @@ export default {
 	background: #858c92;
 	border: 1px solid #495057;
 	color: #ffffff;
+}
+/* confirm-Dialog 다크모드 css */
+.p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-header,
+.p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-content,
+.p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-footer {
+	background: #333536;
+	color: #ffffff;
+}
+.p-dialog.p-component.p-confirm-dialog.dark__mode button.p-button.p-component.p-confirm-dialog-reject.p-button-text {
+	color: #4a83e5;
+}
+.p-dialog.p-component.p-confirm-dialog.dark__mode button.p-button.p-component.p-confirm-dialog-accept {
+	border: none !important;
+	outline: none !important;
+	box-shadow: none !important;
 }
 </style>
