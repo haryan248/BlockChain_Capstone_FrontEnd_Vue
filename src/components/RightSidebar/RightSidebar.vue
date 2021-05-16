@@ -44,7 +44,7 @@
 			</div>
 		</Sidebar>
 		<!-- 간편번호 재설정시 띄우는 화면 -->
-		<Dialog class="password-modal p-dialog-maximized" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
+		<Dialog class="password-modal p-dialog-maximized" :class="{ dark__mode: $shared.checkDarkMode() }" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 			<SimplePassword :title="'간편 비밀번호 재설정'" :isSetting="true" :isResetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
 	</div>
