@@ -29,7 +29,7 @@
 								<SimplePassword :title="'간편 비밀번호 입력'" :isSetting="false" @correctPassword="closePasswordModal" />
 							</Dialog>
 							<!-- qr 코드 화면 부분 -->
-							<Dialog class="QR-modal" header="Header" :showHeader="false" v-model:visible="displayQRModal" :style="{ width: '80vw' }" :modal="true">
+							<Dialog class="QR-modal" :class="{ dark__mode: darkModeState }" header="Header" :showHeader="false" v-model:visible="displayQRModal" :style="{ width: '80vw' }" :modal="true">
 								<QRVerification @goBack="closeQRModal" :isStudentId="true" :DIDPasswd="DIDPasswd" />
 							</Dialog>
 						</div>

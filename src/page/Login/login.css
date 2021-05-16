@@ -78,6 +78,7 @@
 	font-weight: bold;
 }
 
+/* 다크모드 css */
 .home-container.dark__mode {
 	background-color: #333536;
 }

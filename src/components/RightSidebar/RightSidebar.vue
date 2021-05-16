@@ -1,5 +1,5 @@
 <template>
-	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }"></ConfirmDialog>
+	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }" class="setting_confirm-dialog"></ConfirmDialog>
 
 	<div class="nav__button">
 		<Button icon="pi pi-align-justify" @click="openVisibleRight()" class="p-mr-2" />
@@ -144,8 +144,8 @@ export default {
 	box-shadow: none !important;
 }
 /* 모달 닫기 버튼 */
-button.p-dialog-header-icon.p-dialog-header-close.p-link {
-	/* display: none; */
+.setting_confirm-dialog button.p-dialog-header-icon.p-dialog-header-close.p-link {
+	display: none;
 }
 /* 다크모드  css*/
 .p-sidebar.p-component.p-sidebar-right.p-sidebar-active.dark__mode {
@@ -168,6 +168,13 @@ button.p-dialog-header-icon.p-dialog-header-close.p-link {
 	border: 1px solid #495057;
 	color: #ffffff;
 }
+.setting_confirm-dialog .p-dialog-header {
+	border-radius: 10px 10px 0 0;
+}
+.setting_confirm-dialog .p-dialog-footer {
+	border-radius: 0 0 10px 10px;
+}
+
 /* confirm-Dialog 다크모드 css */
 .p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-header,
 .p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-content,

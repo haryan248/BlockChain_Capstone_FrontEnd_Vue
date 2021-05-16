@@ -4,31 +4,36 @@
 			<div class="QR-wrapper">
 				<div class="box">
 					<div class="qr-card__item">
-						<p v-if="isStudentId" class="item__desc">입장을 위한 QR코드</p>
-						<p v-else class="item__desc p-text-center p-text-bold">주문 확인을 위한 QR코드</p>
+						<p v-if="isStudentId" class="item__title">입장을 위한 QR코드</p>
+						<p v-else class="item__title p-text-center p-text-bold">주문 확인을 위한 QR코드</p>
+						<div v-if="isStudentId" class="item__time">
+							<i class="pi pi-clock" style="fontSize: 14px; margin-right:5px"></i>
+							<div v-if="countDown === 0">인증 유효시간 초과</div>
+							<div v-else class="time__sec">
+								<div class="rest__time-text">남은 시간</div>
+								<div class="rest__time">{{ countDown }}</div>
+							</div>
+						</div>
 						<div class="demo-container p-p-4">
 							<!-- qr 코드 출력 부분 -->
 							<div class="item__code" :class="{ item__refresh: countDown === 0 }">
 								<VueQrcode :value="qrString" :size="150" />
 							</div>
 							<!-- qr 시간 만료시 재발급 -->
-							<Button v-if="countDown === 0" iconPos="top" size="large" icon="pi pi-refresh" @click="resetQR" class="p-button-rounded refresh__button" />
 						</div>
-						<p class="item__temp p-text-center p-text-bold">QR코드를 리더기에 제시해주세요</p>
-						<div v-if="isStudentId" class="item__time">
-							남은 시간
-							<div class="time__sec">{{ countDown }}</div>
-						</div>
+						<Button v-if="countDown === 0" iconPos="top" size="large" icon="pi pi-refresh" @click="resetQR" class="p-button-rounded refresh__button" />
+
+						<p class="item__desc p-text-center p-text-bold">QR코드를 리더기에 제시해주세요</p>
 					</div>
 				</div>
 			</div>
 		</div>
 		<!-- 임시 qr 내용 출력 부분 -->
-		<div style="display:block; font-size: 2px; width:100% word-break:normal;">
+		<div style="display:block; font-size: 19px; width:100%; word-break:normal;" :class="{ temp_font: $shared.checkDarkMode() }">
 			{{ qrString }}
 		</div>
 		<div class="qr-verification__button">
-			<Button label="돌아가기" icon="pi pi-backward" iconPos="left" @click="goBack()" />
+			<Button label="돌아가기" icon="pi pi-times" iconPos="left" @click="goBack()" />
 		</div>
 	</div>
 </template>
@@ -45,7 +50,7 @@ export default {
 		VueQrcode,
 	},
 	data() {
-		return { countDown: 15, polling: null, timeStamp: null, qrString: "" }
+		return { countDown: 15, polling: null, timeStamp: null, qrString: "", darkModeState: this.$shared.checkDarkMode() }
 	},
 	created() {
 		this.setQRString()

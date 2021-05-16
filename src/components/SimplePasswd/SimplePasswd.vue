@@ -89,8 +89,6 @@ export default {
 		this.shuffle(this.passwdArray)
 		this.genCharArray("a", "z")
 		this.shuffle(this.alphaPasswdArray)
-		console.log(this.touchstart)
-		console.log(this.touchAlphaStart)
 	},
 	mounted() {
 		document.addEventListener("touchstart", (event) => {
