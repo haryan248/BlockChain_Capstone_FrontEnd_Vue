@@ -5,7 +5,7 @@
 		<Button icon="pi pi-align-justify" @click="openVisibleRight()" class="p-mr-2" />
 	</div>
 	<div>
-		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:12rem" :class="{ dark__mode: $shared.checkDarkMode() }">
+		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:12.5rem" :class="{ dark__mode: $shared.checkDarkMode() }">
 			<!-- 프로필 화면 -->
 			<div>
 				<div class="blank__content"></div>
@@ -15,7 +15,7 @@
 					<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }" style="width: 60px;height: 60px;"></div>
 				</div>
 				<div class="text__content">
-					<div class="student__name">{{ name }} 님😃</div>
+					<div class="student__name">{{ name }}님 😃</div>
 					<div class="student__id">{{ studentId }}</div>
 					<div class="student__major">{{ major }}</div>
 				</div>

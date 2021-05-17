@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<Toast :style="{ width: '90%' }" position="top-right" :baseZIndex="100" />
 		<Header :title="'QR인증'" :isShow="false" />
 		<div class="container bg-gray">
 			<div>
@@ -8,10 +9,8 @@
 						<div class="close__button">
 							<Button icon="pi pi-times" @click="goBack" class="p-button-lg" alt="switch camera" />
 						</div>
-						<div class="conver__button camera-turn">
-							<!-- 카메라 전환 -->
-							<!-- <Button icon="pi" class="p-button-lg" alt="switch camera" /> -->
-						</div>
+						<!-- 카메라 전환 -->
+
 						<button class="conver__button" type="button" @click="switchCamera"></button>
 						<qr-stream :camera="camera" @decode="onDecode" class="mb" @init="onInit">
 							<!-- 로딩화면 -->
@@ -70,16 +69,27 @@ export default {
 	methods: {
 		async onDecode(result) {
 			this.result = result
+			console.log(result)
 			this.turnCameraOff()
 
 			// pretend it's taking really long
 			await this.timeout(3000)
-			this.isValid = result.startsWith("https")
+			this.isValid = true
+			this.showSuccess("인증 완료", "학생증이 인증되었습니다.")
+			this.play("http://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
 
 			// some more delay, so users have time to read the message
 			await this.timeout(2000)
 			this.turnCameraOn()
 		},
+		play(sound) {
+			if (sound) {
+				var audio = new Audio(sound)
+				audio.play()
+				console.log(audio.play())
+			}
+		},
+
 		resetValidationState() {
 			this.isValid = undefined
 		},
@@ -135,6 +145,12 @@ export default {
 				this.loading = false
 				this.resetValidationState()
 			}
+		},
+		showError(summaryText, detailText) {
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
+		},
+		showSuccess(summaryText, detailText) {
+			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
 		},
 	},
 }
