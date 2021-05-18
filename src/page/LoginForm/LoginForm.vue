@@ -216,7 +216,9 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
-					this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
+					if (error.response.data.msg === "DID 발급 오류") {
+						this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
+					}				
 				}
 			}
 		},

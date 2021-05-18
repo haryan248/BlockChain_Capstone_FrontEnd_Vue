@@ -186,14 +186,16 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
-					this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
+					if (error.response.data.msg === "DID 발급 오류") {
+						this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
+					}
 				}
 			}
 		},
 		//did 찾기
 		async getUserDID() {
 			try {
-				const response = await this.$axios.get("/api/getdd/", { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.get("/api/getdid/", { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					this.successFindDID = true
 					localStorage.setItem("did", response.data.did)

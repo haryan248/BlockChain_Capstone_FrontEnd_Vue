@@ -4,7 +4,7 @@
 			<div class="calendar__content">
 				<Header :title="'캘린더'" @confirmSetting="confirmSetting" />
 				<!-- <Calendar /> -->
-				<v-calendar is-expanded :attributes="attributes">
+				<v-calendar is-expanded :attributes="attributes" :is-dark="darkModeState">
 					<template #day-popover="{ day, format, masks }">
 						<div class="text-xs text-gray-300 font-semibold text-center">
 							{{ format(day.date, masks.dayPopover) }}
