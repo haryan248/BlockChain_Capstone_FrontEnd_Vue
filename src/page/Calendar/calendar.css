@@ -37,8 +37,22 @@
 .schedule__content .schedule__date {
 	font-weight: bold;
 	font-size: 18px;
-	height: 40px;
+	height: 35px;
+	line-height: 35px;
 }
+.schedule__content .refresh__button {
+	position: absolute;
+	left: unset;
+	right: 10%;
+	top: unset;
+	transform: unset;
+}
+.refresh__button .border__none-refresh {
+	outline: none !important;
+	box-shadow: none !important;
+	border: none !important;
+}
+
 .entry-list__content {
 	overflow: scroll;
 	box-sizing: border-box;
@@ -76,7 +90,7 @@
 	align-items: center;
 	justify-content: center;
 }
-.empty-list__item .class__room {
+.empty-list__item .empty__desc {
 	color: #000;
 	font-size: 15px;
 	font-weight: 400;
@@ -111,4 +125,46 @@
 	font-weight: 600;
 	line-height: 22px;
 	margin-right: 15px;
+}
+
+.loading__overlay {
+	overflow: scroll;
+	height: 100vh;
+	box-sizing: border-box;
+	position: fixed;
+	background-color: #4a4343c7;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 30;
+}
+.loading__progressbar {
+	position: absolute;
+	top: 34%;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding: 20px;
+	box-sizing: border-box;
+}
+
+.loading__progressbar .calendar_loading {
+	color: #ffffff;
+	text-align: center;
+	font-size: 20px;
+	margin-bottom: 20px;
+}
+
+/* 다크 모드 */
+.schedule__content.dark__mode {
+	background-color: #333536;
+	border: 1px solid #e3e3e3;
+}
+.schedule__content.dark__mode .schedule__date,
+.entry-list__content.dark__mode .entry__time,
+.entry-list__content.dark__mode .class__room,
+.entry-empty__list.dark__mode .empty__desc {
+	color: #ffffff;
 }

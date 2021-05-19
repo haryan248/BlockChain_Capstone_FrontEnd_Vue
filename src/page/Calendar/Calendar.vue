@@ -3,7 +3,7 @@
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div class="calendar__content">
 				<Header :title="'캘린더'" @confirmSetting="confirmSetting" />
-				<v-calendar :attributes="attributes" :is-dark="darkModeState" @dayclick="onDayClick" is-expanded>
+				<v-calendar :attributes="attributes" :is-dark="darkModeState" @dayclick="onDayClick" @update:to-page="toPage" is-expanded>
 					<!-- <template #day-popover="{ dayTitle, attributes }">
 						<div>
 							<div class="text-xs text-gray-300 font-semibold text-center">
@@ -17,24 +17,45 @@
 						</div>
 					</template> -->
 				</v-calendar>
-				<div class="schedule__content" v-if="!loading">
+				<div v-if="loading" class="loading__overlay">
+					<div class="loading__progressbar">
+						<h5 class="calendar_loading">출입 여부를 불러오는 중입니다.</h5>
+						<ProgressBar mode="indeterminate" style="height: .5em" />
+					</div>
+				</div>
+				<div class="schedule__content" :class="{ dark__mode: darkModeState }">
 					<div class="item__content">
 						<div v-for="(item, index) in selectDate" :key="index" class="entry__content">
 							<div class="schedule__date">
 								{{ item.day }}
+								<!-- <i class="pi pi-spin pi-spinner" style="fontSize: 2rem"></i> -->
 							</div>
-							<div class="entry-empty__list" v-if="item.attributes.length === 0">
+							<div class="refresh__button">
+								<Button icon="pi pi-refresh" @click="getEntry" class="border__none-refresh p-button-sm p-button-rounded p-button-secondary" />
+							</div>
+							<div v-if="loading" class="entry-empty__list" :class="{ dark__mode: darkModeState }">
 								<li class="list__item">
 									<div class="empty-list__item">
 										<div class="item__content">
 											<div class="item__summary">
-												<h3 class="class__room">방문한 기록이 없어요!</h3>
+												<h3 class="empty__desc">방문한 기록을 확인해보세요!</h3>
 											</div>
 										</div>
 									</div>
 								</li>
 							</div>
-							<div class="entry-list__content" v-else>
+							<div v-else-if="item.attributes.length === 0" class="entry-empty__list" :class="{ dark__mode: darkModeState }">
+								<li class="list__item">
+									<div class="empty-list__item">
+										<div class="item__content">
+											<div class="item__summary">
+												<h3 class="empty__desc">방문한 기록이 없어요!</h3>
+											</div>
+										</div>
+									</div>
+								</li>
+							</div>
+							<div v-else class="entry-list__content" :class="{ dark__mode: darkModeState }">
 								<div v-for="(attribute, index) in item.attributes" :key="index">
 									<li class="list__item">
 										<div class="entry-list__item">
@@ -65,7 +86,7 @@ export default {
 			curMonth: "",
 			curDay: "",
 			buildingName: [],
-			loading: true,
+			loading: false,
 			selectDate: [
 				{
 					day: "",
@@ -101,7 +122,6 @@ export default {
 	},
 	created() {
 		this.setDate()
-		this.getEntry()
 		this.selectDate[0].day = this.curYear + "-" + this.curMonth + "-" + this.curDay
 	},
 	methods: {
@@ -115,6 +135,11 @@ export default {
 			this.curMonth = this.curMonth >= 10 ? this.curMonth : "0" + this.curMonth
 			this.curDay = date.getDate()
 			this.curDay = this.curDay >= 10 ? this.curDay : "0" + this.curDay
+		},
+		toPage(page) {
+			page.month = page.month >= 10 ? page.month : "0" + page.month
+			this.selectDate[0].day = page.year + "-" + page.month + "-01"
+			this.selectDate[0].attributes = []
 		},
 		onDayClick(day) {
 			console.log(day)
@@ -159,6 +184,8 @@ export default {
 		},
 		async getEntry() {
 			try {
+				this.loading = true
+
 				const response = await this.$axios.get("/api/getentry/", {
 					params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword"), did: localStorage.getItem("did"), year: this.curYear, month: this.curMonth, day: this.curDay },
 				})
