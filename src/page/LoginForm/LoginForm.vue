@@ -201,15 +201,11 @@ export default {
 		//did 발급
 		async generateUserDID() {
 			try {
-				const response = await this.$axios.post("/api/generatedid/", {}, { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post("/api/generatedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
 					localStorage.removeItem("wrongPassword")
-					if (this.checkRegenerateDID) {
-						this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다. \n잠시후 학생증 페이지로 이동합니다.")
-					} else {
-						this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
-					}
+					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
 					setTimeout(() => {
 						this.$router.replace("/")
 					}, 2000)
@@ -218,7 +214,27 @@ export default {
 				if (error.response) {
 					if (error.response.data.msg === "DID 발급 오류") {
 						this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
-					}				
+					}
+				}
+			}
+		},
+		//did 재발급
+		async regenerateUserDID() {
+			try {
+				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
+				if (response.status === 201) {
+					localStorage.setItem("did", response.data.did)
+					localStorage.removeItem("wrongPassword")
+					this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다. \n잠시후 학생증 페이지로 이동합니다.")
+					setTimeout(() => {
+						this.$router.replace("/")
+					}, 2000)
+				}
+			} catch (error) {
+				if (error.response) {
+					if (error.response.data.msg === "DID 재발급 오류") {
+						this.showError("DID 재발급 오류", "죄송합니다. \nDID 재발급에 오류가 있습니다.")
+					}
 				}
 			}
 		},
@@ -277,13 +293,12 @@ export default {
 		//간편 비밀번호 모달
 		openPasswordModal(state) {
 			if (state === "regenerate") this.checkRegenerateDID = true
-			console.log(this.checkRegenerateDID)
 			this.closeWarningModal()
 			this.displayPasswordModal = true
 		},
 		closePasswordModal() {
 			if (this.checkRegenerateDID) {
-				this.generateUserDID()
+				this.regenerateUserDID()
 			} else if (this.find !== "true") {
 				this.openBasicModal()
 				this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다. \n학생증을 발급해주세요.")

@@ -180,6 +180,7 @@ export default {
 					return this.buildingName[index]
 			}
 		},
+		//출입 여부 받아오기
 		async getEntry() {
 			try {
 				this.loading = true
