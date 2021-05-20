@@ -180,7 +180,6 @@ export default {
 					this.showSuccess("회원가입 완료", "회원가입이 완료되었습니다. \n간편비밀번호를 설정해주세요.")
 					localStorage.setItem("key", response.data.user_key)
 					this.setMembers()
-					this.closeBasicModal()
 				}
 			} catch (error) {
 				if (error.response) {
