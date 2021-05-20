@@ -18,7 +18,7 @@
 	border: 1px solid #cbd5e0;
 	color: #495057;
 	/* padding: 0 1.5rem 2rem 1.5rem; */
-	padding: 20px;
+	padding: 20px 10px 20px 10px;
 	height: calc(50% - 60px);
 	margin-top: 10px;
 	border-radius: 7px;
@@ -37,13 +37,14 @@
 .schedule__content .schedule__date {
 	font-weight: bold;
 	font-size: 18px;
-	height: 35px;
-	line-height: 35px;
+	height: 50px;
+	line-height: 70px;
+	margin-bottom: 25px;
 }
 .schedule__content .refresh__button {
 	position: absolute;
 	left: unset;
-	right: 10%;
+	right: 8%;
 	top: unset;
 	transform: unset;
 }
@@ -51,6 +52,13 @@
 	outline: none !important;
 	box-shadow: none !important;
 	border: none !important;
+}
+.refresh__button .load__text {
+	font-size: 11px;
+	color: #495057;
+	padding-bottom: 4px;
+	margin-top: -3px;
+	font-weight: 700;
 }
 
 .entry-list__content {
@@ -163,6 +171,7 @@
 	border: 1px solid #e3e3e3;
 }
 .schedule__content.dark__mode .schedule__date,
+.schedule__content.dark__mode .load__text,
 .entry-list__content.dark__mode .entry__time,
 .entry-list__content.dark__mode .class__room,
 .entry-empty__list.dark__mode .empty__desc {
