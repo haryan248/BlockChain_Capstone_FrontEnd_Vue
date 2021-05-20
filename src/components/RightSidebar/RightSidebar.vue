@@ -1,6 +1,11 @@
 <template>
 	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }" class="setting_confirm-dialog"></ConfirmDialog>
-
+	<div v-if="loading" class="loading__overlay-loginForm">
+		<div class="loading__progressbar">
+			<h5 class="loginForm_loading">학생증을 재발급 중입니다.</h5>
+			<ProgressBar mode="indeterminate" style="height: .5em" />
+		</div>
+	</div>
 	<div class="nav__button">
 		<Button icon="pi pi-align-justify" @click="openVisibleRight()" class="p-mr-2" />
 	</div>
@@ -23,29 +28,30 @@
 			<div class="sidebar_content">
 				<Accordion :class="{ dark__mode: $shared.checkDarkMode() }">
 					<AccordionTab header="간편비밀번호">
-						<div class="accordian-item" @click="openPasswordModal">
+						<div class="accordian-item" @click="confirmRegenerateDID">
 							재설정
 						</div>
 					</AccordionTab>
 					<AccordionTab header="다크모드">
 						<div class="dark__mode-button">
 							<div class="item-content">다크모드</div>
-							<InputSwitch v-model="darkModeChecked" @click="confirmDarkMode()" />
+							<InputSwitch v-model="darkModeChecked" @click="confirmDarkMode" />
 						</div>
 					</AccordionTab>
-					<AccordionTab header="DID 재발급">
-						재발급
+
+					<AccordionTab header="백업하기">
+						<div class="accordian-item">간편비밀번호 <br />백업</div>
 					</AccordionTab>
 				</Accordion>
 			</div>
 			<!-- 로그아웃 버튼 -->
 			<div class="logout__button">
-				<Button label="로그아웃" class="logout" icon="pi pi-sign-out" iconPos="right" @click="logout" />
+				<Button label="로그아웃" class="logout" icon="pi pi-sign-out" iconPos="right" @click="confirmLogout" />
 			</div>
 		</Sidebar>
 		<!-- 간편번호 재설정시 띄우는 화면 -->
-		<Dialog class="password-modal p-dialog-maximized" :class="{ dark__mode: $shared.checkDarkMode() }" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
-			<SimplePassword :title="'간편 비밀번호 재설정'" :isSetting="true" :isResetting="true" @setCorrectPassword="closePasswordModal" />
+		<Dialog class="password-modal p-dialog-maximized" :class="[{ dark__mode: $shared.checkDarkMode() }]" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
+			<SimplePassword :title="'간편 비밀번호 재설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
 	</div>
 </template>
@@ -65,25 +71,19 @@ export default {
 			major: "",
 			userImage: "",
 			members: JSON.parse(localStorage.getItem("members")),
+			loading: false,
 		}
 	},
 	created() {
 		this.setMembers()
 	},
 	emits: ["confirmSetting"],
-
 	methods: {
 		setMembers() {
 			this.name = this.members.name
 			this.studentId = this.members.studentId
 			this.major = this.members.major
 			this.userImage = this.members.userImage
-		},
-		logout() {
-			this.$gAuth.instance.signOut()
-			localStorage.removeItem("key")
-			JSON.stringify(localStorage.setItem("hasLogout", true))
-			this.$router.replace("/login")
 		},
 		confirmDarkMode() {
 			this.closeVisibleRight()
@@ -103,6 +103,32 @@ export default {
 				reject: () => {},
 			})
 		},
+		confirmLogout() {
+			this.closeVisibleRight()
+			this.$confirm.require({
+				message: "로그아웃 하시겠습니까? \n\n다시 로그인 시\n 간편 비밀번호 입력이 필요합니다.",
+				header: "로그아웃",
+				icon: "pi",
+				accept: () => {
+					this.$gAuth.instance.signOut()
+					localStorage.removeItem("key")
+					this.$router.replace("/login")
+				},
+				reject: () => {},
+			})
+		},
+		confirmRegenerateDID() {
+			this.closeVisibleRight()
+			this.$confirm.require({
+				message: "간편비밀번호를 재설정하시겠습니까? \n\n간편 비밀번호를 재설정 후 학생증을\n 재발급하게 됩니다. \n\n간편비밀번호 재설정시\n 불이익이 갈 수 있으니 비밀번호를\n 기억해주세요!",
+				header: "간편 비밀번호 재설정",
+				icon: "pi",
+				accept: () => {
+					this.openPasswordModal()
+				},
+				reject: () => {},
+			})
+		},
 		openVisibleRight() {
 			this.visibleRight = true
 		},
@@ -117,10 +143,33 @@ export default {
 		closePasswordModal() {
 			this.displayPasswordModal = false
 			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다.")
+			this.regenerateUserDID()
+		},
+		//did 재발급
+		async regenerateUserDID() {
+			this.loading = true
+			try {
+				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
+				if (response.status === 201) {
+					localStorage.setItem("did", response.data.did)
+					this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다.")
+				}
+			} catch (error) {
+				if (error.response) {
+					if (error.response.data.msg === "DID 재발급 오류") {
+						this.showError("DID 재발급 오류", "죄송합니다. \nDID 재발급에 오류가 있습니다.")
+					}
+				}
+			}
+			this.loading = false
 		},
 		// 설정 완료시 띄워주는 toast message
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
+		},
+		//에러 토스트 메시지
+		showError(summaryText, detailText) {
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
 		},
 	},
 }
@@ -174,7 +223,14 @@ export default {
 .setting_confirm-dialog .p-dialog-footer {
 	border-radius: 0 0 10px 10px;
 }
-
+.p-dialog.p-confirm-dialog .p-confirm-dialog-message {
+	white-space: pre-wrap;
+	text-align: center;
+	font-size: 14px;
+}
+.regenerate__password.p-dialog-header-icons {
+	display: none;
+}
 /* confirm-Dialog 다크모드 css */
 .p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-header,
 .p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-content,

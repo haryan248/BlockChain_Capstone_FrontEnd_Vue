@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<Toast :style="{ width: '90%' }" position="top-right" :baseZIndex="100" />
 		<Header :title="'QR인증'" :isShow="false" />
 		<div class="container bg-gray">
 			<div>

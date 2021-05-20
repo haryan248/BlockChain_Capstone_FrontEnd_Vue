@@ -8,7 +8,7 @@
 						<div class="login__button">
 							<div class="error-message" v-html="errorTitle"></div>
 							<Button label="구글 로그인" icon="pi pi-google" iconPos="left" @click="handleLogin" class="p-button-outlined" style="margin-bottom:40px;" />
-							<Button v-if="checkLogout !== true" label="이미 가입하신적이 있나요?" class="p-button-outlined p-button-danger" icon="pi pi-question-circle" iconPos="left" @click="goToFindForm" />
+							<Button label="이미 가입하신적이 있나요?" class="p-button-outlined p-button-danger" icon="pi pi-question-circle" iconPos="left" @click="goToFindForm" />
 						</div>
 					</div>
 				</div>
@@ -52,7 +52,6 @@ export default {
 			isFirstMember: null,
 			startLogin: false,
 			loading: false,
-			checkLogout: JSON.parse(localStorage.getItem("hasLogout")),
 			errorTitle: "",
 			displayBasic: false,
 			displayInfoModal: false,
@@ -60,13 +59,8 @@ export default {
 			darkModeState: this.$shared.checkDarkMode(),
 		}
 	},
-	created() {
-		console.log(sessionStorage.getItem("isLogin") !== null || sessionStorage.getItem("isFindAccount") !== null || this.checkLogout === true)
-	},
 	mounted() {
-		if (this.checkLogout) {
-			this.loading = false
-		} else if (sessionStorage.getItem("isLogin") !== null || sessionStorage.getItem("isFindAccount") !== null || this.checkLogout === true) {
+		if (sessionStorage.getItem("isLogin") !== null || sessionStorage.getItem("isFindAccount") !== null) {
 			this.loading = true
 			setTimeout(() => {
 				this.checkLogin()
@@ -80,7 +74,7 @@ export default {
 		async checkLogin() {
 			if (this.$gAuth.instance === null) this.loading = false
 			const GoogleUser = this.$gAuth.instance.currentUser.get()
-			if (GoogleUser.isSignedIn() === false && this.checkLogout !== true) {
+			if (GoogleUser.isSignedIn() === false) {
 				this.loading = false
 				sessionStorage.removeItem("isLogin")
 				sessionStorage.removeItem("isFindAccount")
@@ -89,19 +83,19 @@ export default {
 			const profile = GoogleUser.getBasicProfile()
 			const email = profile.getEmail()
 
+			//경기대 이메일이 아닐시 로그아웃
 			if (email.split("@")[1] !== "kyonggi.ac.kr") {
 				this.errorTitle = "경기대 이메일(kyonggi.ac.kr)로<br> 로그인/회원가입 해주세요."
 				this.loading = false
 				await this.$gAuth.signOut()
 			} else {
+				//구글 로그인시 기본 정보 가져오기
 				this.userName = profile.getName()
 				this.userImage = profile.getImageUrl()
 				this.userEmail = email
 				this.isFirstMember = localStorage.getItem("key")
 				//처음 가입시 회원가입, 아닐시 바로 학생증 창으로 이동
-				if (this.checkLogout) {
-					this.findAccount()
-				} else if (this.isFirstMember !== null) {
+				if (this.isFirstMember !== null) {
 					this.$router.push("/")
 				} else {
 					//처음 가입시 로그인 폼으로 이동
@@ -146,7 +140,6 @@ export default {
 		//처음에 get으로 데이터를 받아오고, 없으면 회원가입 있으면 로그인 진행
 		async handleLogin() {
 			sessionStorage.setItem("isLogin", true)
-			if (this.checkLogout) localStorage.removeItem("hasLogout")
 			await this.$gAuth.signIn()
 		},
 		async goToFindForm() {

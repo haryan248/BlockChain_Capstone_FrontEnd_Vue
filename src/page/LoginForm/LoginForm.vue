@@ -1,8 +1,15 @@
 <template>
 	<div class="login__form-container" :class="{ dark__mode: darkModeState }">
 		<Toast :style="{ width: '90%' }" />
+		<div v-if="loading" class="loading__overlay-loginForm">
+			<div class="loading__progressbar">
+				<h5 class="loginForm_loading">{{ loadingText }}</h5>
+				<ProgressBar mode="indeterminate" style="height: .5em" />
+			</div>
+		</div>
 		<Dialog class="login-form" v-model:visible="displayBasic" :showHeader="false" position="bottom" :style="{ width: '80vw' }">
 			<!-- 회원가입 정보 입력 화면 -->
+
 			<div class="login__form-box">
 				<div class="p-fluid">
 					<div class="sign-in">
@@ -60,7 +67,7 @@
 				<br /><span class="password-focus"> 주의 사항 <i class="pi pi-exclamation-triangle" style="color:#ff4b4b; margin-left:5px;"></i></span> <br />
 				<br />
 				학생증 재발급 시<br />
-				이전의 출입했던 기록들은 <br />찾을 수 없습니다.
+				악의적으로 학생증을 재발급시 <br />사용자에게 불이익이 갈 수 있습니다.
 				<br />
 				<br />
 				유의해 주시길 바랍니다.
@@ -127,6 +134,8 @@ export default {
 				userImage: "",
 			},
 			darkModeState: this.$shared.checkDarkMode(),
+			loading: false,
+			loadingText: "",
 		}
 	},
 	mounted() {
@@ -192,13 +201,15 @@ export default {
 						this.showError("회원가입 오류", "이미 등록된 이메일입니다.\n잠시후 메인 화면으로 이동합니다.")
 						setTimeout(() => {
 							this.$router.replace("/login")
-						}, 3000)
+						}, 2000)
 					}
 				}
 			}
 		},
 		//did 발급
 		async generateUserDID() {
+			this.loading = true
+			this.loadingText = "학생증을 발급하는 중입니다."
 			try {
 				const response = await this.$axios.post("/api/generatedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
@@ -207,7 +218,7 @@ export default {
 					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
 					setTimeout(() => {
 						this.$router.replace("/")
-					}, 2000)
+					}, 1500)
 				}
 			} catch (error) {
 				if (error.response) {
@@ -216,9 +227,12 @@ export default {
 					}
 				}
 			}
+			this.loading = false
 		},
 		//did 재발급
 		async regenerateUserDID() {
+			this.loading = true
+			this.loadingText = "학생증을 재발급하는 중입니다."
 			try {
 				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
@@ -227,7 +241,7 @@ export default {
 					this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다. \n잠시후 학생증 페이지로 이동합니다.")
 					setTimeout(() => {
 						this.$router.replace("/")
-					}, 2000)
+					}, 1500)
 				}
 			} catch (error) {
 				if (error.response) {
@@ -236,9 +250,12 @@ export default {
 					}
 				}
 			}
+			this.loading = false
 		},
 		//did 찾기
 		async getUserDID() {
+			this.loading = true
+			this.loadingText = "학생증을 불러오는 중입니다."
 			try {
 				const response = await this.$axios.get("/api/getdid/", { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
@@ -249,7 +266,7 @@ export default {
 					this.showSuccess("학생증 찾기 성공", "학생증 찾기를 성공하였습니다. \n잠시후 학생증 페이지로 이동합니다.")
 					setTimeout(() => {
 						this.$router.replace("/")
-					}, 2000)
+					}, 1500)
 				}
 			} catch (error) {
 				if (error.response) {
@@ -261,6 +278,7 @@ export default {
 					}
 				}
 			}
+			this.loading = false
 		},
 		//회원 찾기
 		async findAccount() {

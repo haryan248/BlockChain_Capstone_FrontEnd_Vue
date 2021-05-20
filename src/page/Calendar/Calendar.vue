@@ -182,8 +182,9 @@ export default {
 		},
 		//출입 여부 받아오기
 		async getEntry() {
+			this.loading = true
+
 			try {
-				this.loading = true
 				const response = await this.$axios.get("/api/getentry/", {
 					params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword"), did: localStorage.getItem("did"), year: this.curYear, month: this.curMonth, day: this.curDay },
 				})
@@ -194,7 +195,6 @@ export default {
 					this.attributes.push(this.today)
 					this.attributes = [...this.attributes]
 					this.selectDate[0].day = this.curYear + "-" + this.curMonth + "-" + this.curDay
-					this.loading = false
 					let j = 0
 					this.attributes.forEach((item) => {
 						if (this.selectDate[0].day === item.compareDate) {
@@ -209,6 +209,7 @@ export default {
 					}
 				}
 			}
+			this.loading = false
 		},
 	},
 }
