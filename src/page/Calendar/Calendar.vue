@@ -176,7 +176,7 @@ export default {
 					this.buildingName[index] = "육영관"
 					return this.buildingName[index]
 				case 9:
-					this.buildingName[index] = "육영관"
+					this.buildingName[index] = "호연관"
 					return this.buildingName[index]
 			}
 		},
@@ -186,7 +186,7 @@ export default {
 
 			try {
 				const response = await this.$axios.get("/api/getentry/", {
-					params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword"), did: localStorage.getItem("did"), year: this.curYear, month: this.curMonth, day: this.curDay },
+					params: { key: localStorage.getItem("key"), did: localStorage.getItem("did"), year: this.curYear, month: this.curMonth },
 				})
 				if (response.status === 201) {
 					response.data.transaction.forEach((item, i) => {

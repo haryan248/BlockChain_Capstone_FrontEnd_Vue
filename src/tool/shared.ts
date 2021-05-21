@@ -10,6 +10,11 @@ const shared = {
 			return true
 		} else return false
 	},
+	checkAdminMode() {
+		if (JSON.parse(localStorage.getItem("AdminMode")) == true) {
+			return true
+		} else return false
+	},
 }
 
 export default shared

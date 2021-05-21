@@ -1,7 +1,5 @@
 <template>
-	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }" class="setting_confirm-dialog">
-		ㅁㅁㅁ
-	</ConfirmDialog>
+	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }" class="setting_confirm-dialog"> </ConfirmDialog>
 	<div v-if="loading" class="loading__overlay-loginForm">
 		<div class="loading__progressbar">
 			<h5 class="loginForm_loading">학생증을 재발급 중입니다.</h5>
@@ -28,7 +26,21 @@
 				</div>
 			</a>
 			<div class="sidebar_content">
-				<Accordion :class="{ dark__mode: $shared.checkDarkMode() }">
+				<Accordion v-if="$shared.checkAdminMode()" :class="{ dark__mode: $shared.checkDarkMode() }">
+					<AccordionTab header="다크모드">
+						<div class="dark__mode-button">
+							<div class="item-content">다크모드</div>
+							<InputSwitch v-model="darkModeChecked" @click="confirmDarkMode" />
+						</div>
+					</AccordionTab>
+					<AccordionTab header="관리자 모드">
+						<div class="dark__mode-button">
+							<div class="item-content">관리자 모드</div>
+							<InputSwitch v-model="adminChecked" @click="confirmAdminMode" />
+						</div>
+					</AccordionTab>
+				</Accordion>
+				<Accordion v-else :class="{ dark__mode: $shared.checkDarkMode() }">
 					<AccordionTab header="간편비밀번호">
 						<div class="accordian-item" @click="confirmRegenerateDID">
 							재설정
@@ -40,9 +52,14 @@
 							<InputSwitch v-model="darkModeChecked" @click="confirmDarkMode" />
 						</div>
 					</AccordionTab>
-
 					<AccordionTab header="백업하기">
 						<div class="accordian-item" @click="openBackupModal">간편비밀번호 <br />백업</div>
+					</AccordionTab>
+					<AccordionTab header="관리자 모드">
+						<div class="dark__mode-button">
+							<div class="item-content">관리자 모드</div>
+							<InputSwitch v-model="adminChecked" @click="confirmAdminMode" />
+						</div>
 					</AccordionTab>
 				</Accordion>
 			</div>
@@ -99,6 +116,7 @@ export default {
 			displayPasswordModal: false,
 			displayBackupModal: false,
 			darkModeChecked: JSON.parse(localStorage.getItem("DarkMode")) === true ? true : false,
+			adminChecked: JSON.parse(localStorage.getItem("AdminMode")) === true ? true : false,
 			name: "",
 			studentId: "",
 			major: "",
@@ -134,6 +152,25 @@ export default {
 					}
 					this.openVisibleRight()
 					this.$emit("confirmSetting")
+				},
+				reject: () => {},
+			})
+		},
+		confirmAdminMode() {
+			this.closeVisibleRight()
+			this.$confirm.require({
+				message: JSON.parse(localStorage.getItem("AdminMode")) === true ? "관리자 모드를 비활성화 하시겠습니까?" : "관리자 모드를 활성화 하시겠습니까?",
+				header: "관리자 모드 설정",
+				icon: "pi",
+				accept: () => {
+					if (JSON.parse(localStorage.getItem("AdminMode")) === false || JSON.parse(localStorage.getItem("AdminMode")) === null) {
+						JSON.stringify(localStorage.setItem("AdminMode", true))
+						this.$router.replace("/entrylist")
+					} else {
+						JSON.stringify(localStorage.setItem("AdminMode", false))
+						this.$router.replace("/")
+					}
+					this.openVisibleRight()
 				},
 				reject: () => {},
 			})

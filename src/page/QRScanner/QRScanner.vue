@@ -73,6 +73,7 @@ export default {
 
 			// pretend it's taking really long
 			await this.timeout(3000)
+			this.generateEntry(result)
 			this.isValid = true
 			this.showSuccess("인증 완료", "학생증이 인증되었습니다.")
 			this.play("http://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
@@ -120,6 +121,22 @@ export default {
 			return new Promise((resolve) => {
 				window.setTimeout(resolve, ms)
 			})
+		},
+		async generateEntry(result) {
+			console.log(result)
+			try {
+				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
+				if (response.status === 201) {
+					localStorage.setItem("did", response.data.did)
+					this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다.")
+				}
+			} catch (error) {
+				if (error.response) {
+					if (error.response.data.msg === "DID 재발급 오류") {
+						this.showError("DID 재발급 오류", "죄송합니다. \nDID 재발급에 오류가 있습니다.")
+					}
+				}
+			}
 		},
 		async onInit(promise) {
 			this.loading = true

@@ -29,9 +29,9 @@
 			</div>
 		</div>
 		<!-- 임시 qr 내용 출력 부분 -->
-		<div style="display:block; font-size: 19px; width:100%; word-break:normal;" :class="{ temp_font: $shared.checkDarkMode() }">
+		<!-- <div style="display:block; font-size: 19px; width:100%; word-break:normal;" :class="{ temp_font: $shared.checkDarkMode() }">
 			{{ qrString }}
-		</div>
+		</div> -->
 		<div class="qr-verification__button">
 			<Button label="돌아가기" icon="pi pi-times" iconPos="left" @click="goBack()" />
 		</div>
@@ -44,7 +44,8 @@ export default {
 	name: "QRVerification",
 	props: {
 		isStudentId: null,
-		DIDPasswd: String,
+		SimplePassword: null,
+		did: null,
 	},
 	components: {
 		VueQrcode,
@@ -60,9 +61,11 @@ export default {
 		clearInterval(this.polling)
 	},
 	methods: {
+		//qr = H(did + simplepassword + timestamp) + did + timestamp
 		setQRString() {
 			this.timeStamp = Math.round(+new Date() / 1000)
-			this.qrString = this.$sha256(this.DIDPasswd + this.timeStamp)
+			console.log(this.timeStamp)
+			this.qrString = "https://" + "_" + this.$sha256(this.did + this.SimplePassword + this.timeStamp) + "_" + this.did + "_" + this.timeStamp
 		},
 		countDownTimer() {
 			if (this.isStudentId) {

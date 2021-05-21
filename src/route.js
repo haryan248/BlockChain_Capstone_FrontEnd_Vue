@@ -8,7 +8,8 @@ import Login from "./page/Login/Login.vue"
 import LoginForm from "./page/LoginForm/LoginForm.vue"
 import Reservation from "./page/Reservation/Reservation.vue"
 import Calendar from "./page/Calendar/Calendar.vue"
-
+import EntryList from "./page/EntryList/EntryList.vue"
+import AdminSetting from "./page/AdminSetting/AdminSetting.vue"
 const routes = [
 	{
 		path: "/",
@@ -46,10 +47,21 @@ const routes = [
 		component: QRScanner,
 	},
 	{
+		path: "/entrylist",
+		name: "Entrylist",
+		component: EntryList,
+	},
+	{
+		path: "/adminsetting",
+		name: "AdminSetting",
+		component: AdminSetting,
+	},
+	{
 		path: "/login",
 		name: "Login",
 		component: Login,
 	},
+
 	{
 		path: "/loginForm/:name/:imgUrl/:email/:find?",
 		name: "LoginForm",
