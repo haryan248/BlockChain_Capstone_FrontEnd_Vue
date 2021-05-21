@@ -72,11 +72,13 @@
 				(단, 비밀번호 재설정시 바뀐 비밀번호는 백업되지 않습니다.)
 				<br />
 				<br />
-				<span class="p-field-checkbox" style="justify-content:center">
-					<Checkbox name="개인정보 활용 동의" class="border-none" value="privacy" v-model="privacy" />
+				<span class="p-field-checkbox" style="justify-content:center; margin-bottom:0px">
+					<Checkbox name="개인정보 활용 동의" class="border-none" value="privacy" v-model="privacy" :binary="true" />
 					<label for="privacy">개인정보 활용 동의</label>
 				</span>
-				<span v-if="privacyError" class="privacy__error">개인정보 활용 동의를 해주세요!</span>
+				<span v-if="privacyError || (privacyError && !privacy)" class="privacy__error">
+					<p class="error__text">개인정보 활용 동의를 해주세요!</p>
+				</span>
 			</p>
 			<template #footer>
 				<Button label="취소" icon="pi pi-times" class="border-none p-button-outlined" @click="closeBackupModal" autofocus />
@@ -173,7 +175,6 @@ export default {
 			this.displayBackupModal = true
 		},
 		closeBackupModal() {
-			this.openVisibleRight()
 			this.displayBackupModal = false
 		},
 		// 패스워드 모달 관련 함수
@@ -210,23 +211,14 @@ export default {
 				this.privacyError = true
 				return
 			}
-
 			this.closeBackupModal()
-			// 	this.loading = true
-			// 	try {
-			// 		const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
-			// 		if (response.status === 201) {
-			// 			localStorage.setItem("did", response.data.did)
-			// 			this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다.")
-			// 		}
-			// 	} catch (error) {
-			// 		if (error.response) {
-			// 			if (error.response.data.msg === "백업하기 오류") {
-			// 				this.showError("백업 오류", "죄송합니다. \n백업에 오류가 있습니다.")
-			// 			}
-			// 		}
-			// 	}
-			// 	this.loading = false
+			const response = await this.$axios.post("/api/password/", {}, { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
+			if (response.status === 201) {
+				this.showSuccess("백업 완료", "간편 비밀번호 백업이 완료되었습니다.")
+			}
+			if (response.status === 400) {
+				this.showError("백업 오류", "죄송합니다. \n백업에 오류가 있습니다.")
+			}
 		},
 		// 설정 완료시 띄워주는 toast message
 		showSuccess(summaryText, detailText) {

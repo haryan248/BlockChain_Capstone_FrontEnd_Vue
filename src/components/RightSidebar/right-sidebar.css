@@ -81,7 +81,9 @@
 	font-weight: bold;
 	color: #ff4b4b;
 }
-
+.privacy__error .error__text {
+	margin-top: 10px;
+}
 /* 다크 모드  */
 .dark__mode .profile__content {
 	background: #495057;
