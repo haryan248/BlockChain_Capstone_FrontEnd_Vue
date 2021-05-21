@@ -1,6 +1,7 @@
 <template>
 	<div class="login__form-container" :class="{ dark__mode: darkModeState }">
-		<Toast :style="{ width: '90%' }" />
+		<!-- <Toast :style="{ width: '90%' }" /> -->
+		<div class="loadpassword__button"></div>
 		<div v-if="loading" class="loading__overlay-loginForm">
 			<div class="loading__progressbar">
 				<h5 class="loginForm_loading">{{ loadingText }}</h5>
@@ -43,30 +44,47 @@
 						<!-- 학생증 찾기 버튼 -->
 						<div v-if="find === 'true'">
 							<Button label="회원 정보 입력" icon="pi pi-pencil" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
-							<Button v-if="successSignUp" label="간편 비밀번호 입력" icon="pi pi-lock" iconPos="right" class="did-issued" :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openPasswordModal" />
-							<Button v-if="successPassword" label="학생증 찾기" icon="pi pi-search" iconPos="right" class="did-issued" :class="{ 'p-button-outlined': !successFindDID }" :disabled="successFindDID" @click="getUserDID" />
-							<Button v-if="regenerateDID" label="학생증 재발급" icon="pi pi-clone" iconPos="right" style="margin-top:20px" class="did-reissued" @click="openWarningModal" :disabled="!successSignUp" />
+							<Button v-if="successSignUp" label="간편 비밀번호 입력" icon="pi pi-lock" iconPos="right" class="login__form-button" :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openPasswordModal" />
+							<Button v-if="successPassword" label="학생증 찾기" icon="pi pi-search" iconPos="right" class="login__form-button" :class="{ 'p-button-outlined': !successFindDID }" :disabled="successFindDID" @click="getUserDID" />
+							<Button v-if="regenerateDID" label="학생증 재발급" icon="pi pi-clone" iconPos="right" class="login__form-button" @click="openWarningModal" :disabled="!successSignUp" />
+							<Button v-if="successSignUp && !successPassword" label="간편 비밀번호 찾기" icon="pi pi-cloud-download" iconPos="right" class="p-button-info login__form-button" @click="getPassword" />
 						</div>
 						<!-- 회원가입 버튼 -->
 						<div v-else>
 							<Button label="회원 가입" icon="pi pi-check" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
-							<Button label="간편 비밀번호 설정" icon="pi pi-lock" iconPos="right" class="did-issued" :class="{ 'p-button-outlined': !successSignUp }" :disabled="!successSignUp" @click="openWarningModal" />
-							<Button label="학생증 발급" icon="pi pi-user-plus" iconPos="right" class="p-button-outlined did-issued" :class="{ 'p-button-outlined': !successSignUp }" :disabled="!successPassword" @click="generateUserDID" />
+							<Button label="간편 비밀번호 설정" icon="pi pi-lock" iconPos="right" class="login__form-button " :class="{ 'p-button-outlined': !successSignUp }" :disabled="!successSignUp" @click="openWarningModal" />
+							<Button label="학생증 발급" icon="pi pi-user-plus" iconPos="right" class="p-button-outlined login__form-button" :class="{ 'p-button-outlined': !successSignUp }" :disabled="!successPassword" @click="generateUserDID" />
 						</div>
 					</div>
 				</div>
 			</div>
 		</Dialog>
+		<!-- 비밀번호 입력/설정 모달 -->
 		<Dialog class="password-modal p-dialog-maximized" :class="{ dark__mode: darkModeState }" :showHeader="false" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 			<SimplePassword :title="find === 'true' ? '간편 비밀번호 입력' : '간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
-
+		<!-- 비밀번호 찾기 모달 -->
+		<Dialog class="password__finding-modal" header="" :showHeader="false" v-model:visible="displayFindPasswordModal" :style="{ width: '80vw' }" :modal="true">
+			<div class="password-finding__detail">
+				<br />
+				<br />
+				<span class="detail__title"> 간편 비밀번호 </span>
+				<br />
+				<br />
+				<p v-if="simplePassword.length === 0">백업한 비밀번호가 존재하지 않습니다.</p>
+				<p v-else class="password__text">{{ simplePassword }}</p>
+				<!-- <p class="password__text">111111a</p> -->
+			</div>
+			<template #footer>
+				<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="closeFindPasswordModal" autofocus />
+			</template>
+		</Dialog>
 		<!-- 비밀번호 설정시 경고모달 -->
 		<Dialog class="password__warning-modal" header="" :showHeader="false" v-model:visible="displayWarningModal" :style="{ width: '80vw' }" :modal="true">
 			<p v-if="regenerateDID" class="password-warning__detail">
 				<br /><span class="password-focus"> 주의 사항 <i class="pi pi-exclamation-triangle" style="color:#ff4b4b; margin-left:5px;"></i></span> <br />
 				<br />
-				학생증 재발급 시<br />
+				<br />
 				악의적으로 학생증을 재발급시 <br />사용자에게 불이익이 갈 수 있습니다.
 				<br />
 				<br />
@@ -106,6 +124,7 @@ export default {
 			selectedGroupedMajor: null,
 			displayPasswordModal: false,
 			displayWarningModal: false,
+			displayFindPasswordModal: false,
 			displayBasic: false,
 			successSignUp: false,
 			successPassword: false,
@@ -136,6 +155,7 @@ export default {
 			darkModeState: this.$shared.checkDarkMode(),
 			loading: false,
 			loadingText: "",
+			simplePassword: "",
 		}
 	},
 	mounted() {
@@ -307,6 +327,23 @@ export default {
 				}
 			}
 		},
+		//간편 비밀번호 찾기
+		async getPassword() {
+			this.openFindPasswordModal()
+
+			const response = await this.$axios.get("/api/password/", { params: { key: localStorage.getItem("key") } })
+			if (response.status === 201) {
+				this.simplePassword = response.data.wallet_key
+			}
+		},
+		//간편 비밀번호 찾기 모달
+		openFindPasswordModal() {
+			this.displayFindPasswordModal = true
+		},
+		closeFindPasswordModal() {
+			this.displayFindPasswordModal = false
+		},
+
 		//간편 비밀번호 모달
 		openPasswordModal(state) {
 			if (state === "regenerate") this.checkRegenerateDID = true
@@ -342,11 +379,11 @@ export default {
 
 		//에러 토스트 메시지
 		showError(summaryText, detailText) {
-			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 2000 })
 		},
 		//성공 토스트 메시지
 		showSuccess(summaryText, detailText) {
-			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
+			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 2000 })
 		},
 	},
 }
@@ -362,10 +399,13 @@ export default {
 	white-space: pre-wrap;
 	font-size: small;
 }
-.password__warning-modal .p-dialog-content {
+.password__warning-modal .p-dialog-content,
+.password__finding-modal .p-dialog-content {
 	border-radius: 20px 20px 0 0;
 }
-.password__warning-modal .p-dialog-footer {
+
+.password__warning-modal .p-dialog-footer,
+.password__finding-modal .p-dialog-footer {
 	border-top: 1px solid #e2e2e2;
 	padding: 1rem 1rem 1rem 1rem;
 	border-radius: 0 0 20px 20px;

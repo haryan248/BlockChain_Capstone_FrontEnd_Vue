@@ -55,11 +55,6 @@
 .logout__button .logout {
 	align-items: center;
 }
-
-.sidebar_content {
-	margin-top: 40px;
-}
-
 .dark__mode-button {
 	display: flex;
 	align-items: center;
@@ -68,6 +63,25 @@
 .dark__mode-button .item-content {
 	margin-right: 13px;
 }
+
+.sidebar_content {
+	margin-top: 40px;
+}
+.password__backup-detail {
+	text-align: center;
+	font-weight: 200;
+	font-size: 14px;
+}
+.password__backup-detail .detail__title {
+	font-size: 16px;
+	font-weight: bold;
+}
+.password__backup-detail .privacy__error {
+	font-size: 13px;
+	font-weight: bold;
+	color: #ff4b4b;
+}
+
 /* 다크 모드  */
 .dark__mode .profile__content {
 	background: #495057;

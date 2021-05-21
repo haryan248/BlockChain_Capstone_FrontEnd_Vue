@@ -9,7 +9,17 @@
 .login__button {
 	align-items: center;
 }
-
+.login__form-container .loadpassword__button {
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	padding-top: 80px;
+}
+.loadpassword__button .border__none-refresh {
+	outline: none !important;
+	box-shadow: none !important;
+	border: none !important;
+}
 .major-invalid {
 	border-color: #f44336;
 }
@@ -34,7 +44,9 @@
 }
 .did-issued {
 	margin-top: 20px;
-	/* animation: fadein 1s; */
+}
+.login__form-button {
+	margin-top: 20px;
 }
 .did-issued.v-enter-from .did-issued.v-leave-to {
 	transform: translate3d(0, -200%, 0);
@@ -43,7 +55,8 @@
 	transition: transform all 3s, background-color 1s;
 	transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
-.password-warning__detail {
+.password-warning__detail,
+.password-finding__detail {
 	text-align: center;
 	font-weight: 200;
 	font-size: 14px;
@@ -57,15 +70,18 @@
 	align-items: center;
 }
 
-@keyframes fadein {
-	from {
-		opacity: 0.2;
-	}
-	to {
-		opacity: 1;
-	}
+.password-finding__detail .detail__title {
+	font-size: 20px;
+	font-weight: bold;
 }
 
+.password-finding__detail .password__text {
+	letter-spacing: 15px;
+	text-indent: 15px;
+	font-weight: bold;
+	font-size: 23px;
+	text-align: center;
+}
 .loading__overlay-loginForm {
 	overflow: scroll;
 	height: 100vh;

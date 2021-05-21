@@ -46,6 +46,7 @@ import Toast from "primevue/toast"
 import ProgressBar from "primevue/progressbar"
 import ConfirmationService from "primevue/confirmationservice"
 import ConfirmDialog from "primevue/confirmdialog"
+import Checkbox from "primevue/checkbox"
 
 // Create Vue Instance
 const app = createApp(App)
@@ -77,6 +78,7 @@ app.component("AccordionTab", AccordionTab)
 app.component("InputSwitch", InputSwitch)
 app.component("Toast", Toast)
 app.component("ConfirmDialog", ConfirmDialog)
+app.component("Checkbox", Checkbox)
 
 app.component("ProgressBar", ProgressBar)
 app.component("Calendar", Calendar)

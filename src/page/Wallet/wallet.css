@@ -64,6 +64,15 @@
 	/* background-color: #6dc3f0; */
 	color: #fff;
 }
+.credit-card__item.type1 {
+	background-color: #8688bc;
+}
+.credit-card__item.type2 {
+	background-color: #eb7777;
+}
+.credit-card__item.type3 {
+	background-color: #7aa0da;
+}
 
 .card-delete__button {
 	margin: 0 auto;

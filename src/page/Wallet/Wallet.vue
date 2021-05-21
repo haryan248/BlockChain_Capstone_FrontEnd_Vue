@@ -16,23 +16,31 @@
 							</div>
 						</div>
 						<!-- 스와이퍼 영역 -->
-
+						<!-- 임시 카드 데이터 -->
 						<div class="card__wrapper">
 							<swiper :slides-per-view="1.3" :space-between="10" :centeredSlides="true" :pagination="true" :loop="true">
 								<swiper-slide>
-									<div class="credit-card__item">
-										<div class="card__name">{{ "visa" }}</div>
-										<div class="card__number">{{ "**** **** **** **** 3282" }}</div>
-										<div class="card__holder">{{ "하현준" }}</div>
-										<div class="card__expires">{{ "12/23" }}</div>
+									<div class="credit-card__item type1">
+										<div class="card__name">visa</div>
+										<div class="card__number">**** **** **** **** 3282</div>
+										<div class="card__holder">{{ members.name }}</div>
+										<div class="card__expires">05/11</div>
 									</div>
 								</swiper-slide>
 								<swiper-slide>
-									<div class="credit-card__item">
-										<div class="card__name">{{ "visa" }}</div>
-										<div class="card__number">{{ "**** **** **** **** 3282" }}</div>
-										<div class="card__holder">{{ "하현준" }}</div>
-										<div class="card__expires">{{ "12/23" }}</div>
+									<div class="credit-card__item type2">
+										<div class="card__name">visa</div>
+										<div class="card__number">**** **** **** **** 9827</div>
+										<div class="card__holder">{{ members.name }}</div>
+										<div class="card__expires">02/11</div>
+									</div>
+								</swiper-slide>
+								<swiper-slide>
+									<div class="credit-card__item type3">
+										<div class="card__name">visa</div>
+										<div class="card__number">**** **** **** **** 0912</div>
+										<div class="card__holder">{{ members.name }}</div>
+										<div class="card__expires">01/23</div>
 									</div>
 								</swiper-slide>
 							</swiper>
@@ -97,7 +105,7 @@ export default {
 		this.$shared.checkGoogleLogin(this.$gAuth)
 	},
 	data() {
-		return { innerWidth: window.innerWidth, visibleBottom: false, darkModeState: this.$shared.checkDarkMode() }
+		return { innerWidth: window.innerWidth, visibleBottom: false, darkModeState: this.$shared.checkDarkMode(), members: JSON.parse(localStorage.getItem("members")) }
 	},
 	methods: {
 		confirmSetting() {

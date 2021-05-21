@@ -1,5 +1,7 @@
 <template>
-	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }" class="setting_confirm-dialog"></ConfirmDialog>
+	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }" class="setting_confirm-dialog">
+		ㅁㅁㅁ
+	</ConfirmDialog>
 	<div v-if="loading" class="loading__overlay-loginForm">
 		<div class="loading__progressbar">
 			<h5 class="loginForm_loading">학생증을 재발급 중입니다.</h5>
@@ -40,7 +42,7 @@
 					</AccordionTab>
 
 					<AccordionTab header="백업하기">
-						<div class="accordian-item">간편비밀번호 <br />백업</div>
+						<div class="accordian-item" @click="openBackupModal">간편비밀번호 <br />백업</div>
 					</AccordionTab>
 				</Accordion>
 			</div>
@@ -52,6 +54,34 @@
 		<!-- 간편번호 재설정시 띄우는 화면 -->
 		<Dialog class="password-modal p-dialog-maximized" :class="[{ dark__mode: $shared.checkDarkMode() }]" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 			<SimplePassword :title="'간편 비밀번호 재설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
+		</Dialog>
+		<!-- 백업 개인동의 모달 -->
+		<Dialog class="password__backup-modal" :class="{ dark__mode: $shared.checkDarkMode() }" :showHeader="false" v-model:visible="displayBackupModal" :style="{ width: '80vw' }" :modal="true">
+			<p class="password__backup-detail">
+				<br />
+				<br />
+				<span class="detail__title">간편 비밀번호를 백업하시겠습니까?</span>
+				<br />
+				<br />
+				간편비밀번호를 백업할 경우에 자신의 비밀번호가 서버에 저장됩니다.
+				<br />
+				<br />
+				디바이스가 변경되거나 앱이 삭제되어 재설치하는 경우 학생증을 불러오기 위해 비밀번호 입력이 필요합니다.
+				<br />
+				<br />
+				(단, 비밀번호 재설정시 바뀐 비밀번호는 백업되지 않습니다.)
+				<br />
+				<br />
+				<span class="p-field-checkbox" style="justify-content:center">
+					<Checkbox name="개인정보 활용 동의" class="border-none" value="privacy" v-model="privacy" />
+					<label for="privacy">개인정보 활용 동의</label>
+				</span>
+				<span v-if="privacyError" class="privacy__error">개인정보 활용 동의를 해주세요!</span>
+			</p>
+			<template #footer>
+				<Button label="취소" icon="pi pi-times" class="border-none p-button-outlined" @click="closeBackupModal" autofocus />
+				<Button label="백업하기" icon="pi pi-cloud-upload" class="border-none p-button-outlined" @click="uploadBackup" autofocus />
+			</template>
 		</Dialog>
 	</div>
 </template>
@@ -65,6 +95,7 @@ export default {
 		return {
 			visibleRight: false,
 			displayPasswordModal: false,
+			displayBackupModal: false,
 			darkModeChecked: JSON.parse(localStorage.getItem("DarkMode")) === true ? true : false,
 			name: "",
 			studentId: "",
@@ -72,6 +103,8 @@ export default {
 			userImage: "",
 			members: JSON.parse(localStorage.getItem("members")),
 			loading: false,
+			privacy: false,
+			privacyError: false,
 		}
 	},
 	created() {
@@ -135,6 +168,14 @@ export default {
 		closeVisibleRight() {
 			this.visibleRight = false
 		},
+		openBackupModal() {
+			this.closeVisibleRight()
+			this.displayBackupModal = true
+		},
+		closeBackupModal() {
+			this.openVisibleRight()
+			this.displayBackupModal = false
+		},
 		// 패스워드 모달 관련 함수
 		openPasswordModal() {
 			this.closeVisibleRight()
@@ -162,6 +203,30 @@ export default {
 				}
 			}
 			this.loading = false
+		},
+		//간편비밀번호 백업하기
+		async uploadBackup() {
+			if (!this.privacy) {
+				this.privacyError = true
+				return
+			}
+
+			this.closeBackupModal()
+			// 	this.loading = true
+			// 	try {
+			// 		const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
+			// 		if (response.status === 201) {
+			// 			localStorage.setItem("did", response.data.did)
+			// 			this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다.")
+			// 		}
+			// 	} catch (error) {
+			// 		if (error.response) {
+			// 			if (error.response.data.msg === "백업하기 오류") {
+			// 				this.showError("백업 오류", "죄송합니다. \n백업에 오류가 있습니다.")
+			// 			}
+			// 		}
+			// 	}
+			// 	this.loading = false
 		},
 		// 설정 완료시 띄워주는 toast message
 		showSuccess(summaryText, detailText) {
@@ -196,6 +261,35 @@ export default {
 .setting_confirm-dialog button.p-dialog-header-icon.p-dialog-header-close.p-link {
 	display: none;
 }
+
+.password__backup-modal .p-dialog-content {
+	border-radius: 20px 20px 0 0;
+}
+.password__backup-modal .p-dialog-footer {
+	border-top: 1px solid #e2e2e2;
+	padding-top: 1rem;
+	border-radius: 0 0 20px 20px;
+	text-align: center;
+}
+
+.setting_confirm-dialog .p-dialog-header {
+	border-radius: 10px 10px 0 0;
+}
+.setting_confirm-dialog .p-dialog-footer {
+	border-radius: 0 0 10px 10px;
+}
+.p-dialog.p-confirm-dialog .p-confirm-dialog-message {
+	white-space: pre-wrap;
+	text-align: center;
+	font-size: 14px;
+}
+.regenerate__password.p-dialog-header-icons {
+	display: none;
+}
+.p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+	box-shadow: none;
+}
+
 /* 다크모드  css*/
 .p-sidebar.p-component.p-sidebar-right.p-sidebar-active.dark__mode {
 	background: #333536;
@@ -217,24 +311,13 @@ export default {
 	border: 1px solid #495057;
 	color: #ffffff;
 }
-.setting_confirm-dialog .p-dialog-header {
-	border-radius: 10px 10px 0 0;
-}
-.setting_confirm-dialog .p-dialog-footer {
-	border-radius: 0 0 10px 10px;
-}
-.p-dialog.p-confirm-dialog .p-confirm-dialog-message {
-	white-space: pre-wrap;
-	text-align: center;
-	font-size: 14px;
-}
-.regenerate__password.p-dialog-header-icons {
-	display: none;
-}
+
 /* confirm-Dialog 다크모드 css */
 .p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-header,
 .p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-content,
-.p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-footer {
+.p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-footer,
+.p-dialog.p-component.password__backup-modal.dark__mode .p-dialog-content,
+.p-dialog.p-component.password__backup-modal.dark__mode .p-dialog-footer {
 	background: #333536;
 	color: #ffffff;
 }
