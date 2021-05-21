@@ -74,8 +74,7 @@ export default {
 			// pretend it's taking really long
 			await this.timeout(3000)
 			this.generateEntry(result)
-			this.isValid = true
-			this.showSuccess("인증 완료", "학생증이 인증되었습니다.")
+
 			this.play("http://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
 
 			// some more delay, so users have time to read the message
@@ -134,17 +133,38 @@ export default {
 			let timestamp = result.split("_")[3]
 			let building = JSON.parse(localStorage.getItem("building"))
 
-			console.log(result, hash, studentDid, timestamp, date, year, month, day, building)
+			console.log(result, hash, studentDid, timestamp, year, month, day, building)
 
 			try {
-				const response = await this.$axios.post("/api/generateentry/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post(
+					"/api/generateentry/",
+					{},
+					{
+						params: {
+							key: localStorage.getItem("key"),
+
+							SimplePassword: localStorage.getItem("simplePassword"),
+							admin_did: localStorage.getItem("did"),
+							std_did: studentDid,
+							year: year,
+							building: building,
+							month: month,
+							day: day,
+							timestamp: timestamp,
+							hashedData: hash,
+						},
+					}
+				)
 				if (response.status === 201) {
-					this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다.")
+					this.isValid = true
+					this.showSuccess("인증 완료", "학생증이 인증되었습니다.")
 				}
 			} catch (error) {
 				if (error.response) {
-					if (error.response.data.msg === "DID 재발급 오류") {
-						this.showError("DID 재발급 오류", "죄송합니다. \nDID 재발급에 오류가 있습니다.")
+					if (error.response.data.msg === "check_DID error") {
+						this.showError("본인 인증 오류", "죄송합니다. \n본인 인증에 오류가 있습니다.")
+					} else if (error.response.data.msg === "timestamp error") {
+						this.showError("유효 시간 오류", "죄송합니다. \n유효 시간이 지났습니다. 다시 찍어주세요.")
 					}
 				}
 			}

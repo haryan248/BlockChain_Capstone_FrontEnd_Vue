@@ -63,6 +63,7 @@ export default {
 	methods: {
 		//qr = H(did + simplepassword + timestamp) + did + timestamp
 		setQRString() {
+			console.log(this.$sha256(this.did + this.SimplePassword))
 			this.timeStamp = Math.round(+new Date() / 1000)
 			console.log(this.timeStamp)
 			this.qrString = "https://" + "_" + this.$sha256(this.$sha256(this.did + this.SimplePassword) + this.timeStamp) + "_" + this.did + "_" + this.timeStamp

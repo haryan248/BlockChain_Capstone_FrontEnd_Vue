@@ -184,6 +184,7 @@ export default {
 				accept: () => {
 					this.$gAuth.instance.signOut()
 					localStorage.removeItem("key")
+					localStorage.removeItem("AdminMode")
 					this.$router.replace("/login")
 				},
 				reject: () => {},
