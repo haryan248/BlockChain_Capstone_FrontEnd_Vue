@@ -65,8 +65,8 @@ export default {
 		setQRString() {
 			this.timeStamp = Math.round(+new Date() / 1000)
 			console.log(this.timeStamp)
-			this.qrString = "https://" + "_" + this.$sha256(this.did + this.SimplePassword + this.timeStamp) + "_" + this.did + "_" + this.timeStamp
-			console.log(this.qrString)
+			this.qrString = "https://" + "_" + this.$sha256(this.$sha256(this.did + this.SimplePassword) + this.timeStamp) + "_" + this.did + "_" + this.timeStamp
+			console.log(this.qrString.split("_"))
 		},
 		countDownTimer() {
 			if (this.isStudentId) {

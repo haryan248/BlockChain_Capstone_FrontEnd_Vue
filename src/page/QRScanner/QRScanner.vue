@@ -123,11 +123,22 @@ export default {
 			})
 		},
 		async generateEntry(result) {
-			console.log(result)
+			let date = new Date()
+			let year = date.getFullYear()
+			let month = date.getMonth() + 1
+			month = month >= 10 ? month : "0" + month
+			let day = date.getDate()
+			day = day >= 10 ? day : "0" + day
+			let hash = result.split("_")[1]
+			let studentDid = result.split("_")[2]
+			let timestamp = result.split("_")[3]
+			let building = JSON.parse(localStorage.getItem("building"))
+
+			console.log(result, hash, studentDid, timestamp, date, year, month, day, building)
+
 			try {
-				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post("/api/generateentry/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
-					localStorage.setItem("did", response.data.did)
 					this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다.")
 				}
 			} catch (error) {
