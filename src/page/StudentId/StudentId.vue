@@ -29,7 +29,7 @@
 							</Dialog>
 							<!-- qr 코드 화면 부분 -->
 							<Dialog class="QR-modal" :class="{ dark__mode: darkModeState }" header="Header" :showHeader="false" v-model:visible="displayQRModal" :style="{ width: '80vw' }" :modal="true">
-								<QRVerification @goBack="closeQRModal" :isStudentId="true" :DID="DID" :SimplePassword="SimplePassword" />
+								<QRVerification @goBack="closeQRModal" :isStudentId="true" :did="DID" :SimplePassword="SimplePassword" />
 							</Dialog>
 						</div>
 					</Dialog>
