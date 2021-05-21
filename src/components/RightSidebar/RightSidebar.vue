@@ -175,6 +175,7 @@ export default {
 			this.displayBackupModal = true
 		},
 		closeBackupModal() {
+			this.privacyError = false
 			this.displayBackupModal = false
 		},
 		// 패스워드 모달 관련 함수
