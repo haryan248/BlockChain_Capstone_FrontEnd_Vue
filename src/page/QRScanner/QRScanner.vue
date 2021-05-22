@@ -74,7 +74,7 @@ export default {
 			await this.timeout(3000)
 			this.generateEntry(result)
 
-			this.play("http://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
+			this.play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
 
 			// some more delay, so users have time to read the message
 			await this.timeout(2000)
