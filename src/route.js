@@ -86,15 +86,23 @@ router.beforeEach((to, from, next) => {
 		} else {
 			next({ path: "/" })
 		}
+		//입력 창 갔을 때
 	} else if (to.path.split("/")[1] == "loginForm") {
 		next()
+		//로그인, 입력창 아닐때
 	} else {
 		if (localStorage.getItem("key") === null) {
 			//로그인 상태(key 없으면)가 아니면 로그인 페이지로 이동시킴
 			next({ path: "/login" })
 		} else {
 			// 로그인 상태면(key 있으면) 페이지 이동
-			next()
+			if (JSON.parse(localStorage.getItem("AdminMode")) === true) {
+				if (to.path == "/entrylist" || to.path == "/qrscanner" || to.path == "/adminsetting") {
+					next()
+				} else next({ path: "/entrylist" })
+			} else {
+				next()
+			}
 		}
 	}
 })

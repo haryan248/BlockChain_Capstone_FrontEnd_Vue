@@ -15,7 +15,7 @@
 			<div>
 				<div class="blank__content"></div>
 			</div>
-			<a href="https://myaccount.google.com/u/1/personal-info" class="profile__content">
+			<div class="profile__content" @click="goToProfile">
 				<div class="img__content">
 					<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }" style="width: 60px;height: 60px;"></div>
 				</div>
@@ -24,7 +24,7 @@
 					<div class="student__id">{{ studentId }}</div>
 					<div class="student__major">{{ major }}</div>
 				</div>
-			</a>
+			</div>
 			<div class="sidebar_content">
 				<Accordion v-if="$shared.checkAdminMode()" :class="{ dark__mode: $shared.checkDarkMode() }">
 					<AccordionTab header="다크모드">
@@ -132,6 +132,9 @@ export default {
 	},
 	emits: ["confirmSetting"],
 	methods: {
+		goToProfile() {
+			window.open("https://myaccount.google.com/u/1/personal-info")
+		},
 		setMembers() {
 			this.name = this.members.name
 			this.studentId = this.members.studentId
@@ -320,7 +323,9 @@ export default {
 .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
 	box-shadow: none;
 }
-
+.p-accordion-header-text {
+	font-size: 14px;
+}
 /* 다크모드  css*/
 .p-sidebar.p-component.p-sidebar-right.p-sidebar-active.dark__mode {
 	background: #333536;

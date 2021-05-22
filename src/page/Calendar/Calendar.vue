@@ -3,7 +3,7 @@
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div class="calendar__content">
 				<Header :title="'캘린더'" @confirmSetting="confirmSetting" />
-				<v-date-picker ref="calendar" :attributes="attributes" :is-dark="darkModeState" v-model="selectDate.date" @dayclick="onDayClick" @update:to-page="toPage" is-expanded />
+				<v-date-picker ref="calendar" :attributes="attributes" :is-dark="darkModeState" @dayclick="onDayClick" v-model="selectDate.date" @update:to-page="toPage" is-expanded />
 				<div v-if="loading" class="loading__overlay">
 					<div class="loading__progressbar">
 						<h5 class="calendar_loading">출입 여부를 불러오는 중입니다.</h5>
@@ -137,6 +137,8 @@ export default {
 		//날짜 클릭 시
 		onDayClick(day) {
 			this.curMonth = day.month
+			this.curMonth = this.curMonth >= 10 ? this.curMonth : "0" + this.curMonth
+
 			this.curYear = day.year
 			this.curDay = day.day
 
@@ -181,30 +183,32 @@ export default {
 			}
 		},
 		//출입 여부 받아오기
+
 		async getEntry() {
 			this.loading = true
-
 			try {
-				const response = await this.$axios.get("/api/getentry/", {
-					params: { key: localStorage.getItem("key"), did: localStorage.getItem("did"), year: this.curYear, month: this.curMonth },
+				const response = await this.$axios.get("/api/entry/", {
+					params: { key: localStorage.getItem("key"), entry_did: localStorage.getItem("did") },
 				})
 				if (response.status === 201) {
-					response.data.transaction.forEach((item, i) => {
-						this.attributes[i] = { key: i, bar: "red", customData: { building: item.building, time: item.time }, compareDate: item.date, dates: new Date(item.date) }
+					response.data.entry.forEach((item, i) => {
+						this.attributes[i] = { key: i, bar: "red", customData: { building: item.building_num, time: item.entry_time }, compareDate: item.entry_date, dates: new Date(item.entry_date) }
 					})
 					this.attributes.push(this.today)
 					this.attributes = [...this.attributes]
 					this.selectDate[0].day = this.curYear + "-" + this.curMonth + "-" + this.curDay
+
 					let j = 0
 					this.attributes.forEach((item) => {
 						if (this.selectDate[0].day === item.compareDate) {
 							this.selectDate[0].attributes[j++] = { building: item.customData.building, time: item.customData.time }
 						}
+						if (j === 0) this.selectDate[0].attributes = []
 					})
 				}
 			} catch (error) {
 				if (error.response) {
-					if (error.response.data.msg === "DID를 찾을 수 없습니다.") {
+					if (error.response.data.msg === "has no entry") {
 						console.log(error)
 					}
 				}
