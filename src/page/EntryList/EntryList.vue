@@ -33,7 +33,7 @@
 													<div class="item__summary">
 														<h3 class="entry__desc">{{ entryItem.date }}</h3>
 														<h3 class="entry__desc">{{ entryItem.time }}</h3>
-														<h3 class="entry__desc">{{ entryItem.building }} 강의동</h3>
+														<h3 class="entry__desc">{{ entryItem.building }}강의동</h3>
 														<h3 class="entry__desc">{{ entryItem.did }}</h3>
 													</div>
 												</div>

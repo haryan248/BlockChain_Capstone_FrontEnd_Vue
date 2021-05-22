@@ -85,3 +85,6 @@
 	border: 1px solid #333536;
 	color: #ffffff;
 }
+.entryuser__container.dark__mode .entry__desc {
+	color: #ffffff;
+}

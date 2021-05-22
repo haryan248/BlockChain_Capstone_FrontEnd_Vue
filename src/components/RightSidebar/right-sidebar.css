@@ -16,6 +16,7 @@
 
 .accordian-item {
 	padding: 10px;
+	font-size: 13.5px;
 }
 .blank__content {
 	padding: 20px;
@@ -28,6 +29,7 @@
 	padding: 20px 10px 20px 10px;
 	border-radius: 4px;
 	background-color: #f8f9fa;
+	border: 1px solid #dee2e6;
 }
 .profile__content .img__content {
 	margin-right: 4px;
@@ -62,7 +64,7 @@
 }
 .dark__mode-button .item-content {
 	margin-right: 13px;
-	font-size: 14px;
+	font-size: 13.5px;
 }
 
 .sidebar_content {
@@ -88,6 +90,7 @@
 /* 다크 모드  */
 .dark__mode .profile__content {
 	background: #495057;
+	border: 1px solid #495057;
 }
 .dark__mode .profile__content .student__img {
 	border: 1px solid #ffffff;

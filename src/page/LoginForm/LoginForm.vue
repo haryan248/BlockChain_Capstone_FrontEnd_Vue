@@ -10,7 +10,6 @@
 		</div>
 		<Dialog class="login-form" v-model:visible="displayBasic" :showHeader="false" position="bottom" :style="{ width: '80vw' }">
 			<!-- 회원가입 정보 입력 화면 -->
-
 			<div class="login__form-box">
 				<div class="p-fluid">
 					<div class="sign-in">
@@ -76,7 +75,7 @@
 				<!-- <p class="password__text">111111a</p> -->
 			</div>
 			<template #footer>
-				<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="closeFindPasswordModal" autofocus />
+				<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="closeFindPasswordModal" />
 			</template>
 		</Dialog>
 		<!-- 비밀번호 설정시 경고모달 -->
@@ -101,8 +100,8 @@
 				<br />
 			</p>
 			<template #footer>
-				<Button label="취소" icon="pi pi-times" class="border-none p-button-outlined" @click="closeWarningModal" autofocus />
-				<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="openPasswordModal('regenerate')" autofocus />
+				<Button label="취소" icon="pi pi-times" class="border-none p-button-outlined" @click="closeWarningModal" />
+				<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="openPasswordModal('regenerate')" />
 			</template>
 		</Dialog>
 	</div>
@@ -330,7 +329,6 @@ export default {
 		//간편 비밀번호 찾기
 		async getPassword() {
 			this.openFindPasswordModal()
-
 			const response = await this.$axios.get("/api/password/", { params: { key: localStorage.getItem("key") } })
 			if (response.status === 201) {
 				this.simplePassword = response.data.wallet_key

@@ -171,7 +171,7 @@
 /* 다크 모드 */
 .schedule__content.dark__mode {
 	background-color: #333536;
-	border: 1px solid #e3e3e3;
+	border: 1px solid #333536;
 }
 .schedule__content.dark__mode .schedule__date,
 .schedule__content.dark__mode .load__text,
