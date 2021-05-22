@@ -46,7 +46,7 @@
 							</swiper>
 						</div>
 						<div class="card-delete__button">
-							<Button label="카드 삭제" class="p-button-danger" icon="pi pi-times" iconPos="right" />
+							<Button label="카드 삭제" class="p-button-danger" icon="pi pi-times" />
 						</div>
 						<Sidebar v-model:visible="visibleBottom" :baseZIndex="1000" position="bottom" style="height:30rem">
 							<div class="card">
@@ -95,12 +95,6 @@ SwiperCore.use(Controller)
 export default {
 	name: "Wallet",
 	components: { HeaderSection, Swiper, SwiperSlide },
-	computed: {
-		swiper() {
-			const swiper = document.querySelector(".home-carousel").swiper
-			return swiper
-		},
-	},
 	mounted() {
 		this.$shared.checkGoogleLogin(this.$gAuth)
 	},

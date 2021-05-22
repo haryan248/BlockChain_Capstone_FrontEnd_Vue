@@ -77,7 +77,6 @@ export default {
 	},
 	created() {
 		if (this.checkBuilding) {
-			console.log(this.checkBuilding)
 			this.building = this.selectBuilding[this.checkBuilding - 1]
 		}
 	},

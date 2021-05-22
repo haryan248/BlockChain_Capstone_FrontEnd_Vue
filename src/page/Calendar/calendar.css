@@ -164,7 +164,10 @@
 	font-size: 20px;
 	margin-bottom: 20px;
 }
-
+.student__button {
+	margin: 0 auto;
+	margin-top: 10px;
+}
 /* 다크 모드 */
 .schedule__content.dark__mode {
 	background-color: #333536;

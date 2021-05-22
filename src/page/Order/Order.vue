@@ -28,7 +28,7 @@
 						</template>
 					</OrderList>
 					<div class="order__button">
-						<Button label="주문하기" icon="pi pi-check" iconPos="right" />
+						<Button label="주문하기" icon="pi pi-check" />
 					</div>
 				</div>
 			</div>

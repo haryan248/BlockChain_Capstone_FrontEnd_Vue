@@ -55,7 +55,7 @@
 			</router-link>
 			<router-link v-if="adminModeState" to="/adminsetting" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.adminsetting }">
 				<Button
-					label="관리자 설정"
+					label="관리자설정"
 					iconPos="top"
 					icon="pi pi-cog"
 					class="p-button-text p-button-secondary border-none p-button-font--size"

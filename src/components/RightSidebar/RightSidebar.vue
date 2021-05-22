@@ -1,5 +1,5 @@
 <template>
-	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }" class="setting_confirm-dialog"> </ConfirmDialog>
+	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }" class="setting_confirm-dialog" />
 	<div v-if="loading" class="loading__overlay-loginForm">
 		<div class="loading__progressbar">
 			<h5 class="loginForm_loading">학생증을 재발급 중입니다.</h5>
@@ -65,7 +65,7 @@
 			</div>
 			<!-- 로그아웃 버튼 -->
 			<div class="logout__button">
-				<Button label="로그아웃" class="logout" icon="pi pi-sign-out" iconPos="right" @click="confirmLogout" />
+				<Button label="로그아웃" class="logout" icon="pi pi-sign-out" @click="confirmLogout" />
 			</div>
 		</Sidebar>
 		<!-- 간편번호 재설정시 띄우는 화면 -->
@@ -150,13 +150,23 @@ export default {
 				accept: () => {
 					if (JSON.parse(localStorage.getItem("DarkMode")) === false || JSON.parse(localStorage.getItem("DarkMode")) === null) {
 						JSON.stringify(localStorage.setItem("DarkMode", true))
+						this.darkModeChecked = true
 					} else {
 						JSON.stringify(localStorage.setItem("DarkMode", false))
+						this.darkModeChecked = false
 					}
-					this.openVisibleRight()
 					this.$emit("confirmSetting")
 				},
-				reject: () => {},
+				reject: () => {
+					if (JSON.parse(localStorage.getItem("DarkMode")) === false || JSON.parse(localStorage.getItem("DarkMode")) === null) {
+						JSON.stringify(localStorage.setItem("DarkMode", false))
+						this.darkModeChecked = false
+					} else {
+						JSON.stringify(localStorage.setItem("DarkMode", true))
+						this.darkModeChecked = true
+					}
+					this.openVisibleRight()
+				},
 			})
 		},
 		confirmAdminMode() {
@@ -168,14 +178,24 @@ export default {
 				accept: () => {
 					if (JSON.parse(localStorage.getItem("AdminMode")) === false || JSON.parse(localStorage.getItem("AdminMode")) === null) {
 						JSON.stringify(localStorage.setItem("AdminMode", true))
-						this.$router.replace("/entrylist")
+						this.adminChecked = true
+						this.$router.push("/entrylist")
 					} else {
 						JSON.stringify(localStorage.setItem("AdminMode", false))
-						this.$router.replace("/")
+						this.adminChecked = false
+						this.$router.push("/")
 					}
-					this.openVisibleRight()
 				},
-				reject: () => {},
+				reject: () => {
+					if (JSON.parse(localStorage.getItem("AdminMode")) === false || JSON.parse(localStorage.getItem("AdminMode")) === null) {
+						JSON.stringify(localStorage.setItem("AdminMode", false))
+						this.adminChecked = false
+					} else {
+						JSON.stringify(localStorage.setItem("AdminMode", true))
+						this.adminChecked = true
+						this.openVisibleRight()
+					}
+				},
 			})
 		},
 		confirmLogout() {
@@ -190,7 +210,6 @@ export default {
 					localStorage.removeItem("AdminMode")
 					this.$router.replace("/login")
 				},
-				reject: () => {},
 			})
 		},
 		confirmRegenerateDID() {
@@ -202,7 +221,9 @@ export default {
 				accept: () => {
 					this.openPasswordModal()
 				},
-				reject: () => {},
+				reject: () => {
+					return
+				},
 			})
 		},
 		openVisibleRight() {

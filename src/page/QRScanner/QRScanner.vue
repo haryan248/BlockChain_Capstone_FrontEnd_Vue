@@ -68,7 +68,6 @@ export default {
 	methods: {
 		async onDecode(result) {
 			this.result = result
-			console.log(result)
 			this.turnCameraOff()
 
 			// pretend it's taking really long
@@ -132,9 +131,6 @@ export default {
 			let studentDid = result.split("_")[2]
 			let timestamp = result.split("_")[3]
 			let building = JSON.parse(localStorage.getItem("building"))
-
-			console.log(result, hash, studentDid, timestamp, year, month, day, building)
-
 			try {
 				const response = await this.$axios.post(
 					"/api/generateentry/",

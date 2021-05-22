@@ -39,7 +39,7 @@
 					</Dialog>
 					<div class="student__id-content"></div>
 					<div class="student__button">
-						<Button label="학생증" icon="pi pi-id-card" iconPos="left" @click="openPasswordModal" />
+						<Button label="학생증" icon="pi pi-id-card" @click="openPasswordModal" />
 					</div>
 				</div>
 				<!-- 학생증 발급되지 않았을때 화면 띄우는 부분 -->
