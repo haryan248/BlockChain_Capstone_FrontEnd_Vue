@@ -138,7 +138,6 @@ export default {
 					{
 						params: {
 							key: localStorage.getItem("key"),
-
 							SimplePassword: localStorage.getItem("simplePassword"),
 							admin_did: localStorage.getItem("did"),
 							std_did: studentDid,

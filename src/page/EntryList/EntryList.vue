@@ -153,7 +153,7 @@ export default {
 	color: #495057;
 	border: 1px solid #cbd5e0;
 }
-.p-button.p-button-outlined:enabled:hover {
+.p-button.p-button-outlined.filter__button:enabled:hover {
 	background: #ffffff;
 	color: #435e6b;
 	border: 1px solid #cbd5e0;

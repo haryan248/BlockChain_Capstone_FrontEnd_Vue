@@ -50,9 +50,18 @@
 						</div>
 						<!-- 회원가입 버튼 -->
 						<div v-else>
-							<Button label="회원 가입" icon="pi pi-check" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
-							<Button label="간편 비밀번호 설정" icon="pi pi-lock" iconPos="right" class="login__form-button " :class="{ 'p-button-outlined': !successSignUp }" :disabled="!successSignUp" @click="openWarningModal" />
-							<Button label="학생증 발급" icon="pi pi-user-plus" iconPos="right" class="p-button-outlined login__form-button" :class="{ 'p-button-outlined': !successSignUp }" :disabled="!successPassword" @click="generateUserDID" />
+							<Button label="회원 정보 입력" icon="pi pi-check" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
+							<Button v-if="successSignUp" label="간편 비밀번호 설정" icon="pi pi-lock" iconPos="right" class="login__form-button " :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openWarningModal" />
+							<Button
+								v-if="successPassword"
+								label="학생증 발급"
+								icon="pi pi-user-plus"
+								iconPos="right"
+								class="p-button-outlined login__form-button"
+								:class="{ 'p-button-outlined': !successGenerateDID }"
+								:disabled="successGenerateDID"
+								@click="generateUserDID"
+							/>
 						</div>
 					</div>
 				</div>
@@ -101,7 +110,7 @@
 			</p>
 			<template #footer>
 				<Button label="취소" icon="pi pi-times" class="border-none p-button-outlined" @click="closeWarningModal" />
-				<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="openPasswordModal('regenerate')" />
+				<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="regenerateDID ? openPasswordModal('regenerate') : openPasswordModal()" />
 			</template>
 		</Dialog>
 	</div>
@@ -128,6 +137,7 @@ export default {
 			successSignUp: false,
 			successPassword: false,
 			successFindDID: false,
+			successGenerateDID: false,
 			failCount: JSON.parse(localStorage.getItem("wrongPassword")) ? JSON.parse(localStorage.getItem("wrongPassword")) : 1,
 			regenerateDID: JSON.parse(localStorage.getItem("wrongPassword")) >= 5 ? true : false,
 			checkRegenerateDID: false,
@@ -155,6 +165,7 @@ export default {
 			loading: false,
 			loadingText: "",
 			simplePassword: "",
+			tempKey: "",
 		}
 	},
 	mounted() {
@@ -201,28 +212,12 @@ export default {
 		//회원가입
 		async signUp() {
 			this.isFirstMember = false
-			try {
-				const response = await this.$axios.post("/api/members/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
-				if (response.status === 201) {
-					this.successSignUp = true
-					this.showSuccess("회원가입 완료", "회원가입이 완료되었습니다. \n간편비밀번호를 설정해주세요.")
-					localStorage.setItem("key", response.data.user_key)
-					this.setMembers()
-				}
-			} catch (error) {
-				if (error.response) {
-					//중복 회원가입시
-					if (error.response.data.msg === "stdnum is already exists") {
-						this.showError("회원가입 오류", "이미 등록된 학번입니다.")
-						this.studentId = ""
-						this.$refs.studentId.$el.focus()
-					} else if (error.response.data.msg === "Email is already exists") {
-						this.showError("회원가입 오류", "이미 등록된 이메일입니다.\n잠시후 메인 화면으로 이동합니다.")
-						setTimeout(() => {
-							this.$router.replace("/login")
-						}, 2000)
-					}
-				}
+			const response = await this.$axios.get("/api/members/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
+			if (response.status === 201) {
+				this.successSignUp = true
+				this.showSuccess("회원정보 입력 완료", "회원 정보 입력이 완료되었습니다. \n간편비밀번호를 설정해주세요.")
+				localStorage.setItem("key", response.data.user_key)
+				this.setMembers()
 			}
 		},
 		//did 발급
@@ -230,7 +225,21 @@ export default {
 			this.loading = true
 			this.loadingText = "학생증을 발급하는 중입니다."
 			try {
-				const response = await this.$axios.post("/api/generatedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post(
+					"/api/members/",
+					{},
+					{
+						params: {
+							key: localStorage.getItem("key"),
+							major: this.selectedGroupedMajor.label,
+							stdnum: this.studentId,
+							name: this.name,
+							email: this.email,
+							studentId: this.members.studentId,
+							SimplePassword: localStorage.getItem("simplePassword"),
+						},
+					}
+				)
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
 					localStorage.removeItem("wrongPassword")
@@ -241,7 +250,13 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
-					if (error.response.data.msg === "DID 발급 오류") {
+					if (error.response.data.msg === "Email is already exists") {
+						localStorage.removeItem("key")
+						this.showError("회원가입 오류", "이미 등록된 이메일입니다.\n잠시후 메인 화면으로 이동합니다.")
+						setTimeout(() => {
+							this.$router.replace("/login")
+						}, 2000)
+					} else if (error.response.data.msg === "DID 발급 오류") {
 						this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
 					}
 				}
@@ -253,8 +268,9 @@ export default {
 			this.loading = true
 			this.loadingText = "학생증을 재발급하는 중입니다."
 			try {
-				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: this.tempKey, studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
+					localStorage.setItem("key", this.tempKey)
 					localStorage.setItem("did", response.data.did)
 					localStorage.removeItem("wrongPassword")
 					this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다. \n잠시후 학생증 페이지로 이동합니다.")
@@ -276,9 +292,10 @@ export default {
 			this.loading = true
 			this.loadingText = "학생증을 불러오는 중입니다."
 			try {
-				const response = await this.$axios.get("/api/getdid/", { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.get("/api/getdid/", { params: { key: this.tempKey, SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					this.successFindDID = true
+					localStorage.setItem("key", this.tempKey)
 					localStorage.setItem("did", response.data.did)
 					localStorage.removeItem("wrongPassword")
 					localStorage.removeItem("findDid")
@@ -305,7 +322,7 @@ export default {
 				const response = await this.$axios.post("/api/findmyinfo/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
 				if (response.status === 201) {
 					this.showSuccess("회원 정보 입력 성공", "올바른 회원입니다. \n간편 비밀번호를 입력해주세요. ")
-					localStorage.setItem("key", response.data.user_key)
+					this.tempKey = response.data.user_key
 					JSON.stringify(localStorage.setItem("findDid", true))
 					this.successSignUp = true
 					this.setMembers()
@@ -349,6 +366,7 @@ export default {
 			this.displayPasswordModal = true
 		},
 		closePasswordModal() {
+			console.log(this.checkRegenerateDID)
 			if (this.checkRegenerateDID) {
 				this.regenerateUserDID()
 			} else if (this.find !== "true") {

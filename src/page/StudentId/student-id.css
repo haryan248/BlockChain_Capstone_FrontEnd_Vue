@@ -122,9 +122,10 @@
 	margin: 0 auto;
 	margin-top: 10px;
 }
-
+.focus__color {
+	color: #2196f3;
+}
 /*did 모달*/
-
 .did-issued {
 	margin-top: 70px;
 }
