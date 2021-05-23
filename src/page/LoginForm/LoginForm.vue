@@ -217,7 +217,7 @@ export default {
 				if (response.status === 201) {
 					this.successSignUp = true
 					this.showSuccess("회원정보 입력 완료", "회원 정보 입력이 완료되었습니다. \n간편비밀번호를 설정해주세요.")
-					localStorage.setItem("key", response.data.user_key)
+					this.tempKey = response.data.user_key
 					this.setMembers()
 				}
 			} catch (error) {
@@ -240,7 +240,7 @@ export default {
 					{},
 					{
 						params: {
-							key: localStorage.getItem("key"),
+							key: this.tempKey,
 							major: this.selectedGroupedMajor.label,
 							stdnum: this.studentId,
 							name: this.name,
@@ -251,6 +251,7 @@ export default {
 					}
 				)
 				if (response.status === 201) {
+					localStorage.setItem("key", this.tempKey)
 					localStorage.setItem("did", response.data.did)
 					localStorage.removeItem("wrongPassword")
 					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다. \n 잠시후 학생증 페이지로 이동합니다.")
