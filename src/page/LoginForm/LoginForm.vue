@@ -253,7 +253,7 @@ export default {
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
 					localStorage.removeItem("wrongPassword")
-					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
+					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다. \n 잠시후 학생증 페이지로 이동합니다.")
 					setTimeout(() => {
 						this.$router.replace("/")
 					}, 1500)
