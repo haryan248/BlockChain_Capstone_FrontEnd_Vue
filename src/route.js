@@ -76,6 +76,8 @@ export const router = createRouter({
 	history: createWebHistory(),
 	routes,
 })
+
+// 올바른 키인지 확인
 async function authenticationKey() {
 	try {
 		const response = await axios.get("/api/authkey/", { params: { key: localStorage.getItem("key") } })

@@ -140,6 +140,7 @@ export default {
 			this.major = this.members.major
 			this.userImage = this.members.userImage
 		},
+		// user 키 요청
 		async getMember() {
 			const response = await this.$axios.get("/api/members/", { params: { key: localStorage.getItem("key") } })
 			if (response.status === 201) {
@@ -149,13 +150,29 @@ export default {
 				this.userImage = this.members.userImage = response.data.image
 			}
 		},
+		// did 발급 및 회원가입
 		async generateUserDID() {
+			this.loading = true
+			this.loadingText = "학생증을 발급하는 중입니다."
 			try {
-				const response = await this.$axios.post("/api/generatedid/", {}, { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post(
+					"/api/members/",
+					{},
+					{
+						params: {
+							key: localStorage.getItem("key"),
+							major: this.members.major,
+							stdnum: this.members.studentId,
+							name: this.members.name,
+							email: this.members.email,
+							studentId: this.members.studentId,
+							SimplePassword: localStorage.getItem("simplePassword"),
+						},
+					}
+				)
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
-					this.closeDIDModal()
-					this.openStudentModal()
+					localStorage.removeItem("wrongPassword")
 					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
 				}
 			} catch (error) {
@@ -165,6 +182,7 @@ export default {
 					}
 				}
 			}
+			this.loading = false
 		},
 
 		openQRModal() {

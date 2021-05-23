@@ -206,11 +206,11 @@ export default {
 			if (this.find === "true") {
 				this.findAccount()
 			} else {
-				this.signUp()
+				this.getUserKey()
 			}
 		},
-		//회원가입
-		async signUp() {
+		// key 요청
+		async getUserKey() {
 			this.isFirstMember = false
 			try {
 				const response = await this.$axios.get("/api/members/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
@@ -230,7 +230,7 @@ export default {
 				}
 			}
 		},
-		//did 발급
+		//did 발급 및 회원가입
 		async generateUserDID() {
 			this.loading = true
 			this.loadingText = "학생증을 발급하는 중입니다."
