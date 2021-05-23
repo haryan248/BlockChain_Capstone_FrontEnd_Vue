@@ -55,9 +55,9 @@
 					<AccordionTab header="백업하기">
 						<div class="accordian-item" @click="openBackupModal">간편비밀번호 백업</div>
 					</AccordionTab>
-					<AccordionTab header="관리자 모드">
+					<AccordionTab header="관리자모드">
 						<div class="dark__mode-button">
-							<div class="item-content">관리자 모드</div>
+							<div class="item-content">관리자모드</div>
 							<InputSwitch v-model="adminChecked" @click="confirmAdminMode" />
 						</div>
 					</AccordionTab>
