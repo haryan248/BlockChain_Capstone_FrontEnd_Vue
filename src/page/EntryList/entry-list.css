@@ -37,10 +37,25 @@
 }
 
 .entryuser-list__content {
-	overflow: scroll;
+	overflow-y: auto;
 	box-sizing: border-box;
-	-ms-overflow-style: none;
 }
+/* 스크롤바 custom */
+.entryuser-list__content::-webkit-scrollbar {
+	width: 10px;
+}
+.entryuser-list__content::-webkit-scrollbar-thumb {
+	background-color: #607d8b;
+	border-radius: 5px;
+	background-clip: padding-box;
+	border: 2px solid transparent;
+}
+.entryuser-list__content::-webkit-scrollbar-track {
+	background-color: #cbd5e0;
+	border-radius: 3px;
+	box-shadow: inset 0px 0px 5px white;
+}
+
 .entryuser-list__item {
 	display: flex;
 	align-items: center;
