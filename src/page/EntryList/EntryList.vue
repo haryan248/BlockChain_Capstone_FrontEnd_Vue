@@ -7,13 +7,8 @@
 				<div class="entry__admin">
 					<HeaderSection class="entry_admin-headersection" :viewDate="false" :title="building + ' 강의동' + ' (' + buildingName + ')'" :subtitle="'출입자 명단을 확인해보세요.'" :darkModeState="darkModeState" />
 					<div class="filter__section">
-						<Button
-							label="날짜순"
-							class="p-button-sm p-button-outlined filter__button"
-							:class="{ dark__mode: darkModeState }"
-							:icon="[{ 'pi-sort-up': selectOrder === 'Desc' }, { 'pi-sort-down': selectOrder === 'Asc' }, 'pi']"
-							@click="orderDate"
-						/>
+						<Button v-if="selectOrder === 'Desc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-up" @click="orderDate" />
+						<Button v-if="selectOrder === 'Asc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-down" @click="orderDate" />
 					</div>
 
 					<div class="entryuser__container" :class="{ dark__mode: darkModeState }">

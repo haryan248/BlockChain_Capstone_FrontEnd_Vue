@@ -197,7 +197,6 @@ export default {
 					this.attributes.push(this.today)
 					this.attributes = [...this.attributes]
 					this.selectDate[0].day = this.curYear + "-" + this.curMonth + "-" + this.curDay
-
 					let j = 0
 					this.attributes.forEach((item) => {
 						if (this.selectDate[0].day === item.compareDate) {

@@ -64,7 +64,6 @@
 .entry-list__content {
 	overflow: scroll;
 	box-sizing: border-box;
-	-ms-overflow-style: none;
 }
 .entry-list__item {
 	display: flex;
@@ -77,7 +76,6 @@
 .entry-empty__list {
 	overflow: scroll;
 	box-sizing: border-box;
-	-ms-overflow-style: none;
 }
 .empty-list__item {
 	display: flex;
