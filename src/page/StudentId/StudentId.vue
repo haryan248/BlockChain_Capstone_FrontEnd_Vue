@@ -1,6 +1,12 @@
 <template>
 	<div>
 		<Header :title="'U-PASS'" @confirmSetting="confirmSetting" />
+		<div v-if="loading" class="loading__overlay-loginForm">
+			<div class="loading__progressbar">
+				<h5 class="loginForm_loading">학생증을 발급하는 중입니다.</h5>
+				<ProgressBar mode="indeterminate" style="height: .5em" />
+			</div>
+		</div>
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div>
 				<div class="student-content">
@@ -112,6 +118,7 @@ export default {
 			members: JSON.parse(localStorage.getItem("members")),
 			successPassword: false,
 			darkModeState: this.$shared.checkDarkMode(),
+			loading: false,
 		}
 	},
 	created() {
@@ -174,6 +181,8 @@ export default {
 					localStorage.setItem("did", response.data.did)
 					localStorage.removeItem("wrongPassword")
 					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다.")
+					this.closeDIDModal()
+					this.openStudentModal()
 				}
 			} catch (error) {
 				if (error.response) {
