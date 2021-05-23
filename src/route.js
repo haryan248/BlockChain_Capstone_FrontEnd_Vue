@@ -10,6 +10,8 @@ import Reservation from "./page/Reservation/Reservation.vue"
 import Calendar from "./page/Calendar/Calendar.vue"
 import EntryList from "./page/EntryList/EntryList.vue"
 import AdminSetting from "./page/AdminSetting/AdminSetting.vue"
+import axios from "axios"
+
 const routes = [
 	{
 		path: "/",
@@ -74,6 +76,19 @@ export const router = createRouter({
 	history: createWebHistory(),
 	routes,
 })
+async function authenticationKey() {
+	try {
+		const response = await axios.get("/api/authkey/", { params: { key: localStorage.getItem("key") } })
+		if (response.status === 201) {
+			if (response.data.msg === "This is the correct key") return true
+		}
+	} catch (error) {
+		if (error.response.data.msg === "Invalid key") {
+			localStorage.removeItem("key")
+			return false
+		}
+	}
+}
 
 // 라우터 이동전에 로그인 유효성 검사
 router.beforeEach((to, from, next) => {
@@ -91,6 +106,7 @@ router.beforeEach((to, from, next) => {
 		next()
 		//로그인, 입력창 아닐때
 	} else {
+		authenticationKey()
 		if (localStorage.getItem("key") === null) {
 			//로그인 상태(key 없으면)가 아니면 로그인 페이지로 이동시킴
 			next({ path: "/login" })

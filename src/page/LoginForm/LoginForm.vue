@@ -212,12 +212,22 @@ export default {
 		//회원가입
 		async signUp() {
 			this.isFirstMember = false
-			const response = await this.$axios.get("/api/members/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
-			if (response.status === 201) {
-				this.successSignUp = true
-				this.showSuccess("회원정보 입력 완료", "회원 정보 입력이 완료되었습니다. \n간편비밀번호를 설정해주세요.")
-				localStorage.setItem("key", response.data.user_key)
-				this.setMembers()
+			try {
+				const response = await this.$axios.get("/api/members/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
+				if (response.status === 201) {
+					this.successSignUp = true
+					this.showSuccess("회원정보 입력 완료", "회원 정보 입력이 완료되었습니다. \n간편비밀번호를 설정해주세요.")
+					localStorage.setItem("key", response.data.user_key)
+					this.setMembers()
+				}
+			} catch (error) {
+				if (error.response.data.msg === "Email is already exists") {
+					localStorage.removeItem("key")
+					this.showError("회원가입 오류", "이미 등록된 이메일입니다.\n잠시후 메인 화면으로 이동합니다.")
+					setTimeout(() => {
+						this.$router.replace("/login")
+					}, 2000)
+				}
 			}
 		},
 		//did 발급
@@ -250,13 +260,7 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
-					if (error.response.data.msg === "Email is already exists") {
-						localStorage.removeItem("key")
-						this.showError("회원가입 오류", "이미 등록된 이메일입니다.\n잠시후 메인 화면으로 이동합니다.")
-						setTimeout(() => {
-							this.$router.replace("/login")
-						}, 2000)
-					} else if (error.response.data.msg === "DID 발급 오류") {
+					if (error.response.data.msg === "DID 발급 오류") {
 						this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
 					}
 				}
@@ -319,7 +323,7 @@ export default {
 		//회원 찾기
 		async findAccount() {
 			try {
-				const response = await this.$axios.post("/api/findmyinfo/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
+				const response = await this.$axios.get("/api/findmyinfo/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
 				if (response.status === 201) {
 					this.showSuccess("회원 정보 입력 성공", "올바른 회원입니다. \n간편 비밀번호를 입력해주세요. ")
 					this.tempKey = response.data.user_key
