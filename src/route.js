@@ -108,8 +108,8 @@ router.beforeEach((to, from, next) => {
 		next()
 		//로그인, 입력창 아닐때
 	} else {
-		authenticationKey()
-		if (localStorage.getItem("key") === null) {
+		if (localStorage.getItem !== null) authenticationKey()
+		else if (localStorage.getItem("key") === null) {
 			//로그인 상태(key 없으면)가 아니면 로그인 페이지로 이동시킴
 			next({ path: "/login" })
 		} else {
