@@ -48,6 +48,7 @@ import ConfirmationService from "primevue/confirmationservice"
 import ConfirmDialog from "primevue/confirmdialog"
 import Checkbox from "primevue/checkbox"
 import RadioButton from "primevue/radiobutton"
+import Paginator from "primevue/paginator"
 
 // Create Vue Instance
 const app = createApp(App)
@@ -81,6 +82,7 @@ app.component("Toast", Toast)
 app.component("ConfirmDialog", ConfirmDialog)
 app.component("Checkbox", Checkbox)
 app.component("RadioButton", RadioButton)
+app.component("Paginator", Paginator)
 
 app.component("ProgressBar", ProgressBar)
 app.component("Calendar", Calendar)
