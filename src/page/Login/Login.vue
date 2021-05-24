@@ -1,5 +1,6 @@
 <template>
 	<div :class="[{ 'home-container--loading': loading }, { dark__mode: darkModeState }, { 'home-container--loading-dark': darkModeState && loading }]" class="home-container">
+		<!-- Main screen modal -->
 		<Dialog class="login" v-if="!loading" :showHeader="false" position="bottom" v-model:visible="displayBasic" :style="{ width: '80vw' }">
 			<div class="login-box">
 				<div class="login-card">
@@ -14,10 +15,12 @@
 				</div>
 			</div>
 		</Dialog>
+		<!-- Loading screen -->
 		<div v-else class="loading-indicator">
 			<h5 class="login_loading">잠시만 기다려주세요.</h5>
 			<ProgressBar mode="indeterminate" style="height: .5em" />
 		</div>
+		<!-- UPASS info modal -->
 		<Dialog class="upass__info-modal" header="" :showHeader="false" v-model:visible="displayInfoModal" :style="{ width: '80vw' }" :modal="true">
 			<p class="upass-info__detail">
 				<br /><span class="upass-focus">U: University</span> <br />
@@ -44,13 +47,11 @@ export default {
 	name: "Login",
 	data() {
 		return {
-			signedIn: false,
 			userName: null,
 			userEmail: null,
 			userImage: null,
 			currentUser: null,
 			isFirstMember: null,
-			startLogin: false,
 			loading: false,
 			errorTitle: "",
 			displayBasic: false,
@@ -83,69 +84,45 @@ export default {
 			const profile = GoogleUser.getBasicProfile()
 			const email = profile.getEmail()
 
-			//경기대 이메일이 아닐시 로그아웃
+			// 경기대 이메일이 아닐시 로그아웃
 			if (email.split("@")[1] !== "kyonggi.ac.kr") {
 				this.errorTitle = "경기대 이메일(kyonggi.ac.kr)로<br> 로그인/회원가입 해주세요."
 				this.loading = false
 				await this.$gAuth.signOut()
 			} else {
-				//구글 로그인시 기본 정보 가져오기
+				// 구글 로그인시 기본 정보 가져오기
 				this.userName = profile.getName()
 				this.userImage = profile.getImageUrl()
 				this.userEmail = email
 				this.isFirstMember = localStorage.getItem("key")
-				//처음 가입시 회원가입, 아닐시 바로 학생증 창으로 이동
+				// 처음 가입시 회원가입, 아닐시 바로 학생증 창으로 이동
 				if (this.isFirstMember !== null) {
 					this.$router.push("/")
 				} else {
-					//처음 가입시 로그인 폼으로 이동
+					// 처음 가입시 로그인 폼으로 이동
 					if (sessionStorage.getItem("isFindAccount") !== null) {
 						// 회원찾기 시
 						this.$router.replace({ name: "LoginForm", params: { name: this.userName, imgUrl: this.userImage, email: this.userEmail, find: true } })
 						sessionStorage.removeItem("isFindAccount")
 					} else {
-						//회원가입 시
+						// 회원가입 시
 						this.$router.replace({ name: "LoginForm", params: { name: this.userName, imgUrl: this.userImage, email: this.userEmail } })
 					}
 				}
 				sessionStorage.removeItem("isLogin")
 			}
 		},
-		//로그아웃 후 로그인 시
-		async findAccount() {
-			try {
-				const response = await this.$axios.post("/api/findmyinfo/", {}, { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.members.major, stdnum: this.members.studentId, name: this.members.name, email: this.members.email } })
-				if (response.status === 201) {
-					localStorage.setItem("key", response.data.user_key)
-					localStorage.removeItem("hasLogout")
-					setTimeout(() => {
-						this.$router.replace("/")
-					}, 2000)
-				}
-			} catch (error) {
-				if (error.response) {
-					if (error.response.data.msg === "가입되지 않은 stdnum입니다") {
-						this.showError("회원 찾기 오류", "가입된 정보가 없습니다. \n잠시후 메인 화면으로 돌아갑니다.")
-						setTimeout(() => {
-							this.$router.replace("/login")
-						}, 2000)
-					} else if (error.response.data.msg === "email과 stdnum이 일치하지 않습니다.") {
-						this.showError("회원 찾기 오류", "해당되는 학번이 없습니다. \n확인 후 다시 입력해주세요.")
-						this.studentId = ""
-						this.$refs.studentId.$el.focus()
-					}
-				}
-			}
-		},
-		//처음에 get으로 데이터를 받아오고, 없으면 회원가입 있으면 로그인 진행
+		// 처음에 get으로 데이터를 받아오고, 없으면 회원가입 있으면 로그인 진행
 		async handleLogin() {
 			sessionStorage.setItem("isLogin", true)
 			await this.$gAuth.signIn()
 		},
+		// 회원 찾기 창 이동
 		async goToFindForm() {
 			sessionStorage.setItem("isFindAccount", true)
 			await this.$gAuth.signIn()
 		},
+		// UPASS info 모달 토글 함수
 		openInfoModal() {
 			this.displayInfoModal = true
 		},

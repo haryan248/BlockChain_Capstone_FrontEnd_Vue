@@ -8,15 +8,13 @@
 						<div class="close__button">
 							<Button icon="pi pi-times" @click="goBack" class="p-button-lg" alt="switch camera" />
 						</div>
-						<!-- 카메라 전환 -->
-
+						<!-- Camera switch -->
 						<button class="conver__button" type="button" @click="switchCamera"></button>
 						<qr-stream :camera="camera" @decode="onDecode" class="mb" @init="onInit">
-							<!-- 로딩화면 -->
+							<!-- Loading screen -->
 							<div class="loading-indicator-qr" v-if="loading">
 								잠시만 기다려주세요.
 								<ProgressBar mode="indeterminate" style="height: .5em" />
-								<!-- <ProgressSpinner  /> -->
 							</div>
 							<div v-if="validationSuccess" class="validation-success">
 								{{ result }}
@@ -32,13 +30,10 @@
 							<div v-else style="color: #ff4b4b;" class="frame"></div>
 						</qr-stream>
 					</div>
-					<!-- qr 인증 되었을때 -->
-					<!-- <div v-show="showScanConfirmation" class="scan-confirmation">{{ result }}</div> -->
 				</div>
 			</div>
 		</div>
 	</div>
-	<!-- <BottomNav /> -->
 </template>
 <script>
 import { QrStream } from "vue3-qr-reader"
@@ -66,6 +61,7 @@ export default {
 		},
 	},
 	methods: {
+		// qr 디코드
 		async onDecode(result) {
 			this.result = result
 			this.turnCameraOff()
@@ -80,6 +76,7 @@ export default {
 			await this.timeout(2000)
 			this.turnCameraOn()
 		},
+		// 인증 사운드
 		play(sound) {
 			if (sound) {
 				var audio = new Audio(sound)
@@ -87,22 +84,20 @@ export default {
 				console.log(audio.play())
 			}
 		},
-
 		resetValidationState() {
 			this.isValid = undefined
 		},
 		turnCameraOn() {
 			this.camera = "front"
 		},
-
 		turnCameraOff() {
 			this.camera = "off"
 		},
-
+		// 뒤로가기 버튼
 		goBack() {
 			this.$router.go(-1)
 		},
-		//카메라 전환
+		// 카메라 전환
 		switchCamera() {
 			console.log(this.camera)
 			switch (this.camera) {
@@ -183,16 +178,17 @@ export default {
 					this.error = "ERROR: Stream API is not supported in this browser"
 				}
 			} finally {
-				// this.showScanConfirmation = this.camera === "off"
 				this.loading = false
 				this.resetValidationState()
 			}
 		},
-		showError(summaryText, detailText) {
-			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
-		},
+		// 성공 토스트 메시지
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
+		},
+		// 에러 토스트 메시지
+		showError(summaryText, detailText) {
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
 		},
 	},
 }

@@ -4,6 +4,7 @@
 			<div class="calendar__content">
 				<Header :title="'캘린더'" @confirmSetting="confirmSetting" />
 				<v-date-picker ref="calendar" :attributes="attributes" :is-dark="darkModeState" @dayclick="onDayClick" v-model="selectDate.date" @update:to-page="toPage" is-expanded />
+				<!-- Loading screen -->
 				<div v-if="loading" class="loading__overlay">
 					<div class="loading__progressbar">
 						<h5 class="calendar_loading">출입 여부를 불러오는 중입니다.</h5>
@@ -16,14 +17,17 @@
 							<div class="schedule__date">
 								{{ item.day }}
 							</div>
+							<!-- entry download button -->
 							<div class="refresh__button">
 								<h4 class="load__text">{{ loadMonth }}월 출입 기록</h4>
 								<Button icon="pi pi-download" @click="getEntry" class="border__none-refresh p-button-lg p-button-rounded p-button-text p-button-secondary" />
 							</div>
+							<!-- kyonggi university map button -->
 							<div class="map__button">
 								<h4 class="map__text">경기대학교 지도</h4>
 								<Button icon="pi pi-map" @click="openDisplayMap" class="border__none-map p-button-lg p-button-rounded p-button-text p-button-secondary" />
 							</div>
+							<!-- before check entrylist -->
 							<div v-if="loading" class="entry-empty__list" :class="{ dark__mode: darkModeState }">
 								<li class="list__item">
 									<div class="empty-list__item">
@@ -35,6 +39,7 @@
 									</div>
 								</li>
 							</div>
+							<!-- no entrylist -->
 							<div v-else-if="item.attributes.length === 0" class="entry-empty__list" :class="{ dark__mode: darkModeState }">
 								<li class="list__item">
 									<div class="empty-list__item">
@@ -46,6 +51,7 @@
 									</div>
 								</li>
 							</div>
+							<!-- has entrylist -->
 							<div v-else class="entry-list__content" :class="{ dark__mode: darkModeState }">
 								<div v-for="(attribute, index) in item.attributes" :key="index">
 									<li class="list__item">
@@ -63,6 +69,7 @@
 						</div>
 					</div>
 				</div>
+				<!-- kyonggi map modal -->
 				<Dialog class="kyonggi__map-modal" :class="{ dark__mode: darkModeState }" :showHeader="false" v-model:visible="displayMapModal" :style="{ width: '90vw' }" :modal="true">
 					<p class="kyonggi__map-detail">
 						<iframe src="https://m.map.naver.com/search2/site.naver?query=%EA%B2%BD%EA%B8%B0%EB%8C%80&sm=hty&style=v5&code=11591483#/map" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen=""></iframe>
@@ -131,7 +138,7 @@ export default {
 		confirmSetting() {
 			this.darkModeState = this.$shared.checkDarkMode()
 		},
-		//초기 데이트 설정
+		// 초기 데이트 설정
 		setDate() {
 			this.curYear = this.today.dates.getFullYear()
 			this.curMonth = this.today.dates.getMonth() + 1
@@ -139,7 +146,7 @@ export default {
 			this.curDay = this.today.dates.getDate()
 			this.curDay = this.curDay >= 10 ? this.curDay : "0" + this.curDay
 		},
-		//달력 넘길때
+		// 달력 넘길 때 함수
 		toPage(page) {
 			this.loadMonth = page.month
 			page.month = page.month >= 10 ? page.month : "0" + page.month
@@ -147,7 +154,7 @@ export default {
 			this.curMonth = page.month
 			this.curDay = "01"
 		},
-		//날짜 클릭 시
+		// 날짜 클릭 시 함수
 		onDayClick(day) {
 			this.curMonth = day.month
 			this.curMonth = this.curMonth >= 10 ? this.curMonth : "0" + this.curMonth
@@ -163,7 +170,7 @@ export default {
 				}
 			})
 		},
-		//강의동에 따른 건물 이름 매핑
+		// 강의동에 따른 건물 이름 매핑
 		checkBuildingName(building, index) {
 			switch (Number(building)) {
 				case 1:
@@ -195,8 +202,7 @@ export default {
 					return this.buildingName[index]
 			}
 		},
-		//출입 여부 받아오기
-
+		// 출입 여부 받아오기
 		async getEntry() {
 			this.loading = true
 			try {
@@ -228,6 +234,7 @@ export default {
 			this.loading = false
 		},
 
+		// 경기대학교 지도 토글 함수
 		openDisplayMap() {
 			this.displayMapModal = true
 		},
@@ -248,7 +255,6 @@ export default {
 .vc-day-content:hover {
 	background-color: transparent !important;
 }
-
 .kyonggi__map-modal .p-dialog-content {
 	border-radius: 20px 20px 0 0;
 	padding: 15px;

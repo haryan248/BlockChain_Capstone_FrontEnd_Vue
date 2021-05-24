@@ -1,14 +1,12 @@
 .card__content {
 	padding-top: 60px;
 	padding-bottom: 60px;
-	/* background-color: #5582f8; */
 }
 .card__wrapper {
 	padding-top: 30px;
 	padding-bottom: 30px;
 }
 .card__content .item__title {
-	/* padding: 0 30px 20px; */
 	color: #607d8b;
 	font-size: 24px;
 	font-weight: 900;
@@ -31,14 +29,11 @@
 	align-items: center;
 	justify-content: space-between;
 	padding-top: 10px;
-	/* padding-left: 20px;
-	padding-right: 20px; */
 	padding-bottom: 10px;
 }
 .card__menu .tab__list {
 	position: relative;
 }
-
 .card__button {
 	position: absolute;
 	top: 57px;
@@ -61,7 +56,6 @@
 	margin-bottom: 50px;
 	opacity: 0.5;
 	background-color: #13405b;
-	/* background-color: #6dc3f0; */
 	color: #fff;
 }
 .credit-card__item.type1 {
@@ -73,7 +67,6 @@
 .credit-card__item.type3 {
 	background-color: #7aa0da;
 }
-
 .card-delete__button {
 	margin: 0 auto;
 	margin-top: 10px;
@@ -83,11 +76,9 @@
 }
 .swiper-slide-active .credit-card__item {
 	box-shadow: 0px 20px 16px 6px rgb(0 0 0 / 13%);
-
 	height: 210px;
 	opacity: 1;
 }
-
 /* 다크 모드 css */
 .card__menu.dark__mode .item__title {
 	color: #ffffff;

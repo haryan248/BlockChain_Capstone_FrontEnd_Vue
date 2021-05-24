@@ -1,12 +1,14 @@
 <template>
 	<div class="password-container">
 		<div class="password-content" :class="{ dark__mode: darkModeState }">
+			<!-- password header title -->
 			<h1 class="password-header">{{ title }}</h1>
+			<!-- password info text -->
 			<div v-if="isResetting" class="password-help" v-html="resettingText"></div>
 			<div v-else class="password-help">숫자 6자리 + 영문자 1자리</div>
 
 			<div class="password-info">
-				<!-- 비밀번호 입력시 뜨는 화면 -->
+				<!-- Password number icon -->
 				<div class="password-filter" v-for="(item, index) in simplePasswd.length" :key="index" style="display:inline-block">
 					<Button v-if="index === 6" icon="pi pi-plus" class="p-button-rounded p-button-secondary p-button-text border-none" />
 					<Button v-else icon="pi pi-circle-on" class="p-button-rounded p-button-secondary p-button-text border-none" />
@@ -17,11 +19,11 @@
 				</div>
 				<div class="password__wrong" v-html="simplePasswdText"></div>
 
-				<!-- 비밀번호 입력창 -->
+				<!-- Password input screen -->
 				<div class="password-inputter">
 					<div class="password-wrapper">
 						<div class="inputter__flex">
-							<!-- 숫자 자판 -->
+							<!-- number keypad -->
 							<div v-if="simplePasswd.length !== 6">
 								<button v-for="(item, index) in passwdArray" :key="index" ref="passwdButton" :class="{ 'num-button__flex--active': touchstart[index] }" class="num-button__flex spread-effect fantasy-font__2_3rem">
 									<button v-if="index === 9" class="num-button__flex spread-effect fantasy-font__2_3rem">
@@ -36,7 +38,7 @@
 									←
 								</button>
 							</div>
-							<!-- 영어 자판 -->
+							<!-- alphabet keypad -->
 							<div v-else>
 								<button v-for="(item, index) in alphaPasswdArray" :key="index" ref="passwdButton" :class="{ 'num-button__flex--active': touchAlphaStart[index] }" class="num-button__flex spread-effect fantasy-font__2_3rem--alpha">
 									<button v-if="index === 21" class="num-button__flex spread-effect 1">
@@ -55,7 +57,7 @@
 					</div>
 				</div>
 			</div>
-			<!-- 비밀번호 경고 문구 -->
+			<!-- password warning text -->
 			<div v-if="isSetting || isResetting" class="warning-info">
 				<i class="pi pi-shield" style="fontSize: 6px"></i>
 				<div class="text">간편비밀번호를 잊어버리면 찾을 수 없으니 주의해주시기 바랍니다.</div>
@@ -86,11 +88,13 @@ export default {
 		}
 	},
 	created() {
+		// 자판 무작위 배열
 		this.shuffle(this.passwdArray)
 		this.genCharArray("a", "z")
 		this.shuffle(this.alphaPasswdArray)
 	},
 	mounted() {
+		// 터치 이벤트 등록
 		document.addEventListener("touchstart", (event) => {
 			this.touchStartListener(event)
 		})
@@ -139,16 +143,15 @@ export default {
 		checkInvisibleNum(num) {
 			this.tempNum = num
 		},
+		// 비밀번호 설정
 		setPasswd(num) {
 			if (this.simplePasswd.length !== this.passwdMaxLength) {
 				this.simplePasswd = this.simplePasswd + String(num)
 			}
 		},
+		//비밀번호 지우기
 		erasePasswd() {
 			this.simplePasswd = this.simplePasswd.slice(0, this.simplePasswd.length === 0 ? 0 : this.simplePasswd.length - 1)
-		},
-		findSimplePasswd() {
-			console.log(find)
 		},
 	},
 	watch: {

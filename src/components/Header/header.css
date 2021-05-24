@@ -7,13 +7,11 @@
 	justify-content: space-between;
 	height: 60px;
 }
-
 .top-nav,
 .top-nav .nav__button {
 	display: flex;
 	align-items: center;
 }
-
 .top-nav .nav__button {
 	width: 60px;
 	height: 100%;
@@ -26,12 +24,10 @@
 	position: absolute;
 	right: 5%;
 }
-
 .top-nav .nav__login {
 	position: absolute;
 	right: 20%;
 }
-
 .top-nav .nav__icon {
 	display: block;
 	overflow: hidden;
@@ -40,7 +36,6 @@
 	color: transparent;
 	background-size: 100%;
 }
-
 .top-nav--active {
 	background-color: #fff;
 	border-bottom: 1px solid #e3e3e3;
@@ -48,7 +43,6 @@
 .top-nav .nav__button--active {
 	color: #5582f8;
 }
-
 .header__nav {
 	width: 60%;
 	position: absolute;
@@ -61,11 +55,9 @@
 	transition: all 0.1s;
 	opacity: 0;
 }
-
 .top-nav--active .header__nav {
 	opacity: 1;
 }
-
 .header__nav .header__title2 {
 	font-size: 16px;
 	font-weight: bold;
@@ -77,7 +69,6 @@
 	background-repeat: no-repeat;
 	width: 100px;
 }
-
 /*다크 모드 css*/
 .top-nav--active.dark__mode {
 	background-color: #333536;

@@ -1,7 +1,6 @@
 .student-content {
 	display: flex;
 	flex-direction: column;
-	/* align-items: center; */
 	height: 100vh;
 	margin-top: -60px;
 	padding: 60px 10px 0;
@@ -21,7 +20,6 @@
 	color: #000;
 	font-size: 12px;
 }
-
 .student-id__button {
 	display: flex;
 	align-items: center;
@@ -36,23 +34,17 @@
 }
 .student-info {
 	height: 100%;
-	/* align-items: center; */
 	text-align: center;
 }
 .student-card {
 	margin: auto;
 	display: flex;
 	flex-direction: column;
-	/* align-items: center;
-	box-sizing: border-box;
-	width: 287px;
-	height: 453px; */
 }
 .student-wrapper {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	/* padding-top: 5vh; */
 	z-index: 1;
 	display: flex;
 	transition-property: transform;
@@ -62,12 +54,8 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	/* min-height: 375px;
-	padding: 42px 20px 20px; */
 	padding-top: 42px;
 	background: #fff;
-	/* box-shadow: 0 0 5px rgba(0, 0, 0, 0.05), 0 5px 20px rgba(0, 0, 0, 0.05);
-	border-radius: 20px; */
 	box-sizing: border-box;
 	flex-shrink: 0;
 	width: 100%;
@@ -79,7 +67,6 @@
 	position: relative;
 }
 .student-card__item .item__univ {
-	/* color: #4a83e5; */
 	text-align: center;
 	font-size: 25px;
 	font-weight: 700;
@@ -89,15 +76,12 @@
 .student-card__item .item__img {
 	margin-top: 10px;
 	margin: 0 auto;
-	/* color: #4a83e5; */
 	margin-bottom: 20px;
 	border-radius: 200px;
 	width: 160px;
 	height: 160px;
 	border: 2px solid #d2d0d0;
-	/* box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.5); */
 }
-
 .student__img {
 	border-radius: 200px;
 	top: 0;
@@ -112,12 +96,10 @@
 .student-card__item .item__detail {
 	margin-top: 10px;
 	font-weight: 600;
-	/* color: #4a83e5; */
 	font-size: 14px;
 	line-height: 20px;
 	letter-spacing: -1px;
 }
-
 .student__button {
 	margin: 0 auto;
 	margin-top: 10px;
@@ -125,16 +107,13 @@
 .focus__color {
 	color: #2196f3;
 }
-/*did 모달*/
 .did-issued {
 	margin-top: 70px;
 }
-
 /* 다크모드 css */
 .student-wrapper .box.dark__mode {
 	background: #333536;
 }
-
 .box.dark__mode .student-card__item {
 	color: #ffffff;
 }

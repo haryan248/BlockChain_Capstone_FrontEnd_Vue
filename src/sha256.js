@@ -197,5 +197,3 @@ function SHA256(s) {
 	return binb2hex(core_sha256(str2binb(s), s.length * chrsz))
 }
 export { SHA256 }
-// 암호화 확인
-// console.log(SHA256("blockchain"))

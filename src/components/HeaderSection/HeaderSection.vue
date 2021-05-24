@@ -1,5 +1,4 @@
 <template>
-	<!-- 각 탭의 타이틀 영역 -->
 	<div class="headersection__info" :class="{ dark__mode: darkModeState }">
 		<h5 class="headerSection__time" v-if="viewDate">{{ currentDate }}</h5>
 		<h1 class="headerSection__title">{{ title }}</h1>
@@ -26,6 +25,7 @@ export default {
 		this.setTime()
 	},
 	methods: {
+		// 현재 시간 설정
 		setTime() {
 			let date = new Date()
 			this.currentDate = date.getFullYear() + "년 " + (date.getMonth() + 1) + "월 " + date.getDate() + "일"

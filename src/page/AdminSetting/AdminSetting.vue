@@ -1,10 +1,10 @@
 <template>
 	<div>
 		<Header :title="'관리자 설정'" @confirmSetting="confirmSetting" />
-
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div class="admin__setting-content">
 				<HeaderSection :title="'강의동 설정'" :subtitle="'강의동을 선택해주세요.'" :darkModeState="darkModeState" />
+				<!-- Lecture building selection screen -->
 				<div class="setting__select" :class="{ dark__mode: darkModeState }">
 					<div class="item__content">
 						<div class="select__list" :class="{ dark__mode: darkModeState }">
@@ -15,12 +15,12 @@
 						</div>
 					</div>
 				</div>
+				<!-- Settings confirmation button -->
 				<div class="setting-confirm__button">
 					<Button label="설정 확인" icon="pi pi-check" iconPos="left" @click="confirmBuilding" />
 				</div>
 			</div>
 		</div>
-
 		<BottomNav :darkModeState="darkModeState" />
 	</div>
 </template>
@@ -92,18 +92,22 @@ export default {
 		}
 	},
 	created() {
+		// 설정되어 있는 강의동 확인
 		if (this.checkBuilding) {
 			this.building = this.selectBuilding[this.checkBuilding - 1]
 		}
 	},
 	methods: {
+		// 다크모드 설정
 		confirmSetting() {
 			this.darkModeState = this.$shared.checkDarkMode()
 		},
+		// 강의동 선택 함수
 		confirmBuilding() {
 			JSON.stringify(localStorage.setItem("building", this.building.key))
 			this.showSuccess("강의동 설정 완료", "선택하신 강의동이 설정되었습니다.")
 		},
+		// 성공 토스트 메시지
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
 		},

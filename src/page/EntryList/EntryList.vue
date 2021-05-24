@@ -1,27 +1,28 @@
 <template>
 	<div>
 		<Header :title="'출입 여부'" @confirmSetting="confirmSetting" />
-
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div>
 				<div class="entry__admin">
 					<HeaderSection class="entry_admin-headersection" :viewDate="false" :title="buildingName" :subtitle="'출입자 명단을 확인해보세요.'" :darkModeState="darkModeState" />
+					<!-- Sort button -->
 					<div class="filter__section">
 						<Button v-if="selectOrder === 'Desc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-up" @click="orderDate" />
 						<Button v-if="selectOrder === 'Asc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-down" @click="orderDate" />
 					</div>
-
 					<div class="entryuser__container" :class="{ dark__mode: darkModeState }">
 						<div class="item__content">
 							<div class="entry__content">
 								<div class="entryuser-list__content" :class="{ dark__mode: darkModeState }">
 									<div v-if="entryList[0].building === ''">
 										<div class="emptyuser-list">
+											<!-- When the lecture building is not selected -->
 											<p v-if="building === null">
 												<i class="pi pi-users" style="fontSize: 2rem"></i>
 												<br /><br />
 												강의동을 <br />먼저 설정해주세요.
 											</p>
+											<!-- When there are no students in the lecture building -->
 											<p v-else>
 												<i class="pi pi-users" style="fontSize: 2rem"></i>
 												<br /><br />
@@ -29,6 +30,7 @@
 											</p>
 										</div>
 									</div>
+									<!-- Screen of students entering the lecture building -->
 									<div v-else v-for="(entryItem, index) in entryList" :key="index">
 										<li class="list__item">
 											<div class="entryuser-list__item">
@@ -47,6 +49,7 @@
 							</div>
 						</div>
 					</div>
+					<!-- Pagination button -->
 					<div class="check__entry-button">
 						<Paginator :class="{ dark__mode: darkModeState }" :rows="10" :pageLinkSize="3" :totalRecords="totalRecords" @page="onPage($event)" />
 					</div>
@@ -86,9 +89,11 @@ export default {
 		this.getEntryListForAdmin()
 	},
 	methods: {
+		// 다크모드 설정
 		confirmSetting() {
 			this.darkModeState = this.$shared.checkDarkMode()
 		},
+		// 선택한 강의동 매핑
 		checkBuilding() {
 			switch (this.building) {
 				case 1:
@@ -149,6 +154,7 @@ export default {
 			}
 			this.getEntryListForAdmin()
 		},
+		// 출입한 학생 리스트에서 클릭시 클립보드 복사
 		copyToClipboard(evt) {
 			const textNode = document.createElement("textarea")
 			textNode.value = "날짜: " + evt.currentTarget.dataset.date + " 시간: " + evt.currentTarget.dataset.time + " 출입 건물: " + evt.currentTarget.dataset.building + " did: " + evt.currentTarget.dataset.did
@@ -162,7 +168,7 @@ export default {
 				this.showError("클립보드 복사 실패", "죄송합니다. \n복사에 실패했습니다.")
 			}
 		},
-		//did 찾기
+		// 출입한 학생 리스트 뽑아오기
 		async getEntryListForAdmin() {
 			this.loading = true
 			try {
@@ -185,11 +191,11 @@ export default {
 			}
 			this.loading = false
 		},
-		// 설정 완료시 띄워주는 toast message
+		// 성공 토스트 메시지
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "info", summary: summaryText, detail: detailText, life: 3000 })
 		},
-		//에러 토스트 메시지
+		// 에러 토스트 메시지
 		showError(summaryText, detailText) {
 			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
 		},
@@ -234,7 +240,6 @@ button.p-button.p-component.p-button-sm.p-button-outlined.filter__button.dark__m
 	background-color: #333536;
 	border: 1px solid #333536;
 }
-
 .p-paginator.p-component.dark__mode {
 	color: #ffffff;
 	background-color: #333536;
@@ -249,7 +254,6 @@ button.p-button.p-component.p-button-sm.p-button-outlined.filter__button.dark__m
 .p-paginator.p-component.dark__mode .p-link:focus {
 	box-shadow: none !important;
 }
-
 .p-paginator.p-component.dark__mode button.p-paginator-page.p-paginator-element.p-link.p-highlight,
 .p-paginator.p-component.dark__mode .p-paginator-page:not(.p-highlight):hover {
 	background: #495057;

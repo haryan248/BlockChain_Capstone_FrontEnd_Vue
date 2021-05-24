@@ -16,15 +16,15 @@ import shared from "./tool/shared.ts"
 // 구글 로그인
 import GAuth from "vue3-google-oauth2"
 
-//calendar 사용
+// calendar 사용
 import VCalendar from "v-calendar"
 import { SetupCalendar, Calendar, DatePicker } from "v-calendar"
 
-//헤더, 푸터 임포트 부분
+// 헤더, 푸터 임포트 부분
 import Header from "./components/Header/Header"
 import BottomNav from "./components/BottomNav/BottomNav"
 
-//primevue 임포트 부분
+// primevue 임포트 부분
 import PrimeVue from "primevue/config"
 import Sidebar from "primevue/sidebar"
 import Button from "primevue/button"
@@ -61,7 +61,7 @@ app.use(VCalendar, {})
 app.component("Header", Header)
 app.component("BottomNav", BottomNav)
 
-//사용할 UI 컴포넌트 추가
+// 사용할 UI 컴포넌트 추가
 app.component("Sidebar", Sidebar)
 app.component("Button", Button)
 app.component("Dialog", Dialog)
@@ -83,12 +83,12 @@ app.component("ConfirmDialog", ConfirmDialog)
 app.component("Checkbox", Checkbox)
 app.component("RadioButton", RadioButton)
 app.component("Paginator", Paginator)
-
 app.component("ProgressBar", ProgressBar)
 app.component("Calendar", Calendar)
 app.component("DatePicker", DatePicker)
 app.component("SetupCalendar", SetupCalendar)
-//구글 로그인
+
+// 구글 로그인
 const gAuthOptions = {
 	clientId: "1022565741938-a0i54ckun7augse5rfte33htdn1kea74.apps.googleusercontent.com",
 	scope: "email profile",
@@ -96,8 +96,9 @@ const gAuthOptions = {
 	ux_mode: "redirect",
 	fetch_basic_profile: true,
 }
+
 app.use(GAuth, gAuthOptions)
-//전역 변수 설정
+// 전역 변수 설정
 app.config.globalProperties.$shared = shared
 app.config.globalProperties.$axios = axios
 app.config.globalProperties.$sha256 = SHA256

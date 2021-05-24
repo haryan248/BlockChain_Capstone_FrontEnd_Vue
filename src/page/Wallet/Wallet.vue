@@ -5,7 +5,6 @@
 			<div>
 				<div class="wallet__content">
 					<HeaderSection :title="'결제'" :subtitle="'간편하게 지갑을 관리하세요.'" :darkModeState="darkModeState" />
-
 					<div class="card__content">
 						<div class="card__menu" :class="{ dark__mode: darkModeState }">
 							<div class="tab__list">
@@ -15,8 +14,8 @@
 								<Button label="+ 카드 추가하기" :class="{ dark__mode: darkModeState }" class="p-button-text p-button-secondary" @click="visibleBottom = true" />
 							</div>
 						</div>
-						<!-- 스와이퍼 영역 -->
-						<!-- 임시 카드 데이터 -->
+						<!-- Swiper section -->
+						<!-- temp card data -->
 						<div class="card__wrapper">
 							<swiper :slides-per-view="1.3" :space-between="10" :centeredSlides="true" :pagination="true" :loop="true">
 								<swiper-slide>
@@ -48,6 +47,7 @@
 						<div class="card-delete__button">
 							<Button label="카드 삭제" class="p-button-danger" icon="pi pi-times" />
 						</div>
+						<!-- Add card screen -->
 						<Sidebar v-model:visible="visibleBottom" :baseZIndex="1000" position="bottom" style="height:30rem">
 							<div class="card">
 								<h3>카드 추가하기</h3>
@@ -102,6 +102,7 @@ export default {
 		return { innerWidth: window.innerWidth, visibleBottom: false, darkModeState: this.$shared.checkDarkMode(), members: JSON.parse(localStorage.getItem("members")) }
 	},
 	methods: {
+		// 다크모드 설정
 		confirmSetting() {
 			this.darkModeState = this.$shared.checkDarkMode()
 		},

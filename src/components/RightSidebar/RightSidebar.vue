@@ -1,5 +1,7 @@
 <template>
+	<!-- confirm dialog -->
 	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }" class="setting_confirm-dialog" />
+	<!-- Student ID reissuance loading screen -->
 	<div v-if="loading" class="loading__overlay-loginForm">
 		<div class="loading__progressbar">
 			<h5 class="loginForm_loading">학생증을 재발급 중입니다.</h5>
@@ -11,7 +13,7 @@
 	</div>
 	<div>
 		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:12.5rem" :class="{ dark__mode: $shared.checkDarkMode() }">
-			<!-- 프로필 화면 -->
+			<!-- profile content -->
 			<div>
 				<div class="blank__content"></div>
 			</div>
@@ -27,7 +29,7 @@
 					<div class="student__email">{{ email }}</div>
 				</div>
 			</div>
-
+			<!-- sidebar setting content -->
 			<div class="sidebar_content">
 				<Accordion v-if="$shared.checkAdminMode()" :class="{ dark__mode: $shared.checkDarkMode() }">
 					<AccordionTab header="다크모드">
@@ -66,16 +68,16 @@
 					</AccordionTab>
 				</Accordion>
 			</div>
-			<!-- 로그아웃 버튼 -->
+			<!-- logout button -->
 			<div class="logout__button">
 				<Button label="로그아웃" class="logout" icon="pi pi-sign-out" @click="confirmLogout" />
 			</div>
 		</Sidebar>
-		<!-- 간편번호 재설정시 띄우는 화면 -->
+		<!-- Simple password reset modal -->
 		<Dialog class="password-modal p-dialog-maximized" :class="[{ dark__mode: $shared.checkDarkMode() }]" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 			<SimplePassword :title="'간편 비밀번호 재설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
-		<!-- 백업 개인동의 모달 -->
+		<!-- Backup personal consent modal -->
 		<Dialog class="password__backup-modal" :class="{ dark__mode: $shared.checkDarkMode() }" :showHeader="false" v-model:visible="displayBackupModal" :style="{ width: '80vw' }" :modal="true">
 			<p class="password__backup-detail">
 				<br />
@@ -136,9 +138,11 @@ export default {
 	},
 	emits: ["confirmSetting"],
 	methods: {
+		// 프로필 설정 화면 이동
 		goToProfile() {
 			window.open("https://myaccount.google.com/u/1/personal-info")
 		},
+		// 개인정보 세팅
 		setMembers() {
 			this.name = this.members.name
 			this.studentId = this.members.studentId
@@ -146,6 +150,7 @@ export default {
 			this.userImage = this.members.userImage
 			this.email = this.members.email
 		},
+		// 다크모드 설정 함수
 		confirmDarkMode() {
 			this.closeVisibleRight()
 			this.$confirm.require({
@@ -174,6 +179,7 @@ export default {
 				},
 			})
 		},
+		// 관리자 모드 설정 함수
 		confirmAdminMode() {
 			this.closeVisibleRight()
 			this.$confirm.require({
@@ -203,6 +209,7 @@ export default {
 				},
 			})
 		},
+		// 로그아웃 확인 함수
 		confirmLogout() {
 			this.closeVisibleRight()
 			this.$confirm.require({
@@ -217,6 +224,7 @@ export default {
 				},
 			})
 		},
+		// 간편 비밀번호 재설정 함수
 		confirmRegenerateDID() {
 			this.closeVisibleRight()
 			this.$confirm.require({
@@ -231,12 +239,14 @@ export default {
 				},
 			})
 		},
+		// 사이드바 모달 토글 함수
 		openVisibleRight() {
 			this.visibleRight = true
 		},
 		closeVisibleRight() {
 			this.visibleRight = false
 		},
+		//백업 모달 토글 함수
 		openBackupModal() {
 			this.closeVisibleRight()
 			this.displayBackupModal = true
@@ -245,7 +255,7 @@ export default {
 			this.privacyError = false
 			this.displayBackupModal = false
 		},
-		// 패스워드 모달 관련 함수
+		// 패스워드 모달 토글 함수
 		openPasswordModal() {
 			this.closeVisibleRight()
 			this.displayPasswordModal = true
@@ -273,7 +283,7 @@ export default {
 			}
 			this.loading = false
 		},
-		//간편비밀번호 백업하기
+		//간편 비밀번호 백업하기
 		async uploadBackup() {
 			if (!this.privacy) {
 				this.privacyError = true
@@ -288,11 +298,11 @@ export default {
 				this.showError("백업 오류", "죄송합니다. \n백업에 오류가 있습니다.")
 			}
 		},
-		// 설정 완료시 띄워주는 toast message
+		// 성공 토스트 메시지
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
 		},
-		//에러 토스트 메시지
+		// 에러 토스트 메시지
 		showError(summaryText, detailText) {
 			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
 		},
@@ -321,7 +331,6 @@ export default {
 .setting_confirm-dialog button.p-dialog-header-icon.p-dialog-header-close.p-link {
 	display: none;
 }
-
 .password__backup-modal .p-dialog-content {
 	border-radius: 20px 20px 0 0;
 }
@@ -352,6 +361,7 @@ export default {
 .p-accordion-header-text {
 	font-size: 14px;
 }
+
 /* 다크모드  css*/
 .p-sidebar.p-component.p-sidebar-right.p-sidebar-active.dark__mode {
 	background: #333536;

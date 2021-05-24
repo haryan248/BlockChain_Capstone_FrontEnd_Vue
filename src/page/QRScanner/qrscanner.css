@@ -3,23 +3,18 @@
 	font-size: 1rem;
 	text-align: center;
 }
-
 .scan-confirmation {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-
 	background-color: rgba(255, 255, 255, 0.8);
-
 	display: flex;
 	flex-flow: row nowrap;
 	justify-content: center;
 }
-
 .qr-content {
 	display: flex;
 	flex-direction: column;
-	/* align-items: center; */
 	height: 100vh;
 	margin-top: -60px;
 	box-sizing: border-box;
@@ -27,7 +22,6 @@
 	margin-right: auto;
 	position: relative;
 	list-style: none;
-	/* z-index: 1; */
 }
 .conver__button {
 	position: absolute;
@@ -73,13 +67,11 @@
 	position: absolute;
 	width: 100%;
 	height: 100%;
-
 	background-color: rgba(255, 255, 255, 0.8);
 	text-align: center;
 	font-weight: bold;
 	font-size: 1.4rem;
 	padding: 10px;
-
 	display: flex;
 	flex-flow: column nowrap;
 	justify-content: center;
@@ -90,10 +82,7 @@
 .validation-failure {
 	color: red;
 }
-
 .camera-turn {
-	/* background-image: url("../../assets/camera.png"); */
-	/* background: #2196f3; */
 	background-position: center;
 	background-repeat: no-repeat;
 	width: 100%;
@@ -104,7 +93,6 @@
 	display: block;
 	width: 45px;
 	height: 45px;
-	/* margin-right: 16px; */
 	background-color: #4a83e5;
 	border: 1px solid #4a83e5;
 	border-radius: 3px;
@@ -112,7 +100,6 @@
 }
 .conver__button::before {
 	background-image: url("../../assets/camera2.png");
-
 	content: "";
 	display: block;
 	width: 24px;

@@ -1,36 +1,15 @@
 .login-box {
-	/* position: absolute;
-	top: -525%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	padding: 20px;
-	min-width: 300px;
-	box-shadow: -1px 13px 20px 3px rgb(0 0 0 / 13%);
-	border-radius: 20px;
-	background-color: #fff;
-	min-height: 300px; */
 	padding-top: 44px;
 	padding-bottom: 32px;
-}
-.login-card {
-	/* margin: 0;
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	width: 100%;
-	padding: 20px; */
 }
 .login_loading {
 	text-align: center;
 	font-size: 20px;
-	/* color: #ffffff; */
 	margin-bottom: 20px;
 }
 .login__button {
 	align-items: center;
 }
-
 .major-invalid {
 	border-color: #f44336;
 }
@@ -61,13 +40,11 @@
 	left: 50%;
 	transform: translate(-50%, -50%);
 }
-
 .upass__button-info {
 	color: black !important;
 	text-align: right;
 	font-size: 15px;
 }
-
 .upass-info__detail {
 	text-align: center;
 	font-weight: 200;
@@ -77,7 +54,6 @@
 	font-size: 15.5px;
 	font-weight: bold;
 }
-
 /* 다크모드 css */
 .home-container.dark__mode {
 	background-color: #333536;
