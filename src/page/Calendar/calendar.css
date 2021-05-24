@@ -198,6 +198,7 @@
 }
 .schedule__content.dark__mode .schedule__date,
 .schedule__content.dark__mode .load__text,
+.schedule__content.dark__mode .map__text,
 .entry-list__content.dark__mode .entry__time,
 .entry-list__content.dark__mode .class__room,
 .entry-empty__list.dark__mode .empty__desc {

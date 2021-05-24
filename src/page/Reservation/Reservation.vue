@@ -54,17 +54,20 @@
 			</div>
 		</div>
 	</div>
-	<BottomNav />
+	<BottomNav :darkModeState="darkModeState" />
 </template>
 <script>
 export default {
 	name: "Reservation",
 	components: {},
 	data() {
-		return { errors: [], o: [], selectedSeat: null, rows: 12, cols: 7, seats: [] }
+		return { errors: [], o: [], selectedSeat: null, rows: 12, cols: 7, seats: [], darkModeState: this.$shared.checkDarkMode() }
 	},
 	computed: {},
 	methods: {
+		confirmSetting() {
+			this.darkModeState = this.$shared.checkDarkMode()
+		},
 		getSeat(r, c) {
 			for (let i = 0; i < this.seats.length; ++i) {
 				if (this.seats[i].position.r == r && this.seats[i].position.c == c) {

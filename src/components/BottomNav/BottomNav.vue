@@ -24,7 +24,13 @@
 				/>
 			</router-link>
 			<router-link to="/reservation" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.reservation }">
-				<Button label="예약" iconPos="top" icon="pi pi-ticket" class="p-button-text p-button-secondary border-none p-button-font--size" :class="{ 'p-button-text--active': $route.path === path.reservation }" />
+				<Button
+					label="예약"
+					iconPos="top"
+					icon="pi pi-ticket"
+					class="p-button-text p-button-secondary border-none p-button-font--size"
+					:class="[{ 'p-button-text--active': $route.path === path.reservation }, { dark__mode: darkModeState }]"
+				/>
 			</router-link>
 			<router-link v-if="!adminModeState" to="/calendar" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.calendar }">
 				<Button
