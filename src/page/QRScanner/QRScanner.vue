@@ -96,8 +96,9 @@ export default {
 		turnCameraOff() {
 			this.camera = "off"
 		},
-		// 뒤로가기 버튼
+		// 뒤로가기 버튼 클릭시 카메라 끄고 이동
 		goBack() {
+			this.turnCameraOff()
 			this.$router.go(-1)
 		},
 		// 카메라 전환
