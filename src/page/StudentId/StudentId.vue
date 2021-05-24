@@ -98,7 +98,9 @@ export default {
 			this.displayPasswordModal = true
 		},
 		closePasswordModal() {
-			this.openQRModal()
+			setTimeout(() => {
+				this.openQRModal()
+			}, 100)
 			this.displayPasswordModal = false
 		},
 		//학생증 모달
