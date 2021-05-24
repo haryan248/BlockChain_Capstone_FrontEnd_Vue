@@ -31,8 +31,8 @@
 }
 .close__button {
 	position: absolute;
-	top: 40px;
-	left: 32px;
+	top: 30px;
+	left: 25px;
 	z-index: 10;
 }
 .qr-stream-wrapper {
@@ -49,38 +49,107 @@
 	margin: auto;
 }
 .frame {
-	border-style: dashed;
-	border-width: 3px;
-	border-color: red;
-	height: 300px;
-	width: 300px;
+	height: 300px !important;
+	width: 300px !important;
 	position: absolute;
 	top: 0px;
 	bottom: 0px;
 	right: 0px;
 	left: 0px;
 	margin: auto;
+	color: #ff4b4b;
 }
+.frame .center__box {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.frame .left_top-box {
+	position: absolute;
+	border-style: solid;
+	border-width: 5px;
+	border-bottom: none;
+	border-right: none;
+	border-top-left-radius: 10px;
+	width: 40px;
+	height: 40px;
+}
+.frame .right_top-box {
+	position: absolute;
+	right: 0;
+	border-style: solid;
+	border-width: 5px;
+	border-bottom: none;
+	border-left: none;
+	border-top-right-radius: 10px;
+	width: 40px;
+	height: 40px;
+}
+.frame .left_bottom-box {
+	position: absolute;
+	bottom: 0;
+	border-style: solid;
+	border-width: 5px;
+	border-top: none;
+	border-right: none;
+	border-bottom-left-radius: 10px;
+	width: 40px;
+	height: 40px;
+}
+.frame .right_bottom-box {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	border-style: solid;
+	border-width: 5px;
+	border-top: none;
+	border-left: none;
+	border-bottom-right-radius: 10px;
+	width: 40px;
+	height: 40px;
+}
+.QR_title {
+	position: absolute;
+	top: 50px;
+	left: 50%;
+	font-size: 20px;
+	font-weight: bold;
+	color: #ffffff;
+	transform: translate(-50%, -50%);
+}
+.QR_descirpt {
+	position: absolute;
+	bottom: 20%;
+	left: 50%;
+	width: max-content;
+	text-align: center;
+	transform: translate(-50%, -50%);
+	font-size: 14px;
+	color: #ffffff;
+}
+.QR_descirpt .focus {
+	font-weight: bold;
+}
+
 .validation-success,
 .validation-failure,
 .validation-pending {
 	position: absolute;
 	width: 100%;
 	height: 100%;
-	background-color: rgba(255, 255, 255, 0.8);
+	background-color: rgb(6 6 6 / 80%);
 	text-align: center;
 	font-weight: bold;
 	font-size: 1.4rem;
 	padding: 10px;
 	display: flex;
+	color: #4a83e5;
 	flex-flow: column nowrap;
 	justify-content: center;
 }
 .validation-success {
-	color: green;
-}
-.validation-failure {
-	color: red;
+	color: #4a83e5;
 }
 .camera-turn {
 	background-position: center;
@@ -89,22 +158,30 @@
 	height: 100%;
 	background-size: 100%;
 }
-.conver__button {
-	display: block;
-	width: 45px;
-	height: 45px;
+.switch__button {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	left: 0;
+	justify-content: center;
+	align-items: center;
+	z-index: 20;
+	display: flex;
 	background-color: #4a83e5;
-	border: 1px solid #4a83e5;
-	border-radius: 3px;
-	flex: none;
+	text-align: center;
+	padding: 20px;
+	font-size: 15px;
+	font-weight: bold;
+	color: #ffffff;
+	border-radius: 7px 7px 0 0;
 }
-.conver__button::before {
+.switch__button::after {
 	background-image: url("../../assets/camera2.png");
+	margin-left: 20px;
 	content: "";
 	display: block;
 	width: 24px;
 	height: 24px;
-	margin: 10px;
 	background-repeat: no-repeat;
 	background-size: 100%;
 }
