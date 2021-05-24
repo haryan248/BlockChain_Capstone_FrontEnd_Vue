@@ -175,6 +175,9 @@ button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondar
 	background: #ffffff;
 	border: 1px solid #cbd5e0;
 }
+.p-orderlist.p-component .p-orderlist-list .p-orderlist-item {
+	border-bottom: 1px solid #cbd5e0;
+}
 /* 다크모드 css */
 .p-orderlist.p-component.dark__mode .p-orderlist-header {
 	background: #333536;
@@ -189,6 +192,7 @@ button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondar
 .p-orderlist.p-component.dark__mode .p-orderlist-list:focus {
 	box-shadow: inset 0 0 0 0.15rem #607d8b;
 }
+
 .p-orderlist.p-component.dark__mode .p-orderlist-list .p-orderlist-item {
 	color: #ffffff;
 }
@@ -208,6 +212,10 @@ button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondar
 .p-multiselect:not(.p-disabled):hover {
 	box-shadow: none;
 	border-color: #607d8b;
+}
+.p-orderlist .p-orderlist-list .p-orderlist-item:not(.p-highlight):hover {
+	background: none;
+	box-shadow: none;
 }
 .menu__tab.dark__mode .p-multiselect-label.p-placeholder {
 	color: #ffffff;

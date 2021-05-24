@@ -112,6 +112,7 @@
 .dark__mode .profile__content .student__name,
 .dark__mode .profile__content .student__major,
 .dark__mode .profile__content .student__email,
-.dark__mode .profile__content .profile__config {
+.dark__mode .profile__content .profile__config,
+.dark__mode .profile__content .admin {
 	color: #ffffff;
 }
