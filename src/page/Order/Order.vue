@@ -15,7 +15,7 @@
 					</div>
 					<OrderList v-model="products" listStyle="height:auto" dataKey="id">
 						<template #header>
-							List of Products
+							식당 메뉴
 						</template>
 						<template #item="slotProps">
 							<div class="product-item">

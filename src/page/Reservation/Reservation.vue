@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<Header :title="'예약'" />
-		<div class="container bg-gray">
+		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div class="reservation-content">
 				<div class="row">
 					<div class="col-8 py-5">

@@ -1,5 +1,5 @@
 <template>
-	<!-- 각 페이지의 하단 네비게이션 -->
+	<!-- Bottom navigation of each page -->
 	<div v-if="$route.path !== '/login' || $route.path !== '/simplepwd'">
 		<aside class="bottom-nav footer--view" :class="{ dark__mode: darkModeState }">
 			<router-link to="/" v-if="!adminModeState" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.studentId }">
