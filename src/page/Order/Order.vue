@@ -211,13 +211,14 @@ button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondar
 }
 .p-multiselect:not(.p-disabled):hover {
 	box-shadow: none;
-	border-color: #607d8b;
+	border-color: none;
 }
 .p-orderlist .p-orderlist-list .p-orderlist-item:not(.p-highlight):hover {
 	background: none;
 	box-shadow: none;
 }
-.menu__tab.dark__mode .p-multiselect-label.p-placeholder {
+.menu__tab.dark__mode .p-multiselect-label.p-placeholder,
+.menu__tab.dark__mode .p-multiselect-label {
 	color: #ffffff;
 }
 .menu__tab.dark__mode button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondary {
