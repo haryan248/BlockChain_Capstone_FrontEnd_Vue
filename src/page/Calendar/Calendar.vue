@@ -72,7 +72,14 @@
 				<!-- kyonggi map modal -->
 				<Dialog class="kyonggi__map-modal" :class="{ dark__mode: darkModeState }" :showHeader="false" v-model:visible="displayMapModal" :style="{ width: '90vw' }" :modal="true">
 					<p class="kyonggi__map-detail">
-						<iframe src="https://m.map.naver.com/search2/site.naver?query=%EA%B2%BD%EA%B8%B0%EB%8C%80&sm=hty&style=v5&code=11591483#/map" width="100%" height="400" frameborder="0" style="border-radius:4px" allowfullscreen=""></iframe>
+						<iframe
+							src="https://m.map.naver.com/search2/site.naver?query=%EA%B2%BD%EA%B8%B0%EB%8C%80&sm=hty&style=v5&code=11591483#/map"
+							width="100%"
+							height="400"
+							frameborder="0"
+							style="border:0; border-radius:4px"
+							allowfullscreen=""
+						></iframe>
 					</p>
 					<template #footer>
 						<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="closeDisplayMap" autofocus />
