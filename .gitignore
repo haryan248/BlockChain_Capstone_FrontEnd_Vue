@@ -2,7 +2,7 @@
 node_modules
 /dist
 /key
-src/assets/S-Core-Dream-light
+src/assets/S-Core-Dream-light/
 
 # local env files
 .env.local
