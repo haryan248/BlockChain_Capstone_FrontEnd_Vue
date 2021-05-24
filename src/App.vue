@@ -6,6 +6,18 @@
 <script>
 export default {
 	name: "App",
+	created() {
+		// 두번 탭 방지
+		document.documentElement.addEventListener(
+			"touchstart",
+			function(event) {
+				if (event.touches.length > 1) {
+					event.preventDefault()
+				}
+			},
+			false
+		)
+	},
 }
 </script>
 
