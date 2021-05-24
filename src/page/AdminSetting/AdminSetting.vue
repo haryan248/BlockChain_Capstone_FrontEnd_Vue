@@ -4,7 +4,7 @@
 
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div class="admin__setting-content">
-				<HeaderSection :title="'설정'" :subtitle="'강의동을 선택해주세요.'" :darkModeState="darkModeState" />
+				<HeaderSection :title="'강의동 설정'" :subtitle="'강의동을 선택해주세요.'" :darkModeState="darkModeState" />
 				<div class="setting__select" :class="{ dark__mode: darkModeState }">
 					<div class="item__content">
 						<div class="select__list" :class="{ dark__mode: darkModeState }">
@@ -71,6 +71,22 @@ export default {
 				{
 					name: "9강의동 (호연관)",
 					key: "9",
+				},
+				{
+					name: "E-스퀘어",
+					key: "10",
+				},
+				{
+					name: "감성코어",
+					key: "11",
+				},
+				{
+					name: "학생회관",
+					key: "12",
+				},
+				{
+					name: "중앙도서",
+					key: "13",
 				},
 			],
 		}

@@ -20,11 +20,14 @@
 					<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }" style="width: 60px;height: 60px;"></div>
 				</div>
 				<div class="text__content">
+					<i class="pi pi-spin pi-cog profile__config" style="fontSize: 15px"></i>
 					<div class="student__name">{{ name }}님 😃</div>
 					<div class="student__id">{{ studentId }}</div>
 					<div class="student__major">{{ major }}</div>
+					<div class="student__email">{{ email }}</div>
 				</div>
 			</div>
+
 			<div class="sidebar_content">
 				<Accordion v-if="$shared.checkAdminMode()" :class="{ dark__mode: $shared.checkDarkMode() }">
 					<AccordionTab header="다크모드">
@@ -121,6 +124,7 @@ export default {
 			studentId: "",
 			major: "",
 			userImage: "",
+			email: "",
 			members: JSON.parse(localStorage.getItem("members")),
 			loading: false,
 			privacy: false,
@@ -140,6 +144,7 @@ export default {
 			this.studentId = this.members.studentId
 			this.major = this.members.major
 			this.userImage = this.members.userImage
+			this.email = this.members.email
 		},
 		confirmDarkMode() {
 			this.closeVisibleRight()

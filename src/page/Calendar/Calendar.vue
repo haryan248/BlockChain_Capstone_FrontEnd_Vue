@@ -18,7 +18,11 @@
 							</div>
 							<div class="refresh__button">
 								<h4 class="load__text">{{ loadMonth }}월 출입 기록</h4>
-								<Button icon="pi pi-download" @click="getEntry" class="border__none-refresh p-button-sm p-button-rounded p-button-secondary" />
+								<Button icon="pi pi-download" @click="getEntry" class="border__none-refresh p-button-lg p-button-rounded p-button-text p-button-secondary" />
+							</div>
+							<div class="map__button">
+								<h4 class="map__text">경기대학교 지도</h4>
+								<Button icon="pi pi-map" @click="openDisplayMap" class="border__none-map p-button-lg p-button-rounded p-button-text p-button-secondary" />
 							</div>
 							<div v-if="loading" class="entry-empty__list" :class="{ dark__mode: darkModeState }">
 								<li class="list__item">
@@ -59,6 +63,14 @@
 						</div>
 					</div>
 				</div>
+				<Dialog class="kyonggi__map-modal" :class="{ dark__mode: darkModeState }" :showHeader="false" v-model:visible="displayMapModal" :style="{ width: '90vw' }" :modal="true">
+					<p class="kyonggi__map-detail">
+						<iframe src="https://m.map.naver.com/search2/site.naver?query=%EA%B2%BD%EA%B8%B0%EB%8C%80&sm=hty&style=v5&code=11591483#/map" width="100%" height="400" frameborder="0" style="border:0" allowfullscreen=""></iframe>
+					</p>
+					<template #footer>
+						<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="closeDisplayMap" autofocus />
+					</template>
+				</Dialog>
 			</div>
 			<BottomNav :darkModeState="darkModeState" />
 		</div>
@@ -75,6 +87,7 @@ export default {
 			loadMonth: "",
 			buildingName: [],
 			loading: false,
+			displayMapModal: false,
 			selectDate: [
 				{
 					day: "",
@@ -214,6 +227,13 @@ export default {
 			}
 			this.loading = false
 		},
+
+		openDisplayMap() {
+			this.displayMapModal = true
+		},
+		closeDisplayMap() {
+			this.displayMapModal = false
+		},
 	},
 }
 </script>
@@ -227,5 +247,16 @@ export default {
 }
 .vc-day-content:hover {
 	background-color: transparent !important;
+}
+
+.kyonggi__map-modal .p-dialog-content {
+	border-radius: 20px 20px 0 0;
+	padding: 15px;
+}
+.kyonggi__map-modal .p-dialog-footer {
+	border-top: 1px solid #e2e2e2;
+	padding: 15px;
+	border-radius: 0 0 20px 20px;
+	text-align: center;
 }
 </style>

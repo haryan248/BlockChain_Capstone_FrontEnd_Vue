@@ -5,7 +5,7 @@
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div>
 				<div class="entry__admin">
-					<HeaderSection class="entry_admin-headersection" :viewDate="false" :title="building + ' 강의동' + ' (' + buildingName + ')'" :subtitle="'출입자 명단을 확인해보세요.'" :darkModeState="darkModeState" />
+					<HeaderSection class="entry_admin-headersection" :viewDate="false" :title="buildingName" :subtitle="'출입자 명단을 확인해보세요.'" :darkModeState="darkModeState" />
 					<div class="filter__section">
 						<Button v-if="selectOrder === 'Desc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-up" @click="orderDate" />
 						<Button v-if="selectOrder === 'Asc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-down" @click="orderDate" />
@@ -17,15 +17,23 @@
 								<div class="entryuser-list__content" :class="{ dark__mode: darkModeState }">
 									<div v-if="entryList[0].building === ''">
 										<div class="emptyuser-list">
-											<i class="pi pi-users" style="fontSize: 2rem"></i>
-											<br /><br />{{ building }} 강의동에 출입한 <br />학생이 없습니다.
+											<p v-if="building === null">
+												<i class="pi pi-users" style="fontSize: 2rem"></i>
+												<br /><br />
+												강의동을 <br />먼저 설정해주세요.
+											</p>
+											<p v-else>
+												<i class="pi pi-users" style="fontSize: 2rem"></i>
+												<br /><br />
+												{{ buildingName }}에 출입한 <br />학생이 없습니다.
+											</p>
 										</div>
 									</div>
 									<div v-else v-for="(entryItem, index) in entryList" :key="index">
 										<li class="list__item">
 											<div class="entryuser-list__item">
 												<div class="item__content">
-													<div class="item__summary">
+													<div class="item__summary" @click="copyToClipboard" :data-date="entryItem.date" :data-time="entryItem.time" :data-building="entryItem.building" :data-did="entryItem.did">
 														<h3 class="entry__desc">{{ entryItem.date }}</h3>
 														<h3 class="entry__desc">{{ entryItem.time }}</h3>
 														<h3 class="entry__desc">{{ entryItem.building }}강의동</h3>
@@ -84,31 +92,46 @@ export default {
 		checkBuilding() {
 			switch (this.building) {
 				case 1:
-					this.buildingName = "진리관"
+					this.buildingName = "1 강의동 (진리관)"
 					break
 				case 2:
-					this.buildingName = "성신관"
+					this.buildingName = "2 강의동 (성신관)"
 					break
 				case 3:
-					this.buildingName = "애경관"
+					this.buildingName = "3 강의동 (애경관)"
 					break
 				case 4:
-					this.buildingName = "예지관"
+					this.buildingName = "4 강의동 (예지관)"
 					break
 				case 5:
-					this.buildingName = "덕문관"
+					this.buildingName = "5 강의동 (덕문관)"
 					break
 				case 6:
-					this.buildingName = "광교관"
+					this.buildingName = "6 강의동 (광교관)"
 					break
 				case 7:
-					this.buildingName = "집현관"
+					this.buildingName = "7 강의동 (집현관)"
 					break
 				case 8:
-					this.buildingName = "육영관"
+					this.buildingName = "8 강의동 (육영관)"
 					break
 				case 9:
-					this.buildingName = "호연관"
+					this.buildingName = "9 강의동 (호연관)"
+					break
+				case 10:
+					this.buildingName = "E-스퀘어"
+					break
+				case 11:
+					this.buildingName = "감성코어"
+					break
+				case 12:
+					this.buildingName = "학생회관"
+					break
+				case 13:
+					this.buildingName = "중앙도서"
+					break
+				default:
+					this.buildingName = "강의동을 선택해주세요."
 					break
 			}
 		},
@@ -117,6 +140,7 @@ export default {
 			this.curPage = event.page + 1
 			this.getEntryListForAdmin()
 		},
+		//정렬 버튼 클릭시
 		orderDate() {
 			if (this.selectOrder === "Asc") {
 				this.selectOrder = "Desc"
@@ -124,6 +148,19 @@ export default {
 				this.selectOrder = "Asc"
 			}
 			this.getEntryListForAdmin()
+		},
+		copyToClipboard(evt) {
+			const textNode = document.createElement("textarea")
+			textNode.value = "날짜: " + evt.currentTarget.dataset.date + " 시간: " + evt.currentTarget.dataset.time + " 출입 건물: " + evt.currentTarget.dataset.building + " did: " + evt.currentTarget.dataset.did
+			document.body.appendChild(textNode)
+			textNode.select()
+			const copy = document.execCommand("copy")
+			document.body.removeChild(textNode)
+			if (copy === true) {
+				this.showSuccess("클립보드 복사 완료", "클립보드에 복사가 완료되었습니다.")
+			} else {
+				this.showError("클립보드 복사 실패", "죄송합니다. \n복사에 실패했습니다.")
+			}
 		},
 		//did 찾기
 		async getEntryListForAdmin() {
@@ -147,6 +184,14 @@ export default {
 				}
 			}
 			this.loading = false
+		},
+		// 설정 완료시 띄워주는 toast message
+		showSuccess(summaryText, detailText) {
+			this.$toast.add({ severity: "info", summary: summaryText, detail: detailText, life: 3000 })
+		},
+		//에러 토스트 메시지
+		showError(summaryText, detailText) {
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
 		},
 	},
 }

@@ -30,6 +30,16 @@
 	border-radius: 4px;
 	background-color: #f8f9fa;
 	border: 1px solid #dee2e6;
+	flex-direction: column;
+}
+.profile__content .profile__config {
+	position: absolute;
+	top: 58px;
+	right: 4%;
+}
+.profile__content .text__content {
+	text-align: center;
+	margin-top: 5px;
 }
 .profile__content .img__content {
 	margin-right: 4px;
@@ -45,7 +55,8 @@
 }
 .profile__content .student__name,
 .profile__content .student__id,
-.profile__content .student__major {
+.profile__content .student__major,
+.profile__content .student__email {
 	font-size: 12px;
 }
 .logout__button {
@@ -98,6 +109,8 @@
 .dark__mode .profile__content .student__img,
 .dark__mode .profile__content .student__id,
 .dark__mode .profile__content .student__name,
-.dark__mode .profile__content .student__major {
+.dark__mode .profile__content .student__major,
+.dark__mode .profile__content .student__email,
+.dark__mode .profile__content .profile__config {
 	color: #ffffff;
 }
