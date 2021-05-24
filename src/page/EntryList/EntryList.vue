@@ -133,7 +133,7 @@ export default {
 					this.buildingName = "학생회관"
 					break
 				case 13:
-					this.buildingName = "중앙도서"
+					this.buildingName = "중앙도서관"
 					break
 				default:
 					this.buildingName = "강의동을 선택해주세요."

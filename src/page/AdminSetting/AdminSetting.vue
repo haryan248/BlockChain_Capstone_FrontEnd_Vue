@@ -85,7 +85,7 @@ export default {
 					key: "12",
 				},
 				{
-					name: "중앙도서",
+					name: "중앙도서관",
 					key: "13",
 				},
 			],

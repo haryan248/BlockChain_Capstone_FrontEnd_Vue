@@ -54,6 +54,13 @@
 .profile__content .student__email {
 	font-size: 12px;
 }
+.profile__content .admin {
+	text-align: left;
+	font-weight: bold;
+	position: absolute;
+	top: 56px;
+	left: 4%;
+}
 .logout__button {
 	position: fixed;
 	margin: 0 auto;
