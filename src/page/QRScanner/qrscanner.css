@@ -49,8 +49,8 @@
 	margin: auto;
 }
 .frame {
-	height: 300px !important;
-	width: 300px !important;
+	height: 345px;
+	width: 345px;
 	position: absolute;
 	top: 0px;
 	bottom: 0px;
