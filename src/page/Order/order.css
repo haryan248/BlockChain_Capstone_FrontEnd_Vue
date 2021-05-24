@@ -13,8 +13,10 @@
 	z-index: 1;
 }
 .order__button {
-	margin: 0 auto;
-	margin-top: 10px;
+	position: absolute;
+	bottom: 110px;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 /* 메뉴 */
 .menu__tab {
@@ -42,4 +44,81 @@
 }
 .sorting .sorting__group-item {
 	width: 100%;
+}
+/* 주문 리스트 css */
+.card {
+	background: #ffffff;
+	padding: 2rem;
+	box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+	border-radius: 4px;
+	margin-bottom: 2rem;
+}
+.product-item {
+	display: flex;
+	align-items: center;
+	padding: 0.5rem;
+	width: 100%;
+}
+.product-item .img {
+	width: 75px;
+	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+	margin-right: 1rem;
+}
+
+.product-item .product-list-detail {
+	flex: 1 1 0;
+}
+
+.product-item .product-list-action {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+.product-item .product-category-icon {
+	vertical-align: middle;
+	margin-right: 0.5rem;
+	font-size: 0.875rem;
+}
+
+.product-item .product-category {
+	vertical-align: middle;
+	line-height: 1;
+	font-size: 0.875rem;
+}
+.product-badge {
+	border-radius: 2px;
+	padding: 0.25em 0.5rem;
+	text-transform: uppercase;
+	font-weight: 700;
+	font-size: 12px;
+	letter-spacing: 0.3px;
+}
+.product-badge.status-instock {
+	background: #c8e6c9;
+	color: #256029;
+}
+.product-badge.status-lowstock {
+	background: #feedaf;
+	color: #8a5340;
+}
+.food__image {
+	border: 1px solid #dee2e6;
+	box-shadow: 0 0 5px rgb(0 0 0 / 5%), 0 5px 20px rgb(0 0 0 / 5%);
+	height: 100px;
+	border-radius: 5px;
+}
+@media screen and (max-width: 576px) {
+	.product-item {
+		flex-wrap: wrap;
+	}
+	.product-item .image-container {
+		width: 100%;
+		text-align: center;
+	}
+
+	.product-item .img {
+		margin: 0 0 1rem 0;
+		width: 100px;
+	}
 }
