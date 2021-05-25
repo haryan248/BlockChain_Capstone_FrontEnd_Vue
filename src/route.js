@@ -14,19 +14,30 @@ import axios from "axios"
 // 각 페이지 라우팅 설정
 const routes = [
 	{
+		path: "/login",
+		name: "Login",
+		component: Login,
+	},
+	{
+		path: "/loginForm/:name/:imgUrl/:email/:find?",
+		name: "LoginForm",
+		component: LoginForm,
+		props: true,
+	},
+	{
 		path: "/",
 		name: "StudentId",
 		component: StudentId,
 	},
 	{
-		path: "/order",
-		name: "Order",
-		component: Order,
-	},
-	{
 		path: "/wallet",
 		name: "Wallet",
 		component: Wallet,
+	},
+	{
+		path: "/order",
+		name: "Order",
+		component: Order,
 	},
 	{
 		path: "/reservation",
@@ -39,30 +50,19 @@ const routes = [
 		component: Calendar,
 	},
 	{
-		path: "/qrscanner",
-		name: "QRScanner",
-		component: QRScanner,
-	},
-	{
 		path: "/entrylist",
 		name: "Entrylist",
 		component: EntryList,
 	},
 	{
+		path: "/qrscanner",
+		name: "QRScanner",
+		component: QRScanner,
+	},
+	{
 		path: "/adminsetting",
 		name: "AdminSetting",
 		component: AdminSetting,
-	},
-	{
-		path: "/login",
-		name: "Login",
-		component: Login,
-	},
-	{
-		path: "/loginForm/:name/:imgUrl/:email/:find?",
-		name: "LoginForm",
-		component: LoginForm,
-		props: true,
 	},
 ]
 
@@ -90,11 +90,11 @@ async function authenticationKey() {
 router.beforeEach((to, from, next) => {
 	// 로그인 페이지 갔을때
 	if (to.path == "/login") {
-		// 로그인 상태면(key 있으면) studentId 페이지로
+		// 로그인 상태가 아니면(key 없으면) 로그인 페이지로 이동
 		if (localStorage.getItem("key") === null) {
-			// 로그인 상태면(key 있으면) 페이지 이동
 			next()
 		} else {
+			// 로그인 상태면(key 있으면) 페이지 이동
 			next({ path: "/" })
 		}
 		// 입력 창 갔을 때

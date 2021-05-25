@@ -7,7 +7,7 @@
 export default {
 	name: "App",
 	created() {
-		// 두번 탭 방지
+		// 두 손가락으로 확대 방지
 		document.documentElement.addEventListener(
 			"touchstart",
 			function(event) {
