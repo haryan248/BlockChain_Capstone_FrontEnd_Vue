@@ -58,7 +58,6 @@ const routes = [
 		name: "Login",
 		component: Login,
 	},
-
 	{
 		path: "/loginForm/:name/:imgUrl/:email/:find?",
 		name: "LoginForm",

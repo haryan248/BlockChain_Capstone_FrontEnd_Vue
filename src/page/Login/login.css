@@ -22,17 +22,17 @@
 .home-container {
 	height: 100vh;
 	background-color: #4a83e5;
-	background-image: url("../../assets/upass-white.png");
+	background-image: url("../../assets/Logo/upass-white.png");
 	background-size: 100%;
 	background-position: center;
 	background-position: 50% 23%;
 	background-repeat: no-repeat;
 }
 .home-container--loading {
-	background-image: url("../../assets/First.png");
+	background-image: url("../../assets/Loading/First.png");
 }
 .home-container--loading-dark {
-	background-image: url("../../assets/First-Dark.png");
+	background-image: url("../../assets/Loading/First-Dark.png");
 }
 .loading-indicator {
 	position: absolute;

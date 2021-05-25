@@ -176,7 +176,7 @@
 	border-radius: 7px 7px 0 0;
 }
 .switch__button::after {
-	background-image: url("../../assets/camera2.png");
+	background-image: url("../../assets/Camera/switch_camera.png");
 	margin-left: 20px;
 	content: "";
 	display: block;
