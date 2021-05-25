@@ -10,7 +10,7 @@
 						<Button v-if="selectOrder === 'Desc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-up" @click="orderDate" />
 						<Button v-if="selectOrder === 'Asc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-down" @click="orderDate" />
 					</div>
-					<!-- Coach mark -->
+					<!-- Entry list coach mark -->
 					<CoachMark :coachMarkType="'clipboard'" :storageName="'clipboard'" />
 					<div class="entryuser__container" :class="{ dark__mode: darkModeState }">
 						<div class="item__content">

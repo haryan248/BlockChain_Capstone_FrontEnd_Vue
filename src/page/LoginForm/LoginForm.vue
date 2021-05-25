@@ -276,7 +276,7 @@ export default {
 			this.loading = true
 			this.loadingText = "학생증을 재발급하는 중입니다."
 			try {
-				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: this.tempKey, studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: this.tempKey, stdnum: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					localStorage.setItem("key", this.tempKey)
 					localStorage.setItem("did", response.data.did)
