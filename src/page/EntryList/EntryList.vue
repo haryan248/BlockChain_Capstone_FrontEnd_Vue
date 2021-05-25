@@ -37,7 +37,7 @@
 										<li class="list__item">
 											<div class="entryuser-list__item">
 												<div class="item__content">
-													<div class="item__summary" @click="copyToClipboard" :data-date="entryItem.date" :data-time="entryItem.time" :data-building="entryItem.building" :data-did="entryItem.did">
+													<div class="item__summary" @dblclick="copyToClipboard" :data-date="entryItem.date" :data-time="entryItem.time" :data-building="entryItem.building" :data-did="entryItem.did">
 														<h3 class="entry__desc">{{ entryItem.date }}</h3>
 														<h3 class="entry__desc">{{ entryItem.time }}</h3>
 														<h3 class="entry__desc">{{ entryItem.building }}강의동</h3>
@@ -84,29 +84,11 @@ export default {
 			curPage: 1,
 			totalPage: "",
 			selectOrder: "Asc",
-			checkDoubleTab: false,
 		}
 	},
 	created() {
 		this.checkBuilding()
 		this.getEntryListForAdmin()
-		// 더블 클릭 이벤트 체크
-		var lastTouchEnd = 0
-		document.documentElement.addEventListener(
-			"touchend",
-			(event) => {
-				var now = new Date().getTime()
-				if (now - lastTouchEnd <= 200) {
-					event.preventDefault()
-					this.checkDoubleTab = true
-				}
-				lastTouchEnd = now
-			},
-			true
-		)
-	},
-	unmounted() {
-		document.documentElement.removeEventListener("touchend")
 	},
 	methods: {
 		// 다크모드 설정
@@ -176,8 +158,7 @@ export default {
 		},
 		// 출입한 학생 리스트에서 더블 클릭시 클립보드 복사
 		copyToClipboard(evt) {
-			if (this.checkDoubleTab === false) return
-			this.checkDoubleTab = false
+			console.log(evt)
 			const textNode = document.createElement("textarea")
 			textNode.value = "날짜: " + evt.currentTarget.dataset.date + " 시간: " + evt.currentTarget.dataset.time + " 출입 건물: " + evt.currentTarget.dataset.building + " did: " + evt.currentTarget.dataset.did
 			document.body.appendChild(textNode)
@@ -215,11 +196,11 @@ export default {
 		},
 		// 성공 토스트 메시지
 		showSuccess(summaryText, detailText) {
-			this.$toast.add({ severity: "info", summary: summaryText, detail: detailText, life: 2000 })
+			this.$toast.add({ severity: "info", summary: summaryText, detail: detailText, life: 1000 })
 		},
 		// 에러 토스트 메시지
 		showError(summaryText, detailText) {
-			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 2000 })
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 1000 })
 		},
 	},
 }

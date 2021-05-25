@@ -5,7 +5,6 @@
 			<div>
 				<div class="student-content">
 					<CoachMark :coachMarkType="'student-id'" :storageName="'studentId'" />
-
 					<HeaderSection :title="'학생증'" :subtitle="'자신의 정보를 간편하게 관리해보세요.'" :darkModeState="darkModeState" />
 					<Dialog class="QR-modal" :showHeader="false" v-model:visible="displayStudentModal" :style="{ width: '80vw' }" :baseZIndex="-1000" :class="{ dark__mode: darkModeState }">
 						<!-- 학생증 카드 -->
