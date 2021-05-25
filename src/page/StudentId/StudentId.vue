@@ -147,7 +147,9 @@ export default {
 .p-dialog.p-component.password-modal.p-dialog-maximized .p-dialog-content {
 	padding: 0 !important;
 }
-
+.unset__zindex .p-dialog-mask {
+	z-index: unset;
+}
 /* 다크모드 */
 .p-dialog.p-component.QR-modal.dark__mode .p-dialog-content {
 	background: #333536;
