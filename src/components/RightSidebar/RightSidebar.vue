@@ -274,7 +274,7 @@ export default {
 		async regenerateUserDID() {
 			this.loading = true
 			try {
-				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: localStorage.getItem("key"), studentId: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: localStorage.getItem("key"), std_num: this.members.studentId, simple_password: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					localStorage.setItem("did", response.data.did)
 					this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다.")
@@ -297,7 +297,7 @@ export default {
 			}
 			this.closeBackupModal()
 			try {
-				const response = await this.$axios.post("/api/password/", {}, { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post("/api/password/", {}, { params: { key: localStorage.getItem("key"), simple_password: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					this.showSuccess("백업 완료", "간편 비밀번호 백업이 완료되었습니다.")
 				}

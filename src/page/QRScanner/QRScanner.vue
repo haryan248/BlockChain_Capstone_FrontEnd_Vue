@@ -135,15 +135,15 @@ export default {
 					{
 						params: {
 							key: localStorage.getItem("key"),
-							SimplePassword: localStorage.getItem("simplePassword"),
+							simple_password: localStorage.getItem("simplePassword"),
 							admin_did: localStorage.getItem("did"),
 							std_did: studentDid,
 							year: year,
-							building: building,
+							building_num: building,
 							month: month,
 							day: day,
-							timestamp: timestamp,
-							hashedData: hash,
+							time_stamp: timestamp,
+							hashed_data: hash,
 						},
 					}
 				)

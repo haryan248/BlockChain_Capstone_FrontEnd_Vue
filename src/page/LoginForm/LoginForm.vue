@@ -214,7 +214,7 @@ export default {
 		async getUserKey() {
 			this.isFirstMember = false
 			try {
-				const response = await this.$axios.get("/api/members/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
+				const response = await this.$axios.get("/api/members/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, std_num: this.studentId, name: this.name, email: this.email } })
 				if (response.status === 201) {
 					this.successSignUp = true
 					this.showSuccess("회원정보 입력 완료", "회원 정보 입력이 완료되었습니다. \n간편비밀번호를 설정해주세요.")
@@ -244,11 +244,10 @@ export default {
 						params: {
 							key: this.tempKey,
 							major: this.selectedGroupedMajor.label,
-							stdnum: this.studentId,
+							std_num: this.studentId,
 							name: this.name,
 							email: this.email,
-							studentId: this.members.studentId,
-							SimplePassword: localStorage.getItem("simplePassword"),
+							simple_password: localStorage.getItem("simplePassword"),
 						},
 					}
 				)
@@ -276,7 +275,7 @@ export default {
 			this.loading = true
 			this.loadingText = "학생증을 재발급하는 중입니다."
 			try {
-				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: this.tempKey, stdnum: this.members.studentId, SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.post("/api/regeneratedid/", {}, { params: { key: this.tempKey, std_num: this.members.studentId, simple_password: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					localStorage.setItem("key", this.tempKey)
 					localStorage.setItem("did", response.data.did)
@@ -301,7 +300,7 @@ export default {
 			this.loading = true
 			this.loadingText = "학생증을 불러오는 중입니다."
 			try {
-				const response = await this.$axios.get("/api/getdid/", { params: { key: this.tempKey, SimplePassword: localStorage.getItem("simplePassword") } })
+				const response = await this.$axios.get("/api/getdid/", { params: { key: this.tempKey, simple_password: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
 					this.successFindDID = true
 					localStorage.setItem("key", this.tempKey)
@@ -329,7 +328,7 @@ export default {
 		// 회원 찾기
 		async findAccount() {
 			try {
-				const response = await this.$axios.get("/api/findmyinfo/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
+				const response = await this.$axios.get("/api/findmyinfo/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, std_num: this.studentId, name: this.name, email: this.email } })
 				if (response.status === 201) {
 					this.showSuccess("회원 정보 입력 성공", "올바른 회원입니다. \n간편 비밀번호를 입력해주세요. ")
 					this.tempKey = response.data.user_key
