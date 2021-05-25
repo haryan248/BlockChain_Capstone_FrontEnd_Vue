@@ -4,6 +4,8 @@
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div>
 				<div class="student-content">
+					<CoachMark :coachMarkType="'student-id'" :storageName="'studentId'" />
+
 					<HeaderSection :title="'학생증'" :subtitle="'자신의 정보를 간편하게 관리해보세요.'" :darkModeState="darkModeState" />
 					<Dialog class="QR-modal" :showHeader="false" v-model:visible="displayStudentModal" :style="{ width: '80vw' }" :baseZIndex="-1000" :class="{ dark__mode: darkModeState }">
 						<!-- 학생증 카드 -->
@@ -47,6 +49,7 @@
 import QRVerification from "../../components/QRVerification/QRVerification"
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
 import SimplePassword from "../../components/SimplePasswd/SimplePasswd"
+import CoachMark from "../../components/CoachMark/CoachMark"
 
 export default {
 	name: "StudentId",
@@ -54,6 +57,7 @@ export default {
 		QRVerification,
 		HeaderSection,
 		SimplePassword,
+		CoachMark,
 	},
 	data() {
 		return {

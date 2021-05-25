@@ -5,7 +5,8 @@
 				<div class="coach__mark-closebutton" @click="closeCoachMark">
 					<i class="close__button pi pi-times" style="fontSize: 2rem"></i>
 				</div>
-				<div :class="coachMarkType + '__desc'">
+				<!-- Clipboard coach mark screen -->
+				<div v-if="coachMarkType === 'clipboard'" :class="coachMarkType + '__desc'">
 					<div :class="coachMarkType + '__subtitle'">1. 관리자는 강의동 설정 탭에서 <br /><span class="focus">강의동</span>을 <span class="focus">선택</span> 해주세요 !</div>
 					<div :class="coachMarkType + '__subtitle'">
 						2. 두번 터치해서
@@ -13,6 +14,25 @@
 						해보세요 !
 					</div>
 					<div :class="coachMarkType + '__subtitle'">3. 강의동 <span class="focus">출입자 명부</span>를 확인하세요 !</div>
+				</div>
+				<!-- Student Id coach mark screen -->
+				<div v-else-if="coachMarkType === 'student-id'" :class="coachMarkType + '__desc'">
+					<div :class="coachMarkType + '__title'">
+						안녕하세요! <span class="focus">{{ name }}</span> 님
+						<br />
+						<br />
+						U-PASS를 이용해 주셔서 <br />감사합니다.
+					</div>
+					<div :class="coachMarkType + '__content'">
+						<div :class="coachMarkType + '__subtitle'">분산 네트워크를 사용한 안전한 <br /><span class="focus">학생증 어플</span>입니다.</div>
+						<div :class="coachMarkType + '__subtitle'">학생증 기능뿐만 아니라 <br />다양한 기능을 사용해보세요 !</div>
+						<div :class="coachMarkType + '__subtitle'">
+							<span class="focus">학생증 버튼</span>을 클릭해 간편하게 <br />
+							학생증을 사용해보세요!
+						</div>
+						<br />
+						<i class="pi pi-arrow-down" style="fontSize: 2rem"></i>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -29,6 +49,7 @@ export default {
 	data() {
 		return {
 			clicked: false,
+			name: JSON.parse(localStorage.getItem("members")).name,
 		}
 	},
 	created() {

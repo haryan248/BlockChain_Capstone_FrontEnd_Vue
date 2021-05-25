@@ -13,6 +13,7 @@
 	font-size: 2rem;
 	color: #ffffff;
 }
+/* 클립보드 복사 코치마크 */
 .clipboard__desc {
 	position: absolute;
 	top: 50%;
@@ -33,4 +34,43 @@
 	color: #9cc0ff;
 	font-weight: bold;
 	font-size: 21px;
+}
+/* 학생증 코치마크 */
+.student-id__desc {
+	color: #ffffff;
+	margin: 0 auto;
+	text-align: center;
+	width: 100%;
+}
+.student-id__content {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: fit-content;
+	margin: 0 auto;
+	padding: 10px;
+	text-align: center;
+}
+.student-id__desc .student-id__title {
+	position: absolute;
+	width: fit-content;
+	font-weight: 600;
+	font-size: 23px;
+	top: 20%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+.student-id__content .student-id__subtitle {
+	font-weight: 600;
+	font-size: 15px;
+	margin-bottom: 30px;
+}
+.student-id__desc .focus {
+	color: #9cc0ff;
+}
+.student-id__content .focus {
+	color: #9cc0ff;
+	font-weight: bold;
+	font-size: 17px;
 }

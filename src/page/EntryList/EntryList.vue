@@ -96,7 +96,7 @@ export default {
 			"touchend",
 			(event) => {
 				var now = new Date().getTime()
-				if (now - lastTouchEnd <= 300) {
+				if (now - lastTouchEnd <= 200) {
 					event.preventDefault()
 					this.checkDoubleTab = true
 				}
