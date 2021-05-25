@@ -307,7 +307,7 @@ export default {
 					localStorage.setItem("did", response.data.did)
 					localStorage.removeItem("wrongPassword")
 					localStorage.removeItem("findDid")
-					this.showSuccess("학생증 찾기 성공", "학생증 찾기를 성공하였습니다. \n잠시후 학생증 페이지로 이동합니다.")
+					this.showSuccess("학생증 불러오기 성공", "학생증 찾기를 성공하였습니다. \n잠시후 학생증 페이지로 이동합니다.")
 					setTimeout(() => {
 						this.$router.replace("/")
 					}, 1500)

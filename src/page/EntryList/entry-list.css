@@ -71,7 +71,7 @@
 	line-height: 15px;
 	letter-spacing: 0;
 	align-items: center;
-	justify-content: center;
+	justify-content: flex-start;
 }
 .entryuser-list__item .entry__desc {
 	color: #000;

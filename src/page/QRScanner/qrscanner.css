@@ -53,7 +53,7 @@
 	width: 345px;
 	position: absolute;
 	top: 0px;
-	bottom: 0px;
+	bottom: 10%;
 	right: 0px;
 	left: 0px;
 	margin: auto;
@@ -120,7 +120,7 @@
 }
 .QR_descirpt {
 	position: absolute;
-	bottom: 20%;
+	bottom: 15%;
 	left: 50%;
 	width: max-content;
 	text-align: center;
