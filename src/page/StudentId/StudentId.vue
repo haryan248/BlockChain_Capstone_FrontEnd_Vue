@@ -7,7 +7,7 @@
 					<CoachMark :coachMarkType="'student-id'" :storageName="'studentId'" />
 					<HeaderSection :title="'학생증'" :subtitle="'자신의 정보를 간편하게 관리해보세요.'" :darkModeState="darkModeState" />
 					<Dialog class="QR-modal" :showHeader="false" v-model:visible="displayStudentModal" :style="{ width: '80vw' }" :baseZIndex="-1000" :class="{ dark__mode: darkModeState }">
-						<!-- 학생증 카드 -->
+						<!-- Student ID card -->
 						<div class="student-info">
 							<div class="student-card">
 								<div class="student-wrapper">
@@ -24,11 +24,11 @@
 									</div>
 								</div>
 							</div>
-							<!-- 학생증 누를때 간편번호 입력 -->
+							<!-- Simplepassword modal input when pressing student ID -->
 							<Dialog class="password-modal p-dialog-maximized" :class="{ dark__mode: darkModeState }" header="" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 								<SimplePassword :title="'간편 비밀번호 입력'" :isSetting="false" @correctPassword="closePasswordModal" />
 							</Dialog>
-							<!-- qr 코드 화면 부분 -->
+							<!-- QR code screen part -->
 							<Dialog class="QR-modal" :class="{ dark__mode: darkModeState }" header="Header" :showHeader="false" v-model:visible="displayQRModal" :style="{ width: '80vw' }" :modal="true">
 								<QRVerification @goBack="closeQRModal" :isStudentId="true" :did="DID" :SimplePassword="SimplePassword" />
 							</Dialog>
@@ -81,22 +81,25 @@ export default {
 		this.$shared.checkGoogleLogin(this.$gAuth)
 	},
 	methods: {
+		// 다크모드 세팅
 		confirmSetting() {
 			this.darkModeState = this.$shared.checkDarkMode()
 		},
+		// 개인정보 세팅
 		setMembers() {
 			this.name = this.members.name
 			this.studentId = this.members.studentId
 			this.major = this.members.major
 			this.userImage = this.members.userImage
 		},
-
+		// QR 모달 토글 함수
 		openQRModal() {
 			this.displayQRModal = true
 		},
 		closeQRModal() {
 			this.displayQRModal = false
 		},
+		// 간편비밀번호 모달 토글 함수
 		openPasswordModal() {
 			this.displayPasswordModal = true
 		},
@@ -106,7 +109,7 @@ export default {
 			}, 100)
 			this.displayPasswordModal = false
 		},
-		//학생증 모달
+		//학생증 모달 토글 함수
 		openStudentModal() {
 			this.displayStudentModal = true
 		},
@@ -114,10 +117,11 @@ export default {
 			this.displayStudentModal = false
 		},
 
-		// 토스트 메시지
+		// 상공 토스트 메시지
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
 		},
+		// 에러 토스트 메시지
 		showError(summaryText, detailText) {
 			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
 		},

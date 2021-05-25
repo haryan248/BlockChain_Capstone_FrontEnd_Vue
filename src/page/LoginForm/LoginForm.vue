@@ -1,6 +1,5 @@
 <template>
 	<div class="login__form-container" :class="{ dark__mode: darkModeState }">
-		<!-- <Toast :style="{ width: '90%' }" /> -->
 		<div class="loadpassword__button"></div>
 		<div v-if="loading" class="loading__overlay-loginForm">
 			<div class="loading__progressbar">
@@ -9,7 +8,7 @@
 			</div>
 		</div>
 		<Dialog class="login-form" v-model:visible="displayBasic" :showHeader="false" position="bottom" :style="{ width: '80vw' }">
-			<!-- 회원가입 정보 입력 화면 -->
+			<!-- Member registration information input screen -->
 			<div class="login__form-box">
 				<div class="p-fluid">
 					<div class="sign-in">
@@ -40,7 +39,7 @@
 							<small v-if="failMajor" class="p-error" id="studentid-help">{{ failMajorText }}</small>
 							<small v-else id="usermajor-help">학과를 선택해주세요.</small>
 						</div>
-						<!-- 학생증 찾기 버튼 -->
+						<!-- Find student ID button -->
 						<div v-if="find === 'true'">
 							<Button label="회원 정보 입력" icon="pi pi-pencil" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
 							<Button v-if="successSignUp" label="간편 비밀번호 입력" icon="pi pi-lock" iconPos="right" class="login__form-button" :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openPasswordModal" />
@@ -48,7 +47,7 @@
 							<Button v-if="regenerateDID" label="학생증 재발급" icon="pi pi-clone" iconPos="right" class="login__form-button" @click="openWarningModal" :disabled="!successSignUp" />
 							<Button v-if="successSignUp && !successPassword" label="간편 비밀번호 찾기" icon="pi pi-cloud-download" iconPos="right" class="p-button-info login__form-button" @click="getPassword" />
 						</div>
-						<!-- 회원가입 버튼 -->
+						<!-- Sign up button -->
 						<div v-else>
 							<Button label="회원 정보 입력" icon="pi pi-check" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
 							<Button v-if="successSignUp" label="간편 비밀번호 설정" icon="pi pi-lock" iconPos="right" class="login__form-button " :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openWarningModal" />
@@ -67,11 +66,11 @@
 				</div>
 			</div>
 		</Dialog>
-		<!-- 비밀번호 입력/설정 모달 -->
+		<!-- Password input/setting modal -->
 		<Dialog class="password-modal p-dialog-maximized" :class="{ dark__mode: darkModeState }" :showHeader="false" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 			<SimplePassword :title="find === 'true' ? '간편 비밀번호 입력' : '간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
-		<!-- 비밀번호 찾기 모달 -->
+		<!-- Find password modal -->
 		<Dialog class="password__finding-modal" header="" :showHeader="false" v-model:visible="displayFindPasswordModal" :style="{ width: '80vw' }" :modal="true">
 			<div class="password-finding__detail">
 				<br />
@@ -81,13 +80,12 @@
 				<br />
 				<p v-if="simplePassword.length === 0">백업한 비밀번호가 존재하지 않습니다.</p>
 				<p v-else class="password__text">{{ simplePassword }}</p>
-				<!-- <p class="password__text">111111a</p> -->
 			</div>
 			<template #footer>
 				<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="closeFindPasswordModal" />
 			</template>
 		</Dialog>
-		<!-- 비밀번호 설정시 경고모달 -->
+		<!-- Warning modal when setting password -->
 		<Dialog class="password__warning-modal" header="" :showHeader="false" v-model:visible="displayWarningModal" :style="{ width: '80vw' }" :modal="true">
 			<p v-if="regenerateDID" class="password-warning__detail">
 				<br /><span class="password-focus"> 주의 사항 <i class="pi pi-exclamation-triangle" style="color:#ff4b4b; margin-left:5px;"></i></span> <br />
@@ -174,6 +172,7 @@ export default {
 		}, 600)
 	},
 	methods: {
+		// 개인정보 설정
 		setMembers() {
 			this.members.name = this.name
 			this.members.email = this.email
@@ -182,7 +181,7 @@ export default {
 			this.members.userImage = this.imgUrl
 			localStorage.setItem("members", JSON.stringify(this.members))
 		},
-		//유효성 검사
+		// 유효성 검사
 		checkValidate() {
 			let regexp = /^[0-9]*$/
 			if (this.studentId === "") {
@@ -209,7 +208,7 @@ export default {
 				this.getUserKey()
 			}
 		},
-		// key 요청
+		// User key 요청
 		async getUserKey() {
 			this.isFirstMember = false
 			try {
@@ -230,7 +229,7 @@ export default {
 				}
 			}
 		},
-		//did 발급 및 회원가입
+		// did 발급 및 회원가입
 		async generateUserDID() {
 			this.loading = true
 			this.loadingText = "학생증을 발급하는 중입니다."
@@ -268,7 +267,7 @@ export default {
 			}
 			this.loading = false
 		},
-		//did 재발급
+		// did 재발급
 		async regenerateUserDID() {
 			this.loading = true
 			this.loadingText = "학생증을 재발급하는 중입니다."
@@ -292,7 +291,7 @@ export default {
 			}
 			this.loading = false
 		},
-		//did 찾기
+		// did 찾기
 		async getUserDID() {
 			this.loading = true
 			this.loadingText = "학생증을 불러오는 중입니다."
@@ -321,7 +320,7 @@ export default {
 			}
 			this.loading = false
 		},
-		//회원 찾기
+		// 회원 찾기
 		async findAccount() {
 			try {
 				const response = await this.$axios.get("/api/findmyinfo/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, stdnum: this.studentId, name: this.name, email: this.email } })
@@ -348,7 +347,7 @@ export default {
 				}
 			}
 		},
-		//간편 비밀번호 찾기
+		// 간편 비밀번호 찾기
 		async getPassword() {
 			this.openFindPasswordModal()
 			const response = await this.$axios.get("/api/password/", { params: { key: localStorage.getItem("key") } })
@@ -356,7 +355,7 @@ export default {
 				this.simplePassword = response.data.wallet_key
 			}
 		},
-		//간편 비밀번호 찾기 모달
+		// 간편 비밀번호 찾기 모달 토글 함수
 		openFindPasswordModal() {
 			this.displayFindPasswordModal = true
 		},
@@ -364,7 +363,7 @@ export default {
 			this.displayFindPasswordModal = false
 		},
 
-		//간편 비밀번호 모달
+		// 간편 비밀번호 모달 토글 함수
 		openPasswordModal(state) {
 			if (state === "regenerate") this.checkRegenerateDID = true
 			this.closeWarningModal()
@@ -382,7 +381,7 @@ export default {
 			this.displayPasswordModal = false
 		},
 
-		//기본 모달
+		// 기본 모달 토글 함수
 		openBasicModal() {
 			this.displayBasic = true
 		},
@@ -390,21 +389,20 @@ export default {
 			this.displayBasic = false
 		},
 
-		//간편 비밀번호 경고 모달
+		// 간편 비밀번호 경고 모달 토글 함수
 		openWarningModal() {
 			this.displayWarningModal = true
 		},
 		closeWarningModal() {
 			this.displayWarningModal = false
 		},
-
-		//에러 토스트 메시지
-		showError(summaryText, detailText) {
-			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 2000 })
-		},
-		//성공 토스트 메시지
+		// 성공 토스트 메시지
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 2000 })
+		},
+		// 에러 토스트 메시지
+		showError(summaryText, detailText) {
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 2000 })
 		},
 	},
 }

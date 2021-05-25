@@ -4,6 +4,7 @@
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div class="reservation-content">
 				<HeaderSection :title="'좌석 예약'" :subtitle="'자신의 좌석를 예약해주세요.'" :darkModeState="darkModeState" />
+				<!-- Seat UI -->
 				<div class="row">
 					<div class="col-8 py-5">
 						<div>
@@ -18,6 +19,7 @@
 							</table>
 						</div>
 					</div>
+					<!-- Seat selection UI -->
 					<div class="seat__content">
 						<div class="seat__select" :class="{ dark__mode: darkModeState }">
 							<div>
@@ -62,12 +64,15 @@ export default {
 		return { errors: [], o: [], selectedSeat: null, rows: 12, cols: 7, seats: [], darkModeState: this.$shared.checkDarkMode() }
 	},
 	mounted() {
+		// 좌석 배열하기
 		this.generateSeats()
 	},
 	methods: {
+		// 다크모드 세팅
 		confirmSetting() {
 			this.darkModeState = this.$shared.checkDarkMode()
 		},
+		// 좌석 가지고 오기
 		getSeat(r, c) {
 			for (let i = 0; i < this.seats.length; ++i) {
 				if (this.seats[i].position.r == r && this.seats[i].position.c == c) {
@@ -76,6 +81,7 @@ export default {
 			}
 			return null
 		},
+		// 좌석 배열하기
 		generateSeats() {
 			for (let y = 1; y <= this.rows; ++y) {
 				for (let x = 1; x <= this.cols; ++x) {
@@ -88,6 +94,7 @@ export default {
 				}
 			}
 		},
+		// 좌석 분류
 		classifier(r, c) {
 			let seat = this.getSeat(r, c)
 			if (seat != null) {
@@ -107,6 +114,7 @@ export default {
 				}
 			}
 		},
+		// 통로인지 체크
 		isAisle(r, c) {
 			if (r == 3) {
 				if (c >= 1 && c <= 11) {
@@ -115,6 +123,7 @@ export default {
 			}
 			return false
 		},
+		// 선택된 좌석 함수
 		onSeatSelected(r, c) {
 			if (this.selectedSeat == this.getSeat(r, c)) {
 				this.selectedSeat = null
@@ -122,12 +131,14 @@ export default {
 				this.selectedSeat = this.getSeat(r, c)
 			}
 		},
+		// 좌석 상태 확인
 		seatStatus(status) {
 			if (this.selectedSeat != null) {
 				if (this.selectedSeat.status == status) return "active"
 			}
 			return ""
 		},
+		// 좌석 변경
 		changeSeatStatus(status) {
 			if (this.selectedSeat != null) {
 				for (let i = 0; i < this.seats.length; ++i) {
