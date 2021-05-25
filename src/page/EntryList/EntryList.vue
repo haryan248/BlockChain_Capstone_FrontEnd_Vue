@@ -90,6 +90,7 @@ export default {
 	created() {
 		this.checkBuilding()
 		this.getEntryListForAdmin()
+		// 더블 클릭 이벤트 체크
 		var lastTouchEnd = 0
 		document.documentElement.addEventListener(
 			"touchend",

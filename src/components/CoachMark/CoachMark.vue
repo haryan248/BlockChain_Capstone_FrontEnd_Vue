@@ -33,14 +33,17 @@ export default {
 	},
 	created() {
 		this.checkStorage()
-		document.body.classList.add("unset__zindex")
+		// 상단바 하단바 z-index 무시 class 삽입
+		if (this.clicked === false) document.body.classList.add("unset__zindex")
 	},
 	methods: {
+		// 코치마크 닫기 클릭 함수
 		closeCoachMark() {
 			document.body.classList.remove("unset__zindex")
 			JSON.stringify(localStorage.setItem(this.storageName, true))
 			this.clicked = true
 		},
+		// 로컬 스토리지 체크
 		checkStorage() {
 			if (localStorage.getItem(this.storageName) !== null && JSON.parse(localStorage.getItem(this.storageName)) === true) {
 				this.clicked = true
