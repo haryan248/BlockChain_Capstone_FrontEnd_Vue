@@ -148,7 +148,7 @@ export default {
 	padding: 0 !important;
 }
 .unset__zindex .p-dialog-mask {
-	z-index: unset;
+	z-index: unset !important;
 }
 /* 다크모드 */
 .p-dialog.p-component.QR-modal.dark__mode .p-dialog-content {
