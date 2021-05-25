@@ -7,6 +7,9 @@
 	justify-content: space-between;
 	height: 60px;
 }
+.unset__zindex .top-nav {
+	z-index: unset;
+}
 .top-nav,
 .top-nav .nav__button {
 	display: flex;

@@ -10,6 +10,8 @@
 						<Button v-if="selectOrder === 'Desc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-up" @click="orderDate" />
 						<Button v-if="selectOrder === 'Asc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-down" @click="orderDate" />
 					</div>
+					<!-- Coach mark -->
+					<CoachMark :coachMarkType="'clipboard'" :storageName="'clipboard'" />
 					<div class="entryuser__container" :class="{ dark__mode: darkModeState }">
 						<div class="item__content">
 							<div class="entry__content">
@@ -61,10 +63,10 @@
 </template>
 <script>
 import HeaderSection from "../../components/HeaderSection/HeaderSection"
-
+import CoachMark from "../../components/CoachMark/CoachMark"
 export default {
 	name: "EntryList",
-	components: { HeaderSection },
+	components: { HeaderSection, CoachMark },
 	data() {
 		return {
 			darkModeState: this.$shared.checkDarkMode(),
@@ -82,11 +84,28 @@ export default {
 			curPage: 1,
 			totalPage: "",
 			selectOrder: "Asc",
+			checkDoubleTab: false,
 		}
 	},
 	created() {
 		this.checkBuilding()
 		this.getEntryListForAdmin()
+		var lastTouchEnd = 0
+		document.documentElement.addEventListener(
+			"touchend",
+			(event) => {
+				var now = new Date().getTime()
+				if (now - lastTouchEnd <= 300) {
+					event.preventDefault()
+					this.checkDoubleTab = true
+				}
+				lastTouchEnd = now
+			},
+			true
+		)
+	},
+	unmounted() {
+		document.documentElement.removeEventListener("touchend")
 	},
 	methods: {
 		// 다크모드 설정
@@ -154,8 +173,10 @@ export default {
 			}
 			this.getEntryListForAdmin()
 		},
-		// 출입한 학생 리스트에서 클릭시 클립보드 복사
+		// 출입한 학생 리스트에서 더블 클릭시 클립보드 복사
 		copyToClipboard(evt) {
+			if (this.checkDoubleTab === false) return
+			this.checkDoubleTab = false
 			const textNode = document.createElement("textarea")
 			textNode.value = "날짜: " + evt.currentTarget.dataset.date + " 시간: " + evt.currentTarget.dataset.time + " 출입 건물: " + evt.currentTarget.dataset.building + " did: " + evt.currentTarget.dataset.did
 			document.body.appendChild(textNode)
@@ -193,11 +214,11 @@ export default {
 		},
 		// 성공 토스트 메시지
 		showSuccess(summaryText, detailText) {
-			this.$toast.add({ severity: "info", summary: summaryText, detail: detailText, life: 3000 })
+			this.$toast.add({ severity: "info", summary: summaryText, detail: detailText, life: 2000 })
 		},
 		// 에러 토스트 메시지
 		showError(summaryText, detailText) {
-			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 2000 })
 		},
 	},
 }

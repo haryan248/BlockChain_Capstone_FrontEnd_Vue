@@ -1,0 +1,36 @@
+.coach__mark-overlay {
+	height: 100vh;
+	box-sizing: border-box;
+	position: fixed;
+	background-color: #0f0f0fc4;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 9999;
+}
+.coach__mark-closebutton .close__button {
+	font-size: 2rem;
+	color: #ffffff;
+}
+.clipboard__desc {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	color: #ffffff;
+	width: fit-content;
+	margin: 0 auto;
+	padding: 10px;
+	text-align: center;
+}
+.clipboard__desc .clipboard__subtitle {
+	font-weight: 600;
+	font-size: 20px;
+	margin-bottom: 30px;
+}
+.clipboard__desc .focus {
+	color: #9cc0ff;
+	font-weight: bold;
+	font-size: 21px;
+}
