@@ -181,7 +181,7 @@ export default {
 			this.members.userImage = this.imgUrl
 			localStorage.setItem("members", JSON.stringify(this.members))
 		},
-		// 유효성 검사
+		// 입력창 유효성 검사
 		checkValidate() {
 			let regexp = /^[0-9]*$/
 			if (this.studentId === "") {
@@ -203,8 +203,10 @@ export default {
 			}
 			this.failMajor = false
 			if (this.find === "true") {
+				// 회원 찾기 시
 				this.findAccount()
 			} else {
+				// 회원가입 시
 				this.getUserKey()
 			}
 		},
@@ -220,6 +222,7 @@ export default {
 					this.setMembers()
 				}
 			} catch (error) {
+				// 가입된 회원일 때
 				if (error.response.data.msg === "Email is already exists") {
 					localStorage.removeItem("key")
 					this.showError("회원가입 오류", "이미 등록된 이메일입니다.\n잠시후 메인 화면으로 이동합니다.")
@@ -259,6 +262,7 @@ export default {
 					}, 1500)
 				}
 			} catch (error) {
+				// DID 발급 오류 시
 				if (error.response) {
 					if (error.response.data.msg === "DID 발급 오류") {
 						this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
@@ -284,6 +288,7 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
+					// DID 재발급 오류 시
 					if (error.response.data.msg === "DID 재발급 오류") {
 						this.showError("DID 재발급 오류", "죄송합니다. \nDID 재발급에 오류가 있습니다.")
 					}
@@ -310,6 +315,7 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
+					// 해당하는 DID 정보가 없을 때
 					if (error.response.data.msg === "DID를 찾을 수 없습니다.") {
 						JSON.stringify(localStorage.setItem("wrongPassword", this.failCount++))
 						if (JSON.parse(localStorage.getItem("wrongPassword")) === 5) this.regenerateDID = true
@@ -333,12 +339,15 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
+					// 가입되지 않은 이메일 일때
 					if (error.response.data.msg === "가입되지 않은 email입니다.") {
 						this.showError("회원 찾기 오류", "가입된 이메일이 없습니다. \n잠시후 메인 화면으로 돌아갑니다.")
 						setTimeout(() => {
 							this.$router.replace("/login")
 						}, 2000)
-					} else if (error.response.data.msg === "잘못된 정보를 입력하였습니다.") {
+					}
+					// 사용자가 잘못된 정보를 입력했을 때
+					else if (error.response.data.msg === "잘못된 정보를 입력하였습니다.") {
 						this.showError("회원 찾기 오류", "잘못된 정보를 입력하였습니다. \n다시 입력해주세요.")
 						this.studentId = ""
 						this.selectedGroupedMajor = null
@@ -355,6 +364,7 @@ export default {
 				this.simplePassword = response.data.wallet_key
 			}
 		},
+
 		// 간편 비밀번호 찾기 모달 토글 함수
 		openFindPasswordModal() {
 			this.displayFindPasswordModal = true
@@ -370,7 +380,6 @@ export default {
 			this.displayPasswordModal = true
 		},
 		closePasswordModal() {
-			console.log(this.checkRegenerateDID)
 			if (this.checkRegenerateDID) {
 				this.regenerateUserDID()
 			} else if (this.find !== "true") {
@@ -396,6 +405,7 @@ export default {
 		closeWarningModal() {
 			this.displayWarningModal = false
 		},
+
 		// 성공 토스트 메시지
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 2000 })

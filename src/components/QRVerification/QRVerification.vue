@@ -59,7 +59,7 @@ export default {
 		clearInterval(this.polling)
 	},
 	methods: {
-		//qr코드 = H(did + simplepassword + timestamp) + did + timestamp
+		//qr코드 = H(H(did + simplepassword) + timestamp) + did + timestamp
 		setQRString() {
 			this.timeStamp = Math.round(+new Date() / 1000)
 			this.qrString = "https://" + "_" + this.$sha256(this.$sha256(this.did + this.SimplePassword) + this.timeStamp) + "_" + this.did + "_" + this.timeStamp

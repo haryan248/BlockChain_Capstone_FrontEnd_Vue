@@ -165,7 +165,6 @@ export default {
 		onDayClick(day) {
 			this.curMonth = day.month
 			this.curMonth = this.curMonth >= 10 ? this.curMonth : "0" + this.curMonth
-
 			this.curYear = day.year
 			this.curDay = day.day
 
@@ -217,12 +216,14 @@ export default {
 					params: { key: localStorage.getItem("key"), entry_did: localStorage.getItem("did") },
 				})
 				if (response.status === 201) {
+					// 달력에 데이터 바인딩
 					response.data.entry.forEach((item, i) => {
 						this.attributes[i] = { key: i, bar: "red", customData: { building: item.building_num, time: item.entry_time }, compareDate: item.entry_date, dates: new Date(item.entry_date) }
 					})
 					this.attributes.push(this.today)
 					this.attributes = [...this.attributes]
 					this.selectDate[0].day = this.curYear + "-" + this.curMonth + "-" + this.curDay
+					// 현재 날짜에 맞는 달력의 데이터 바인딩
 					let j = 0
 					this.attributes.forEach((item) => {
 						if (this.selectDate[0].day === item.compareDate) {
@@ -234,7 +235,8 @@ export default {
 			} catch (error) {
 				if (error.response) {
 					if (error.response.data.msg === "has no entry") {
-						console.log(error)
+						// 해당 달에 출입한 적이 없을 때
+						console.log(error.response.data.msg)
 					}
 				}
 			}

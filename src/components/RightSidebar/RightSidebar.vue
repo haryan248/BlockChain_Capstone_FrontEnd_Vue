@@ -139,7 +139,7 @@ export default {
 	},
 	emits: ["confirmSetting"],
 	methods: {
-		// 프로필 설정 화면 이동
+		// 프로필 설정 화면 새 창으로 이동
 		goToProfile() {
 			window.open("https://myaccount.google.com/u/1/personal-info")
 		},
@@ -240,6 +240,7 @@ export default {
 				},
 			})
 		},
+
 		// 사이드바 모달 토글 함수
 		openVisibleRight() {
 			this.visibleRight = true
@@ -247,7 +248,8 @@ export default {
 		closeVisibleRight() {
 			this.visibleRight = false
 		},
-		//백업 모달 토글 함수
+
+		// 백업 모달 토글 함수
 		openBackupModal() {
 			this.closeVisibleRight()
 			this.displayBackupModal = true
@@ -256,6 +258,7 @@ export default {
 			this.privacyError = false
 			this.displayBackupModal = false
 		},
+
 		// 패스워드 모달 토글 함수
 		openPasswordModal() {
 			this.closeVisibleRight()
@@ -266,7 +269,8 @@ export default {
 			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다.")
 			this.regenerateUserDID()
 		},
-		//did 재발급
+
+		// did 재발급
 		async regenerateUserDID() {
 			this.loading = true
 			try {
@@ -277,6 +281,7 @@ export default {
 				}
 			} catch (error) {
 				if (error.response) {
+					// DID 재발급 오류 시
 					if (error.response.data.msg === "DID 재발급 오류") {
 						this.showError("DID 재발급 오류", "죄송합니다. \nDID 재발급에 오류가 있습니다.")
 					}
@@ -284,18 +289,19 @@ export default {
 			}
 			this.loading = false
 		},
-		//간편 비밀번호 백업하기
+		// 간편 비밀번호 백업하기
 		async uploadBackup() {
 			if (!this.privacy) {
 				this.privacyError = true
 				return
 			}
 			this.closeBackupModal()
-			const response = await this.$axios.post("/api/password/", {}, { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
-			if (response.status === 201) {
-				this.showSuccess("백업 완료", "간편 비밀번호 백업이 완료되었습니다.")
-			}
-			if (response.status === 400) {
+			try {
+				const response = await this.$axios.post("/api/password/", {}, { params: { key: localStorage.getItem("key"), SimplePassword: localStorage.getItem("simplePassword") } })
+				if (response.status === 201) {
+					this.showSuccess("백업 완료", "간편 비밀번호 백업이 완료되었습니다.")
+				}
+			} catch (error) {
 				this.showError("백업 오류", "죄송합니다. \n백업에 오류가 있습니다.")
 			}
 		},

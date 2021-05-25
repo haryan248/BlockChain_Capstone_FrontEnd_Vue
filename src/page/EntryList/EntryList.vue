@@ -158,7 +158,6 @@ export default {
 		},
 		// 출입한 학생 리스트에서 더블 클릭시 클립보드 복사
 		copyToClipboard(evt) {
-			console.log(evt)
 			const textNode = document.createElement("textarea")
 			textNode.value = "날짜: " + evt.currentTarget.dataset.date + " 시간: " + evt.currentTarget.dataset.time + " 출입 건물: " + evt.currentTarget.dataset.building + " did: " + evt.currentTarget.dataset.did
 			document.body.appendChild(textNode)
@@ -188,7 +187,7 @@ export default {
 			} catch (error) {
 				if (error.response) {
 					if (error.response.data.msg === "has no entry") {
-						console.log(error.response.data)
+						this.entryList = []
 					}
 				}
 			}

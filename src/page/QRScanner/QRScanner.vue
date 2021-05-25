@@ -84,7 +84,6 @@ export default {
 			if (sound) {
 				var audio = new Audio(sound)
 				audio.play()
-				console.log(audio.play())
 			}
 		},
 		resetValidationState() {

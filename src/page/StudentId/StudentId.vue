@@ -92,6 +92,7 @@ export default {
 			this.major = this.members.major
 			this.userImage = this.members.userImage
 		},
+
 		// QR 모달 토글 함수
 		openQRModal() {
 			this.displayQRModal = true
@@ -99,6 +100,7 @@ export default {
 		closeQRModal() {
 			this.displayQRModal = false
 		},
+
 		// 간편비밀번호 모달 토글 함수
 		openPasswordModal() {
 			this.displayPasswordModal = true
@@ -109,6 +111,7 @@ export default {
 			}, 100)
 			this.displayPasswordModal = false
 		},
+
 		//학생증 모달 토글 함수
 		openStudentModal() {
 			this.displayStudentModal = true

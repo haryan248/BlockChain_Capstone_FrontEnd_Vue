@@ -133,6 +133,7 @@ export default {
 		confirmSetting() {
 			this.darkModeState = this.$shared.checkDarkMode()
 		},
+
 		// 주문 qr코드 토글 함수
 		openOrderQRModal() {
 			this.displayOrderQRModal = true

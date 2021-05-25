@@ -3,7 +3,6 @@ const shared = {
 	// 로그인 유효성 검사 함수
 	checkGoogleLogin(gAuth) {
 		setTimeout(() => {
-			// console.log(gAuth.instance.currentUser.get().isSignedIn())
 			if (gAuth.instance.currentUser.get().isSignedIn() === false) localStorage.removeItem("key")
 		}, 2000)
 	},

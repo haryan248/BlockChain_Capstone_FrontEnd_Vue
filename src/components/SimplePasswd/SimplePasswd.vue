@@ -103,10 +103,12 @@ export default {
 		})
 	},
 	unmounted() {
+		// 터치 이벤트 제거
 		document.removeEventListener("touchstart", this.touchStartListener)
 		document.removeEventListener("touchend", this.touchEndListener)
 	},
 	methods: {
+		// 영어 자판 배열 생성
 		genCharArray(charA, charZ) {
 			var a = [],
 				i = charA.charCodeAt(0),
@@ -140,21 +142,25 @@ export default {
 				this.touchAlphaStart[event.target.getAttribute("value")] = false
 			}
 		},
+
 		checkInvisibleNum(num) {
 			this.tempNum = num
 		},
+
 		// 비밀번호 설정
 		setPasswd(num) {
 			if (this.simplePasswd.length !== this.passwdMaxLength) {
 				this.simplePasswd = this.simplePasswd + String(num)
 			}
 		},
-		//비밀번호 지우기
+
+		// 비밀번호 지우기
 		erasePasswd() {
 			this.simplePasswd = this.simplePasswd.slice(0, this.simplePasswd.length === 0 ? 0 : this.simplePasswd.length - 1)
 		},
 	},
 	watch: {
+		// 입력한 비밀번호 Watch
 		simplePasswd(data) {
 			if (data.length >= 1) this.simplePasswdText = ""
 
@@ -166,7 +172,7 @@ export default {
 					this.simplePasswd = ""
 				}
 			}
-			//비밀번호 재설정 관련
+			// 비밀번호 재설정 관련
 			else if (this.correctCurrentPassword === false && this.isResetting === true && data.length === this.passwdMaxLength) {
 				if (data === localStorage.getItem("simplePassword")) {
 					this.resettingText = "변경할 비밀번호를 입력해주세요."
@@ -178,15 +184,16 @@ export default {
 					this.simplePasswd = ""
 				}
 			}
-			//비밀 번호 설정 관련
+			// 비밀 번호 설정 관련
 			else if ((this.isSetting === true && data.length === this.passwdMaxLength) || (this.correctCurrentPassword === true && data.length === this.passwdMaxLength)) {
-				//처음 비밀번호 입력
+				// 처음 비밀번호 입력
 				if (this.isFirstSettingPassword) {
 					this.tempPassword = this.simplePasswd
 					this.simplePasswd = ""
 					this.isFirstSettingPassword = false
 					this.simplePasswdText = "간편 비밀번호를 한 번 더 입력해 주세요."
 				} else {
+					// 두번째 비밀번호 입력
 					if (this.tempPassword === this.simplePasswd) {
 						localStorage.setItem("simplePassword", this.simplePasswd)
 						this.$emit("setCorrectPassword")
