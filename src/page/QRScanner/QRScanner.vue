@@ -70,12 +70,13 @@ export default defineComponent({
 		const validationPending = computed(() => state.checkQR === true)
 		const validationSuccess = computed(() => state.isValid === true)
 		const validationFailure = computed(() => state.isValid === false)
-		function onDecode(result) {
+		async function onDecode(result) {
 			state.firstLoading = true
 			state.result = result
 			let currentCamera = state.camera
 			turnCameraOff()
 			// pretend it's taking really long
+			await this.timeout(1500)
 			state.checkQR = true
 			generateEntry(result, currentCamera)
 		}
