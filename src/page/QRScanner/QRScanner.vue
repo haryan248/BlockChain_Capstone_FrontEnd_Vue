@@ -73,12 +73,11 @@ export default {
 		async onDecode(result) {
 			this.firstLoading = true
 			this.result = result
-			// this.turnCameraOff()
+			this.turnCameraOff()
 			// pretend it's taking really long
 			this.checkQR = true
 			this.generateEntry(result)
 			await this.timeout(3000)
-			// this.turnCameraOn(this.camera)
 		},
 		// 인증 사운드
 		play(sound) {
@@ -165,6 +164,7 @@ export default {
 					}
 				}
 			}
+			this.turnCameraOn(this.camera)
 			this.checkQR = false
 			this.play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
 		},
