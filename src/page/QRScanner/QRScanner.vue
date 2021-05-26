@@ -76,7 +76,7 @@ export default defineComponent({
 			let currentCamera = state.camera
 			turnCameraOff()
 			// pretend it's taking really long
-			await this.timeout(1500)
+			await timeout(1500)
 			state.checkQR = true
 			generateEntry(result, currentCamera)
 		}
