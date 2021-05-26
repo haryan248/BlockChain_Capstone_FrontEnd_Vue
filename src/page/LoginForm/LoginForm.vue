@@ -43,11 +43,11 @@
 							<label for="adminCode" class="input__form" ref="adminCodeInput"
 								>관리자 코드
 								<span class="p-field-checkbox" style="display:inline; position: absolute;right: 24px;">
-									<Checkbox name="관리자" class="border-none" value="admin" v-model="admin" :binary="true" :disable="successSignUp" />
+									<Checkbox name="관리자" class="border-none" value="admin" v-model="admin" :binary="true" :disabled="successSignUp || checkAdminCodeState" />
 								</span>
 							</label>
 							<div v-if="admin">
-								<InputText :class="{ 'p-invalid': failAdmin && admin }" autocomplete="off" id="adminCode" placeholder="관리자 코드" type="text" v-model="adminCode" :disabled="!admin" />
+								<InputText :class="{ 'p-invalid': failAdmin && admin }" autocomplete="off" id="adminCode" placeholder="관리자 코드" type="text" v-model="adminCode" :disabled="checkAdminCodeState" />
 								<small v-if="failAdmin && admin" class="p-error" id="studentid-help">{{ failAdminText }}</small>
 								<small v-else id="studentid-help">관리자인 경우 입력해주세요.</small>
 							</div>
@@ -267,6 +267,11 @@ export default {
 					setTimeout(() => {
 						this.$router.replace("/login")
 					}, 2000)
+				} else if (error.response.data.msg === "Kgu DB info is not exists") {
+					this.showError("회원 정보 입력 오류", "잘못된 정보를 입력하였습니다. \n다시 입력해주세요.")
+					this.studentId = ""
+					this.selectedGroupedMajor = null
+					this.$refs.studentId.$el.focus()
 				}
 			}
 		},

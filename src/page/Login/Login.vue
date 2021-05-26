@@ -31,7 +31,7 @@
 				비대면 학생증 발급을 위한 블록체인 기반 DID (Decentralized Identifier) 발급 <br />
 				어플리케이션입니다.
 				<br />
-				자신의 데이터 및 개인 정보는 자신만이 지킬 수 있습니다.👍
+				자신의 데이터 및 개인 정보는 자신만이 <br />지킬 수 있습니다.👍
 				<br />
 				<br />
 				<span class="upass-focus">- 이팔청춘 -</span> <br />
