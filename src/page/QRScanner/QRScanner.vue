@@ -73,12 +73,11 @@ export default {
 		async onDecode(result) {
 			this.firstLoading = true
 			this.result = result
+			let currentCamera = this.camera
 			this.turnCameraOff()
 			// pretend it's taking really long
 			this.checkQR = true
-			this.generateEntry(result)
-			await this.timeout(3000)
-			this.turnCameraOn(this.camera)
+			this.generateEntry(result, currentCamera)
 		},
 		// 인증 사운드
 		play(sound) {
@@ -92,7 +91,6 @@ export default {
 		},
 		turnCameraOn(camera) {
 			this.camera = camera
-			alert("camera on")
 		},
 		turnCameraOff() {
 			this.camera = "off"
@@ -118,7 +116,7 @@ export default {
 			})
 		},
 		// qr 인증시 블록체인 네트워크에 tx 발생
-		async generateEntry(result) {
+		async generateEntry(result, currentCamera) {
 			let date = new Date()
 			let year = date.getFullYear()
 			let month = date.getMonth() + 1
@@ -150,6 +148,8 @@ export default {
 				)
 				if (response.status === 201) {
 					this.isValid = true
+					this.turnCameraOn(currentCamera)
+
 					this.showSuccess("인증 완료", "학생증이 인증되었습니다.")
 				}
 			} catch (error) {
@@ -161,6 +161,7 @@ export default {
 					} else {
 						this.showError("인증 오류", "죄송합니다. \n본인 인증에 오류가 있습니다.")
 					}
+					this.turnCameraOn(currentCamera)
 				}
 			}
 			this.checkQR = false
