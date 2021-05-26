@@ -8,7 +8,7 @@
 						<div class="close__button">
 							<Button icon="pi pi-times" @click="goBack" class="p-button" alt="switch camera" />
 						</div>
-						<qr-stream :camera="state.camera" @decode="onDecode" @init="onInit">
+						<QrStream :camera="state.camera" @decode="onDecode" @init="onInit">
 							<!-- Loading screen -->
 							<div class="loading-indicator-qr" v-if="state.loading && !state.firstLoading">
 								카메라가 로딩중입니다.
@@ -32,7 +32,7 @@
 								</div>
 								<div class="QR_descirpt"><span class="focus">QR코드</span>로 인증을 진행할 수 있습니다. <br />카메라 화면 안에 <span class="focus">QR 코드</span>를 <span class="focus">인식</span>시켜주세요.</div>
 							</div>
-						</qr-stream>
+						</QrStream>
 						<!-- Camera switch -->
 						<div class="switch__button" @click="switchCamera">
 							<div>카메라 전환</div>
@@ -45,12 +45,12 @@
 </template>
 <script>
 import { QrStream } from "vue3-qr-reader"
-import { computed, reactive } from "vue"
+import { defineComponent, computed, reactive } from "vue"
 import { useRouter } from "vue-router"
 import axios from "axios"
 import { useToast } from "primevue/usetoast"
 
-export default {
+export default defineComponent({
 	name: "QRScanner",
 	components: { QrStream },
 	setup() {
@@ -62,18 +62,15 @@ export default {
 			result: "",
 			error: "",
 			loading: false,
-			camera: "rear",
+			camera: "auto",
 			checkQR: false,
 			firstLoading: false,
 		})
 
 		const validationPending = computed(() => state.checkQR === true)
-
 		const validationSuccess = computed(() => state.isValid === true)
-
 		const validationFailure = computed(() => state.isValid === false)
-
-		const onDecode = (result) => {
+		function onDecode(result) {
 			state.firstLoading = true
 			state.result = result
 			let currentCamera = state.camera
@@ -175,7 +172,6 @@ export default {
 				if (response.status === 201) {
 					state.isValid = true
 					turnCameraOn(currentCamera)
-
 					showSuccess("인증 완료", "학생증이 인증되었습니다.")
 				}
 			} catch (error) {
@@ -202,6 +198,7 @@ export default {
 			toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
 		}
 		return {
+			// ...toRefs(state),
 			state,
 			validationPending,
 			validationSuccess,
@@ -220,7 +217,7 @@ export default {
 			showError,
 		}
 	},
-}
+})
 </script>
 <style scoped>
 @import "./qrscanner.css";
