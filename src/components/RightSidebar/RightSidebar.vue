@@ -142,6 +142,7 @@ export default {
 		// 프로필 설정 화면 새 창으로 이동
 		goToProfile() {
 			window.open("https://myaccount.google.com/u/1/personal-info")
+			JSON.stringify(sessionStorage.setItem("checkGoogleProfile", true))
 		},
 		// 개인정보 세팅
 		setMembers() {

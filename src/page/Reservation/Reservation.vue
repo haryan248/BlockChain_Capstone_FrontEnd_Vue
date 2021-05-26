@@ -66,6 +66,7 @@ export default {
 	mounted() {
 		// 좌석 배열하기
 		this.generateSeats()
+		this.$shared.checkGoogleLogin(this.$gAuth)
 	},
 	methods: {
 		// 다크모드 세팅

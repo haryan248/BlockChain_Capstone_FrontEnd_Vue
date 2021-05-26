@@ -187,7 +187,7 @@ export default {
 			} catch (error) {
 				if (error.response) {
 					if (error.response.data.msg === "has no entry") {
-						this.entryList = []
+						this.entryList = [...this.entryList]
 					}
 				}
 			}

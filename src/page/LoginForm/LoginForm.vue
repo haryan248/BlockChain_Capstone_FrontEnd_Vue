@@ -155,6 +155,7 @@ export default {
 			],
 			members: {
 				name: "",
+				email: "",
 				studentId: "",
 				major: "",
 				userImage: "",

@@ -138,6 +138,7 @@ export default {
 		}
 	},
 	mounted() {
+		this.$shared.checkGoogleLogin(this.$gAuth)
 		this.setDate()
 		this.selectDate[0].day = this.curYear + "-" + this.curMonth + "-" + this.curDay
 	},
