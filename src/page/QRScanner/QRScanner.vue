@@ -151,6 +151,7 @@ export default {
 				if (response.status === 201) {
 					this.isValid = true
 					this.showSuccess("인증 완료", "학생증이 인증되었습니다.")
+					this.turnCameraOn(this.camera)
 				}
 			} catch (error) {
 				if (error.response) {
@@ -161,9 +162,9 @@ export default {
 					} else {
 						this.showError("인증 오류", "죄송합니다. \n본인 인증에 오류가 있습니다.")
 					}
+					this.turnCameraOn(this.camera)
 				}
 			}
-			this.turnCameraOn(this.camera)
 			this.checkQR = false
 			this.play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
 		},
