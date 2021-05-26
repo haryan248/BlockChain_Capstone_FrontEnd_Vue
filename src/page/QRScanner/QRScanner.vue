@@ -77,7 +77,7 @@ export default {
 			// pretend it's taking really long
 			this.generateEntry(result)
 			await this.timeout(3000)
-			this.turnCameraOn()
+			this.turnCameraOn(this.camera)
 		},
 		// 인증 사운드
 		play(sound) {
@@ -89,8 +89,8 @@ export default {
 		resetValidationState() {
 			this.isValid = undefined
 		},
-		turnCameraOn() {
-			this.camera = "front"
+		turnCameraOn(camera) {
+			this.camera = camera
 		},
 		turnCameraOff() {
 			this.camera = "off"
@@ -186,6 +186,7 @@ export default {
 			} finally {
 				this.loading = false
 				this.resetValidationState()
+				this.turnCameraOn(this.camera)
 			}
 		},
 		// 성공 토스트 메시지
