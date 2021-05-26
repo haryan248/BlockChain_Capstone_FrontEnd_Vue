@@ -267,7 +267,7 @@ export default {
 					setTimeout(() => {
 						this.$router.replace("/login")
 					}, 2000)
-				} else if (error.response.data.msg === "Kgu DB info is not exists") {
+				} else if (error.response.data.msg === "user info is not exists in blockchain") {
 					this.showError("회원 정보 입력 오류", "잘못된 정보를 입력하였습니다. \n다시 입력해주세요.")
 					this.studentId = ""
 					this.selectedGroupedMajor = null
