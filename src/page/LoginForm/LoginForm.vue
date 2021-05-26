@@ -39,10 +39,13 @@
 							<small v-if="failMajor" class="p-error" id="studentid-help">{{ failMajorText }}</small>
 							<small v-else id="usermajor-help">학과를 선택해주세요.</small>
 						</div>
-						<div class="p-field">
+						<div v-if="find !== 'true'" class="p-field">
 							<label for="adminCode" class="input__form" ref="adminCodeInput"
-								>관리자 코드 <span class="p-field-checkbox" style="display:inline; position: absolute;right: 24px;"> <Checkbox name="관리자" class="border-none" value="admin" v-model="admin" :binary="true" /> </span
-							></label>
+								>관리자 코드
+								<span class="p-field-checkbox" style="display:inline; position: absolute;right: 24px;">
+									<Checkbox name="관리자" class="border-none" value="admin" v-model="admin" :binary="true" :disable="successSignUp" />
+								</span>
+							</label>
 							<div v-if="admin">
 								<InputText :class="{ 'p-invalid': failAdmin && admin }" autocomplete="off" id="adminCode" placeholder="관리자 코드" type="text" v-model="adminCode" :disabled="!admin" />
 								<small v-if="failAdmin && admin" class="p-error" id="studentid-help">{{ failAdminText }}</small>
@@ -51,7 +54,6 @@
 						</div>
 						<!-- Find student ID button -->
 						<div v-if="find === 'true'">
-							<Button v-if="admin" label="관리자 코드 확인" icon="pi pi-key" iconPos="right" :class="{ 'p-button-outlined': !successAdminCode }" :disabled="successAdminCode" @click="checkAdminCode" style="margin-bottom: 20px;" />
 							<Button label="회원 정보 입력" icon="pi pi-pencil" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
 							<Button v-if="successSignUp" label="간편 비밀번호 입력" icon="pi pi-lock" iconPos="right" class="login__form-button" :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openPasswordModal" />
 							<Button v-if="successPassword" label="학생증 찾기" icon="pi pi-search" iconPos="right" class="login__form-button" :class="{ 'p-button-outlined': !successFindDID }" :disabled="successFindDID" @click="getUserDID" />
@@ -281,7 +283,6 @@ export default {
 							key: this.tempKey,
 							major: this.selectedGroupedMajor.label,
 							std_num: this.studentId,
-							name: this.name,
 							email: this.email,
 							simple_password: localStorage.getItem("simplePassword"),
 							position: this.checkAdminCodeState ? "admin" : "",
@@ -317,7 +318,6 @@ export default {
 				if (response.status === 201) {
 					localStorage.setItem("key", this.tempKey)
 					localStorage.setItem("did", response.data.did)
-					if (this.checkAdminCodeState) localStorage.setItem("adminKey", this.$sha256(this.adminCode))
 					localStorage.removeItem("wrongPassword")
 					this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다. \n잠시후 학생증 페이지로 이동합니다.")
 					setTimeout(() => {
@@ -344,7 +344,6 @@ export default {
 					this.successFindDID = true
 					localStorage.setItem("key", this.tempKey)
 					localStorage.setItem("did", response.data.did)
-					if (this.checkAdminCodeState) localStorage.setItem("adminKey", this.$sha256(this.adminCode))
 					localStorage.removeItem("wrongPassword")
 					localStorage.removeItem("findDid")
 					this.showSuccess("학생증 불러오기 성공", "학생증 찾기를 성공하였습니다. \n잠시후 학생증 페이지로 이동합니다.")
@@ -368,10 +367,11 @@ export default {
 		// 회원 찾기
 		async findAccount() {
 			try {
-				const response = await this.$axios.get("/api/findmyinfo/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, std_num: this.studentId, name: this.name, email: this.email } })
+				const response = await this.$axios.get("/api/findmyinfo/", { params: { key: this.$sha256("이팔청춘의 U-PASS"), major: this.selectedGroupedMajor.label, std_num: this.studentId, email: this.email } })
 				if (response.status === 201) {
 					this.showSuccess("회원 정보 입력 성공", "올바른 회원입니다. \n간편 비밀번호를 입력해주세요. ")
 					this.tempKey = response.data.user_key
+					if (response.data.admin_key !== null) localStorage.setItem("adminKey", response.data.admin_key)
 					JSON.stringify(localStorage.setItem("findDid", true))
 					this.successSignUp = true
 					this.setMembers()
