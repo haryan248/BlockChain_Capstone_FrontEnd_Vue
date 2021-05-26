@@ -78,6 +78,7 @@ export default {
 			this.checkQR = true
 			this.generateEntry(result)
 			await this.timeout(3000)
+			this.turnCameraOn(this.camera)
 		},
 		// 인증 사운드
 		play(sound) {
@@ -99,7 +100,6 @@ export default {
 		// 뒤로가기 버튼 클릭시 카메라 끄고 이동
 		goBack() {
 			this.$router.go(-1)
-			// this.turnCameraOff()
 		},
 		// 카메라 전환
 		switchCamera() {
@@ -151,7 +151,6 @@ export default {
 				if (response.status === 201) {
 					this.isValid = true
 					this.showSuccess("인증 완료", "학생증이 인증되었습니다.")
-					this.turnCameraOn(this.camera)
 				}
 			} catch (error) {
 				if (error.response) {
@@ -162,7 +161,6 @@ export default {
 					} else {
 						this.showError("인증 오류", "죄송합니다. \n본인 인증에 오류가 있습니다.")
 					}
-					this.turnCameraOn(this.camera)
 				}
 			}
 			this.checkQR = false
