@@ -105,11 +105,15 @@ export default {
 		// 강의동 선택 함수
 		confirmBuilding() {
 			JSON.stringify(localStorage.setItem("building", this.building.key))
-			this.showSuccess("강의동 설정 완료", "선택하신 강의동이 설정되었습니다.")
+			if (this.building === null) this.showError("강의동 설정 실패", "강의동을 선택해주세요.")
+			else this.showSuccess("강의동 설정 완료", "선택하신 강의동이 설정되었습니다.")
 		},
 		// 성공 토스트 메시지
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
+		}, // 에러 토스트 메시지
+		showError(summaryText, detailText) {
+			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
 		},
 	},
 }
