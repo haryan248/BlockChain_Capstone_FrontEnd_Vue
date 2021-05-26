@@ -18,7 +18,7 @@
 				<div class="blank__content"></div>
 			</div>
 			<div class="profile__content" @click="goToProfile">
-				<div v-if="adminChecked" class="admin">관리자</div>
+				<div v-if="isAdmin" class="admin">관리자</div>
 				<div class="img__content">
 					<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }" style="width: 60px;height: 60px;"></div>
 				</div>
