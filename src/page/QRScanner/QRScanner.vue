@@ -8,9 +8,9 @@
 						<div class="close__button">
 							<Button icon="pi pi-times" @click="goBack" class="p-button" alt="switch camera" />
 						</div>
-						<qr-stream :camera="camera" @decode="onDecode" @init="onInit">
+						<qr-stream :camera="state.camera" @decode="onDecode" @init="onInit">
 							<!-- Loading screen -->
-							<div class="loading-indicator-qr" v-if="loading && !firstLoading">
+							<div class="loading-indicator-qr" v-if="state.loading && !state.firstLoading">
 								카메라가 로딩중입니다.
 								<ProgressBar mode="indeterminate" style="height: .5em" />
 							</div>
@@ -45,78 +45,104 @@
 </template>
 <script>
 import { QrStream } from "vue3-qr-reader"
+import { computed, reactive } from "vue"
+import { useRouter } from "vue-router"
+import axios from "axios"
+import { useToast } from "primevue/usetoast"
 
 export default {
 	name: "QRScanner",
 	components: { QrStream },
-	data() {
-		return { isValid: undefined, result: "", error: "", loading: false, camera: "rear", checkQR: false, firstLoading: false }
-	},
-	mounted() {
-		this.$shared.checkGoogleLogin(this.$gAuth)
-	},
-	computed: {
-		validationPending() {
-			return this.checkQR === true
-		},
+	setup() {
+		const router = useRouter()
+		const toast = useToast()
 
-		validationSuccess() {
-			return this.isValid === true
-		},
+		const state = reactive({
+			isValid: undefined,
+			result: "",
+			error: "",
+			loading: false,
+			camera: "rear",
+			checkQR: false,
+			firstLoading: false,
+		})
 
-		validationFailure() {
-			return this.isValid === false
-		},
-	},
-	methods: {
-		// qr 디코드
-		async onDecode(result) {
-			this.firstLoading = true
-			this.result = result
-			let currentCamera = this.camera
-			this.turnCameraOff()
+		const validationPending = computed(() => state.checkQR === true)
+
+		const validationSuccess = computed(() => state.isValid === true)
+
+		const validationFailure = computed(() => state.isValid === false)
+
+		const onDecode = (result) => {
+			state.firstLoading = true
+			state.result = result
+			let currentCamera = state.camera
+			turnCameraOff()
 			// pretend it's taking really long
-			this.checkQR = true
-			this.generateEntry(result, currentCamera)
-		},
+			state.checkQR = true
+			generateEntry(result, currentCamera)
+		}
 		// 인증 사운드
-		play(sound) {
+		const play = (sound) => {
 			if (sound) {
 				var audio = new Audio(sound)
 				audio.play()
 			}
-		},
-		resetValidationState() {
-			this.isValid = undefined
-		},
-		turnCameraOn(camera) {
-			this.camera = camera
-		},
-		turnCameraOff() {
-			this.camera = "off"
-		},
+		}
+		const resetValidationState = () => {
+			state.isValid = undefined
+		}
+		const turnCameraOn = (camera) => {
+			state.camera = camera
+		}
+		const turnCameraOff = () => {
+			state.camera = "off"
+		}
 		// 뒤로가기 버튼 클릭시 카메라 끄고 이동
-		goBack() {
-			this.$router.go(-1)
-		},
+		const goBack = () => {
+			router.go(-1)
+		}
 		// 카메라 전환
-		switchCamera() {
-			switch (this.camera) {
+		function switchCamera() {
+			switch (state.camera) {
 				case "front":
-					this.camera = "rear"
+					state.camera = "rear"
 					break
 				case "rear":
-					this.camera = "front"
+					state.camera = "front"
 					break
 			}
-		},
-		timeout(ms) {
+		}
+		const timeout = (ms) => {
 			return new Promise((resolve) => {
 				window.setTimeout(resolve, ms)
 			})
-		},
-		// qr 인증시 블록체인 네트워크에 tx 발생
-		async generateEntry(result, currentCamera) {
+		}
+		// 카메라 초기 세팅
+		const onInit = async (promise) => {
+			state.loading = true
+			try {
+				await promise
+			} catch (error) {
+				if (error.name === "NotAllowedError") {
+					state.error = "ERROR: you need to grant camera access permisson"
+				} else if (error.name === "NotFoundError") {
+					state.error = "ERROR: no camera on this device"
+				} else if (error.name === "NotSupportedError") {
+					state.error = "ERROR: secure context required (HTTPS, localhost)"
+				} else if (error.name === "NotReadableError") {
+					state.error = "ERROR: is the camera already in use?"
+				} else if (error.name === "OverconstrainedError") {
+					state.error = "ERROR: installed cameras are not suitable"
+				} else if (error.name === "StreamApiNotSupportedError") {
+					state.error = "ERROR: Stream API is not supported in this browser"
+				}
+			} finally {
+				state.loading = false
+				resetValidationState()
+			}
+		}
+		const generateEntry = async (result, currentCamera) => {
 			let date = new Date()
 			let year = date.getFullYear()
 			let month = date.getMonth() + 1
@@ -128,7 +154,7 @@ export default {
 			let timestamp = result.split("_")[3]
 			let building = JSON.parse(localStorage.getItem("building"))
 			try {
-				const response = await this.$axios.post(
+				const response = await axios.post(
 					"/api/generateentry/",
 					{},
 					{
@@ -147,58 +173,52 @@ export default {
 					}
 				)
 				if (response.status === 201) {
-					this.isValid = true
-					this.turnCameraOn(currentCamera)
+					state.isValid = true
+					turnCameraOn(currentCamera)
 
-					this.showSuccess("인증 완료", "학생증이 인증되었습니다.")
+					showSuccess("인증 완료", "학생증이 인증되었습니다.")
 				}
 			} catch (error) {
 				if (error.response) {
 					if (error.response.data.msg === "check_DID error") {
-						this.showError("본인 인증 오류", "죄송합니다. \n본인 인증에 오류가 있습니다.")
+						showError("본인 인증 오류", "죄송합니다. \n본인 인증에 오류가 있습니다.")
 					} else if (error.response.data.msg === "timestamp error") {
-						this.showError("유효 시간 오류", "죄송합니다. \n유효 시간이 지났습니다. 다시 찍어주세요.")
+						showError("유효 시간 오류", "죄송합니다. \n유효 시간이 지났습니다. 다시 찍어주세요.")
 					} else {
-						this.showError("인증 오류", "죄송합니다. \n본인 인증에 오류가 있습니다.")
+						showError("인증 오류", "죄송합니다. \n본인 인증에 오류가 있습니다.")
 					}
-					this.turnCameraOn(currentCamera)
+					turnCameraOn(currentCamera)
 				}
 			}
-			this.checkQR = false
-			this.play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
-		},
-		// 카메라 초기 세팅
-		async onInit(promise) {
-			this.loading = true
-			try {
-				await promise
-			} catch (error) {
-				if (error.name === "NotAllowedError") {
-					this.error = "ERROR: you need to grant camera access permisson"
-				} else if (error.name === "NotFoundError") {
-					this.error = "ERROR: no camera on this device"
-				} else if (error.name === "NotSupportedError") {
-					this.error = "ERROR: secure context required (HTTPS, localhost)"
-				} else if (error.name === "NotReadableError") {
-					this.error = "ERROR: is the camera already in use?"
-				} else if (error.name === "OverconstrainedError") {
-					this.error = "ERROR: installed cameras are not suitable"
-				} else if (error.name === "StreamApiNotSupportedError") {
-					this.error = "ERROR: Stream API is not supported in this browser"
-				}
-			} finally {
-				this.loading = false
-				this.resetValidationState()
-			}
-		},
+			state.checkQR = false
+			play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
+		}
 		// 성공 토스트 메시지
-		showSuccess(summaryText, detailText) {
-			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
-		},
+		const showSuccess = (summaryText, detailText) => {
+			toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
+		}
 		// 에러 토스트 메시지
-		showError(summaryText, detailText) {
-			this.$toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
-		},
+		const showError = (summaryText, detailText) => {
+			toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
+		}
+		return {
+			state,
+			validationPending,
+			validationSuccess,
+			validationFailure,
+			onDecode,
+			play,
+			resetValidationState,
+			turnCameraOn,
+			turnCameraOff,
+			goBack,
+			switchCamera,
+			timeout,
+			onInit,
+			generateEntry,
+			showSuccess,
+			showError,
+		}
 	},
 }
 </script>
