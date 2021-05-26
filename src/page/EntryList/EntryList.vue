@@ -174,7 +174,7 @@ export default {
 		async getEntryListForAdmin() {
 			this.loading = true
 			try {
-				const response = await this.$axios.get("/api/entryadmin/", { params: { key: localStorage.getItem("key"), building_num: localStorage.getItem("building"), page_num: this.curPage, order: this.selectOrder } })
+				const response = await this.$axios.get("/api/entryadmin/", { params: { admin_did: localStorage.getItem("did"), building_num: localStorage.getItem("building"), page_num: this.curPage, order: this.selectOrder } })
 				if (response.status === 201) {
 					this.totalPage = response.data.total_page
 					this.totalRecords = Number(response.data.total_count)

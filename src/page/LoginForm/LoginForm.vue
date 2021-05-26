@@ -13,13 +13,13 @@
 				<div class="p-fluid">
 					<div class="sign-in">
 						<div class="p-field">
-							<label for="studentId" ref="usernameInput" class="studentId">학번 *</label>
+							<label for="studentId" ref="usernameInput" class="input__form">학번 *</label>
 							<InputText ref="studentId" :class="{ 'p-invalid': failId }" autocomplete="off" id="studentId" placeholder="학번" type="text" :maxlength="9" v-model="studentId" :disabled="successSignUp" />
 							<small v-if="failId" class="p-error" id="studentid-help">{{ failIdText }}</small>
 							<small v-else id="studentid-help">학번을 입력해주세요.</small>
 						</div>
 						<div class="p-field">
-							<label for="id" class="studentId" ref="majorInput">학과 *</label>
+							<label for="id" class="input__form" ref="majorInput">학과 *</label>
 							<Dropdown
 								:disabled="successSignUp"
 								v-model="selectedGroupedMajor"
@@ -39,8 +39,19 @@
 							<small v-if="failMajor" class="p-error" id="studentid-help">{{ failMajorText }}</small>
 							<small v-else id="usermajor-help">학과를 선택해주세요.</small>
 						</div>
+						<div class="p-field">
+							<label for="adminCode" class="input__form" ref="adminCodeInput"
+								>관리자 코드 <span class="p-field-checkbox" style="display:inline; position: absolute;right: 24px;"> <Checkbox name="관리자" class="border-none" value="admin" v-model="admin" :binary="true" /> </span
+							></label>
+							<div v-if="admin">
+								<InputText :class="{ 'p-invalid': failAdmin && admin }" autocomplete="off" id="adminCode" placeholder="관리자 코드" type="text" v-model="adminCode" :disabled="!admin" />
+								<small v-if="failAdmin && admin" class="p-error" id="studentid-help">{{ failAdminText }}</small>
+								<small v-else id="studentid-help">관리자인 경우 입력해주세요.</small>
+							</div>
+						</div>
 						<!-- Find student ID button -->
 						<div v-if="find === 'true'">
+							<Button v-if="admin" label="관리자 코드 확인" icon="pi pi-key" iconPos="right" :class="{ 'p-button-outlined': !successAdminCode }" :disabled="successAdminCode" @click="checkAdminCode" style="margin-bottom: 20px;" />
 							<Button label="회원 정보 입력" icon="pi pi-pencil" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
 							<Button v-if="successSignUp" label="간편 비밀번호 입력" icon="pi pi-lock" iconPos="right" class="login__form-button" :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openPasswordModal" />
 							<Button v-if="successPassword" label="학생증 찾기" icon="pi pi-search" iconPos="right" class="login__form-button" :class="{ 'p-button-outlined': !successFindDID }" :disabled="successFindDID" @click="getUserDID" />
@@ -49,8 +60,9 @@
 						</div>
 						<!-- Sign up button -->
 						<div v-else>
+							<Button v-if="admin" label="관리자 코드 확인" icon="pi pi-key" iconPos="right" :class="{ 'p-button-outlined': !successAdminCode }" :disabled="successAdminCode" @click="checkAdminCode" style="margin-bottom: 20px;" />
 							<Button label="회원 정보 입력" icon="pi pi-check" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
-							<Button v-if="successSignUp" label="간편 비밀번호 설정" icon="pi pi-lock" iconPos="right" class="login__form-button " :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openWarningModal" />
+							<Button v-if="successSignUp" label="간편 비밀번호 설정" icon="pi pi-lock" iconPos="right" class="login__form-button" :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openWarningModal" />
 							<Button
 								v-if="successPassword"
 								label="학생증 발급"
@@ -127,6 +139,8 @@ export default {
 			failIdText: "",
 			failMajor: false,
 			failMajorText: "",
+			failAdmin: false,
+			failAdminText: "",
 			selectedGroupedMajor: null,
 			displayPasswordModal: false,
 			displayWarningModal: false,
@@ -136,6 +150,7 @@ export default {
 			successPassword: false,
 			successFindDID: false,
 			successGenerateDID: false,
+			successAdminCode: false,
 			failCount: JSON.parse(localStorage.getItem("wrongPassword")) ? JSON.parse(localStorage.getItem("wrongPassword")) : 1,
 			regenerateDID: JSON.parse(localStorage.getItem("wrongPassword")) >= 5 ? true : false,
 			checkRegenerateDID: false,
@@ -165,6 +180,9 @@ export default {
 			loadingText: "",
 			simplePassword: "",
 			tempKey: "",
+			admin: false,
+			adminCode: null,
+			checkAdminCodeState: false,
 		}
 	},
 	mounted() {
@@ -201,6 +219,23 @@ export default {
 				this.$refs.majorInput.focus()
 				this.failMajorText = "필수 입력 사항입니다."
 				return
+			} else if (this.admin === true) {
+				if (this.adminCode === null || this.adminCode.length === 0) {
+					this.failId = false
+					this.failMajor = false
+					this.failAdmin = true
+					this.$refs.adminCodeInput.focus()
+					this.failAdminText = "관리자 코드를 입력해주세요."
+					return
+				} else if (this.checkAdminCodeState === false) {
+					this.failId = false
+					this.failMajor = false
+					this.failAdmin = true
+					console.log(this.$refs.adminCodeInput)
+					this.$refs.adminCodeInput.focus()
+					this.failAdminText = "관리자 코드를 검증해주세요."
+					return
+				}
 			}
 			this.failMajor = false
 			if (this.find === "true") {
@@ -249,12 +284,14 @@ export default {
 							name: this.name,
 							email: this.email,
 							simple_password: localStorage.getItem("simplePassword"),
+							position: this.checkAdminCodeState ? "admin" : "",
 						},
 					}
 				)
 				if (response.status === 201) {
 					localStorage.setItem("key", this.tempKey)
 					localStorage.setItem("did", response.data.did)
+					if (this.checkAdminCodeState) localStorage.setItem("adminKey", this.$sha256(this.adminCode))
 					localStorage.removeItem("wrongPassword")
 					this.showSuccess("학생증 발급 완료", "학생증 발급이 완료되었습니다. \n 잠시후 학생증 페이지로 이동합니다.")
 					setTimeout(() => {
@@ -280,6 +317,7 @@ export default {
 				if (response.status === 201) {
 					localStorage.setItem("key", this.tempKey)
 					localStorage.setItem("did", response.data.did)
+					if (this.checkAdminCodeState) localStorage.setItem("adminKey", this.$sha256(this.adminCode))
 					localStorage.removeItem("wrongPassword")
 					this.showSuccess("학생증 재발급 완료", "학생증 재발급이 완료되었습니다. \n잠시후 학생증 페이지로 이동합니다.")
 					setTimeout(() => {
@@ -306,6 +344,7 @@ export default {
 					this.successFindDID = true
 					localStorage.setItem("key", this.tempKey)
 					localStorage.setItem("did", response.data.did)
+					if (this.checkAdminCodeState) localStorage.setItem("adminKey", this.$sha256(this.adminCode))
 					localStorage.removeItem("wrongPassword")
 					localStorage.removeItem("findDid")
 					this.showSuccess("학생증 불러오기 성공", "학생증 찾기를 성공하였습니다. \n잠시후 학생증 페이지로 이동합니다.")
@@ -364,7 +403,25 @@ export default {
 				this.simplePassword = response.data.wallet_key
 			}
 		},
-
+		// 관리자 코드 검증
+		async checkAdminCode() {
+			try {
+				const response = await this.$axios.get("/api/admincheck/", { params: { key: this.$sha256(this.adminCode) } })
+				if (response.status === 201) {
+					this.checkAdminCodeState = true
+					this.successAdminCode = true
+					this.showSuccess("관리자 코드 인증 성공", "관리자 검증이 완료되었습니다.")
+				}
+			} catch (error) {
+				if (error.response) {
+					// 올바르지 않은 검증키일 때
+					if (error.response.data.msg === "Key is error") {
+						this.showError("관리자 코드 인증 실패", "올바르지 않은 관리자 코드입니다.")
+						this.adminCode = ""
+					}
+				}
+			}
+		},
 		// 간편 비밀번호 찾기 모달 토글 함수
 		openFindPasswordModal() {
 			this.displayFindPasswordModal = true

@@ -32,7 +32,25 @@
 			</div>
 			<!-- sidebar setting content -->
 			<div class="sidebar_content">
-				<Accordion v-if="$shared.checkAdminMode()" :class="{ dark__mode: $shared.checkDarkMode() }">
+				<!-- user sidebar -->
+				<Accordion v-if="!isAdmin" :class="{ dark__mode: $shared.checkDarkMode() }">
+					<AccordionTab header="간편비밀번호">
+						<div class="accordian-item" @click="confirmRegenerateDID">
+							재설정
+						</div>
+					</AccordionTab>
+					<AccordionTab header="다크모드">
+						<div class="dark__mode-button">
+							<div class="item-content">다크모드</div>
+							<InputSwitch v-model="darkModeChecked" @click="confirmDarkMode" />
+						</div>
+					</AccordionTab>
+					<AccordionTab header="백업하기">
+						<div class="accordian-item" @click="openBackupModal">간편비밀번호 백업</div>
+					</AccordionTab>
+				</Accordion>
+				<!-- admin sidebar -->
+				<Accordion v-else-if="$shared.checkAdminMode()" :class="{ dark__mode: $shared.checkDarkMode() }">
 					<AccordionTab header="다크모드">
 						<div class="dark__mode-button">
 							<div class="item-content">다크모드</div>
@@ -123,6 +141,7 @@ export default {
 			displayBackupModal: false,
 			darkModeChecked: JSON.parse(localStorage.getItem("DarkMode")) === true ? true : false,
 			adminChecked: JSON.parse(localStorage.getItem("AdminMode")) === true ? true : false,
+			isAdmin: false,
 			name: "",
 			studentId: "",
 			major: "",
@@ -136,13 +155,13 @@ export default {
 	},
 	created() {
 		this.setMembers()
+		this.checkAdmin()
 	},
 	emits: ["confirmSetting"],
 	methods: {
 		// 프로필 설정 화면 새 창으로 이동
 		goToProfile() {
 			window.open("https://myaccount.google.com/u/1/personal-info")
-			JSON.stringify(sessionStorage.setItem("checkGoogleProfile", true))
 		},
 		// 개인정보 세팅
 		setMembers() {
@@ -240,6 +259,22 @@ export default {
 					return
 				},
 			})
+		},
+		// 관리자 검증
+		async checkAdmin() {
+			try {
+				const response = await this.$axios.get("/api/admincheck/", { params: { key: localStorage.getItem("adminKey") } })
+				if (response.status === 201) {
+					this.isAdmin = true
+				}
+			} catch (error) {
+				if (error.response) {
+					// 올바르지 않은 검증키일 때
+					if (error.response.data.msg === "Key is error") {
+						this.isAdmin = false
+					}
+				}
+			}
 		},
 
 		// 사이드바 모달 토글 함수
