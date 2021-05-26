@@ -50,14 +50,14 @@ export default {
 	name: "QRScanner",
 	components: { QrStream },
 	data() {
-		return { isValid: undefined, result: "", error: "", loading: false, camera: "front", showScanConfirmation: false, firstLoading: false }
+		return { isValid: undefined, result: "", error: "", loading: false, camera: "front", checkQR: false, firstLoading: false }
 	},
 	mounted() {
 		this.$shared.checkGoogleLogin(this.$gAuth)
 	},
 	computed: {
 		validationPending() {
-			return this.isValid === undefined && this.camera === "off"
+			return this.checkQR === true
 		},
 
 		validationSuccess() {
@@ -73,11 +73,12 @@ export default {
 		async onDecode(result) {
 			this.firstLoading = true
 			this.result = result
-			this.turnCameraOff()
+			// this.turnCameraOff()
 			// pretend it's taking really long
+			this.checkQR = true
 			this.generateEntry(result)
 			await this.timeout(3000)
-			this.turnCameraOn(this.camera)
+			// this.turnCameraOn(this.camera)
 		},
 		// 인증 사운드
 		play(sound) {
@@ -91,6 +92,7 @@ export default {
 		},
 		turnCameraOn(camera) {
 			this.camera = camera
+			console.log("camera on")
 		},
 		turnCameraOff() {
 			this.camera = "off"
@@ -162,6 +164,7 @@ export default {
 					}
 				}
 			}
+			this.checkQR = false
 			this.play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
 		},
 		// 카메라 초기 세팅
@@ -187,6 +190,7 @@ export default {
 				this.loading = false
 				this.resetValidationState()
 				this.turnCameraOn(this.camera)
+				console.log(this.camera)
 			}
 		},
 		// 성공 토스트 메시지
