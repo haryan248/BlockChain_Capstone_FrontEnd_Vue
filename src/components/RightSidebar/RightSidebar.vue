@@ -256,6 +256,7 @@ export default {
 		},
 		closeBackupModal() {
 			this.privacyError = false
+			this.privacy = false
 			this.displayBackupModal = false
 		},
 
@@ -299,6 +300,7 @@ export default {
 			try {
 				const response = await this.$axios.post("/api/password/", {}, { params: { key: localStorage.getItem("key"), simple_password: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {
+					this.privacy = false
 					this.showSuccess("백업 완료", "간편 비밀번호 백업이 완료되었습니다.")
 				}
 			} catch (error) {

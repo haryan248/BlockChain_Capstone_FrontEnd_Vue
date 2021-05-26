@@ -13,7 +13,7 @@
 						<span class="focus">출입자 <br />명단</span>을 <span class="focus">복사</span>
 						해보세요 !
 					</div>
-					<div :class="coachMarkType + '__subtitle'">3. 강의동 <span class="focus">출입자 명부</span>를 확인하세요 !</div>
+					<div :class="coachMarkType + '__subtitle'">3. 강의동 <span class="focus">출입자 명단</span>를 확인하세요 !</div>
 				</div>
 				<!-- Student Id coach mark screen -->
 				<div v-else-if="coachMarkType === 'student-id'" :class="coachMarkType + '__desc'">
