@@ -108,6 +108,9 @@ export default defineComponent({
 				case "rear":
 					state.camera = "front"
 					break
+				case "auto":
+					state.camera = "front"
+					break
 			}
 		}
 		const timeout = (ms) => {
@@ -191,11 +194,11 @@ export default defineComponent({
 		}
 		// 성공 토스트 메시지
 		const showSuccess = (summaryText, detailText) => {
-			toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })
+			toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 2000 })
 		}
 		// 에러 토스트 메시지
 		const showError = (summaryText, detailText) => {
-			toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 3000 })
+			toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 2000 })
 		}
 		return {
 			// ...toRefs(state),
