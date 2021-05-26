@@ -391,7 +391,7 @@ export default {
 						}, 2000)
 					}
 					// 사용자가 잘못된 정보를 입력했을 때
-					else if (error.response.data.msg === "잘못된 정보를 입력하였습니다.") {
+					else if (error.response.data.msg === "user info is not exists in blockchain") {
 						this.showError("회원 찾기 오류", "잘못된 정보를 입력하였습니다. \n다시 입력해주세요.")
 						this.studentId = ""
 						this.selectedGroupedMajor = null
