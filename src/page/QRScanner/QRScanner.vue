@@ -50,7 +50,7 @@ export default {
 	name: "QRScanner",
 	components: { QrStream },
 	data() {
-		return { isValid: undefined, result: "", error: "", loading: false, camera: "front", checkQR: false, firstLoading: false }
+		return { isValid: undefined, result: "", error: "", loading: false, camera: "rear", checkQR: false, firstLoading: false }
 	},
 	mounted() {
 		this.$shared.checkGoogleLogin(this.$gAuth)
@@ -93,14 +93,15 @@ export default {
 		turnCameraOn(camera) {
 			this.camera = camera
 			console.log("camera on")
+			alert("camera on")
 		},
 		turnCameraOff() {
 			this.camera = "off"
 		},
 		// 뒤로가기 버튼 클릭시 카메라 끄고 이동
 		goBack() {
-			this.turnCameraOff()
 			this.$router.go(-1)
+			// this.turnCameraOff()
 		},
 		// 카메라 전환
 		switchCamera() {
