@@ -8,7 +8,7 @@
 						<div class="close__button">
 							<Button icon="pi pi-times" @click="goBack" class="p-button" alt="switch camera" />
 						</div>
-						<QrStream :camera="state.camera" @decode="onDecode" @init="onInit">
+						<QrStream @decode="onDecode" @init="onInit">
 							<!-- Loading screen -->
 							<div class="loading-indicator-qr" v-if="state.loading && !state.firstLoading">
 								카메라가 로딩중입니다.
