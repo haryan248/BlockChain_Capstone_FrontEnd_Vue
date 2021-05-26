@@ -91,7 +91,6 @@ export default {
 		},
 		turnCameraOn(camera) {
 			this.camera = camera
-			console.log("camera on")
 			alert("camera on")
 		},
 		turnCameraOff() {
@@ -190,8 +189,6 @@ export default {
 			} finally {
 				this.loading = false
 				this.resetValidationState()
-				this.turnCameraOn(this.camera)
-				console.log(this.camera)
 			}
 		},
 		// 성공 토스트 메시지
