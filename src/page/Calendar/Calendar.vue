@@ -59,7 +59,7 @@
 											<div class="item__content">
 												<div class="item__summary">
 													<h3 class="entry__time">{{ attribute.time }}</h3>
-													<h3 class="class__room">{{ attribute.building }}강의동 ( {{ checkBuildingName(attribute.building, index) }} )</h3>
+													<h3 class="class__room">{{ checkBuildingName(attribute.building, index) }}</h3>
 												</div>
 											</div>
 										</div>
@@ -181,31 +181,43 @@ export default {
 		checkBuildingName(building, index) {
 			switch (Number(building)) {
 				case 1:
-					this.buildingName[index] = "진리관"
+					this.buildingName[index] = "1강의동 (진리관)"
 					return this.buildingName[index]
 				case 2:
-					this.buildingName[index] = "성신관"
+					this.buildingName[index] = "2강의동 (성신관)"
 					return this.buildingName[index]
 				case 3:
-					this.buildingName[index] = "애경관"
+					this.buildingName[index] = "3강의동 (애경관)"
 					return this.buildingName[index]
 				case 4:
-					this.buildingName[index] = "예지관"
+					this.buildingName[index] = "4강의동 (예지관)"
 					return this.buildingName[index]
 				case 5:
-					this.buildingName[index] = "덕문관"
+					this.buildingName[index] = "5강의동 (덕문관)"
 					return this.buildingName[index]
 				case 6:
-					this.buildingName[index] = "광교관"
+					this.buildingName[index] = "6강의동 (광교관)"
 					return this.buildingName[index]
 				case 7:
-					this.buildingName[index] = "집현관"
+					this.buildingName[index] = "7강의동 (집현관)"
 					return this.buildingName[index]
 				case 8:
-					this.buildingName[index] = "육영관"
+					this.buildingName[index] = "8강의동 (육영관)"
 					return this.buildingName[index]
 				case 9:
-					this.buildingName[index] = "호연관"
+					this.buildingName[index] = "9강의동 (호연관)"
+					return this.buildingName[index]
+				case 10:
+					this.buildingName[index] = "E-스퀘어"
+					return this.buildingName[index]
+				case 11:
+					this.buildingName[index] = "감성코어"
+					return this.buildingName[index]
+				case 12:
+					this.buildingName[index] = "학생회관"
+					return this.buildingName[index]
+				case 13:
+					this.buildingName[index] = "중앙도서관"
 					return this.buildingName[index]
 			}
 		},
