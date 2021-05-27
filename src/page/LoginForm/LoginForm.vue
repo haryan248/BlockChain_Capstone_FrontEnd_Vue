@@ -43,7 +43,7 @@
 							<label for="adminCode" class="input__form" ref="adminCodeInput"
 								>관리자 코드
 								<span class="p-field-checkbox" style="display:inline; position: absolute;right: 24px;">
-									<Checkbox name="관리자" class="border-none" value="admin" v-model="admin" :binary="true" :disabled="successSignUp || checkAdminCodeState" />
+									<Checkbox name="관리자" class="border-none" value="admin" v-model="admin" :binary="true" :disabled="successSignUp || checkAdminCodeState || (selectedGroupedMajor === null && studentId === '')" />
 								</span>
 							</label>
 							<div v-if="admin">
@@ -183,7 +183,7 @@ export default {
 			simplePassword: "",
 			tempKey: "",
 			admin: false,
-			adminCode: null,
+			adminCode: "",
 			checkAdminCodeState: false,
 		}
 	},
@@ -222,7 +222,7 @@ export default {
 				this.failMajorText = "필수 입력 사항입니다."
 				return
 			} else if (this.admin === true) {
-				if (this.adminCode === null || this.adminCode.length === 0) {
+				if (this.adminCode.length === 0) {
 					this.failId = false
 					this.failMajor = false
 					this.failAdmin = true
@@ -410,19 +410,23 @@ export default {
 		},
 		// 관리자 코드 검증
 		async checkAdminCode() {
-			try {
-				const response = await this.$axios.get("/api/admincheck/", { params: { key: this.$sha256(this.adminCode) } })
-				if (response.status === 201) {
-					this.checkAdminCodeState = true
-					this.successAdminCode = true
-					this.showSuccess("관리자 코드 인증 성공", "관리자 검증이 완료되었습니다.")
-				}
-			} catch (error) {
-				if (error.response) {
-					// 올바르지 않은 검증키일 때
-					if (error.response.data.msg === "Key is error") {
-						this.showError("관리자 코드 인증 실패", "올바르지 않은 관리자 코드입니다.")
-						this.adminCode = ""
+			this.checkValidate()
+			if (this.failMajor === false && this.failId === false) {
+				try {
+					const response = await this.$axios.get("/api/admincheck/", { params: { key: this.$sha256(this.adminCode) } })
+					if (response.status === 201) {
+						this.checkAdminCodeState = true
+						this.successAdminCode = true
+						this.failAdmin = false
+						this.showSuccess("관리자 코드 인증 성공", "관리자 검증이 완료되었습니다.")
+					}
+				} catch (error) {
+					if (error.response) {
+						// 올바르지 않은 검증키일 때
+						if (error.response.data.msg === "Key is error") {
+							this.showError("관리자 코드 인증 실패", "올바르지 않은 관리자 코드입니다.")
+							this.adminCode = ""
+						}
 					}
 				}
 			}
