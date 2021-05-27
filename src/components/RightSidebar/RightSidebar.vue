@@ -141,7 +141,7 @@ export default {
 			displayBackupModal: false,
 			darkModeChecked: JSON.parse(localStorage.getItem("DarkMode")) === true ? true : false,
 			adminChecked: JSON.parse(localStorage.getItem("AdminMode")) === true ? true : false,
-			isAdmin: false,
+			isAdmin: localStorage.getItem("adminKey") !== null ? true : false,
 			name: "",
 			studentId: "",
 			major: "",
@@ -155,7 +155,6 @@ export default {
 	},
 	created() {
 		this.setMembers()
-		this.checkAdmin()
 	},
 	emits: ["confirmSetting"],
 	methods: {
@@ -259,22 +258,6 @@ export default {
 					return
 				},
 			})
-		},
-		// 관리자 검증
-		async checkAdmin() {
-			try {
-				const response = await this.$axios.get("/api/admincheck/", { params: { key: localStorage.getItem("adminKey") } })
-				if (response.status === 201) {
-					this.isAdmin = true
-				}
-			} catch (error) {
-				if (error.response) {
-					// 올바르지 않은 검증키일 때
-					if (error.response.data.msg === "Key is error") {
-						this.isAdmin = false
-					}
-				}
-			}
 		},
 
 		// 사이드바 모달 토글 함수

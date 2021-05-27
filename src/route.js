@@ -71,16 +71,19 @@ export const router = createRouter({
 	routes,
 })
 
-// 올바른 User key인지 확인
+// 올바른 User key인지 확인 + Admin Key 인지 확인
 async function authenticationKey() {
 	try {
-		const response = await axios.get("/api/authkey/", { params: { key: localStorage.getItem("key") } })
+		const response = await axios.get("/api/authkey/", { params: { key: localStorage.getItem("key"), admin_key: localStorage.getItem("adminKey") } })
 		if (response.status === 201) {
-			if (response.data.msg === "This is the correct key") return true
+			if (response.data.msg === "This is the correct key" || response.data.msg === "Admin key success") return true
 		}
 	} catch (error) {
-		if (error.response.data.msg === "Invalid key") {
+		if (error.response.data.msg === "Key is error") {
 			localStorage.removeItem("key")
+			return false
+		} else if (error.response.data.msg === "Admin key is error") {
+			localStorage.removeItem("adminKey")
 			return false
 		}
 	}
