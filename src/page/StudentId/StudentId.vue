@@ -136,6 +136,14 @@ export default {
 @import "./student-id.css";
 </style>
 <style>
+@media (min-height: 630px) and (max-height: 780px) {
+	.password-modal .p-dialog-header {
+		padding: 0.8rem;
+	}
+	.password-modal .password-content {
+		padding: 40px 10px 0;
+	}
+}
 .p-dialog {
 	border-radius: 20px;
 }

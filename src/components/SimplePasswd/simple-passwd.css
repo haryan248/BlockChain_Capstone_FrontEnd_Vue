@@ -3,7 +3,7 @@
 }
 .warning-info {
 	bottom: 50px;
-	font-size: 5px;
+	font-size: 11px;
 	color: #ff4b4b;
 	font-weight: bold;
 	text-align: center;
@@ -125,6 +125,21 @@
 }
 .p-ripple.purple .p-ink {
 	background: rgba(256, 39, 176, 0.3);
+}
+@media (min-height: 630px) and (max-height: 780px) {
+	.password-inputter {
+		height: 300px;
+	}
+	.fantasy-font__2_3rem {
+		font-size: 1.8rem;
+	}
+	.password-header {
+		font-size: 24px;
+		margin-bottom: 35px;
+	}
+	.password-help {
+		font-size: 14px;
+	}
 }
 /* 다크모드 css */
 .password-content.dark__mode {

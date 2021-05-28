@@ -110,7 +110,7 @@
 .did-issued {
 	margin-top: 70px;
 }
-@media (min-height: 640px) and (max-height: 780px) {
+@media (min-height: 630px) and (max-height: 780px) {
 	.student-content {
 		margin-top: -70px;
 	}
@@ -120,10 +120,18 @@
 	.student-card__item .item__img {
 		width: 100px;
 		height: 100px;
+		margin-bottom: 17px;
 	}
 	.student-card__item .item__detail {
 		margin-top: 8px;
 		font-size: 12px;
+	}
+	.student-card__item .item__univ {
+		font-size: 22px;
+		margin-bottom: 17px;
+	}
+	.student-card .box {
+		padding-top: 36px;
 	}
 }
 /* 다크모드 css */
