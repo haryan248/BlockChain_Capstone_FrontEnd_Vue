@@ -194,7 +194,7 @@
 	color: #4a83e5;
 	font-weight: bold;
 }
-@media (min-height: 630px) and (max-height: 780px) {
+@media (min-height: 600px) and (max-height: 780px) {
 	.frame {
 		height: 295px;
 		width: 295px;

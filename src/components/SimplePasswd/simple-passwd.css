@@ -126,7 +126,7 @@
 .p-ripple.purple .p-ink {
 	background: rgba(256, 39, 176, 0.3);
 }
-@media (min-height: 630px) and (max-height: 780px) {
+@media (min-height: 600px) and (max-height: 780px) {
 	.password-inputter {
 		height: 300px;
 	}

@@ -90,7 +90,7 @@
 	transform: translate(-50%, -50%);
 	font-size: 20px;
 }
-@media (min-height: 630px) and (max-height: 780px) {
+@media (min-height: 600px) and (max-height: 780px) {
 	.entry__admin {
 		margin-top: -70px;
 	}
