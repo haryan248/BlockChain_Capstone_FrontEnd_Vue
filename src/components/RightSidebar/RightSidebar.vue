@@ -91,6 +91,12 @@
 			<div class="logout__button">
 				<Button label="로그아웃" class="logout" icon="pi pi-sign-out" @click="confirmLogout" />
 			</div>
+			<!-- copyright -->
+			<div class="copyright">
+				<p>
+					© 2021. 이팔청춘 All rights reserved.
+				</p>
+			</div>
 		</Sidebar>
 		<!-- Simple password reset modal -->
 		<Dialog class="password-modal p-dialog-maximized" :class="[{ dark__mode: $shared.checkDarkMode() }]" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">

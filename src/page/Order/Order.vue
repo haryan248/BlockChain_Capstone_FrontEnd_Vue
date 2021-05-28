@@ -197,6 +197,9 @@ button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondar
 	.p-orderlist .p-orderlist-controls .pi {
 		font-size: 10px;
 	}
+	.food__image {
+		width: 70%;
+	}
 }
 /* 다크모드 css */
 .p-orderlist.p-component.dark__mode .p-orderlist-header {

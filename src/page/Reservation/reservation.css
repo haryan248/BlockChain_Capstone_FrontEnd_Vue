@@ -86,7 +86,12 @@
 		height: 20px;
 	}
 	.seat__content {
-		height: calc(64% - 80px);
+		height: calc(68% - 80px);
+	}
+	.select-seat {
+		width: 20px;
+		height: 20px;
+		border: 1px solid #cbd5e0;
 	}
 }
 /* 다크모드 css  */
