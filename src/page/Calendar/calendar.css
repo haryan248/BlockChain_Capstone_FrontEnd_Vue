@@ -239,6 +239,10 @@
 	.calendar__content .vc-bars {
 		width: 59%;
 	}
+	.entry-list__item .entry__time,
+	.entry-list__item .class__room {
+		font-size: 13px;
+	}
 }
 /* 다크 모드 */
 .schedule__content.dark__mode {
