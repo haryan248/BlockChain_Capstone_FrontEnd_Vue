@@ -8,7 +8,7 @@
 						<div class="close__button">
 							<Button icon="pi pi-times" @click="goBack" class="p-button" alt="switch camera" />
 						</div>
-						<QrStream :camera="state.camera" @decode="onDecode" @init="onInit">
+						<QrStream v-if="!state.displayQRWarningModal" :camera="state.camera" @decode="onDecode" @init="onInit">
 							<!-- Loading screen -->
 							<div class="loading-indicator-qr" v-if="state.loading && !state.firstLoading">
 								카메라가 로딩중입니다.
@@ -38,6 +38,22 @@
 							<div>카메라 전환</div>
 						</div>
 					</div>
+					<!-- QR Warning modal -->
+					<Dialog class="qr__warning-modal" :showHeader="false" v-model:visible="state.displayQRWarningModal" :style="{ width: '80vw' }" :modal="true">
+						<p class="warning-info__detail">
+							<br />
+							QR 인증을 위해서는<br />
+							<span class="focus">강의동 선택</span>이 <br /><span class="focus">필수</span>로 필요합니다.
+							<br />
+							<br />
+							강의동을 먼저 선택해주세요!
+							<br />
+							<br />
+						</p>
+						<template #footer>
+							<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="goBack" />
+						</template>
+					</Dialog>
 				</div>
 			</div>
 		</div>
@@ -45,7 +61,7 @@
 </template>
 <script>
 import { QrStream } from "vue3-qr-reader"
-import { defineComponent, computed, reactive } from "vue"
+import { defineComponent, computed, reactive, onMounted } from "vue"
 import { useRouter } from "vue-router"
 import axios from "axios"
 import { useToast } from "primevue/usetoast"
@@ -62,14 +78,21 @@ export default defineComponent({
 			result: "",
 			error: "",
 			loading: false,
-			camera: "auto",
+			camera: "rear",
 			checkQR: false,
 			firstLoading: false,
+			displayQRWarningModal: false,
 		})
-
+		onMounted(() => {
+			if (localStorage.getItem("building") === null) {
+				openQRWarningModal()
+			}
+		})
+		// QR 검증 진행
 		const validationPending = computed(() => state.checkQR === true)
+		// QR 검증 완료
 		const validationSuccess = computed(() => state.isValid === true)
-		const validationFailure = computed(() => state.isValid === false)
+		// QR 코드 해독
 		async function onDecode(result) {
 			state.firstLoading = true
 			state.result = result
@@ -87,12 +110,15 @@ export default defineComponent({
 				audio.play()
 			}
 		}
+		// 검증 상태 초기화
 		const resetValidationState = () => {
 			state.isValid = undefined
 		}
+		// 카메라 켜기
 		const turnCameraOn = (camera) => {
 			state.camera = camera
 		}
+		// 카메라 끄기
 		const turnCameraOff = () => {
 			state.camera = "off"
 		}
@@ -103,17 +129,17 @@ export default defineComponent({
 		// 카메라 전환
 		function switchCamera() {
 			switch (state.camera) {
+				// 전면 카메라일 때
 				case "front":
 					state.camera = "rear"
 					break
+				// 후면 카메라 일때
 				case "rear":
-					state.camera = "front"
-					break
-				case "auto":
 					state.camera = "front"
 					break
 			}
 		}
+		// 딜레이
 		const timeout = (ms) => {
 			return new Promise((resolve) => {
 				window.setTimeout(resolve, ms)
@@ -143,6 +169,7 @@ export default defineComponent({
 				resetValidationState()
 			}
 		}
+		// 출입 여부 등록
 		const generateEntry = async (result, currentCamera) => {
 			let date = new Date()
 			let year = date.getFullYear()
@@ -193,6 +220,10 @@ export default defineComponent({
 			state.checkQR = false
 			play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
 		}
+		// QR 경고 모달 토글 함수
+		const openQRWarningModal = () => {
+			state.displayQRWarningModal = true
+		}
 		// 성공 토스트 메시지
 		const showSuccess = (summaryText, detailText) => {
 			toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 2000 })
@@ -206,7 +237,6 @@ export default defineComponent({
 			state,
 			validationPending,
 			validationSuccess,
-			validationFailure,
 			onDecode,
 			play,
 			resetValidationState,
@@ -217,6 +247,7 @@ export default defineComponent({
 			timeout,
 			onInit,
 			generateEntry,
+			openQRWarningModal,
 			showSuccess,
 			showError,
 		}
@@ -242,5 +273,15 @@ export default defineComponent({
 	90% {
 		stroke: #2196f3;
 	}
+}
+.qr__warning-modal .p-dialog-content {
+	border-radius: 20px 20px 0 0;
+	padding: 10px;
+}
+.qr__warning-modal .p-dialog-footer {
+	border-top: 1px solid #e2e2e2;
+	padding-top: 1rem;
+	border-radius: 0 0 20px 20px;
+	text-align: center;
 }
 </style>

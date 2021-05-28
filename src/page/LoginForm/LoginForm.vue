@@ -19,7 +19,7 @@
 							<small v-else id="studentid-help">학번을 입력해주세요.</small>
 						</div>
 						<div class="p-field">
-							<label for="id" class="input__form" ref="majorInput">학과 *</label>
+							<label for="major" class="input__form" ref="majorInput">학과 *</label>
 							<Dropdown
 								:disabled="successSignUp"
 								v-model="selectedGroupedMajor"
@@ -36,7 +36,7 @@
 									</div>
 								</template>
 							</Dropdown>
-							<small v-if="failMajor" class="p-error" id="studentid-help">{{ failMajorText }}</small>
+							<small v-if="failMajor" class="p-error" id="usermajor-help">{{ failMajorText }}</small>
 							<small v-else id="usermajor-help">학과를 선택해주세요.</small>
 						</div>
 						<div v-if="find !== 'true'" class="p-field">
@@ -48,8 +48,8 @@
 							</label>
 							<div v-if="admin">
 								<InputText :class="{ 'p-invalid': failAdmin && admin }" autocomplete="off" id="adminCode" placeholder="관리자 코드" type="text" v-model="adminCode" :disabled="checkAdminCodeState" />
-								<small v-if="failAdmin && admin" class="p-error" id="studentid-help">{{ failAdminText }}</small>
-								<small v-else id="studentid-help">관리자인 경우 입력해주세요.</small>
+								<small v-if="failAdmin && admin" class="p-error" id="admincode-help">{{ failAdminText }}</small>
+								<small v-else id="admincode-help">관리자인 경우 입력해주세요.</small>
 							</div>
 						</div>
 						<!-- Find student ID button -->

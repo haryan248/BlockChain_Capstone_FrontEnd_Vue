@@ -185,3 +185,12 @@
 	background-repeat: no-repeat;
 	background-size: 100%;
 }
+.warning-info__detail {
+	text-align: center;
+	font-weight: 200;
+	font-size: 16px;
+}
+.warning-info__detail .focus {
+	color: #4a83e5;
+	font-weight: bold;
+}
