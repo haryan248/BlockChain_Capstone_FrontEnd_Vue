@@ -59,8 +59,11 @@
 			</div>
 			<!-- password warning text -->
 			<div v-if="isSetting || isResetting" class="warning-info">
-				<i class="pi pi-shield" style="fontSize: 6px"></i>
-				<div class="text">간편비밀번호를 잊어버리면 찾을 수 없으니 주의해주시기 바랍니다.</div>
+				<i class="pi pi-shield" style="fontSize: 8px"></i>
+				<div class="text">
+					간편비밀번호를 잊어버리면 찾을 수 없으니<br />
+					주의해주시기 바랍니다.
+				</div>
 			</div>
 		</div>
 	</div>

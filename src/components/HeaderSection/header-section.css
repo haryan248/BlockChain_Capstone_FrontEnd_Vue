@@ -35,7 +35,7 @@
 	letter-spacing: -1px;
 }
 
-@media (min-height: 600px) and (max-height: 780px) {
+@media (min-height: 600px) and (max-height: 755px) {
 	.headersection__info .headerSection__time {
 		font-size: 1.1vh;
 		margin-top: 2%;

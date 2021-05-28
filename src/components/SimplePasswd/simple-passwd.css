@@ -7,6 +7,9 @@
 	color: #ff4b4b;
 	font-weight: bold;
 	text-align: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 .warning-info .text {
 	margin-left: 4px;
@@ -126,7 +129,7 @@
 .p-ripple.purple .p-ink {
 	background: rgba(256, 39, 176, 0.3);
 }
-@media (min-height: 600px) and (max-height: 780px) {
+@media (min-height: 600px) and (max-height: 755px) {
 	.password-inputter {
 		height: 300px;
 	}

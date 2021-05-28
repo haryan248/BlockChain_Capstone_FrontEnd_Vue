@@ -61,7 +61,7 @@
 	margin: 0 auto;
 	margin-top: 40px;
 }
-@media (min-height: 600px) and (max-height: 780px) {
+@media (min-height: 600px) and (max-height: 755px) {
 	.admin__setting-content {
 		margin-top: -70px;
 	}

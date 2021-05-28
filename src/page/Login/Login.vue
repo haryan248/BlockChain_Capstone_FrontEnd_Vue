@@ -148,4 +148,9 @@ export default {
 	border-radius: 0 0 20px 20px;
 	text-align: center;
 }
+@media (min-height: 600px) and (max-height: 755px) {
+	.login__button .p-button-label {
+		font-size: 14px;
+	}
+}
 </style>

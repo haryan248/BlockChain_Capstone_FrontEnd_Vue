@@ -191,7 +191,7 @@
 	margin: 0 auto;
 	margin-top: 10px;
 }
-@media (min-height: 600px) and (max-height: 780px) {
+@media (min-height: 600px) and (max-height: 755px) {
 	.calendar__content {
 		margin-top: -70px;
 	}

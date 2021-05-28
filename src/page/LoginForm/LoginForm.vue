@@ -1,4 +1,4 @@
-<template>
+dd<template>
 	<div class="login__form-container" :class="{ dark__mode: darkModeState }">
 		<div class="loadpassword__button"></div>
 		<div v-if="loading" class="loading__overlay-loginForm">
@@ -307,7 +307,7 @@ export default {
 			} catch (error) {
 				// DID 발급 오류 시
 				if (error.response) {
-					if (error.response.data.msg === "DID 발급 오류") {
+					if (error.response.data.msg === "DID generate error") {
 						this.showError("DID발급 오류", "죄송합니다. \nDID 발급에 오류가 있습니다.")
 					}
 				}
@@ -332,7 +332,7 @@ export default {
 			} catch (error) {
 				if (error.response) {
 					// DID 재발급 오류 시
-					if (error.response.data.msg === "DID 재발급 오류") {
+					if (error.response.data.msg === "DID regenerate error") {
 						this.showError("DID 재발급 오류", "죄송합니다. \nDID 재발급에 오류가 있습니다.")
 					}
 				}
@@ -359,7 +359,7 @@ export default {
 			} catch (error) {
 				if (error.response) {
 					// 해당하는 DID 정보가 없을 때
-					if (error.response.data.msg === "DID를 찾을 수 없습니다.") {
+					if (error.response.data.msg === "DID not found") {
 						JSON.stringify(localStorage.setItem("wrongPassword", this.failCount++))
 						if (JSON.parse(localStorage.getItem("wrongPassword")) === 5) this.regenerateDID = true
 						this.showError("학생증 찾기 오류", "간편 비밀번호를 " + JSON.parse(localStorage.getItem("wrongPassword")) + "회 틀렸습니다. \n5회 오류시 학생증 재발급이 가능합니다.")
@@ -384,7 +384,7 @@ export default {
 			} catch (error) {
 				if (error.response) {
 					// 가입되지 않은 이메일 일때
-					if (error.response.data.msg === "가입되지 않은 email입니다.") {
+					if (error.response.data.msg === "not join email") {
 						this.showError("회원 찾기 오류", "가입된 이메일이 없습니다. \n잠시후 메인 화면으로 돌아갑니다.")
 						setTimeout(() => {
 							this.$router.replace("/login")
