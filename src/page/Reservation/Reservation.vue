@@ -11,7 +11,7 @@
 							<table class="reservation__table">
 								<tbody>
 									<tr v-for="(idxr, r) in rows" :key="r">
-										<td v-for="(idxc, c) in cols" class="pl-2" :class="{ dark__mode: darkModeState }" style="width: 50px;" :key="c">
+										<td v-for="(idxc, c) in cols" class="seat__box" :class="{ dark__mode: darkModeState }" :key="c">
 											<div @click="onSeatSelected(idxr, idxc)" v-if="!isAisle(idxr, idxc)" :class="classifier(idxr, idxc)" class="seat"></div>
 										</td>
 									</tr>

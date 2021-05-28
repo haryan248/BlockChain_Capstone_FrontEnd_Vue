@@ -116,9 +116,19 @@
 		width: 100%;
 		text-align: center;
 	}
-
 	.product-item .img {
 		margin: 0 0 1rem 0;
 		width: 100px;
+	}
+}
+@media (min-height: 640px) and (max-height: 780px) {
+	.order-content {
+		margin-top: -70px;
+	}
+	.p-orderlist .p-orderlist-list {
+		height: 30% !important;
+	}
+	.order__button {
+		bottom: 9%;
 	}
 }

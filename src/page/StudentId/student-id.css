@@ -110,6 +110,22 @@
 .did-issued {
 	margin-top: 70px;
 }
+@media (min-height: 640px) and (max-height: 780px) {
+	.student-content {
+		margin-top: -70px;
+	}
+	.student__id-content {
+		height: 62%;
+	}
+	.student-card__item .item__img {
+		width: 100px;
+		height: 100px;
+	}
+	.student-card__item .item__detail {
+		margin-top: 8px;
+		font-size: 12px;
+	}
+}
 /* 다크모드 css */
 .student-wrapper .box.dark__mode {
 	background: #333536;
