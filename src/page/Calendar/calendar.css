@@ -234,6 +234,7 @@
 	}
 	.calendar__content .vc-day-content {
 		height: 24px;
+		line-height: 24px;
 	}
 	.calendar__content .vc-bars {
 		width: 59%;
