@@ -248,7 +248,7 @@ export default {
 		confirmRegenerateDID() {
 			this.closeVisibleRight()
 			this.$confirm.require({
-				message: "간편비밀번호를 재설정하시겠습니까? \n\n간편 비밀번호를 재설정 후 학생증을\n 재발급하게 됩니다. \n\n간편비밀번호 재설정시\n 불이익이 갈 수 있으니 비밀번호를\n 기억해주세요!",
+				message: "간편비밀번호를 재설정하시겠습니까? \n\n간편 비밀번호를 재설정 후 학생증을\n 재발급하게 됩니다. \n\n간편비밀번호 재설정을 의도적으로 할 경우\n 불이익이 갈 수 있으니 비밀번호를\n 기억해주세요!",
 				header: "간편 비밀번호 재설정",
 				icon: "pi",
 				accept: () => {
