@@ -179,6 +179,25 @@ button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondar
 .p-orderlist.p-component .p-orderlist-list .p-orderlist-item {
 	border-bottom: 1px solid #cbd5e0;
 }
+@media (min-height: 600px) and (max-height: 755px) {
+	.p-orderlist .p-orderlist-list {
+		height: 30% !important;
+	}
+	.p-orderlist .p-orderlist-controls {
+		padding: 10px !important;
+	}
+	.p-orderlist-controls .p-button.p-button-icon-only {
+		width: 1.8rem;
+		height: 1.8rem;
+	}
+	.p-orderlist .p-orderlist-header {
+		padding: 10px;
+		font-size: 12px;
+	}
+	.p-orderlist .p-orderlist-controls .pi {
+		font-size: 10px;
+	}
+}
 /* 다크모드 css */
 .p-orderlist.p-component.dark__mode .p-orderlist-header {
 	background: #333536;

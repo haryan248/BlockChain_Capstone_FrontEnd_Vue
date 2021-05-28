@@ -389,7 +389,24 @@ export default {
 .p-accordion-header-text {
 	font-size: 14px;
 }
-
+@media (min-height: 600px) and (max-height: 755px) {
+	.sidebar_content {
+		margin-top: 30px;
+	}
+	.sidebar_content .p-accordion .p-accordion-header .p-accordion-header-link {
+		padding: 0.8rem;
+	}
+	.sidebar_content .accordian-item {
+		padding: 6px;
+		font-size: 12px;
+	}
+	.sidebar_content .p-accordion-header-text {
+		font-size: 13px;
+	}
+	.sidebar_content .p-accordion .p-accordion-content {
+		padding: 0.8rem;
+	}
+}
 /* 다크모드  css*/
 .p-sidebar.p-component.p-sidebar-right.p-sidebar-active.dark__mode {
 	background: #333536;

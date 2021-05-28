@@ -125,10 +125,7 @@
 	.order-content {
 		margin-top: -70px;
 	}
-	.p-orderlist .p-orderlist-list {
-		height: 30% !important;
-	}
 	.order__button {
-		bottom: 9%;
+		bottom: 13%;
 	}
 }

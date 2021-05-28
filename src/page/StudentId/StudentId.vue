@@ -136,14 +136,6 @@ export default {
 @import "./student-id.css";
 </style>
 <style>
-@media (min-height: 600px) and (max-height: 755px) {
-	.password-modal .p-dialog-header {
-		padding: 0.8rem;
-	}
-	.password-modal .password-content {
-		padding: 40px 10px 0;
-	}
-}
 .p-dialog {
 	border-radius: 20px;
 }
@@ -157,6 +149,14 @@ export default {
 }
 .unset__zindex .p-dialog-mask {
 	z-index: unset !important;
+}
+@media (min-height: 600px) and (max-height: 755px) {
+	.password-modal .p-dialog-header {
+		padding: 0.8rem;
+	}
+	.password-modal .password-content {
+		padding: 15px 10px 0;
+	}
 }
 /* 다크모드 */
 .p-dialog.p-component.QR-modal.dark__mode .p-dialog-content {
