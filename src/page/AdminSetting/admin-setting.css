@@ -61,6 +61,11 @@
 	margin: 0 auto;
 	margin-top: 40px;
 }
+@media (min-height: 640px) and (max-height: 780px) {
+	.admin__setting-content {
+		margin-top: -70px;
+	}
+}
 /* 다크 모드 css */
 .setting__select.dark__mode {
 	background-color: #333536;

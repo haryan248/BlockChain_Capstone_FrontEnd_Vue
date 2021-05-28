@@ -44,9 +44,11 @@
 	.headersection__info .headerSection__title {
 		margin-top: 2%;
 		margin-bottom: 2px;
+		font-size: 23px;
 	}
 	.headersection__info .headerSection__subttl {
 		margin-top: 2%;
+		font-size: 12px;
 	}
 }
 
