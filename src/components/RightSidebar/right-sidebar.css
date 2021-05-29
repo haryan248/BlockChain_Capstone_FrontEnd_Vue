@@ -65,10 +65,8 @@
 	font-size: 14px;
 }
 .logout__button {
-	position: fixed;
-	margin: 0 auto;
-	bottom: 40px;
-	margin-left: 20px;
+	display: grid;
+	margin-top: 5px;
 }
 .logout__button .logout {
 	align-items: center;
@@ -78,22 +76,16 @@
 	margin: 0 auto;
 	bottom: 10px;
 	font-size: 9px;
+	right: 20px;
 	font-weight: bold;
 }
-.dark__mode-button {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-}
-.dark__mode-button .item-content {
-	margin-right: 13px;
-	font-size: 13.5px;
-}
+.dark__mode-button,
 .admin__mode-button {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: left;
 }
+.dark__mode-button .item-content,
 .admin__mode-button .item-content {
 	margin-right: 13px;
 	font-size: 13.5px;

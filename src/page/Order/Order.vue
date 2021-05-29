@@ -177,7 +177,15 @@ button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondar
 	border: 1px solid #cbd5e0;
 }
 .p-orderlist.p-component .p-orderlist-list .p-orderlist-item {
-	border-bottom: 1px solid #cbd5e0;
+	border-bottom: 1px solid #4a83e5;
+}
+/* 스와이퍼 css */
+.swiper-pagination-bullet-active {
+	background: #607d8b !important;
+}
+.swiper-pagination-bullet {
+	width: 9px !important;
+	height: 9px !important;
 }
 /* Galaxy Tab 1, 2, 3 */
 @media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
@@ -199,7 +207,7 @@ button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondar
 		font-size: 1.6rem;
 	}
 	.food__image {
-		width: 90%;
+		width: 40%;
 	}
 	.order__button .p-button-label,
 	.order__button .pi {

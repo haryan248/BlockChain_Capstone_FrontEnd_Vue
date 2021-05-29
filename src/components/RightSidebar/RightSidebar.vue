@@ -30,6 +30,10 @@
 					<div class="student__email">{{ email }}</div>
 				</div>
 			</div>
+			<!-- logout button -->
+			<div class="logout__button">
+				<Button label="로그아웃" class="logout" icon="pi pi-sign-out" @click="confirmLogout" />
+			</div>
 			<!-- sidebar setting content -->
 			<div class="sidebar_content">
 				<!-- user sidebar -->
@@ -86,10 +90,6 @@
 						</div>
 					</AccordionTab>
 				</Accordion>
-			</div>
-			<!-- logout button -->
-			<div class="logout__button">
-				<Button label="로그아웃" class="logout" icon="pi pi-sign-out" @click="confirmLogout" />
 			</div>
 			<!-- copyright -->
 			<div class="copyright">
@@ -426,7 +426,14 @@ export default {
 	.profile__content .student__email,
 	.dark__mode-button .item-content,
 	.admin__mode-button .item-content {
-		font-size: 19px;
+		font-size: 23px;
+	}
+	.logout__button .p-button,
+	.logout__button .pi {
+		font-size: 1.6rem;
+	}
+	.copyright {
+		font-size: 14px;
 	}
 }
 /* Galaxy S8, S8+, S9, S10, S10+ S10 lite edge */
@@ -448,7 +455,6 @@ export default {
 		padding: 1rem;
 	}
 }
-
 /* Galaxy S6, S7, S7 edge */
 @media screen and (min-device-width: 360px) and (max-device-height: 640px) {
 	.sidebar_content {
