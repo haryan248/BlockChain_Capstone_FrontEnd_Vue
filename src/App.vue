@@ -21,9 +21,6 @@ export default {
 	mounted() {
 		document.addEventListener("backbutton", this.onBackPressed, false)
 	},
-	beforeUnmount() {
-		document.removeEventListener("backbutton", this.onBackPressed)
-	},
 	methods: {
 		onBackPressed() {
 			// this.$router.go(-1)
