@@ -26,7 +26,8 @@ export default {
 	},
 	methods: {
 		onBackPressed() {
-			this.$router.go(-1)
+			// this.$router.go(-1)
+			alert("backbutton")
 		},
 	},
 }
