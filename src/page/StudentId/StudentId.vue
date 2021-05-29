@@ -150,7 +150,7 @@ export default {
 .unset__zindex .p-dialog-mask {
 	z-index: unset !important;
 }
-@media (min-height: 600px) and (max-height: 755px) {
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
 	.password-modal .p-dialog-header {
 		padding: 0.8rem;
 	}

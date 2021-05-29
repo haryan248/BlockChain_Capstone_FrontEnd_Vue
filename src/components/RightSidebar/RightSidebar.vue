@@ -395,7 +395,7 @@ export default {
 .p-accordion-header-text {
 	font-size: 14px;
 }
-@media (min-height: 600px) and (max-height: 755px) {
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
 	.sidebar_content {
 		margin-top: 30px;
 	}

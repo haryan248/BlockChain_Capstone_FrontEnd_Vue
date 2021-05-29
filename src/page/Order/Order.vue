@@ -179,7 +179,7 @@ button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondar
 .p-orderlist.p-component .p-orderlist-list .p-orderlist-item {
 	border-bottom: 1px solid #cbd5e0;
 }
-@media (min-height: 600px) and (max-height: 755px) {
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
 	.p-orderlist .p-orderlist-list {
 		height: 30% !important;
 	}
