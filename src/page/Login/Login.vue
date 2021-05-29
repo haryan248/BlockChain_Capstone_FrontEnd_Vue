@@ -148,7 +148,8 @@ export default {
 	border-radius: 0 0 20px 20px;
 	text-align: center;
 }
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
+/* Galaxy S6, S7, S7 edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 640px) {
 	.login__button .p-button-label {
 		font-size: 14px;
 	}

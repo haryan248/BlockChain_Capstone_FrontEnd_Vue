@@ -64,23 +64,19 @@
 	box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
 	margin-right: 1rem;
 }
-
 .product-item .product-list-detail {
 	flex: 1 1 0;
 }
-
 .product-item .product-list-action {
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
 }
-
 .product-item .product-category-icon {
 	vertical-align: middle;
 	margin-right: 0.5rem;
 	font-size: 0.875rem;
 }
-
 .product-item .product-category {
 	vertical-align: middle;
 	line-height: 1;
@@ -119,10 +115,41 @@
 	margin: 0 0 1rem 0;
 	width: 100px;
 }
-
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
+/* Galaxy Tab 1, 2, 3 */
+@media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
 	.order-content {
-		margin-top: -70px;
+		margin-top: -80px;
+		padding: 80px 10px 0;
+	}
+	.order__button {
+		bottom: 13%;
+	}
+}
+/* Galaxy S8, S8+, S9, S10, S10+ S10 lite edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 740px) {
+	.order-content {
+		margin-top: -55px;
+		padding: 55px 10px 0;
+	}
+	.order__button {
+		bottom: 13%;
+	}
+}
+/* iphone 6, 7, 8 */
+@media screen and (min-device-width: 375px) and (max-device-height: 667px) {
+	.order-content {
+		margin-top: -55px;
+		padding: 55px 10px 0;
+	}
+	.order__button {
+		bottom: 13%;
+	}
+}
+/* Galaxy S6, S7, S7 edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 640px) {
+	.order-content {
+		margin-top: -50px;
+		padding: 50px 10px 0;
 	}
 	.order__button {
 		bottom: 13%;

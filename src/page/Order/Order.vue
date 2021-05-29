@@ -179,7 +179,91 @@ button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondar
 .p-orderlist.p-component .p-orderlist-list .p-orderlist-item {
 	border-bottom: 1px solid #cbd5e0;
 }
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
+/* Galaxy Tab 1, 2, 3 */
+@media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
+	.p-orderlist .p-orderlist-list {
+		height: 70% !important;
+	}
+	.p-orderlist .p-orderlist-controls {
+		padding: 10px !important;
+	}
+	.p-orderlist-controls .p-button.p-button-icon-only {
+		width: 3rem;
+		height: 3rem;
+	}
+	.p-orderlist .p-orderlist-header {
+		padding: 15px;
+		font-size: 1.6rem;
+	}
+	.p-orderlist .p-orderlist-controls .pi {
+		font-size: 1.6rem;
+	}
+	.food__image {
+		width: 90%;
+	}
+	.order__button .p-button-label,
+	.order__button .pi {
+		font-size: 1.6rem;
+	}
+	.p-mb-2 {
+		font-size: 1.3rem;
+	}
+	.product-badge {
+		font-size: 20px;
+	}
+	.product-item .product-category-icon,
+	.product-item .product-category {
+		font-size: 1.375rem;
+	}
+}
+/* Galaxy S8, S8+, S9, S10, S10+ S10 lite edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 740px) {
+	.p-orderlist .p-orderlist-list {
+		height: 55% !important;
+	}
+	.p-orderlist .p-orderlist-controls {
+		padding: 10px !important;
+	}
+	.p-orderlist-controls .p-button.p-button-icon-only {
+		width: 2rem;
+		height: 2rem;
+	}
+	.p-orderlist .p-orderlist-header {
+		padding: 15px;
+		font-size: 14px;
+	}
+	.p-orderlist .p-orderlist-controls .pi {
+		font-size: 13px;
+	}
+	.food__image {
+		width: 75%;
+	}
+}
+/* iphone 6, 7, 8 */
+@media screen and (min-device-width: 375px) and (max-device-height: 667px) {
+	.p-orderlist .p-orderlist-list {
+		height: 50% !important;
+	}
+	.p-orderlist .p-orderlist-controls {
+		padding: 10px !important;
+	}
+	.p-orderlist-controls .p-button.p-button-icon-only {
+		width: 1.8rem;
+		height: 1.8rem;
+	}
+	.p-orderlist .p-orderlist-header {
+		padding: 10px;
+		font-size: 12px;
+	}
+	.p-orderlist .p-orderlist-controls .pi {
+		font-size: 10px;
+	}
+	.food__image {
+		width: 70%;
+	}
+}
+/* Galaxy S6, S7, S7 edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 640px) {
 	.p-orderlist .p-orderlist-list {
 		height: 30% !important;
 	}

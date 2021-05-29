@@ -191,9 +191,131 @@
 	margin: 0 auto;
 	margin-top: 10px;
 }
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
+/* Galaxy Tab 1, 2, 3 */
+@media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
 	.calendar__content {
-		margin-top: -70px;
+		margin-top: -80px;
+		padding: 80px 10px 0;
+	}
+	.schedule__content {
+		height: calc(47% - 60px);
+	}
+	.schedule__content .schedule__date {
+		height: 74px;
+		line-height: 35px;
+		margin-bottom: 6px;
+		font-size: 24px;
+	}
+	.empty-list__item .empty__desc {
+		font-size: 25px;
+	}
+	.refresh__button .load__text,
+	.map__button .map__text {
+		font-size: 28px;
+	}
+	.calendar__content .vc-header {
+		padding: 30px 20px 0px 20px;
+	}
+	.calendar__content .vc-title {
+		font-size: 25px;
+	}
+	.calendar__content .vc-weeks {
+		padding: 6px;
+		padding-top: 20px;
+		padding-bottom: 30px;
+	}
+	.vc-highlight {
+		width: 40px !important;
+		height: 40px !important;
+	}
+	.calendar__content .vc-weekday,
+	.calendar__content .vc-day-content {
+		font-size: 20px;
+	}
+	.calendar__content .vc-day {
+		min-height: 40px;
+	}
+	.calendar__content .vc-day-content {
+		height: 45px;
+		line-height: 60px;
+	}
+	.calendar__content .vc-bars {
+		width: 61%;
+	}
+	.entry-list__item .entry__time,
+	.entry-list__item .class__room {
+		font-size: 25px;
+	}
+	.refresh__button .p-button.p-button-icon-only.p-button-rounded,
+	.map__button .p-button.p-button-icon-only.p-button-rounded {
+		height: 3.357rem;
+		width: 3.357rem;
+	}
+	.refresh__button .p-button.p-button-lg .p-button-icon,
+	.refresh__button .p-button.p-button-lg,
+	.map__button .p-button.p-button-lg .p-button-icon {
+		font-size: 2.375rem;
+	}
+}
+/* Galaxy S8, S8+, S9, S10, S10+ S10 lite edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 740px) {
+	.calendar__content {
+		margin-top: -55px;
+		padding: 55px 10px 0;
+	}
+	.schedule__content {
+		height: calc(55% - 60px);
+	}
+	.schedule__content .schedule__date {
+		height: 58px;
+		line-height: 35px;
+		margin-bottom: 6px;
+		font-size: 17px;
+	}
+	.empty-list__item .empty__desc {
+		font-size: 14px;
+	}
+	.refresh__button .load__text,
+	.map__button .map__text {
+		font-size: 11px;
+	}
+	.calendar__content .vc-header {
+		padding: 8px 14px 0px 14px;
+	}
+	.calendar__content .vc-title {
+		font-size: var(--text-sm);
+	}
+	.calendar__content .vc-weeks {
+		padding: 5px;
+	}
+	.vc-highlight {
+		width: 27px !important;
+		height: 27px !important;
+	}
+	.calendar__content .vc-weekday,
+	.calendar__content .vc-day-content {
+		font-size: 11px;
+	}
+	.calendar__content .vc-day {
+		min-height: 27px;
+	}
+	.calendar__content .vc-day-content {
+		height: 27px;
+		line-height: 27px;
+	}
+	.calendar__content .vc-bars {
+		width: 61%;
+	}
+	.entry-list__item .entry__time,
+	.entry-list__item .class__room {
+		font-size: 14px;
+	}
+}
+/* Galaxy S6, S7, S7 edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 640px) {
+	.calendar__content {
+		margin-top: -50px;
+		padding: 50px 10px 0;
 	}
 	.schedule__content {
 		height: calc(55% - 60px);
@@ -204,7 +326,6 @@
 		margin-bottom: 2px;
 		font-size: 16px;
 	}
-
 	.empty-list__item .empty__desc {
 		font-size: 13px;
 	}

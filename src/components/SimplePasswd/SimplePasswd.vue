@@ -215,6 +215,18 @@ export default {
 @import "./simple-passwd.css";
 </style>
 <style>
+/* Galaxy Tab 1, 2, 3 */
+@media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
+	.password-filter .p-button.p-button-icon-only.p-button-rounded {
+		height: 3.357rem;
+	}
+	.password-filter .p-button.p-button-icon-only {
+		width: 3.357rem;
+	}
+	.password-filter .pi {
+		font-size: 2rem;
+	}
+}
 /* 다크모드 css*/
 .p-dialog.p-component.password-modal.p-dialog-maximized.dark__mode .p-dialog-header,
 .p-dialog.p-component.password-modal.p-dialog-maximized.dark__mode .p-dialog-content {

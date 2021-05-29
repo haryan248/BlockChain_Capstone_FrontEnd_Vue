@@ -34,8 +34,45 @@
 	font-weight: normal;
 	letter-spacing: -1px;
 }
-
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
+/* Galaxy Tab 1, 2, 3 */
+@media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
+	.headersection__info .headerSection__time {
+		font-size: 2vh;
+		margin-top: 3%;
+		margin-bottom: 12px;
+	}
+	.headersection__info .headerSection__title {
+		margin-top: 4%;
+		margin-bottom: 15px;
+		font-size: 30px;
+	}
+	.headersection__info .headerSection__subttl {
+		margin-top: 3%;
+		font-size: 25px;
+	}
+	.headersection__info {
+		padding-bottom: 20px;
+	}
+}
+/* Galaxy S8, S8+, S9, S10, S10+ S10 lite edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 740px) {
+	.headersection__info .headerSection__time {
+		font-size: 1.5vh;
+		margin-top: 3%;
+		margin-bottom: 10px;
+	}
+	.headersection__info .headerSection__title {
+		margin-top: 3%;
+		margin-bottom: 10px;
+		font-size: 26px;
+	}
+	.headersection__info .headerSection__subttl {
+		margin-top: 3%;
+		font-size: 15px;
+	}
+}
+/* Galaxy S6, S7, S7 edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 640px) {
 	.headersection__info .headerSection__time {
 		font-size: 1.1vh;
 		margin-top: 2%;
@@ -51,7 +88,6 @@
 		font-size: 12px;
 	}
 }
-
 /*다크모드 css*/
 .headersection__info.dark__mode {
 	background-color: #333536;

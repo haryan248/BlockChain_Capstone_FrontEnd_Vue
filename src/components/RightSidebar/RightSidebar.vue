@@ -12,7 +12,7 @@
 		<Button icon="pi pi-align-justify" @click="openVisibleRight()" class="p-mr-2" />
 	</div>
 	<div>
-		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:12.5rem" :class="{ dark__mode: $shared.checkDarkMode() }">
+		<Sidebar v-model:visible="visibleRight" :baseZIndex="1000" position="right" style="width:53%" :class="{ dark__mode: $shared.checkDarkMode() }">
 			<!-- profile content -->
 			<div>
 				<div class="blank__content"></div>
@@ -20,7 +20,7 @@
 			<div class="profile__content" @click="goToProfile">
 				<div v-if="isAdmin" class="admin">관리자</div>
 				<div class="img__content">
-					<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }" style="width: 60px;height: 60px;"></div>
+					<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }"></div>
 				</div>
 				<div class="text__content">
 					<i class="pi pi-spin pi-cog profile__config" style="fontSize: 15px"></i>
@@ -58,7 +58,7 @@
 						</div>
 					</AccordionTab>
 					<AccordionTab header="관리자 모드">
-						<div class="dark__mode-button">
+						<div class="admin__mode-button">
 							<div class="item-content">관리자 모드</div>
 							<InputSwitch v-model="adminChecked" @click="confirmAdminMode" />
 						</div>
@@ -395,7 +395,62 @@ export default {
 .p-accordion-header-text {
 	font-size: 14px;
 }
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
+/* Galaxy Tab 1, 2, 3 */
+@media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
+	.sidebar_content {
+		margin-top: 50px;
+	}
+	.sidebar_content .p-accordion .p-accordion-header .p-accordion-header-link {
+		padding: 1.6rem;
+	}
+	.sidebar_content .accordian-item {
+		padding: 7px;
+		font-size: 23px;
+	}
+	.sidebar_content .p-accordion-header-text {
+		font-size: 23px;
+	}
+	.sidebar_content .p-accordion .p-accordion-content {
+		padding: 1.6rem;
+	}
+	.profile__content .admin {
+		font-size: 17px;
+	}
+	.profile__content .student__img {
+		width: 80px;
+		height: 80px;
+	}
+	.profile__content .student__name,
+	.profile__content .student__id,
+	.profile__content .student__major,
+	.profile__content .student__email,
+	.dark__mode-button .item-content,
+	.admin__mode-button .item-content {
+		font-size: 19px;
+	}
+}
+/* Galaxy S8, S8+, S9, S10, S10+ S10 lite edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 740px) {
+	.sidebar_content {
+		margin-top: 33px;
+	}
+	.sidebar_content .p-accordion .p-accordion-header .p-accordion-header-link {
+		padding: 1rem;
+	}
+	.sidebar_content .accordian-item {
+		padding: 6px;
+		font-size: 13px;
+	}
+	.sidebar_content .p-accordion-header-text {
+		font-size: 14px;
+	}
+	.sidebar_content .p-accordion .p-accordion-content {
+		padding: 1rem;
+	}
+}
+
+/* Galaxy S6, S7, S7 edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 640px) {
 	.sidebar_content {
 		margin-top: 30px;
 	}

@@ -150,7 +150,24 @@ export default {
 .unset__zindex .p-dialog-mask {
 	z-index: unset !important;
 }
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
+/* Galaxy Tab 1, 2, 3 */
+@media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
+	.student__button .p-button,
+	.student__button .pi {
+		font-size: 1.6rem;
+	}
+}
+/* Galaxy S8, S8+, S9, S10, S10+ S10 lite edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 740px) {
+	.password-modal .p-dialog-header {
+		padding: 1.3rem;
+	}
+	.password-modal .password-content {
+		padding: 30px 10px 0;
+	}
+}
+/* Galaxy S6, S7, S7 edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 640px) {
 	.password-modal .p-dialog-header {
 		padding: 0.8rem;
 	}

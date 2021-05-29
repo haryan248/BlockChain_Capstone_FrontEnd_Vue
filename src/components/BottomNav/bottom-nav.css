@@ -37,6 +37,15 @@
 .p-button-font--size {
 	font-size: 0.7rem !important;
 }
+/* Galaxy Tab 1, 2, 3 */
+@media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
+	.bottom-nav .pi {
+		font-size: 2rem;
+	}
+	.bottom-nav .p-button-label {
+		font-size: 20px;
+	}
+}
 /*다크 모드 css*/
 .bottom-nav.dark__mode {
 	background-color: #333536;

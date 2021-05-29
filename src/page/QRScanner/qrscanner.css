@@ -131,9 +131,7 @@
 .QR_descirpt .focus {
 	font-weight: bold;
 }
-
 .validation-success,
-.validation-failure,
 .validation-pending {
 	position: absolute;
 	width: 100%;
@@ -194,7 +192,22 @@
 	color: #4a83e5;
 	font-weight: bold;
 }
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
+/* Galaxy Tab 1, 2, 3 */
+@media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
+	.frame {
+		height: 550px;
+		width: 550px;
+	}
+}
+/* Galaxy S8, S8+, S9, S10, S10+ S10 lite edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 740px) {
+	.frame {
+		height: 305px;
+		width: 305px;
+	}
+}
+/* Galaxy S6, S7, S7 edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 640px) {
 	.frame {
 		height: 295px;
 		width: 295px;

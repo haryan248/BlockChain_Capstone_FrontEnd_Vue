@@ -79,9 +79,90 @@
 	height: 210px;
 	opacity: 1;
 }
-@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation: portrait) and (-webkit-device-pixel-ratio: 3) {
+/* Galaxy Tab 1, 2, 3 */
+@media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
 	.wallet__content {
-		margin-top: -70px;
+		margin-top: -80px;
+		padding: 80px 10px 0;
+	}
+	.wallet__content .card__content {
+		padding-top: 30px;
+		padding-bottom: 60px;
+	}
+	.wallet__content .card__wrapper {
+		padding-bottom: 0px;
+	}
+	.swiper-slide-active .credit-card__item {
+		height: 360px;
+	}
+	.credit-card__item {
+		height: 310px;
+	}
+	.card-delete__button {
+		margin-top: 20px;
+	}
+	.card__content .item__title {
+		font-size: 40px;
+	}
+	.tab__list .p-button-label {
+		font-size: 1.6rem;
+	}
+	.card-delete__button .p-button-label,
+	.card-delete__button .pi {
+		font-size: 1.6rem;
+	}
+}
+/* Galaxy S8, S8+, S9, S10, S10+ S10 lite edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 740px) {
+	.wallet__content {
+		margin-top: -55px;
+		padding: 55px 10px 0;
+	}
+	.wallet__content .card__content {
+		padding-top: 30px;
+		padding-bottom: 60px;
+	}
+	.wallet__content .card__wrapper {
+		padding-bottom: 0px;
+	}
+	.swiper-slide-active .credit-card__item {
+		height: 210px;
+	}
+	.credit-card__item {
+		height: 190px;
+	}
+	.card-delete__button {
+		margin-top: 20px;
+	}
+}
+/* iPhone 6, 7, 8 */
+@media screen and (min-device-width: 375px) and (max-device-height: 667px) {
+	.wallet__content {
+		margin-top: -55px;
+		padding: 55px 10px 0;
+	}
+	.wallet__content .card__content {
+		padding-top: 30px;
+		padding-bottom: 60px;
+	}
+	.wallet__content .card__wrapper {
+		padding-bottom: 0px;
+	}
+	.swiper-slide-active .credit-card__item {
+		height: 180px;
+	}
+	.credit-card__item {
+		height: 160px;
+	}
+	.card-delete__button {
+		margin-top: 5px;
+	}
+}
+/* Galaxy S6, S7, S7 edge */
+@media screen and (min-device-width: 360px) and (max-device-height: 640px) {
+	.wallet__content {
+		margin-top: -50px;
+		padding: 50px 10px 0;
 	}
 	.wallet__content .card__content {
 		padding-top: 30px;
