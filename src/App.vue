@@ -19,6 +19,14 @@ export default {
 		)
 	},
 }
+window.C = {
+	NativeTool: {
+		// 물리백버튼(AOS만) 클릭시
+		onBackPressed: () => {
+			this.$router.go(-1)
+		},
+	},
+}
 </script>
 
 <style>
