@@ -21,7 +21,7 @@ export default {
 	mounted() {
 		document.addEventListener("backbutton", this.onBackPressed, false)
 	},
-	beforeDestroy() {
+	beforeUnmount() {
 		document.removeEventListener("backbutton", this.onBackPressed)
 	},
 	methods: {
