@@ -18,11 +18,14 @@ export default {
 			false
 		)
 	},
-}
-window.C = {
-	NativeTool: {
-		// 물리백버튼(AOS만) 클릭시
-		onBackPressed: () => {
+	mounted() {
+		document.addEventListener("backbutton", this.onBackPressed, false)
+	},
+	beforeDestroy() {
+		document.removeEventListener("backbutton", this.onBackPressed)
+	},
+	methods: {
+		onBackPressed() {
 			this.$router.go(-1)
 		},
 	},
