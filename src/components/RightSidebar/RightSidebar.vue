@@ -352,7 +352,6 @@ export default {
 <style>
 /* 판넬 css overwritting */
 .p-panelmenu .p-panelmenu-header > a {
-	/* border: 1px solid #FFF; */
 	background: #fff;
 }
 .p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link:focus {
@@ -377,7 +376,6 @@ export default {
 	border-radius: 0 0 20px 20px;
 	text-align: center;
 }
-
 .setting_confirm-dialog .p-dialog-header {
 	border-radius: 10px 10px 0 0;
 }
@@ -498,7 +496,6 @@ export default {
 	border: 1px solid #495057;
 	color: #ffffff;
 }
-
 /* confirm-Dialog 다크모드 css */
 .p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-header,
 .p-dialog.p-component.p-confirm-dialog.dark__mode .p-dialog-content,

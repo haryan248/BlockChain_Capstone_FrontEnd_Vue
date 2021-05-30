@@ -1,4 +1,4 @@
-dd<template>
+<template>
 	<div class="login__form-container" :class="{ dark__mode: darkModeState }">
 		<div class="loadpassword__button"></div>
 		<div v-if="loading" class="loading__overlay-loginForm">

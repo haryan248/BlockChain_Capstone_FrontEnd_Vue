@@ -18,7 +18,7 @@ import GAuth from "vue3-google-oauth2"
 
 // calendar 사용
 import VCalendar from "v-calendar"
-import { SetupCalendar, Calendar, DatePicker } from "v-calendar"
+import { Calendar, DatePicker } from "v-calendar"
 
 // 헤더, 푸터 임포트 부분
 import Header from "./components/Header/Header"
@@ -31,11 +31,7 @@ import Button from "primevue/button"
 import Dialog from "primevue/dialog"
 import MultiSelect from "primevue/multiselect"
 import OrderList from "primevue/orderlist"
-import Carousel from "primevue/carousel"
-import Avatar from "primevue/avatar"
 import InputText from "primevue/inputtext"
-import InputMask from "primevue/inputmask"
-import Card from "primevue/card"
 import Dropdown from "primevue/dropdown"
 import ProgressSpinner from "primevue/progressspinner"
 import Accordion from "primevue/accordion"
@@ -50,7 +46,7 @@ import Checkbox from "primevue/checkbox"
 import RadioButton from "primevue/radiobutton"
 import Paginator from "primevue/paginator"
 
-// Create Vue Instance
+// vue 인스턴스 생성
 const app = createApp(App)
 app.use(router) // 사용 설정 하기
 app.use(PrimeVue)
@@ -66,13 +62,8 @@ app.component("Sidebar", Sidebar)
 app.component("Button", Button)
 app.component("Dialog", Dialog)
 app.component("MultiSelect", MultiSelect)
-app.component("DataView", DataView)
 app.component("OrderList", OrderList)
-app.component("Carousel", Carousel)
-app.component("Avatar", Avatar)
 app.component("InputText", InputText)
-app.component("InputMask", InputMask)
-app.component("Card", Card)
 app.component("Dropdown", Dropdown)
 app.component("ProgressSpinner", ProgressSpinner)
 app.component("Accordion", Accordion)
@@ -86,9 +77,8 @@ app.component("Paginator", Paginator)
 app.component("ProgressBar", ProgressBar)
 app.component("Calendar", Calendar)
 app.component("DatePicker", DatePicker)
-app.component("SetupCalendar", SetupCalendar)
 
-// 구글 로그인
+// 구글 로그인 option 설정
 const gAuthOptions = {
 	clientId: "1022565741938-a0i54ckun7augse5rfte33htdn1kea74.apps.googleusercontent.com",
 	scope: "email profile",
