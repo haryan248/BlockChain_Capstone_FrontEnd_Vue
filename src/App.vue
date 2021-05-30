@@ -18,15 +18,6 @@ export default {
 			false
 		)
 	},
-	mounted() {
-		document.addEventListener("backbutton", this.onBackPressed, false)
-	},
-	methods: {
-		onBackPressed() {
-			// this.$router.go(-1)
-			alert("backbutton")
-		},
-	},
 }
 </script>
 

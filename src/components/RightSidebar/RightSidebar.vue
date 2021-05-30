@@ -230,8 +230,8 @@ export default {
 					} else {
 						JSON.stringify(localStorage.setItem("AdminMode", true))
 						this.adminChecked = true
-						this.openVisibleRight()
 					}
+					this.openVisibleRight()
 				},
 			})
 		},
@@ -248,6 +248,9 @@ export default {
 					localStorage.removeItem("AdminMode")
 					this.$router.replace("/login")
 				},
+				reject: () => {
+					this.openVisibleRight()
+				},
 			})
 		},
 		// 간편 비밀번호 재설정 함수
@@ -261,7 +264,7 @@ export default {
 					this.openPasswordModal()
 				},
 				reject: () => {
-					return
+					this.openVisibleRight()
 				},
 			})
 		},
@@ -283,6 +286,7 @@ export default {
 			this.privacyError = false
 			this.privacy = false
 			this.displayBackupModal = false
+			this.openVisibleRight()
 		},
 
 		// 패스워드 모달 토글 함수
@@ -295,7 +299,6 @@ export default {
 			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다.")
 			this.regenerateUserDID()
 		},
-
 		// did 재발급
 		async regenerateUserDID() {
 			this.loading = true
@@ -321,7 +324,7 @@ export default {
 				this.privacyError = true
 				return
 			}
-			this.closeBackupModal()
+			this.displayBackupModal = false
 			try {
 				const response = await this.$axios.post("/api/password/", {}, { params: { key: localStorage.getItem("key"), simple_password: localStorage.getItem("simplePassword") } })
 				if (response.status === 201) {

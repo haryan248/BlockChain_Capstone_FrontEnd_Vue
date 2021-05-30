@@ -57,7 +57,7 @@ dd<template>
 							<Button label="회원 정보 입력" icon="pi pi-pencil" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
 							<Button v-if="successSignUp" label="간편 비밀번호 입력" icon="pi pi-lock" iconPos="right" class="login__form-button" :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openPasswordModal" />
 							<Button v-if="successPassword" label="학생증 찾기" icon="pi pi-search" iconPos="right" class="login__form-button" :class="{ 'p-button-outlined': !successFindDID }" :disabled="successFindDID" @click="getUserDID" />
-							<Button v-if="regenerateDID" label="학생증 재발급" icon="pi pi-clone" iconPos="right" class="login__form-button" @click="openWarningModal" :disabled="!successSignUp" />
+							<Button v-if="regenerateDID" label="학생증 재발급" icon="pi pi-clone" iconPos="right" class="did-reissued" @click="openWarningModal" :disabled="!successSignUp" />
 							<Button v-if="successSignUp && !successPassword" label="간편 비밀번호 찾기" icon="pi pi-cloud-download" iconPos="right" class="p-button-info login__form-button" @click="getPassword" />
 						</div>
 						<!-- Sign up button -->
@@ -295,6 +295,7 @@ export default {
 					}
 				)
 				if (response.status === 201) {
+					this.successGenerateDID = true
 					localStorage.setItem("key", this.tempKey)
 					localStorage.setItem("did", response.data.did)
 					if (this.checkAdminCodeState) localStorage.setItem("adminKey", this.$sha256(this.adminCode))
@@ -403,7 +404,7 @@ export default {
 		// 간편 비밀번호 찾기
 		async getPassword() {
 			this.openFindPasswordModal()
-			const response = await this.$axios.get("/api/password/", { params: { key: localStorage.getItem("key") } })
+			const response = await this.$axios.get("/api/password/", { params: { key: this.tempKey } })
 			if (response.status === 201) {
 				this.simplePassword = response.data.wallet_key
 			}

@@ -40,7 +40,8 @@
 .input__form {
 	font-weight: bold;
 }
-.did-issued {
+.did-issued,
+.did-reissued {
 	margin-top: 20px;
 }
 .login__form-button {

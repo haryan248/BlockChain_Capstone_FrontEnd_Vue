@@ -209,7 +209,7 @@ export default defineComponent({
 					if (error.response.data.msg === "check_DID error") {
 						showError("본인 인증 오류", "죄송합니다. \n본인 인증에 오류가 있습니다.")
 					} else if (error.response.data.msg === "timestamp error") {
-						showError("유효 시간 오류", "죄송합니다. \n유효 시간이 지났습니다. 다시 찍어주세요.")
+						showError("유효 시간 오류", "죄송합니다. \n유효 시간이 지났습니다.")
 					} else {
 						showError("인증 오류", "죄송합니다. \n본인 인증에 오류가 있습니다.")
 					}
