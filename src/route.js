@@ -83,6 +83,7 @@ async function authenticationKey() {
 			localStorage.removeItem("key")
 			return false
 		} else if (error.response.data.msg === "Admin key is error") {
+			localStorage.removeItem("key")
 			localStorage.removeItem("adminKey")
 			return false
 		}

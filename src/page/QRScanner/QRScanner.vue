@@ -100,12 +100,14 @@ export default defineComponent({
 			turnCameraOff()
 			await timeout(1500)
 			state.checkQR = true
+			await timeout(2000)
 			generateEntry(result, currentCamera)
 		}
 		// 인증 사운드
 		const play = (sound) => {
 			if (sound) {
 				var audio = new Audio(sound)
+				audio.load()
 				audio.play()
 			}
 		}

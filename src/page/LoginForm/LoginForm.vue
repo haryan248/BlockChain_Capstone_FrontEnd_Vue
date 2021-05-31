@@ -377,7 +377,7 @@ export default {
 				if (response.status === 201) {
 					this.showSuccess("회원 정보 입력 성공", "올바른 회원입니다. \n간편 비밀번호를 입력해주세요. ")
 					this.tempKey = response.data.user_key
-					if (response.data.admin_key !== null) localStorage.setItem("adminKey", response.data.admin_key)
+					if (response.data.admin_key !== null || response.data.admin_key !== undefined) localStorage.setItem("adminKey", response.data.admin_key)
 					JSON.stringify(localStorage.setItem("findDid", true))
 					this.successSignUp = true
 					this.setMembers()
