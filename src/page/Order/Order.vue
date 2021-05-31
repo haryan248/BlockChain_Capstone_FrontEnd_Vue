@@ -177,7 +177,7 @@ button.p-button.p-component.order__qr-button.p-button-outlined.p-button-secondar
 	border: 1px solid #cbd5e0;
 }
 .p-orderlist.p-component .p-orderlist-list .p-orderlist-item {
-	border-bottom: 1px solid #4a83e5;
+	border-bottom: 1px solid #cbd5e0;
 }
 /* 스와이퍼 css */
 .swiper-pagination-bullet-active {
