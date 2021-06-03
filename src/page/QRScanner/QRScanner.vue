@@ -97,6 +97,8 @@ export default defineComponent({
 			state.firstLoading = true
 			state.result = result
 			let currentCamera = state.camera
+			// 스캐너 사운드 play
+			play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
 			turnCameraOff()
 			await timeout(1500)
 			state.checkQR = true
@@ -219,7 +221,6 @@ export default defineComponent({
 				}
 			}
 			state.checkQR = false
-			play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
 		}
 		// QR 경고 모달 토글 함수
 		const openQRWarningModal = () => {
