@@ -97,9 +97,9 @@ export default defineComponent({
 			state.firstLoading = true
 			state.result = result
 			let currentCamera = state.camera
-			// 스캐너 사운드 play
-			turnCameraOff()
 			state.checkQR = true
+			turnCameraOff()
+			// 스캐너 사운드 play
 			play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
 			await timeout(1500)
 			generateEntry(result, currentCamera)
