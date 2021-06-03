@@ -98,12 +98,12 @@ export default defineComponent({
 			state.result = result
 			let currentCamera = state.camera
 			// 스캐너 사운드 play
-			play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
 			turnCameraOff()
-			await timeout(1500)
 			state.checkQR = true
-			await timeout(2000)
+			play("https://soundbible.com/mp3/Checkout Scanner Beep-SoundBible.com-593325210.mp3")
+			await timeout(1500)
 			generateEntry(result, currentCamera)
+			await timeout(1500)
 		}
 		// 인증 사운드
 		const play = (sound) => {
