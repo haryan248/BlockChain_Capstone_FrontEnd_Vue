@@ -4,11 +4,11 @@
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div>
 				<div class="student-content">
-					<!-- Student Id coach mark -->
+					<!-- student Id coach mark -->
 					<CoachMark :coachMarkType="'student-id'" :storageName="'studentId'" />
 					<HeaderSection :title="'학생증'" :subtitle="'자신의 정보를 간편하게 관리해보세요.'" :darkModeState="darkModeState" />
 					<Dialog class="QR-modal" :showHeader="false" v-model:visible="displayStudentModal" :style="{ width: '80vw' }" :baseZIndex="-1000" :class="{ dark__mode: darkModeState }">
-						<!-- Student ID card -->
+						<!-- student ID card -->
 						<div class="student-info">
 							<div class="student-card">
 								<div class="student-wrapper">
@@ -25,7 +25,7 @@
 									</div>
 								</div>
 							</div>
-							<!-- Simplepassword modal input when pressing student ID -->
+							<!-- simplepassword modal input when pressing student ID -->
 							<Dialog class="password-modal p-dialog-maximized" :class="{ dark__mode: darkModeState }" header="" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 								<SimplePassword :title="'간편 비밀번호 입력'" :isSetting="false" @correctPassword="closePasswordModal" />
 							</Dialog>
@@ -113,7 +113,7 @@ export default {
 			this.displayPasswordModal = false
 		},
 
-		//학생증 모달 토글 함수
+		// 학생증 모달 토글 함수
 		openStudentModal() {
 			this.displayStudentModal = true
 		},

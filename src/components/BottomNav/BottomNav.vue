@@ -1,7 +1,7 @@
 <template>
-	<!-- Bottom navigation of each page -->
+	<!-- bottom navigation of each page -->
 	<div v-if="$route.path !== '/login' || $route.path !== '/simplepwd'">
-		<!-- User bottom navigation -->
+		<!-- user bottom navigation -->
 		<aside v-if="!adminModeState" class="bottom-nav footer--view" :class="{ dark__mode: darkModeState }">
 			<router-link to="/" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.studentId }">
 				<Button
@@ -43,7 +43,7 @@
 				/>
 			</router-link>
 		</aside>
-		<!-- Admin bottom navigation -->
+		<!-- admin bottom navigation -->
 		<aside v-else class="bottom-nav footer--view" :class="{ dark__mode: darkModeState }">
 			<router-link to="/entrylist" class="footer-btn" :class="{ 'footer-btn--active': $route.path === path.entrylist }">
 				<Button

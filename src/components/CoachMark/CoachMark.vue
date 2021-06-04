@@ -5,7 +5,7 @@
 				<div class="coach__mark-closebutton" @click="closeCoachMark">
 					<i class="close__button pi pi-times" style="fontSize: 2rem"></i>
 				</div>
-				<!-- Clipboard coach mark screen -->
+				<!-- clipboard coach mark screen -->
 				<div v-if="coachMarkType === 'clipboard'" :class="coachMarkType + '__desc'">
 					<div :class="coachMarkType + '__subtitle'">1. 관리자는 강의동 설정 탭에서 <br /><span class="focus">강의동</span>을 <span class="focus">선택</span> 해주세요 !</div>
 					<div :class="coachMarkType + '__subtitle'">
@@ -15,7 +15,7 @@
 					</div>
 					<div :class="coachMarkType + '__subtitle'">3. 강의동 <span class="focus">출입자 명단</span>를 확인하세요 !</div>
 				</div>
-				<!-- Student Id coach mark screen -->
+				<!-- student id coach mark screen -->
 				<div v-else-if="coachMarkType === 'student-id'" :class="coachMarkType + '__desc'">
 					<div :class="coachMarkType + '__title'">
 						안녕하세요! <span class="focus">{{ name }}</span> 님

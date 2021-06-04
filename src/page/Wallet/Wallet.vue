@@ -14,7 +14,7 @@
 								<Button label="+ 카드 추가하기" :class="{ dark__mode: darkModeState }" class="p-button-text p-button-secondary" @click="visibleBottom = true" />
 							</div>
 						</div>
-						<!-- Swiper section -->
+						<!-- swiper section -->
 						<!-- temp card data -->
 						<div class="card__wrapper">
 							<swiper :slides-per-view="1.3" :space-between="10" :centeredSlides="true" :pagination="true" :loop="true">
@@ -47,7 +47,7 @@
 						<div class="card-delete__button">
 							<Button label="카드 삭제" class="p-button-danger" icon="pi pi-times" />
 						</div>
-						<!-- Add card screen -->
+						<!-- add card screen -->
 						<Sidebar v-model:visible="visibleBottom" :baseZIndex="1000" position="bottom" style="height:30rem">
 							<div class="card">
 								<h3>카드 추가하기</h3>

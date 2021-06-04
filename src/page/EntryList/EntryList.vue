@@ -5,12 +5,12 @@
 			<div>
 				<div class="entry__admin">
 					<HeaderSection class="entry_admin-headersection" :viewDate="false" :title="buildingName" :subtitle="'출입자 명단을 확인해보세요.'" :darkModeState="darkModeState" />
-					<!-- Sort button -->
+					<!-- sort button -->
 					<div class="filter__section">
 						<Button v-if="selectOrder === 'Desc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-up" @click="orderDate" />
 						<Button v-if="selectOrder === 'Asc'" label="날짜순" class="p-button-sm p-button-outlined filter__button" :class="{ dark__mode: darkModeState }" icon="pi pi-sort-down" @click="orderDate" />
 					</div>
-					<!-- Entry list coach mark -->
+					<!-- entry list coach mark -->
 					<CoachMark :coachMarkType="'clipboard'" :storageName="'clipboard'" />
 					<div class="entryuser__container" :class="{ dark__mode: darkModeState }">
 						<div class="item__content">
@@ -18,13 +18,13 @@
 								<div class="entryuser-list__content" :class="{ dark__mode: darkModeState }">
 									<div v-if="entryList[0].building === ''">
 										<div class="emptyuser-list">
-											<!-- When the lecture building is not selected -->
+											<!-- when the lecture building is not selected -->
 											<p v-if="building === null">
 												<i class="pi pi-users" style="fontSize: 2rem"></i>
 												<br /><br />
 												강의동을 <br />먼저 설정해주세요.
 											</p>
-											<!-- When there are no students in the lecture building -->
+											<!-- when there are no students in the lecture building -->
 											<p v-else>
 												<i class="pi pi-users" style="fontSize: 2rem"></i>
 												<br /><br />
@@ -32,7 +32,7 @@
 											</p>
 										</div>
 									</div>
-									<!-- Screen of students entering the lecture building -->
+									<!-- screen of students entering the lecture building -->
 									<div v-else v-for="(entryItem, index) in entryList" :key="index">
 										<li class="list__item">
 											<div class="entryuser-list__item">
@@ -51,7 +51,7 @@
 							</div>
 						</div>
 					</div>
-					<!-- Pagination button -->
+					<!-- pagination button -->
 					<div class="check__entry-button">
 						<Paginator :class="{ dark__mode: darkModeState }" :rows="10" :pageLinkSize="3" :totalRecords="totalRecords" @page="onPage($event)" />
 					</div>
@@ -147,7 +147,7 @@ export default {
 			this.curPage = event.page + 1
 			this.getEntryListForAdmin()
 		},
-		//정렬 버튼 클릭시
+		// 정렬 버튼 클릭시
 		orderDate() {
 			if (this.selectOrder === "Asc") {
 				this.selectOrder = "Desc"

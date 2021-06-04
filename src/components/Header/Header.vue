@@ -23,7 +23,7 @@ export default {
 	},
 	emits: ["confirmSetting"],
 	methods: {
-		//다크 모드 세팅
+		// 다크 모드 세팅
 		confirmSetting() {
 			this.darkModeState = this.$shared.checkDarkMode()
 			this.$emit("confirmSetting")

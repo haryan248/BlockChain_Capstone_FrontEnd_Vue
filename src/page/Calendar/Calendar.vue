@@ -4,7 +4,7 @@
 			<div class="calendar__content">
 				<Header :title="'캘린더'" @confirmSetting="confirmSetting" />
 				<v-date-picker ref="calendar" :attributes="attributes" :is-dark="darkModeState" @dayclick="onDayClick" v-model="selectDate.date" @update:to-page="toPage" is-expanded />
-				<!-- Loading screen -->
+				<!-- loading screen -->
 				<div v-if="loading" class="loading__overlay">
 					<div class="loading__progressbar">
 						<h5 class="calendar_loading">출입 여부를 불러오는 중입니다.</h5>

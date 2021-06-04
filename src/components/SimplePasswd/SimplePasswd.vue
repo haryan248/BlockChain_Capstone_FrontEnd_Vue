@@ -8,7 +8,7 @@
 			<div v-else class="password-help">숫자 6자리 + 영문자 1자리</div>
 
 			<div class="password-info">
-				<!-- Password number icon -->
+				<!-- password number icon -->
 				<div class="password-filter" v-for="(item, index) in simplePasswd.length" :key="index" style="display:inline-block">
 					<Button v-if="index === 6" icon="pi pi-plus" class="p-button-rounded p-button-secondary p-button-text border-none" />
 					<Button v-else icon="pi pi-circle-on" class="p-button-rounded p-button-secondary p-button-text border-none" />
@@ -19,7 +19,7 @@
 				</div>
 				<div class="password__wrong" v-html="simplePasswdText"></div>
 
-				<!-- Password input screen -->
+				<!-- password input screen -->
 				<div class="password-inputter">
 					<div class="password-wrapper">
 						<div class="inputter__flex">

@@ -4,7 +4,7 @@
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div class="reservation-content">
 				<HeaderSection :title="'좌석 예약'" :subtitle="'자신의 좌석를 예약해주세요.'" :darkModeState="darkModeState" />
-				<!-- Seat UI -->
+				<!-- seat UI -->
 				<div class="row">
 					<div class="col-8 py-5">
 						<div>
@@ -19,7 +19,7 @@
 							</table>
 						</div>
 					</div>
-					<!-- Seat selection UI -->
+					<!-- seat selection UI -->
 					<div class="seat__content">
 						<div class="seat__select" :class="{ dark__mode: darkModeState }">
 							<div>

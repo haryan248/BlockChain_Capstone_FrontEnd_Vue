@@ -4,7 +4,7 @@
 		<div class="container bg-gray" :class="{ 'bg-dark': darkModeState }">
 			<div class="admin__setting-content">
 				<HeaderSection :title="'강의동 설정'" :subtitle="'강의동을 선택해주세요.'" :darkModeState="darkModeState" />
-				<!-- Lecture building selection screen -->
+				<!-- lecture building selection screen -->
 				<div class="setting__select" :class="{ dark__mode: darkModeState }">
 					<div class="item__content">
 						<div class="select__list" :class="{ dark__mode: darkModeState }">
@@ -15,7 +15,7 @@
 						</div>
 					</div>
 				</div>
-				<!-- Settings confirmation button -->
+				<!-- settings confirmation button -->
 				<div class="setting-confirm__button">
 					<Button label="설정 확인" icon="pi pi-check" iconPos="left" @click="confirmBuilding" />
 				</div>

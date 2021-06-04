@@ -1,6 +1,7 @@
 <template>
 	<div class="login__form-container" :class="{ dark__mode: darkModeState }">
 		<div class="loadpassword__button"></div>
+		<!-- loading progress bar -->
 		<div v-if="loading" class="loading__overlay-loginForm">
 			<div class="loading__progressbar">
 				<h5 class="loginForm_loading">{{ loadingText }}</h5>
@@ -8,7 +9,7 @@
 			</div>
 		</div>
 		<Dialog class="login-form" v-model:visible="displayBasic" :showHeader="false" position="bottom" :style="{ width: '80vw' }">
-			<!-- Member registration information input screen -->
+			<!-- member registration information input screen -->
 			<div class="login__form-box">
 				<div class="p-fluid">
 					<div class="sign-in">
@@ -52,7 +53,7 @@
 								<small v-else id="admincode-help">관리자인 경우 입력해주세요.</small>
 							</div>
 						</div>
-						<!-- Find student ID button -->
+						<!-- find student ID button -->
 						<div v-if="find === 'true'">
 							<Button label="회원 정보 입력" icon="pi pi-pencil" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
 							<Button v-if="successSignUp" label="간편 비밀번호 입력" icon="pi pi-lock" iconPos="right" class="login__form-button" :class="{ 'p-button-outlined': !successPassword }" :disabled="successPassword" @click="openPasswordModal" />
@@ -60,7 +61,7 @@
 							<Button v-if="regenerateDID" label="학생증 재발급" icon="pi pi-clone" iconPos="right" class="did-reissued" @click="openWarningModal" :disabled="!successSignUp" />
 							<Button v-if="successSignUp && !successPassword" label="간편 비밀번호 찾기" icon="pi pi-cloud-download" iconPos="right" class="p-button-info login__form-button" @click="getPassword" />
 						</div>
-						<!-- Sign up button -->
+						<!-- sign up button -->
 						<div v-else>
 							<Button v-if="admin" label="관리자 코드 확인" icon="pi pi-key" iconPos="right" :class="{ 'p-button-outlined': !successAdminCode }" :disabled="successAdminCode" @click="checkAdminCode" style="margin-bottom: 20px;" />
 							<Button label="회원 정보 입력" icon="pi pi-check" iconPos="right" :class="{ 'p-button-outlined': !successSignUp }" :disabled="successSignUp" @click="checkValidate" />
@@ -80,11 +81,11 @@
 				</div>
 			</div>
 		</Dialog>
-		<!-- Password input/setting modal -->
+		<!-- password input/setting modal -->
 		<Dialog class="password-modal p-dialog-maximized" :class="{ dark__mode: darkModeState }" :showHeader="false" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 			<SimplePassword :title="find === 'true' ? '간편 비밀번호 입력' : '간편 비밀번호 설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
-		<!-- Find password modal -->
+		<!-- find password modal -->
 		<Dialog class="password__finding-modal" header="" :showHeader="false" v-model:visible="displayFindPasswordModal" :style="{ width: '80vw' }" :modal="true">
 			<div class="password-finding__detail">
 				<br />
@@ -99,7 +100,7 @@
 				<Button label="확인" icon="pi pi-check" class="border-none p-button-outlined" @click="closeFindPasswordModal" />
 			</template>
 		</Dialog>
-		<!-- Warning modal when setting password -->
+		<!-- warning modal when setting password -->
 		<Dialog class="password__warning-modal" header="" :showHeader="false" v-model:visible="displayWarningModal" :style="{ width: '80vw' }" :modal="true">
 			<p v-if="regenerateDID" class="password-warning__detail">
 				<br /><span class="password-focus"> 주의 사항 <i class="pi pi-exclamation-triangle" style="color:#ff4b4b; margin-left:5px;"></i></span> <br />

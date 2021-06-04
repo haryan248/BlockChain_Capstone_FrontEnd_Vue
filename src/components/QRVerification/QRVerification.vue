@@ -56,15 +56,16 @@ export default {
 		this.countDownTimer()
 	},
 	unmounted() {
+		// polling 제거
 		clearInterval(this.polling)
 	},
 	methods: {
-		//qr코드 = H(H(did + simplepassword) + timestamp) + did + timestamp
+		// qr코드 = H(H(did + simplepassword) + timestamp) + did + timestamp
 		setQRString() {
 			this.timeStamp = Math.round(+new Date() / 1000)
 			this.qrString = "https://" + "_" + this.$sha256(this.$sha256(this.did + this.SimplePassword) + this.timeStamp) + "_" + this.did + "_" + this.timeStamp
 		},
-		//15초 카운트 다운
+		// 15초 카운트 다운
 		countDownTimer() {
 			if (this.isStudentId) {
 				this.polling = setInterval(() => {
@@ -73,14 +74,14 @@ export default {
 				}, 1000)
 			}
 		},
-		//qr 재발급
+		// qr 재발급
 		resetQR() {
 			clearInterval(this.polling)
 			this.countDown = 15
 			this.countDownTimer()
 			this.setQRString()
 		},
-		//뒤로가기
+		// 뒤로가기
 		goBack() {
 			this.$emit("goBack")
 		},

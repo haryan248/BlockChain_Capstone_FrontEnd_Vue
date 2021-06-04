@@ -1,7 +1,7 @@
 <template>
 	<!-- confirm dialog -->
 	<ConfirmDialog :class="{ dark__mode: $shared.checkDarkMode() }" class="setting_confirm-dialog" />
-	<!-- Student ID reissuance loading screen -->
+	<!-- student id reissuance loading screen -->
 	<div v-if="loading" class="loading__overlay-loginForm">
 		<div class="loading__progressbar">
 			<h5 class="loginForm_loading">학생증을 재발급 중입니다.</h5>
@@ -98,11 +98,11 @@
 				</p>
 			</div>
 		</Sidebar>
-		<!-- Simple password reset modal -->
+		<!-- simple password reset modal -->
 		<Dialog class="password-modal p-dialog-maximized" :class="[{ dark__mode: $shared.checkDarkMode() }]" v-model:visible="displayPasswordModal" :style="{ width: '100vw', height: '100vh' }" :modal="true">
 			<SimplePassword :title="'간편 비밀번호 재설정'" :isSetting="true" @setCorrectPassword="closePasswordModal" />
 		</Dialog>
-		<!-- Backup personal consent modal -->
+		<!-- backup personal consent modal -->
 		<Dialog class="password__backup-modal" :class="{ dark__mode: $shared.checkDarkMode() }" :showHeader="false" v-model:visible="displayBackupModal" :style="{ width: '80vw' }" :modal="true">
 			<p class="password__backup-detail">
 				<br />
@@ -299,6 +299,7 @@ export default {
 			this.showSuccess("간편비밀번호 설정 완료", "간편비밀번호 설정이 완료되었습니다.")
 			this.regenerateUserDID()
 		},
+
 		// did 재발급
 		async regenerateUserDID() {
 			this.loading = true
@@ -335,6 +336,7 @@ export default {
 				this.showError("백업 오류", "죄송합니다. \n백업에 오류가 있습니다.")
 			}
 		},
+
 		// 성공 토스트 메시지
 		showSuccess(summaryText, detailText) {
 			this.$toast.add({ severity: "success", summary: summaryText, detail: detailText, life: 3000 })

@@ -6,16 +6,16 @@
 				<div class="order-content">
 					<HeaderSection :title="'주문서'" :subtitle="'음식을 주문해보세요.'" :darkModeState="darkModeState" />
 					<div class="menu__tab" :class="{ dark__mode: darkModeState }">
-						<!-- Select university cafeteria -->
+						<!-- select university cafeteria -->
 						<div class="tab__list">
 							<MultiSelect class="order__multiselect" v-model="selectedRestaurant" :options="restaurant" optionLabel="brand" placeholder="교내식당을 선택하세요." />
 						</div>
-						<!-- Order QR code  -->
+						<!-- order QR code  -->
 						<div class="tab__list">
 							<Button label="주문서 확인" class="order__qr-button p-button-outlined p-button-secondary" @click="openOrderQRModal" />
 						</div>
 					</div>
-					<!-- OrderList -->
+					<!-- orderList -->
 					<OrderList :class="{ dark__mode: darkModeState }" v-model="foods" listStyle="height:auto" dataKey="id">
 						<template #header>
 							식당 메뉴
@@ -37,14 +37,14 @@
 							</div>
 						</template>
 					</OrderList>
-					<!-- Order button -->
+					<!-- order button -->
 					<div class="order__button">
 						<Button label="주문하기" icon="pi pi-check" />
 					</div>
 				</div>
 			</div>
 		</div>
-		<!-- Order QR Modal -->
+		<!-- order QR Modal -->
 		<Dialog class="OrderModal" :class="{ dark__mode: darkModeState }" header="Header" :showHeader="false" v-model:visible="displayOrderQRModal" :style="{ width: '80vw' }" :modal="true">
 			<QRVerification @goBack="closeOrderQRModal" :did="DID" :SimplePassword="SimplePassword" />
 		</Dialog>

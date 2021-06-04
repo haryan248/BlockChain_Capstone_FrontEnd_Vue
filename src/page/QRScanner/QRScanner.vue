@@ -9,7 +9,7 @@
 							<Button icon="pi pi-times" @click="goBack" class="p-button" alt="switch camera" />
 						</div>
 						<QrStream v-if="!state.displayQRWarningModal" :camera="state.camera" @decode="onDecode" @init="onInit">
-							<!-- Loading screen -->
+							<!-- loading screen -->
 							<div class="loading-indicator-qr" v-if="state.loading && !state.firstLoading">
 								카메라가 로딩중입니다.
 								<ProgressBar mode="indeterminate" style="height: .5em" />
@@ -33,7 +33,7 @@
 								<div class="QR_descirpt"><span class="focus">QR코드</span>로 인증을 진행할 수 있습니다. <br />카메라 화면 안에 <span class="focus">QR 코드</span>를 <span class="focus">인식</span>시켜주세요.</div>
 							</div>
 						</QrStream>
-						<!-- Camera switch -->
+						<!-- camera switch -->
 						<div class="switch__button" @click="switchCamera">
 							<div>카메라 전환</div>
 						</div>
@@ -235,7 +235,6 @@ export default defineComponent({
 			toast.add({ severity: "error", summary: summaryText, detail: detailText, life: 2000 })
 		}
 		return {
-			// ...toRefs(state),
 			state,
 			validationPending,
 			validationSuccess,

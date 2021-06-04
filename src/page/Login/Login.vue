@@ -1,6 +1,6 @@
 <template>
 	<div :class="[{ 'home-container--loading': loading }, { dark__mode: darkModeState }, { 'home-container--loading-dark': darkModeState && loading }]" class="home-container">
-		<!-- Main screen modal -->
+		<!-- main screen modal -->
 		<Dialog class="login" v-if="!loading" :showHeader="false" position="bottom" v-model:visible="displayBasic" :style="{ width: '80vw' }">
 			<div class="login-box">
 				<div class="login-card">
@@ -15,7 +15,7 @@
 				</div>
 			</div>
 		</Dialog>
-		<!-- Loading screen -->
+		<!-- loading screen -->
 		<div v-else class="loading-indicator">
 			<h5 class="login_loading">잠시만 기다려주세요.</h5>
 			<ProgressBar mode="indeterminate" style="height: .5em" />
