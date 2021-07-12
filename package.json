@@ -18,6 +18,7 @@
     "forever": "^0.14.2",
     "glob-parent": "^6.0.0",
     "minimist": "^1.2.5",
+    "open": "^8.2.1",
     "optimist": "^0.5.2",
     "pm2": "^5.1.0",
     "postcss": "^8.3.5",
