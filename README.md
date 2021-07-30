@@ -2,47 +2,10 @@
 캡스톤 프로젝트 
 블록체인 기반 학생증 어플리케이션
 자신의 데이터는 자신이 지키자 (데이터 주권 보장)
-## Project setup
-
-```
-yarn install
-```
-
-### Compiles and hot-reloads for development
-
-```
-yarn serve
-```
-
-### Compiles and minifies for production
-
-```
-yarn build
-```
-
-### Lints and fixes files
-
-```
-yarn lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
-
-### Nginx Server command
-
-sudo service nginx restart (server restart)
-sudo service nginx start (server start)
-sudo service nginx stop (server stop)
-
-### Deploy command
-
-cd BlockChain_FrontEnd_Vue/ && git pull && yarn build && cd /var/www/html && rm -r dist && cp -r ~root/BlockChain_FrontEnd_Vue/dist /var/www/html/ && sudo service nginx restart && cd
 
 ## 이팔청춘 - 블록체인 학생증(U-Pass)
 <p align='center'>
-![이팔청춘(색상) 사본](https://user-images.githubusercontent.com/51049245/127641138-2b93699c-e4a3-4c2c-90de-4741c8d7807d.png)
+    <img src="https://user-images.githubusercontent.com/51049245/127641138-2b93699c-e4a3-4c2c-90de-4741c8d7807d.png"/>
 </p>
 
 <p align='center'>
@@ -87,15 +50,6 @@ cd BlockChain_FrontEnd_Vue/ && git pull && yarn build && cd /var/www/html && rm 
 ![image](https://user-images.githubusercontent.com/51049245/127643219-5c2682ad-654b-4e31-9c70-713df0553208.png)
 
 **3. 프론트엔드**
-- 프론트엔드 환경 변수 설정
-   - fe 폴더 바로 밑에 .env.development 파일 생성
-   - .env_sample에 있는 내용 작성
-   - .env 예시
-    ```
-    REACT_APP_API_URL=[서버 주소 (ex. http://localhost)]
-    
-    REACT_APP_API_PORT=[프론트엔드 서버 포트 (ex. 4000)]
-    ```
 
 - 실행
     ```vue
@@ -107,3 +61,14 @@ cd BlockChain_FrontEnd_Vue/ && git pull && yarn build && cd /var/www/html && rm 
     npm install 
     npm run start
     ```
+    
+    
+### Nginx Server command
+
+sudo service nginx restart (server restart)
+sudo service nginx start (server start)
+sudo service nginx stop (server stop)
+
+### Deploy command
+
+cd BlockChain_FrontEnd_Vue/ && git pull && yarn build && cd /var/www/html && rm -r dist && cp -r ~root/BlockChain_FrontEnd_Vue/dist /var/www/html/ && sudo service nginx restart && cd
