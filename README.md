@@ -70,7 +70,7 @@ cd BlockChain_FrontEnd_Vue/ && git pull && yarn build && cd /var/www/html && rm 
 
 
 
-## 📌 주요 기능
+## 📌 화면 구성
 
 |학생증|결제|주문|좌석예약|
 |:--:|:--:|:--:|:--:|
