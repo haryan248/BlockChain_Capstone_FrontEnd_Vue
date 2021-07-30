@@ -72,16 +72,16 @@ cd BlockChain_FrontEnd_Vue/ && git pull && yarn build && cd /var/www/html && rm 
 
 ## 📌 주요 기능
 
-|학생증![image](https://user-images.githubusercontent.com/51049245/127643339-d9c46127-ddf3-401c-8297-af47785b4718.png)|결제![image](https://user-images.githubusercontent.com/51049245/127643388-1133105e-230e-47a9-a6d9-2dc61158b743.png)|주문![image](https://user-images.githubusercontent.com/51049245/127643409-ad3b84f6-1a8a-4abe-9176-a45fb928a151.png)|좌석예약![image](https://user-images.githubusercontent.com/51049245/127643431-9152c5d6-fc0b-4f96-ac94-99f9f6d5630f.png)|
+|학생증|결제|주문|좌석예약|
 
 |:--:|:--:|:--:|:--:|
-|<img width='500' src='https://i.imgur.com/cUAWIka.png'>|<img width='500' src='https://i.imgur.com/bZW9EaG.png'>|<img width='500' src='https://i.imgur.com/kjrJCes.png'>|<img width='500' src='https://i.imgur.com/65Iq6xY.png'>|
+|<img width='500' src='https://user-images.githubusercontent.com/51049245/127643339-d9c46127-ddf3-401c-8297-af47785b4718.png'>|<img width='500' src='https://user-images.githubusercontent.com/51049245/127643388-1133105e-230e-47a9-a6d9-2dc61158b743.png'>|<img width='500' src='https://user-images.githubusercontent.com/51049245/127643409-ad3b84f6-1a8a-4abe-9176-a45fb928a151.png'>|<img width='500' src='https://user-images.githubusercontent.com/51049245/127643431-9152c5d6-fc0b-4f96-ac94-99f9f6d5630f.png'>|
 
 
 
-|캘린더![image](https://user-images.githubusercontent.com/51049245/127643481-f4ef0092-6477-4f4d-a039-87c2b48cee8e.png)|출입 확인![image](https://user-images.githubusercontent.com/51049245/127643481-f4ef0092-6477-4f4d-a039-87c2b48cee8e.png)|QR 인증![image](https://user-images.githubusercontent.com/51049245/127643640-33712c45-7e6e-4570-baf9-032042c1c299.png)|강의동 설정![image](https://user-images.githubusercontent.com/51049245/127643670-f38b694f-feb1-424b-a2a6-690f5aa3a781.png)|
+|캘린더|출입 확인|QR 인증|강의동 설정|
 |:--:|:--:|:--:|:--:|
-|<img width='500' src='https://i.imgur.com/jnTselu.png'>|![](https://i.imgur.com/rhwIsA1.png)|<img width='500' src='https://i.imgur.com/NgHhEFA.png'>|<img width='500' src='https://i.imgur.com/3N5mWKB.png'>|
+|<img width='500' src='https://user-images.githubusercontent.com/51049245/127643481-f4ef0092-6477-4f4d-a039-87c2b48cee8e.png'>|![](https://user-images.githubusercontent.com/51049245/127643481-f4ef0092-6477-4f4d-a039-87c2b48cee8e.png)|<img width='500' src='https://user-images.githubusercontent.com/51049245/127643640-33712c45-7e6e-4570-baf9-032042c1c299.png'>|<img width='500' src='https://user-images.githubusercontent.com/51049245/127643670-f38b694f-feb1-424b-a2a6-690f5aa3a781.png'>|
 
 
 ## 📌서비스 흐름
