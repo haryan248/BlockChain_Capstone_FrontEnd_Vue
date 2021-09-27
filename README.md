@@ -54,7 +54,7 @@
 - 실행
     ```vue
     yarn
-    yarn start
+    yarn serve
     ```
     or
     ```vue
