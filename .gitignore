@@ -1,6 +1,6 @@
 .DS_Store
 node_modules
-yarn.lock
+/yarn.lock
 /dist
 /key
 src/assets/S-Core-Dream-light/
