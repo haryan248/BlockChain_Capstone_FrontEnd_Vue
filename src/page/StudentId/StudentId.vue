@@ -14,7 +14,9 @@
 								<div class="student-wrapper">
 									<div class="box" :class="{ dark__mode: darkModeState }">
 										<div class="student-card__item">
-											<p class="item__univ">경기대학교</p>
+											<p class="item__univ">
+												<img class="item__univ--name" src="../../images/Logo/kgu_logo.png"/>경기대학교
+											</p>
 											<div class="item__img">
 												<div class="student__img" :style="{ 'background-image': 'url(' + userImage + ')' }"></div>
 											</div>
