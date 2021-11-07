@@ -1,14 +1,14 @@
 module.exports = {
-	devServer: {
-		compress: true,
-		proxy: {
-			"^/api": {
-				target: "https://apiupass.com",
-				changeOrigin: true,
-				logLevel: "debug",
-			},
-		},
-		disableHostCheck: true,
-		allowedHosts: ["https://www.kyonggiupass.com"],
-	},
-}
+    devServer: {
+        compress: true,
+        proxy: {
+            "^/api": {
+                target: "https://www.apiupass.com",
+                changeOrigin: true,
+                logLevel: "debug",
+            },
+        },
+        disableHostCheck: true,
+        allowedHosts: ["https://www.kyonggiupass.com"],
+    },
+};

@@ -68,10 +68,15 @@
 }
 .student-card__item .item__univ {
 	text-align: center;
-	font-size: 25px;
+	font-size: 20px;
 	font-weight: 700;
-	line-height: 38px;
 	margin-bottom: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.student-card__item .item__univ--name{
+	margin-right: 10px;
 }
 .student-card__item .item__img {
 	margin-top: 10px;

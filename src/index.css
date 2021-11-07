@@ -24,8 +24,8 @@ td,
 textarea,
 th,
 ul {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 body,
 button,
@@ -51,8 +51,8 @@ td,
 textarea,
 th,
 ul {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 body,
 button,
@@ -65,32 +65,32 @@ input,
 select,
 table,
 textarea {
-	/* font-family: Roboto, Noto Sans KR, Helvetica Neue, Apple SD Gothic Neo, Arial, Helvetica, sans-serif; */
-	font-family: "s-core-dream-light", sans-serif !important;
-	font-size: 14px;
+    /* font-family: Roboto, Noto Sans KR, Helvetica Neue, Apple SD Gothic Neo, Arial, Helvetica, sans-serif; */
+    font-family: "s-core-dream-light", sans-serif !important;
+    font-size: 14px;
 }
 body {
-	color: #333;
-	word-wrap: break-word;
-	-webkit-text-size-adjust: none;
-	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-	touch-action: manipulation;
+    color: #333;
+    word-wrap: break-word;
+    -webkit-text-size-adjust: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    touch-action: manipulation;
 }
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
 }
 fieldset,
 img {
-	border: 0;
+    border: 0;
 }
 ol,
 ul {
-	list-style: none;
+    list-style: none;
 }
 address,
 em {
-	font-style: normal;
+    font-style: normal;
 }
 article,
 aside,
@@ -103,111 +103,115 @@ hgroup,
 menu,
 nav,
 section {
-	display: block;
+    display: block;
 }
 a {
-	color: inherit;
-	text-decoration: none;
-	outline: none;
+    color: inherit;
+    text-decoration: none;
+    outline: none;
 }
 button,
 input[type="button"],
 input[type="file"],
 input[type="reset"],
 input[type="submit"] {
-	border-radius: 0;
-	box-shadow: none;
-	border: 0;
-	outline: 0;
-	background-color: transparent;
-	cursor: none;
-	-webkit-appearance: button;
-	outline: none;
+    border-radius: 0;
+    box-shadow: none;
+    border: 0;
+    outline: 0;
+    background-color: transparent;
+    cursor: none;
+    -webkit-appearance: button;
+    outline: none;
 }
 .blind,
 .screen_out,
 .sound_only {
-	position: absolute;
-	overflow: hidden;
-	clip: rect(0 0 0 0);
-	width: 1px;
-	height: 1px;
-	margin: -1px;
+    position: absolute;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    width: 1px;
+    height: 1px;
+    margin: -1px;
 }
 .bottom-nav {
-	position: fixed;
-	bottom: 0;
-	right: 0;
-	left: 0;
-	align-items: center;
-	justify-content: space-between;
-	border-top: 1px solid #eee;
-	height: 80px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid #eee;
+    height: 80px;
 }
 .bottom-nav {
-	z-index: 20;
-	display: flex;
-	background-color: #fff;
+    z-index: 20;
+    display: flex;
+    background-color: #fff;
 }
 .container {
-	padding-top: 60px;
-	overflow: hidden;
+    padding-top: 60px;
+    overflow: hidden;
 }
 .bg-gray {
-	background-color: #f9f9f9;
+    background-color: #f9f9f9;
 }
 /* Galaxy Tab 1, 2, 3 */
 @media screen and (min-device-width: 768px) and (max-device-height: 1280px) {
-	.container {
-		padding-top: 80px;
-		overflow: hidden;
-	}
+    .container {
+        padding-top: 80px;
+        overflow: hidden;
+    }
 }
 /* Galaxy S8, S8+, S9, S10, S10+ S10 lite edge */
 @media screen and (min-device-width: 360px) and (max-device-height: 740px) {
-	.container {
-		padding-top: 55px;
-		overflow: hidden;
-	}
+    .container {
+        padding-top: 55px;
+        overflow: hidden;
+    }
 }
 /* Galaxy S6, S7, S7 edge */
 @media screen and (min-device-width: 360px) and (max-device-height: 640px) {
-	.container {
-		padding-top: 50px;
-		overflow: hidden;
-	}
+    .container {
+        padding-top: 50px;
+        overflow: hidden;
+    }
 }
 /* 다크 모드*/
 .bg-dark {
-	background-color: #495057;
+    background-color: #495057;
 }
 /* 버튼 보더 지우기 */
 .border-none {
-	border: none !important;
-	background: transparent !important;
-	outline: none !important;
-	box-shadow: none !important;
+    border: none !important;
+    background: transparent !important;
+    outline: none !important;
+    box-shadow: none !important;
 }
 .p-button.p-button-danger {
-	color: #ffffff;
-	background: #ff4b4b;
-	border: 1px solid #ff4b4b;
+    color: #ffffff;
+    background: #ff4b4b;
+    border: 1px solid #ff4b4b;
 }
 .p-button {
-	background: #4a83e5;
-	border: 1px solid #4a83e5;
+    background: #4a83e5;
+    border: 1px solid #4a83e5;
 }
 .p-button.p-button-success {
-	color: #ffffff;
-	background: #ffaf34;
-	border: 1px solid #ffaf34;
+    color: #ffffff;
+    background: #ffaf34;
+    border: 1px solid #ffaf34;
 }
 .p-component {
-	font-family: "s-core-dream-light", sans-serif !important;
+    font-family: "s-core-dream-light", sans-serif !important;
 }
 .p-progressbar .p-progressbar-value {
-	background: #4a83e5;
+    background: #4a83e5;
 }
 .p-inputswitch.p-inputswitch-checked:not(.p-disabled):hover .p-inputswitch-slider {
-	background: #4a83e5;
+    background: #4a83e5;
+}
+@font-face {
+    font-family: "s-core-dream-light";
+    src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff") format("woff");
 }

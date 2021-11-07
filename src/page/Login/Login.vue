@@ -14,6 +14,10 @@
 					</div>
 				</div>
 			</div>
+			<div class="kgu_logo">
+				<img src="../../images/Logo/kgu_logo.png"/>
+				<div class="kgu_name">경기대학교</div>
+			</div>
 		</Dialog>
 		<!-- loading screen -->
 		<div v-else class="loading-indicator">
